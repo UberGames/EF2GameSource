@@ -18,7 +18,7 @@
 #define _QUATERNION_H_
 
 #include <math.h>
-#include "vector.h"
+#include <game/vector.h>
 //#include "Matrix.h"
 
 #define UNUSED_ARG (void)

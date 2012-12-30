@@ -338,16 +338,13 @@ inline qboolean EventArgDef::isOptional
    return optional;
    }
 
-#ifndef GAME_DLL
-extern "C"
-   {
-   // interface functions
-   void	        L_ProcessPendingEvents( void );
-   void          L_ClearEventList( void );
-   void          L_InitEvents( void );
-   void          L_ShutdownEvents( void );
-   }
-#endif
+// interface functions
+void L_ProcessPendingEvents( void );
+void L_ClearEventList( void );
+void L_InitEvents( void );
+void L_ShutdownEvents( void );
+void L_ArchiveEvents(Archiver& arc);
+void L_UnarchiveEvents(Archiver& arc);
 
 
 class	Listener;

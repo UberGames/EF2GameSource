@@ -182,6 +182,7 @@ inline qboolean Archiver::NoErrors
 	return ( !fileerror );
    }
 
+template <>
 inline void Container<str>::Archive
 	(
    Archiver &arc
@@ -206,6 +207,7 @@ inline void Container<str>::Archive
       }
 	}
 
+template <>
 inline void Container<Vector>::Archive
 	(
    Archiver &arc
@@ -230,6 +232,7 @@ inline void Container<Vector>::Archive
       }
 	}
 
+template <>
 inline void Container<int>::Archive
 	(
    Archiver &arc
@@ -254,6 +257,7 @@ inline void Container<int>::Archive
       }
 	}
 
+template <>
 inline void Container<float>::Archive
 	(
    Archiver &arc
@@ -296,6 +300,7 @@ inline void Container<float>::Archive
 // Returns:		None
 // 
 //===============================================================
+template <>
 inline void Container<Class*>::Archive
 (
 	Archiver &arc
@@ -327,6 +332,7 @@ inline void Container<Class*>::Archive
 // Returns:		None
 // 
 //===============================================================
+template <>
 inline void Container<Class>::Archive
 (
 	Archiver &arc
@@ -388,6 +394,7 @@ inline void Container< SafePtr<Class*> >::Archive
 // Returns:		None
 // 
 //===============================================================
+template <>
 inline void Container<Entity*>::Archive
 (
 	Archiver &arc
@@ -406,6 +413,7 @@ inline void Container<Entity*>::Archive
 	}
 }
 
+template <>
 inline void Container<EntityPtr>::Archive
 (
 	Archiver &arc

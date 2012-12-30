@@ -55,7 +55,7 @@ class UseData : public Class
 		int _useCount;
 
 	public:
-		UseData::UseData()
+		UseData()
 			:_useAnim(""),
 			 _useType(""),
 			 _useThread(""),
