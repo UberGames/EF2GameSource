@@ -103,7 +103,7 @@ Container<Type>::Container()
 	}
 
 template< class Type >
-Container<Type>::~Container<Type>()
+Container<Type>::~Container()
 	{
 	FreeObjectList();
 	}

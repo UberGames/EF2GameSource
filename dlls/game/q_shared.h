@@ -49,11 +49,13 @@
 #pragma warning(disable : 4244)     // 'conversion' conversion from 'type1' to 'type2', possible loss of data
 #pragma warning(disable : 4305)		// truncation from const double to float
 //#pragma warning(disable : 4310)		// cast truncates constant value
+#pragma warning(disable : 4389)
 #pragma warning(disable : 4512)     // 'Class' : assignment operator could not be generated
 #pragma warning(disable : 4514)     // unreferenced inline/local function has been removed
 //#pragma warning(disable : 4611)     // interaction between '_setjmp' and C++ object destruction is non-portable
 #pragma warning(disable : 4710)     // did not inline this function
 #pragma warning(disable : 4711)		// selected for automatic inline expansion
+#pragma warning(disable : 4996)
 
 
 // shut up warnings with Intel Compiler

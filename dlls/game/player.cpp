@@ -5674,7 +5674,7 @@ void Player::GetViewTrace( trace_t& trace,  int contents, float maxDistance )
 	
     fov_x = client->ps.fov;
 	x = 640.0f / (float)tan( fov_x / 360.0 * M_PI );
-	fov_y = (float)atan2( 480.0, x );
+	fov_y = (float)atan2( 480.0f, x );
 	fov_y *= 360.0f / M_PI;
 	
 	ymax = 4.0f * (float)tan( fov_y * M_PI / 360.0 );

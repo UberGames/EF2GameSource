@@ -60,7 +60,7 @@ inline Stack<Type>::Stack()
 	}
 
 template <class Type>
-inline Stack<Type>::~Stack<Type>()
+inline Stack<Type>::~Stack()
 	{
 	Clear();
 	}

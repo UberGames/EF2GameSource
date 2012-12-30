@@ -29,6 +29,7 @@
 
 #ifdef _WIN32
 #pragma warning(disable : 4710)     // function 'blah' not inlined
+#pragma warning(disable : 4996)
 #endif
 
 #define STRING_PREALLOC_SIZE 16

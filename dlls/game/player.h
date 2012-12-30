@@ -1149,7 +1149,11 @@ class Player : public Sentient
 
 inline bool Player::IsNewActiveWeapon()
    {
-   return ( newActiveWeapon.weapon != NULL );
+	   if(newActiveWeapon.weapon != NULL) {
+		   return true;
+	   } else {
+		   return false;
+	   }
    }
 
 inline weaponhand_t Player::GetNewActiveWeaponHand()

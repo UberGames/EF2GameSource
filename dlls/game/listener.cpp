@@ -615,7 +615,7 @@ void EventArgDef::Setup( const char *eventName, const char *argName, const char 
 		while( 1 )
 		{
 			// find opening '['
-			tokptr = strchr( ptr, '[' );
+			tokptr = (char *)strchr( ptr, '[' );
 			if ( !tokptr )
             {
 				break;

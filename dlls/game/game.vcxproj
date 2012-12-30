@@ -112,9 +112,10 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>.\../Debug\</OutDir>
-    <IntDir>.\./Debug\</IntDir>
+    <OutDir>$(ProjectDir)Debug\</OutDir>
+    <IntDir>$(ProjectDir)Debug\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>gamex86</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release CDROM|Win32'">
     <OutDir>.\Release\</OutDir>
@@ -268,11 +269,11 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\Shared;..\..\DLLs;..\..\Executable;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;WIN32;_WINDOWS;_USRDLL;FGAME_EXPORTS;GAME_DLL;MISSIONPACK;ENABLE_ALTROUTING;MSVC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerListingLocation>.\./Debug\</AssemblerListingLocation>
+      <AssemblerListingLocation>$(ProjectDir)Debug\</AssemblerListingLocation>
       <BrowseInformation>true</BrowseInformation>
-      <PrecompiledHeaderOutputFile>.\./Debug\game.pch</PrecompiledHeaderOutputFile>
-      <ObjectFileName>.\./Debug\</ObjectFileName>
-      <ProgramDataBaseFileName>.\./Debug\</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>$(ProjectDir)Debug\game.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>$(ProjectDir)Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>$(ProjectDir)Debug\</ProgramDataBaseFileName>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Midl>
@@ -295,8 +296,8 @@
       <LinkDLL>true</LinkDLL>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <OutputFile>../../Executable/Debug/gamex86.dll</OutputFile>
-      <ImportLibrary>.\../Debug\gamex86.lib</ImportLibrary>
+      <OutputFile>$(ProjectDir)Debug/gamex86.dll</OutputFile>
+      <ImportLibrary>$(ProjectDir)Debug\gamex86.lib</ImportLibrary>
       <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\game.def</ModuleDefinitionFile>
     </Link>
