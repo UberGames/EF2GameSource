@@ -271,7 +271,7 @@ void BotSayTeamOrder(bot_state_t *bs, int toclient) {
 BotVoiceChat
 ==================
 */
-void BotVoiceChat(bot_state_t *bs, int toclient, char *voicechat) {
+void BotVoiceChat(bot_state_t *bs, int toclient, const char *voicechat) {
 #ifdef MISSIONPACK
 	if (toclient == -1)
 		// voice only say team
@@ -287,7 +287,7 @@ void BotVoiceChat(bot_state_t *bs, int toclient, char *voicechat) {
 BotVoiceChatOnly
 ==================
 */
-void BotVoiceChatOnly(bot_state_t *bs, int toclient, char *voicechat) {
+void BotVoiceChatOnly(bot_state_t *bs, int toclient, const char *voicechat) {
 #ifdef MISSIONPACK
 	if (toclient == -1)
 		// voice only say team
