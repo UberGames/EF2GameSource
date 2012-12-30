@@ -303,7 +303,7 @@ int BotGetPatrolWaypoints(bot_state_t *bs, bot_match_t *match) {
 	//
 	while(1) {
 		if (!gi.BotFindMatch(keyarea, &keyareamatch, MTCONTEXT_PATROLKEYAREA)) {
-			gi.EA_SayTeam(bs->client, "what do you say?");
+			gi.EA_SayTeam(bs->client, (char*)"what do you say?");
 			BotFreeWaypoints(newpatrolpoints);
 			bs->patrolpoints = NULL;
 			return qfalse;
@@ -349,7 +349,7 @@ int BotGetPatrolWaypoints(bot_state_t *bs, bot_match_t *match) {
 	}
 	//
 	if (!newpatrolpoints || !newpatrolpoints->next) {
-		gi.EA_SayTeam(bs->client, "I need more key points to patrol\n");
+		gi.EA_SayTeam(bs->client, (char*)"I need more key points to patrol\n");
 		BotFreeWaypoints(newpatrolpoints);
 		newpatrolpoints = NULL;
 		return qfalse;
@@ -1346,7 +1346,7 @@ void BotMatch_WhoIsTeamLeader(bot_state_t *bs, bot_match_t *match) {
 	ClientName(bs->client, netname, sizeof(netname));
 	//if this bot IS the team leader
 	if (!Q_stricmp(netname, bs->teamleader)) {
-		gi.EA_SayTeam(bs->client, "I'm the team leader\n");
+		gi.EA_SayTeam(bs->client, (char*)"I'm the team leader\n");
 	}
 }
 
@@ -1885,12 +1885,12 @@ int BotMatchMessage(bot_state_t *bs, char *message) {
 		}
 		case MSG_CREATENEWFORMATION:	//start the creation of a new formation
 		{
-			gi.EA_SayTeam(bs->client, "the part of my brain to create formations has been damaged");
+			gi.EA_SayTeam(bs->client, (char*)"the part of my brain to create formations has been damaged");
 			break;
 		}
 		case MSG_FORMATIONPOSITION:		//tell someone his/her position in the formation
 		{
-			gi.EA_SayTeam(bs->client, "the part of my brain to create formations has been damaged");
+			gi.EA_SayTeam(bs->client, (char*)"the part of my brain to create formations has been damaged");
 			break;
 		}
 		case MSG_FORMATIONSPACE:		//set the formation space
