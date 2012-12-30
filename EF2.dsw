@@ -1,0 +1,129 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "EF2"=".\Executable\EF2.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/EF2/Code/Executable", UJDAAAAA
+    .\executable
+    end source code control
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name renderer
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name uilib
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name cgame
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name game
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "bspc"=".\Executable\bspc\bspc.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/EF2/Code/Executable/bspc", RTEAAAAA
+    .\Executable\bspc
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "cgame"=".\dlls\cgame\cgame.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Code/DLLs/cgame", LEDAAAAA
+    .\dlls\cgame
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "game"=".\dlls\game\game.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Code/DLLs/game", NEDAAAAA
+    .\dlls\game
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "renderer"=".\Libs\renderer\renderer.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Code/Libs/renderer", MEDAAAAA
+    .\libs\renderer
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "uilib"=".\Libs\uilib\uilib.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+    begin source code control
+    "$/Code/Libs/uilib", REDAAAAA
+    .\libs\uilib
+    end source code control
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Global:
+
+Package=<5>
+{{{
+    begin source code control
+    "$/EF2/Code", QJDAAAAA
+    .
+    end source code control
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+
