@@ -102,9 +102,10 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>.\./Release\</OutDir>
-    <IntDir>.\./Release\</IntDir>
+    <OutDir>$(ProjectDir)Release\</OutDir>
+    <IntDir>$(ProjectDir)Release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>gamex86</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Intel Release|Win32'">
     <OutDir>.\./IntelRelease\</OutDir>
@@ -182,11 +183,11 @@
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>..\..\Shared;..\..\DLLs;..\..\Executable;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;_USRDLL;FGAME_EXPORTS;GAME_DLL;MISSIONPACK;ENABLE_ALTROUTING;MSVC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AssemblerListingLocation>.\./Release\</AssemblerListingLocation>
+      <AssemblerListingLocation>$(ProjectDir)Release\</AssemblerListingLocation>
       <BrowseInformation>true</BrowseInformation>
-      <PrecompiledHeaderOutputFile>.\./Release\game.pch</PrecompiledHeaderOutputFile>
-      <ObjectFileName>.\./Release\</ObjectFileName>
-      <ProgramDataBaseFileName>.\./Release\</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>$(ProjectDir)Release\game.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>$(ProjectDir)Release\</ObjectFileName>
+      <ProgramDataBaseFileName>$(ProjectDir)Release\</ProgramDataBaseFileName>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -208,8 +209,8 @@
       <LinkDLL>true</LinkDLL>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <OutputFile>../../Executable/Release/gamex86.dll</OutputFile>
-      <ImportLibrary>.\./Release\gamex86.lib</ImportLibrary>
+      <OutputFile>$(ProjectDir)Release\gamex86.dll</OutputFile>
+      <ImportLibrary>$(ProjectDir)gamex86.lib</ImportLibrary>
       <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\game.def</ModuleDefinitionFile>
     </Link>
