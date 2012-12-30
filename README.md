@@ -1,6 +1,6 @@
 EF2GameSource
 =============
 
-The original EF2GameSource (soon to be updated so it compiled on windows and linux again)
+The original EF2GameSource updated so it compiles under Visual Studio 2012 and Linux 
 
 Also see original readme.txt
