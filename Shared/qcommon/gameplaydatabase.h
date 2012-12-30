@@ -39,7 +39,7 @@ typedef enum GameplayValueType
 	VALUE_STRING,
 	VALUE_VECTOR,
 	GAMEPLAY_VALUE_UNSPECIFIED
-};
+} GameplayValueType;
 
 //------------------------ CLASS -------------------------------
 //
