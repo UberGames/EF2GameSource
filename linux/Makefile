@@ -25,7 +25,7 @@ BDIR=./
 
 # Where we are building from (where the source code should be!)
 #MOUNT_DIR=/projects/Quake3/q3code
-MOUNT_DIR=../..
+MOUNT_DIR=..
 
 # Custom lcc location, used in vm builds
 LCC=/home/zoid/Quake3/lcc
@@ -53,7 +53,7 @@ SDIR=$(MOUNT_DIR)/Executable/server
 RDIR=$(MOUNT_DIR)/Libs/renderer
 CMDIR=$(MOUNT_DIR)/Shared/qcommon
 UDIR=$(MOUNT_DIR)/Executable/unix
-GDIR=$(MOUNT_DIR)/DLLs/game
+GDIR=$(MOUNT_DIR)/dlls/game
 CGDIR=$(MOUNT_DIR)/DLLs/cgame
 BAIDIR=$(MOUNT_DIR)/botai
 BLIBDIR=$(MOUNT_DIR)/Executable/botlib
@@ -95,7 +95,7 @@ RPMARCH=i386
 VENDOR=unknown
 endif #alpha test
 
-BASE_CFLAGS=-Dstricmp=strcasecmp -Dstrcmpi=strcasecmp -Dstrnicmp=strncasecmp -pipe
+BASE_CFLAGS=-Dstricmp=strcasecmp -Dstrcmpi=strcasecmp -Dstrnicmp=strncasecmp -pipe -m32 -I../dlls
 #BASE_CFLAGS=-Dstricmp=strcasecmp -I$(MESADIR)/include -I/usr/X11R6/include -I/usr/include/glide -pipe
 
 DEBUG_CFLAGS=$(BASE_CFLAGS) -g -Wno-deprecated
