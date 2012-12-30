@@ -55,7 +55,7 @@
 //#pragma warning(disable : 4611)     // interaction between '_setjmp' and C++ object destruction is non-portable
 #pragma warning(disable : 4710)     // did not inline this function
 #pragma warning(disable : 4711)		// selected for automatic inline expansion
-#pragma warning(disable : 4996)
+#pragma warning(disable : 4996)		// unsecure function warnings
 
 
 // shut up warnings with Intel Compiler
