@@ -1965,7 +1965,7 @@ void AIEnter_Battle_Fight(bot_state_t *bs, const char *s) {
 AIEnter_Battle_Fight
 ==================
 */
-void AIEnter_Battle_SuicidalFight(bot_state_t *bs, char *s) {
+void AIEnter_Battle_SuicidalFight(bot_state_t *bs, const char *s) {
 	BotRecordNodeSwitch(bs, "battle fight", "", s);
 	gi.BotResetLastAvoidReach(bs->ms);
 	bs->ainode = AINode_Battle_Fight;
