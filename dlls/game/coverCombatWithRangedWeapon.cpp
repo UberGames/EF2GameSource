@@ -113,7 +113,7 @@ void CoverCombatWithRangedWeapon::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void CoverCombatWithRangedWeapon::AnimDone( Event *ev )
+void CoverCombatWithRangedWeapon::AnimDone( Event * )
 {
 }
 
@@ -128,7 +128,7 @@ void CoverCombatWithRangedWeapon::AnimDone( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void CoverCombatWithRangedWeapon::PostureDone( Event *ev )
+void CoverCombatWithRangedWeapon::PostureDone( Event * )
 {
 	_finishedPostureTransition = true;
 }
@@ -160,7 +160,7 @@ void CoverCombatWithRangedWeapon::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t CoverCombatWithRangedWeapon::Evaluate( Actor &self )
+BehaviorReturnCode_t CoverCombatWithRangedWeapon::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 
@@ -416,7 +416,7 @@ BehaviorReturnCode_t CoverCombatWithRangedWeapon::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void CoverCombatWithRangedWeapon::End(Actor &self)
+void CoverCombatWithRangedWeapon::End(Actor &)
 {   
 	if ( !_self )
 		return;
@@ -712,6 +712,7 @@ BehaviorReturnCode_t CoverCombatWithRangedWeapon::evaluateStateMoveToCover()
 //--------------------------------------------------------------
 void CoverCombatWithRangedWeapon::failureStateMoveToCover( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -770,6 +771,7 @@ BehaviorReturnCode_t CoverCombatWithRangedWeapon::evaluateStateChangePostureDuck
 //--------------------------------------------------------------
 void CoverCombatWithRangedWeapon::failureStateChangePostureDuck( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -827,6 +829,7 @@ BehaviorReturnCode_t CoverCombatWithRangedWeapon::evaluateStateChangePostureStan
 //--------------------------------------------------------------
 void CoverCombatWithRangedWeapon::failureStateChangePostureStand( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -883,6 +886,7 @@ BehaviorReturnCode_t CoverCombatWithRangedWeapon::evaluateStateSpotted()
 //--------------------------------------------------------------
 void CoverCombatWithRangedWeapon::failureStateSpotted( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -930,6 +934,7 @@ BehaviorReturnCode_t CoverCombatWithRangedWeapon::evaluateStateDucked()
 //--------------------------------------------------------------
 void CoverCombatWithRangedWeapon::failureStateDucked( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -979,6 +984,7 @@ BehaviorReturnCode_t CoverCombatWithRangedWeapon::evaluateStateStanding()
 //--------------------------------------------------------------
 void CoverCombatWithRangedWeapon::failureStateStanding( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -1122,7 +1128,7 @@ BehaviorReturnCode_t CoverCombatWithRangedWeapon::evaluateStateFireStanding()
 //--------------------------------------------------------------
 void CoverCombatWithRangedWeapon::failureStateFireStanding( const str &failureReason )
 {
-
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -1171,6 +1177,7 @@ BehaviorReturnCode_t CoverCombatWithRangedWeapon::evaluateStateFirePauseStanding
 //--------------------------------------------------------------
 void CoverCombatWithRangedWeapon::failureStateFirePauseStanding( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -1204,6 +1211,8 @@ bool CoverCombatWithRangedWeapon::CanExecute( Actor &self , float maxDistance )
 {
 	//HelperNode* node;
 	Entity* currentEnemy;
+
+	Q_UNUSED(maxDistance);
 
 	currentEnemy = self.enemyManager->GetCurrentEnemy();
 

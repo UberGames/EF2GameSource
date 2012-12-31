@@ -125,7 +125,7 @@ void CloseInOnPlayer::Begin( Actor &self )
 // Returns:     BehaviorReturnCode_t
 //
 //--------------------------------------------------------------
-BehaviorReturnCode_t	CloseInOnPlayer::Evaluate( Actor &self )
+BehaviorReturnCode_t	CloseInOnPlayer::Evaluate( Actor & )
 {
 
 	BehaviorReturnCode_t stateResult;
@@ -353,4 +353,5 @@ BehaviorReturnCode_t CloseInOnPlayer::evaluateStateApproach()
 //--------------------------------------------------------------
 void CloseInOnPlayer::failureStateApproach( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }

@@ -139,7 +139,7 @@ void GeneralCombatWithRangedWeapon::AnimDone( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void GeneralCombatWithRangedWeapon::PostureDone( Event *ev )
+void GeneralCombatWithRangedWeapon::PostureDone( Event * )
 {
 	_finishedPostureTransition = true;
 }
@@ -524,7 +524,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GeneralCombatWithRangedWeapon::End(Actor &self)
+void GeneralCombatWithRangedWeapon::End(Actor &)
 {   
 	if ( !_self )
 		return;
@@ -804,6 +804,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateChangePostureTo
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateChangePostureToAdvance( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -863,6 +864,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateChangePostureTo
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateChangePostureToRetreat( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -1024,6 +1026,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateAdvanceFiring()
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateAdvanceFiring( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -1184,6 +1187,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateRetreatFiring()
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateRetreatFiring( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -1245,6 +1249,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateStrafe()
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateStrafe( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 	_nextStrafeAttemptTime = level.time + G_Random( 1.0 ) + 3.0f;	
 }
 
@@ -1307,6 +1312,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateChangePostureDu
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateChangePostureDuck( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -1357,6 +1363,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateDucked()
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateDucked( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -1417,6 +1424,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateDuckedFiring()
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateDuckedFiring( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -1478,6 +1486,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateChangePostureSt
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateChangePostureStand( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -1528,6 +1537,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateStand()
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateStand( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -1587,6 +1597,7 @@ BehaviorReturnCode_t GeneralCombatWithRangedWeapon::evaluateStateStandFiring()
 //--------------------------------------------------------------
 void GeneralCombatWithRangedWeapon::failureStateStandFiring( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 

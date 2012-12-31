@@ -548,7 +548,7 @@ void Trigger::SetModelEvent( Event *ev )
 	link();
 }
 
-void Trigger::StartThread( Event *ev )
+void Trigger::StartThread( Event * )
 {
 	if ( thread.length() )
 	{
@@ -1123,12 +1123,12 @@ void Trigger::SetEdgeTriggered( Event *ev )
 	SetEdgeTriggered( ev->GetBoolean( 1 ) );
 }
 
-void Trigger::SetTriggerable( Event *ev )
+void Trigger::SetTriggerable( Event * )
 {
 	triggerable = true;
 }
 
-void Trigger::SetNotTriggerable( Event *ev )
+void Trigger::SetNotTriggerable( Event * )
 {
 	triggerable = false;
 }
@@ -1396,7 +1396,7 @@ TriggerSecret::TriggerSecret()
 	thread = "global/universal_script.scr::secret";
 }
 
-void TriggerSecret::FoundSecret( Event *ev )
+void TriggerSecret::FoundSecret( Event * )
 {
 	//
 	// anything that causes the trigger to fire increments the number
@@ -1538,7 +1538,7 @@ void TriggerSetVariable::SetVariableValue( Event *ev )
 	}
 }
 
-void TriggerSetVariable::SetVariable( Event *ev )
+void TriggerSetVariable::SetVariable( Event * )
 {
 	ScriptVariable * var;
 	int value;
@@ -1817,7 +1817,7 @@ CLASS_DECLARATION( Trigger, TriggerPlaySound, "play_sound_triggered" )
 	{ NULL, NULL }
 };
 
-void TriggerPlaySound::ToggleSound( Event *ev )
+void TriggerPlaySound::ToggleSound( Event * )
 {
 	if ( !state )
 	{
@@ -2727,12 +2727,12 @@ TriggerExit::TriggerExit()
 	respondto = TRIGGER_PLAYERS;
 }
 
-void TriggerExit::TurnExitSignOff( Event *ev )
+void TriggerExit::TurnExitSignOff( Event * )
 {
 	level.near_exit = false;
 }
 
-void TriggerExit::DisplayExitSign( Event *ev )
+void TriggerExit::DisplayExitSign( Event * )
 {
 	level.near_exit = true;
 	
@@ -2980,12 +2980,12 @@ void TriggerMusic::SetAltFallbackMood( Event *ev )
 	altfallback = ev->GetString( 1 );
 }
 
-void TriggerMusic::ChangeMood( Event *ev )
+void TriggerMusic::ChangeMood( Event * )
 {
 	ChangeMusic( current.c_str(), fallback.c_str(), false );
 }
 
-void TriggerMusic::AltChangeMood( Event *ev )
+void TriggerMusic::AltChangeMood( Event * )
 {
 	ChangeMusic( altcurrent.c_str(), altfallback.c_str(), false );
 }
@@ -3000,7 +3000,7 @@ void TriggerMusic::SetOneShot( qboolean once )
 		count = -1;
 }
 
-void TriggerMusic::SetOneShot( Event *ev )
+void TriggerMusic::SetOneShot( Event * )
 {
 	SetOneShot( true );
 }
@@ -3205,7 +3205,7 @@ void TriggerReverb::SetOneShot( qboolean once )
 		count = -1;
 }
 
-void TriggerReverb::SetOneShot( Event *ev )
+void TriggerReverb::SetOneShot( Event * )
 {
 	SetOneShot( true );
 }
@@ -3343,7 +3343,7 @@ TriggerGivePowerup::TriggerGivePowerup()
 	respondto = spawnflags ^ (TRIGGER_PLAYERS | TRIGGER_MONSTERS );
 }
 
-void TriggerGivePowerup::SetOneShot( Event *ev )
+void TriggerGivePowerup::SetOneShot( Event * )
 {
 	trigger_time = 0.0f;
 	oneshot = true;
@@ -3655,7 +3655,7 @@ void TriggerGroupEvent::SetGroupNumber( Event *ev )
 	groupNumber = ev->GetInteger( 1 );
 }
 
-void TriggerGroupEvent::PassEvent( Event *ev )
+void TriggerGroupEvent::PassEvent( Event * )
 {
 	//groupeventmanager->SendEvent( groupNumber, passEvent );
 	
@@ -3966,7 +3966,7 @@ void TriggerCallVolume::EntityLeftVolume( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void TriggerCallVolume::CheckReady( Event *ev )
+void TriggerCallVolume::CheckReady( Event * )
 {
 	str name;
 	Entity *ent;   
@@ -4250,7 +4250,7 @@ void TriggerEntryAndExit::TriggerStuff( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void TriggerEntryAndExit::EntityLeftVolume( Event *ev )
+void TriggerEntryAndExit::EntityLeftVolume( Event * )
 {
 	Event *exitEvent;
 	exitEvent = new Event( EV_Trigger_EntityExit );

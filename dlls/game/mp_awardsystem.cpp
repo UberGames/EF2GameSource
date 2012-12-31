@@ -430,6 +430,7 @@ void AwardSystem::awardTeamAward( AfterMatchTeamAwardType teamAward, const char 
 void AwardSystem::playerEventNotification( const char *eventName, const char *eventItemName, Player *eventPlayer )
 {
 	Q_UNUSED(eventName);
+	Q_UNUSED(eventItemName);
 
 	// See if we care about this player notification
 

@@ -662,7 +662,7 @@ void ViewMaster::Init( void )
 	g_vt_viewbellrandomize  = gi.cvar( "g_vt_viewminrandomize", "1",    0 );
 }
 
-void ViewMaster::Save( Event *ev )
+void ViewMaster::Save( Event * )
 {
 	// saves currently spawned things to disk
 	str         buf;
@@ -905,7 +905,7 @@ void ViewMaster::Copy( Event * )
 // Returns:     None
 //              
 //================================================================
-void ViewMaster::Shoot( Event *ev )
+void ViewMaster::Shoot( Event * )
 {
 	int idx = g_vt_modelIndex->integer ;
 	if ( (idx <= 0) || (idx > _modelNamesArray.NumObjects()) ) return ;
@@ -1019,7 +1019,7 @@ void ViewMaster::NextModelInSet( Event * )
 // Returns:     None
 //              
 //================================================================
-void ViewMaster::PrevModelInSet( Event *ev )
+void ViewMaster::PrevModelInSet( Event * )
 {
 	if (!_numberOfModelsInSet)
 	{
@@ -2048,7 +2048,7 @@ void Viewthing::SetSelected( qboolean state )
 	}
 }
 
-void Viewthing::Flash( Event *ev )
+void Viewthing::Flash( Event * )
 {
 	SetSelected(true);
 }
@@ -2090,7 +2090,7 @@ void Viewthing::UpdateCvars( qboolean quiet )
 }
 
 
-void Viewthing::ThinkEvent( Event *ev )
+void Viewthing::ThinkEvent( Event * )
 {
 	static float startTime = 0 ;
 	
@@ -2147,7 +2147,7 @@ void Viewthing::ThinkEvent( Event *ev )
 	}
 }
 
-void Viewthing::LastFrameEvent( Event *ev )
+void Viewthing::LastFrameEvent( Event * )
 {
 	if ( animstate != 3 )
 	{
@@ -2155,7 +2155,7 @@ void Viewthing::LastFrameEvent( Event *ev )
 	}
 }
 
-void Viewthing::ToggleAnimateEvent( Event *ev )
+void Viewthing::ToggleAnimateEvent( Event * )
 {
 	animstate = ( animstate + 1 ) % 4;
 	total_delta = Vector(0, 0, 0);
@@ -2224,7 +2224,7 @@ void Viewthing::SetModelEvent( Event *ev )
 	UpdateCvars();
 }
 
-void Viewthing::NextFrameEvent( Event *ev )
+void Viewthing::NextFrameEvent( Event * )
 {
 	int numframes;
 	
@@ -2238,7 +2238,7 @@ void Viewthing::NextFrameEvent( Event *ev )
 	}
 }
 
-void Viewthing::PrevFrameEvent( Event *ev )
+void Viewthing::PrevFrameEvent( Event * )
 {
 	int numframes;
 	
@@ -2292,7 +2292,7 @@ void Viewthing::SetAnim( int num )
 	}
 }
 
-void Viewthing::NextAnimEvent( Event *ev )
+void Viewthing::NextAnimEvent( Event * )
 {
 	int numanims;
 	
@@ -2312,7 +2312,7 @@ void Viewthing::NextAnimEvent( Event *ev )
 	}
 }
 
-void Viewthing::PrevAnimEvent( Event *ev )
+void Viewthing::PrevAnimEvent( Event * )
 {
 	int anim;
 	int numanims;
@@ -2338,13 +2338,13 @@ void Viewthing::PrevAnimEvent( Event *ev )
 	}
 }
 
-void Viewthing::ScaleUpEvent( Event *ev )
+void Viewthing::ScaleUpEvent( Event * )
 {
 	edict->s.scale += 0.05f;
 	UpdateCvars();
 }
 
-void Viewthing::ScaleDownEvent( Event *ev )
+void Viewthing::ScaleDownEvent( Event * )
 {
 	edict->s.scale -= 0.05f;
 	UpdateCvars();
@@ -2473,7 +2473,7 @@ void Viewthing::AttachModel(Event *ev)
 	child->ProcessEvent( event );
 }
 
-void Viewthing::Delete( Event *ev )
+void Viewthing::Delete( Event * )
 {
 	Viewmodel.current_viewthing = NULL;
 	PostEvent( EV_Remove, 0.0f );
@@ -2485,7 +2485,7 @@ void Viewthing::Delete()
 	PostEvent( EV_Remove, 0.0f );
 }
 
-void Viewthing::DetachAll( Event *ev )
+void Viewthing::DetachAll( Event * )
 {
 	int i;
 	int num;
@@ -2525,13 +2525,13 @@ void Viewthing::ChangeOrigin( Event *ev )
 	gi.Printf( "vieworigin = x%0.4f y%0.4f z%0.4f\n", origin.x, origin.y, origin.z );
 }
 
-void Viewthing::SaveSurfaces( Event *ev )
+void Viewthing::SaveSurfaces( Event * )
 {
 	memcpy( origSurfaces, edict->s.surfaces, sizeof( origSurfaces ) );
 }
 
 
-void Viewthing::NextMorph( Event *ev )
+void Viewthing::NextMorph( Event * )
 {
 	current_morph++;
 	
@@ -2544,7 +2544,7 @@ void Viewthing::NextMorph( Event *ev )
 	UpdateCvars( true );
 }
 
-void Viewthing::PrevMorph( Event *ev )
+void Viewthing::PrevMorph( Event * )
 {
 	current_morph--;
 	
@@ -2557,7 +2557,7 @@ void Viewthing::PrevMorph( Event *ev )
 	UpdateCvars( true );
 }
 
-void Viewthing::Morph( Event *ev )
+void Viewthing::Morph( Event * )
 {
 	const char *morph_name;
 	
@@ -2574,7 +2574,7 @@ void Viewthing::Morph( Event *ev )
 	}
 }
 
-void Viewthing::Unmorph( Event *ev )
+void Viewthing::Unmorph( Event * )
 {
 	const char *morph_name;
 	

@@ -133,7 +133,7 @@ void CorridorCombatWithRangedWeapon::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void CorridorCombatWithRangedWeapon::AnimDone( Event *ev )
+void CorridorCombatWithRangedWeapon::AnimDone( Event * )
 {
 }
 
@@ -148,7 +148,7 @@ void CorridorCombatWithRangedWeapon::AnimDone( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void CorridorCombatWithRangedWeapon::PostureDone( Event *ev )
+void CorridorCombatWithRangedWeapon::PostureDone( Event * )
 {
 	_finishedPostureTransition = true;
 }
@@ -180,7 +180,7 @@ void CorridorCombatWithRangedWeapon::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t CorridorCombatWithRangedWeapon::Evaluate( Actor &self )
+BehaviorReturnCode_t CorridorCombatWithRangedWeapon::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 
@@ -447,7 +447,7 @@ BehaviorReturnCode_t CorridorCombatWithRangedWeapon::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void CorridorCombatWithRangedWeapon::End(Actor &self)
+void CorridorCombatWithRangedWeapon::End(Actor &)
 {   
 	if ( !_self )
 		return;

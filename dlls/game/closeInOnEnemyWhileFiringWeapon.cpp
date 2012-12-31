@@ -133,7 +133,7 @@ void CloseInOnEnemyWhileFiringWeapon::Begin( Actor &self )
 // Returns:     BehaviorReturnCode_t
 //
 //--------------------------------------------------------------
-BehaviorReturnCode_t CloseInOnEnemyWhileFiringWeapon::Evaluate( Actor &self )
+BehaviorReturnCode_t CloseInOnEnemyWhileFiringWeapon::Evaluate( Actor & )
 {
 
 	BehaviorReturnCode_t stateResult;
@@ -205,7 +205,7 @@ BehaviorReturnCode_t CloseInOnEnemyWhileFiringWeapon::Evaluate( Actor &self )
 // Returns:     None
 //
 //--------------------------------------------------------------
-void CloseInOnEnemyWhileFiringWeapon::End(Actor &self)
+void CloseInOnEnemyWhileFiringWeapon::End(Actor &)
 {   
 	_chaseEnemy.End( *_self );
 	_fireWeapon.End( *_self );
@@ -391,6 +391,7 @@ BehaviorReturnCode_t CloseInOnEnemyWhileFiringWeapon::evaluateStateSetupApproach
 //--------------------------------------------------------------
 void CloseInOnEnemyWhileFiringWeapon::failureStateSetupApproach( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -455,6 +456,7 @@ BehaviorReturnCode_t CloseInOnEnemyWhileFiringWeapon::evaluateStateApproachFire(
 //--------------------------------------------------------------
 void CloseInOnEnemyWhileFiringWeapon::failureStateApproachFire( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -517,4 +519,5 @@ BehaviorReturnCode_t CloseInOnEnemyWhileFiringWeapon::evaluateStateApproachFireP
 //--------------------------------------------------------------
 void CloseInOnEnemyWhileFiringWeapon::failureStateApproachFirePause( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }

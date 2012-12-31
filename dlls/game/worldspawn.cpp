@@ -1443,7 +1443,7 @@ void World::removeAvailableViewMode( Event *ev )
 // Returns:			none
 //----------------------------------------------------------------
 
-void World::clearAvailableViewModes( Event *ev )
+void World::clearAvailableViewModes( Event * )
 {
 	_availableViewModes.ClearObjectList();
 }

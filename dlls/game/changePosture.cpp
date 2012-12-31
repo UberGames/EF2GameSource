@@ -85,7 +85,7 @@ void ChangePosture::SetArgs( Event *ev )
 	_posture = ev->GetString( 1 );
 }
 
-void ChangePosture::PostureDone( Event *ev )
+void ChangePosture::PostureDone( Event * )
 {
 	_postureDone = true;
 }
@@ -102,7 +102,7 @@ void ChangePosture::PostureDone( Event *ev )
 // Returns:     None
 //
 //--------------------------------------------------------------
-void ChangePosture::Begin( Actor &self )
+void ChangePosture::Begin( Actor & )
 {          
 	init();
 }
@@ -121,7 +121,7 @@ void ChangePosture::Begin( Actor &self )
 // Returns:     BehaviorReturnCode_t
 //
 //--------------------------------------------------------------
-BehaviorReturnCode_t	ChangePosture::Evaluate( Actor &self )
+BehaviorReturnCode_t	ChangePosture::Evaluate( Actor & )
 {
 
 	BehaviorReturnCode_t stateResult;
@@ -184,7 +184,7 @@ BehaviorReturnCode_t	ChangePosture::Evaluate( Actor &self )
 // Returns:     None
 //
 //--------------------------------------------------------------
-void ChangePosture::End(Actor &self)
+void ChangePosture::End(Actor &)
 {   
 }
 
@@ -318,6 +318,7 @@ BehaviorReturnCode_t ChangePosture::evaluateStateSetup()
 //--------------------------------------------------------------
 void ChangePosture::failureStateSetup( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -364,4 +365,5 @@ BehaviorReturnCode_t ChangePosture::evaluateStateChange()
 //--------------------------------------------------------------
 void ChangePosture::failureStateChange( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }

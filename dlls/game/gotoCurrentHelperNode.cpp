@@ -103,7 +103,7 @@ void GotoCurrentHelperNode::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GotoCurrentHelperNode::AnimDone( Event *ev )
+void GotoCurrentHelperNode::AnimDone( Event * )
 {
 }
 
@@ -136,7 +136,7 @@ void GotoCurrentHelperNode::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t GotoCurrentHelperNode::Evaluate( Actor &self )
+BehaviorReturnCode_t GotoCurrentHelperNode::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 

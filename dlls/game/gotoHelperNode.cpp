@@ -106,7 +106,7 @@ void GotoHelperNode::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GotoHelperNode::AnimDone( Event *ev )
+void GotoHelperNode::AnimDone( Event * )
 {
 }
 
@@ -139,7 +139,7 @@ void GotoHelperNode::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t GotoHelperNode::Evaluate( Actor &self )
+BehaviorReturnCode_t GotoHelperNode::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 
@@ -206,7 +206,7 @@ BehaviorReturnCode_t GotoHelperNode::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GotoHelperNode::End(Actor &self)
+void GotoHelperNode::End(Actor &)
 {   
 }
 

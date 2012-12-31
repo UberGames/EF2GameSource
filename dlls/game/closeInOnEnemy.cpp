@@ -125,7 +125,7 @@ void CloseInOnEnemy::Begin( Actor &self )
 // Returns:     BehaviorReturnCode_t
 //
 //--------------------------------------------------------------
-BehaviorReturnCode_t	CloseInOnEnemy::Evaluate( Actor &self )
+BehaviorReturnCode_t	CloseInOnEnemy::Evaluate( Actor & )
 {
 
 	BehaviorReturnCode_t stateResult;
@@ -362,4 +362,5 @@ BehaviorReturnCode_t CloseInOnEnemy::evaluateStateApproach()
 //--------------------------------------------------------------
 void CloseInOnEnemy::failureStateApproach( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }

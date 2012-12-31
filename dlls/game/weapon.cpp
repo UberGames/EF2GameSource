@@ -1391,6 +1391,7 @@ Weapon::Weapon()
 //======================
 Weapon::Weapon( const char *file )
 {
+	Q_UNUSED(file);
 	// The tik file holds all the information available for a weapon
 	Weapon();
 }
@@ -2750,6 +2751,7 @@ qboolean Weapon::Drop( void )
 //======================
 void Weapon::Charge( firemode_t mode )
 {
+	Q_UNUSED(mode);
 }
 
 //======================
@@ -3258,7 +3260,7 @@ void Weapon::ForceIdle( void )
 //======================
 //Weapon::DoneRaising
 //======================
-void Weapon::DoneRaising( Event *ev )
+void Weapon::DoneRaising( Event * )
 {
 	Event *event;
 	
@@ -3386,7 +3388,7 @@ void Weapon::AddEffectsAnims( void )
 //======================
 //Weapon::DoneAnimating
 //======================
-void Weapon::DoneAnimating( Event *ev )
+void Weapon::DoneAnimating( Event * )
 {
 	weaponstate = WEAPON_READY;
 	
@@ -3407,7 +3409,7 @@ void Weapon::ClientFireDone( void )
 //======================
 //Weapon::DoneFiring
 //======================
-void Weapon::DoneFiring( Event *ev )
+void Weapon::DoneFiring( Event * )
 {
 	/*
 	firemode_t mode = (firemode_t)ev->GetInteger( 1 );
@@ -3790,7 +3792,7 @@ qboolean Weapon::ForceReload( void )
 //======================
 //Weapon::Idle
 //======================
-void Weapon::Idle( Event *ev )
+void Weapon::Idle( Event * )
 {
 	ForceIdle();
 }
@@ -3830,7 +3832,7 @@ void Weapon::SetMinRangeEvent( Event *ev )
 //======================
 //Weapon::NotDroppableEvent
 //======================
-void Weapon::NotDroppableEvent( Event *ev )
+void Weapon::NotDroppableEvent( Event * )
 {
 	notdroppable = true;
 }
@@ -4318,7 +4320,7 @@ void Weapon::setWeildedScale( Event *ev )
 //====================
 //Weapon::SetQuiet
 //====================
-void Weapon::SetQuiet( Event *ev )
+void Weapon::SetQuiet( Event * )
 {
 	quiet = true;
 }
@@ -4326,7 +4328,7 @@ void Weapon::SetQuiet( Event *ev )
 //====================
 //Weapon::SetLoopFire
 //====================
-void Weapon::SetLoopFire( Event *ev )
+void Weapon::SetLoopFire( Event * )
 {
 	assert( ( firemodeindex >= 0 ) && ( firemodeindex < MAX_FIREMODES ) );
 	loopfire[firemodeindex] = true;
@@ -4421,7 +4423,7 @@ void Weapon::SetViewModel( Event *ev )
 	}
 }
 
-void Weapon::DonePutaway( Event *ev )
+void Weapon::DonePutaway( Event * )
 {
 	//int i;
 
@@ -4501,12 +4503,12 @@ void Weapon::SetRegenAmmo( Event *ev )
 // Returns:			none
 //----------------------------------------------------------------
 
-void Weapon::SetRegenOnlyWhenIdle( Event *ev )
+void Weapon::SetRegenOnlyWhenIdle( Event * )
 {
 	_regenOnlyWhenIdle[ firemodeindex ] = true;
 }
 
-void Weapon::ChangeIdle( Event *ev )
+void Weapon::ChangeIdle( Event * )
 {
 	ForceIdle();
 	
@@ -4516,13 +4518,13 @@ void Weapon::ChangeIdle( Event *ev )
 	}
 }
 
-void Weapon::DrawBowStrain( Event *ev )
+void Weapon::DrawBowStrain( Event * )
 {
 	if ( animate->HasAnim( "draw_strain" ) )
 		animate->RandomAnimate( "draw_strain" );
 }
 
-void Weapon::AltDrawBowStrain( Event *ev )
+void Weapon::AltDrawBowStrain( Event * )
 {
 	if ( animate->HasAnim( "alternate_draw_strain" ) )
 		animate->RandomAnimate( "alternate_draw_strain" );
@@ -4629,7 +4631,7 @@ void Weapon::SetFireTimer( Event *ev )
 	fire_timer[firemodeindex] = ev->GetFloat( 1 );
 }
 
-void Weapon::UseSameClip( Event *ev )
+void Weapon::UseSameClip( Event * )
 {
 	usesameclip = true;
 }
@@ -4661,18 +4663,18 @@ void Weapon::SetMaxModes( Event *ev )
 	maxmode = WeaponModeNameToNum( ev->GetToken( 1 ) );
 }
 
-void Weapon::SetSwitchMode( Event *ev )
+void Weapon::SetSwitchMode( Event * )
 {
 	switchmode = true;
 }
 
 // Target Idle Weapon functions
-void Weapon::TargetIdle( Event *ev )
+void Weapon::TargetIdle( Event * )
 {
 	targetidle = true;
 }
 
-void Weapon::TargetIdleThink( Event *ev )
+void Weapon::TargetIdleThink( Event * )
 {
 	CancelEventsOfType( EV_Weapon_TargetIdleThink );
 	
@@ -4744,7 +4746,7 @@ void Weapon::SwitchMode( void )
 	}
 }
 
-void Weapon::DoneSwitchToMiddle( Event *ev )
+void Weapon::DoneSwitchToMiddle( Event * )
 {
 	int mode;
 	char anim[128];
@@ -4771,7 +4773,7 @@ void Weapon::DoneSwitchToMiddle( Event *ev )
 	}
 }
 
-void Weapon::DoneSwitching( Event *ev )
+void Weapon::DoneSwitching( Event * )
 {
 	if ( curmode == maxmode )
 		curmode = FIRE_MODE1;
@@ -4845,7 +4847,7 @@ qboolean Weapon::IsDoneFiring()
 //
 // Returns:			none
 //----------------------------------------------------------------
-void Weapon::StartFiring( Event *ev )
+void Weapon::StartFiring( Event * )
 {
 	startfiretime = level.time;
 }
@@ -4867,7 +4869,7 @@ void Weapon::FinishedFiring( Event *ev )
 	}
 }
 
-void Weapon::Zoom( Event *ev )
+void Weapon::Zoom( Event * )
 {
 	Player *player = NULL;
 	
@@ -4893,7 +4895,7 @@ void Weapon::Zoom( Event *ev )
 	}
 }
 
-void Weapon::endZoom( Event *ev )
+void Weapon::endZoom( Event * )
 {
 	if ( zoomed )
 		_lastZoomFov = zoomfov;
@@ -4903,7 +4905,7 @@ void Weapon::endZoom( Event *ev )
 	endZoom();
 }
 
-void Weapon::rezoom( Event *ev )
+void Weapon::rezoom( Event * )
 {
 	Player *player = NULL;
 	
@@ -4948,7 +4950,7 @@ void Weapon::endZoom( void )
 	zoomed = false;
 }
 
-void Weapon::IncrementZoom( Event* ev )
+void Weapon::IncrementZoom( Event*  )
 {
 	
 	if(!zoomed)
@@ -5215,7 +5217,7 @@ void Weapon::updateViewShake( void )
 	}
 }
 
-void Weapon::startViewShake( Event *ev )
+void Weapon::startViewShake( Event * )
 {
 	startViewShake();
 }
@@ -5238,7 +5240,7 @@ void Weapon::startViewShake( void )
 	}
 }
 
-void Weapon::reduceViewShake( Event *ev )
+void Weapon::reduceViewShake( Event * )
 {
 	int i;
 	bool repost;
@@ -5279,7 +5281,7 @@ void Weapon::reduceViewShake( Event *ev )
 //
 // Returns:			none
 //----------------------------------------------------------------
-void Weapon::clearViewShake( Event *ev )
+void Weapon::clearViewShake( Event * )
 {
 	viewShake = vec_zero;
 	CancelEventsOfType( EV_Weapon_ReduceViewShake );
@@ -5558,7 +5560,7 @@ Vector Weapon::getSpread( void )
 // Returns:			None
 //
 //--------------------------------------------------------------
-void Weapon::processGameplayData( Event *ev )
+void Weapon::processGameplayData( Event * )
 {
 	GameplayManager *gpm = GameplayManager::getTheGameplayManager();
 	if ( !gpm->hasObject(getArchetype()) )
@@ -5618,7 +5620,7 @@ bool Weapon::hasNoAmmoMode( firemode_t mode )
 	return _noAmmoMode[ mode ];
 }
 
-void Weapon::setNoDelay( Event *ev )
+void Weapon::setNoDelay( Event * )
 {
 	_noDelay[ firemodeindex ] = true;
 }
@@ -5628,7 +5630,7 @@ bool Weapon::isModeNoDelay( firemode_t mode )
 	return _noDelay[ mode ];
 }
 
-void Weapon::pauseRegen( Event *ev )
+void Weapon::pauseRegen( Event * )
 {
 	int i;
 
@@ -5799,7 +5801,7 @@ void Weapon::setAllowAutoSwitch( Event *ev )
 	_allowAutoSwitch = ev->GetBoolean( 1 );
 }
 
-void Weapon::forceReload( Event *ev )
+void Weapon::forceReload( Event * )
 {
 	ForceReload();
 }

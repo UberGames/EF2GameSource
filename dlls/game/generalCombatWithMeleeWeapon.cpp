@@ -367,7 +367,7 @@ BehaviorReturnCode_t GeneralCombatWithMeleeWeapon::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void GeneralCombatWithMeleeWeapon::End ( Actor &self	)
+void GeneralCombatWithMeleeWeapon::End ( Actor &	)
 {
 }
 
@@ -532,7 +532,7 @@ void GeneralCombatWithMeleeWeapon::strafe( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GeneralCombatWithMeleeWeapon::strafeFailed( Actor &self )
+void GeneralCombatWithMeleeWeapon::strafeFailed( Actor & )
 {
 	_nextStrafeAttemptTime = level.time + G_Random( 1.0 ) + 3.0f;
 	_state = GENERAL_COMBAT_MELEE_SELECT_STATE;
@@ -580,7 +580,7 @@ bool GeneralCombatWithMeleeWeapon::setupRushEnemy( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GeneralCombatWithMeleeWeapon::setupRushEnemyFailed ( Actor &self )
+void GeneralCombatWithMeleeWeapon::setupRushEnemyFailed ( Actor & )
 {
  	if ( !_allowRushFailure )
 		{
@@ -746,7 +746,7 @@ bool GeneralCombatWithMeleeWeapon::setupAttack( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GeneralCombatWithMeleeWeapon::setupAttackFailed( Actor &self )
+void GeneralCombatWithMeleeWeapon::setupAttackFailed( Actor & )
 {
 	_state = GENERAL_COMBAT_MELEE_SELECT_STATE;   
 }
@@ -764,7 +764,7 @@ void GeneralCombatWithMeleeWeapon::setupAttackFailed( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GeneralCombatWithMeleeWeapon::attack( Actor &self )
+void GeneralCombatWithMeleeWeapon::attack( Actor & )
 {
 	// The transition back to SELECT_STATE is
 	// handled by AnimDone
@@ -802,7 +802,7 @@ bool GeneralCombatWithMeleeWeapon::setupHold( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GeneralCombatWithMeleeWeapon::hold( Actor &self )
+void GeneralCombatWithMeleeWeapon::hold( Actor & )
 	{
 	if ( level.time > _exitHoldTime )
 		_state = GENERAL_COMBAT_MELEE_SELECT_STATE;
@@ -877,7 +877,7 @@ void GeneralCombatWithMeleeWeapon::setupBlockFailed( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GeneralCombatWithMeleeWeapon::block( Actor &self )
+void GeneralCombatWithMeleeWeapon::block( Actor & )
 {
 	//if ( !self.checkincomingmeleeattack() ) // Old condition, do we need this anymore?
 	if ( level.time > _exitBlockTime )
@@ -896,7 +896,7 @@ void GeneralCombatWithMeleeWeapon::block( Actor &self )
 //
 // Returns:     true or false
 //--------------------------------------------------------------
-bool GeneralCombatWithMeleeWeapon::setupChangePosture( Actor &self )
+bool GeneralCombatWithMeleeWeapon::setupChangePosture( Actor & )
 {
 	float chance;
 	chance = G_Random();
@@ -931,7 +931,7 @@ bool GeneralCombatWithMeleeWeapon::setupChangePosture( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GeneralCombatWithMeleeWeapon::changePosture( Actor &self )
+void GeneralCombatWithMeleeWeapon::changePosture( Actor & )
 {
 	// Transitions handled in AnimDone
 }

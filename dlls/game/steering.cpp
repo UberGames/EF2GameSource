@@ -40,7 +40,7 @@ _maxSpeed(320)
 }
 
 //-----------------------------------------------------------------------------
-void Steering::ShowInfo(Actor &self)
+void Steering::ShowInfo(Actor &)
 {
    gi.Printf( "steeringforce: ( %f, %f, %f )\n", _steeringForce.x, _steeringForce.y, _steeringForce.z );
    gi.Printf( "origin: ( %f, %f, %f )\n", _origin.x, _origin.y, _origin.z );
@@ -49,18 +49,18 @@ void Steering::ShowInfo(Actor &self)
 }
 
 //-----------------------------------------------------------------------------
-void Steering::Begin(Actor &self)
+void Steering::Begin(Actor &)
 {
 }
 
 //-----------------------------------------------------------------------------
-const Steering::ReturnValue Steering::Evaluate(Actor &self)
+const Steering::ReturnValue Steering::Evaluate(Actor &)
 {
 	return Steering::FAILED;
 }
 
 //-----------------------------------------------------------------------------
-void Steering::End(Actor &self)
+void Steering::End(Actor &)
 {
 }
 

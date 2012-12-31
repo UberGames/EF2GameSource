@@ -87,7 +87,7 @@ void DoAttack::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void DoAttack::AnimDone( Event *ev )
+void DoAttack::AnimDone( Event * )
 {
 	_state = ATTACK_STATE_COMPLETE;
 }

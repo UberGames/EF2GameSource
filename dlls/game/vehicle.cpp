@@ -311,7 +311,7 @@ Vehicle::Vehicle()
 	PostEvent( EV_Vehicle_Start, FRAMETIME );
 }
 
-void Vehicle::VehicleStart( Event *ev )
+void Vehicle::VehicleStart( Event * )
 {
 	Entity *ent;
 	VehicleBase *last;
@@ -403,34 +403,34 @@ void Vehicle::VehicleStart( Event *ev )
 	setSize( drivemins, drivemaxs );
 }
 
-void Vehicle::Drivable( Event *ev )
+void Vehicle::Drivable( Event * )
 {
 	setMoveType( MOVETYPE_NONE );
 	drivable = true;
 }
 
-void Vehicle::UnDrivable( Event *ev )
+void Vehicle::UnDrivable( Event * )
 {
 	setMoveType( MOVETYPE_PUSH );
 	drivable = false;
 }
 
-void Vehicle::Jumpable( Event *ev )
+void Vehicle::Jumpable( Event * )
 {
 	jumpable = true;
 }
 
-void Vehicle::Lock( Event *ev )
+void Vehicle::Lock( Event * )
 {
 	locked = true;
 }
 
-void Vehicle::UnLock( Event *ev )
+void Vehicle::UnLock( Event * )
 {
 	locked = false;
 }
 
-void Vehicle::SteerInPlace( Event *ev )
+void Vehicle::SteerInPlace( Event * )
 {
 	steerinplace = true;
 }
@@ -452,7 +452,7 @@ void Vehicle::SetWeapon( Event *ev )
 	weaponName = ev->GetString( 1 );
 }
 
-void Vehicle::ShowWeaponEvent( Event *ev )
+void Vehicle::ShowWeaponEvent( Event * )
 {
 	showweapon = true;
 }
@@ -526,7 +526,7 @@ void Vehicle::SetNoPrediction(Event* event)
 }
 
 
-void Vehicle::DisableInventory(Event* event)
+void Vehicle::DisableInventory(Event* )
 {
 	_disableInventory = true;
 }
@@ -560,7 +560,7 @@ void Vehicle::SetDriverAngles( const Vector &angles )
 	}
 }
 
-void Vehicle::HandleEvent( Event *ev )
+void Vehicle::HandleEvent( Event * )
 {
 
 }
@@ -1151,7 +1151,7 @@ void Vehicle::VehicleTouched( Event *ev )
 	
 }
 
-void Vehicle::VehicleBlocked( Event *ev )
+void Vehicle::VehicleBlocked( Event * )
 {
 	return;
 	/*
@@ -2246,12 +2246,12 @@ void HorseVehicle::_SetCrossHairMode()
 	
 }
 
-void HorseVehicle::AnimDone( Event *ev )
+void HorseVehicle::AnimDone( Event * )
 {
 	_animDone = true;
 }
 
-void HorseVehicle::DriverAnimDone( Event *ev )
+void HorseVehicle::DriverAnimDone( Event * )
 {
 	_driverAnimDone = true;
 }
@@ -2296,10 +2296,10 @@ VehicleMoveMode::VehicleMoveMode()
 
 void VehicleMoveMode::Move( Vehicle *vehicle )
 {
-
+	Q_UNUSED(vehicle);
 }
 
-void VehicleMoveMode::HandleEvent( Event *ev )
+void VehicleMoveMode::HandleEvent( Event * )
 {
 
 }
@@ -2419,7 +2419,7 @@ HVMoveMode_Locked::HVMoveMode_Locked()
 
 void HVMoveMode_Locked::Move( Vehicle *base_vehicle )
 {
-	
+	Q_UNUSED(base_vehicle);
 }
 
 //==============================================================================

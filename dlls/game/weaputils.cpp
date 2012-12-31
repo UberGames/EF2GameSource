@@ -895,7 +895,7 @@ void Projectile::setControlTurnSpeed( Event *ev )
 	_controlTurnSpeed = ev->GetFloat( 1 );
 }
 
-void Projectile::HeatSeek( Event *ev )
+void Projectile::HeatSeek( Event * )
 {
 	float		mindist;
 	Entity	*ent;
@@ -953,7 +953,7 @@ void Projectile::HeatSeek( Event *ev )
 	//turnThinkOn();
 }
 
-void Projectile::AngleThink( Event *ev )
+void Projectile::AngleThink( Event * )
 {
 	turnThinkOn();
 }
@@ -1265,7 +1265,7 @@ void Projectile::Explode( Event *ev )
 //
 // Returns:			void
 //----------------------------------------------------------------
-void Projectile::SetQuietExpire( Event *ev )
+void Projectile::SetQuietExpire( Event * )
 {
 	projFlags |= P_QUIET_EXPIRE; // set projectile to not spawn explosionmodel if it times out
 }
@@ -1315,7 +1315,7 @@ void Projectile::BeamCommand( Event *ev )
 	PostEvent( EV_Projectile_UpdateBeam, level.frametime );
 }
 
-void Projectile::UpdateBeam( Event *ev )
+void Projectile::UpdateBeam( Event * )
 {
 	if ( m_beam )
 	{
@@ -1329,7 +1329,7 @@ void Projectile::SetBounceSound( Event *ev )
 	bouncesound = ev->GetString( 1 );
 }
 
-void Projectile::SetChargeLife( Event *ev )
+void Projectile::SetChargeLife( Event * )
 {
 	projFlags   |= P_CHARGE_LIFE;
 }
@@ -1356,7 +1356,7 @@ void Projectile::SetMinSpeed( Event *ev )
 	projFlags   |= P_CHARGE_SPEED;
 }
 
-void Projectile::SetChargeSpeed( Event *ev )
+void Projectile::SetChargeSpeed( Event * )
 {
 	projFlags   |= P_CHARGE_SPEED;
 }
@@ -1681,18 +1681,18 @@ void Projectile::Touch( Event *ev )
 	BroadcastSound();
 }
 
-void Projectile::SetCanHitOwner( Event *ev )
+void Projectile::SetCanHitOwner( Event * )
 {
 	can_hit_owner = true;
 }
 
-void Projectile::ClearOwner( Event *ev )
+void Projectile::ClearOwner( Event * )
 {
 	//this->owner     = ENTITYNUM_NONE;
 	edict->ownerNum = ENTITYNUM_NONE;
 }
 
-void Projectile::RemoveWhenStopped( Event *ev )
+void Projectile::RemoveWhenStopped( Event * )
 {
 	remove_when_stopped = true;
 }
@@ -1705,7 +1705,7 @@ void Projectile::StickOnTouch( Event *ev )
 		stick_on_touch = true;
 }
 
-void Projectile::Stopped( Event *ev )
+void Projectile::Stopped( Event * )
 {
 	if ( remove_when_stopped )
 		PostEvent( EV_Remove, 0.0f );
@@ -1719,7 +1719,7 @@ void Projectile::setScaleByCharge( Event *ev )
 	_maxScaleFromCharge = ev->GetFloat( 2 );
 }
 
-void Projectile::setScaleExplosion( Event *ev )
+void Projectile::setScaleExplosion( Event * )
 {
 	_scaleExplosion = true;
 }
@@ -1734,7 +1734,7 @@ void Projectile::setNotifyActors( Event *ev )
 	}
 }
 
-void Projectile::setNotShootable( Event *ev )
+void Projectile::setNotShootable( Event * )
 {
 	_notShootable = true;
 }
@@ -1903,17 +1903,17 @@ void Explosion::SetRadiusDamage( Event *ev )
 	radius_damage = ev->GetFloat( 1 );
 }
 
-void Explosion::SetConstantDamage( Event *ev )
+void Explosion::SetConstantDamage( Event * )
 {
 	constant_damage = true;
 }
 
-void Explosion::SetDamageEveryFrame( Event *ev )
+void Explosion::SetDamageEveryFrame( Event * )
 {
 	damage_every_frame = true;
 }
 
-void Explosion::DamageAgain( Event *ev )
+void Explosion::DamageAgain( Event * )
 {
 	Entity *owner_ent;
 	
@@ -2550,6 +2550,8 @@ void StunAttack(
 {
 	Entity *ent;
 	
+	Q_UNUSED(pos);
+	
 	ent = findradius( NULL, inflictor->origin, radius );
 	
 	while( ent )
@@ -2686,6 +2688,8 @@ void FlashPlayers(
 	Vector		playerViewDir;
 	Vector		playerViewAngles;
 	float		dot;
+
+	Q_UNUSED(type);
 	
 	for( i = 0; i < game.maxclients; i++ )
 	{
