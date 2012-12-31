@@ -127,7 +127,7 @@ public:
 	void Archive(Archiver &arc);
 };
 
-inline void GameplayObject::Archive(Archiver &arc)
+inline void GameplayObject::Archive(Archiver &)
 {
 	// TODO: Archive the container of GameplayProperties
 	// TODO: Archive the container of GameplayObjects
@@ -182,7 +182,7 @@ public:
 	void Archive(Archiver &arc);
 };
 
-inline void GameplayDatabase::Archive(Archiver &arc)
+inline void GameplayDatabase::Archive(Archiver &)
 {
 	// TODO: Archive the container of GameplayObjects
 }

@@ -918,12 +918,12 @@ inline void TriggerEntryAndExit::ExitTrigger()
 	_entered = false;
 }
 
-inline void TriggerEntryAndExit::EnterTrigger( Event *ev )
+inline void TriggerEntryAndExit::EnterTrigger( Event* )
 {
 	EnterTrigger();
 }
 
-inline void TriggerEntryAndExit::ExitTrigger( Event *ev )
+inline void TriggerEntryAndExit::ExitTrigger( Event* )
 {
 	ExitTrigger();
 }

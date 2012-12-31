@@ -860,7 +860,7 @@ class Entity : public Listener
 		// GameplayManager interfaces to health and damage
 		void			setGameplayHealth( Event *ev );
 		void			setGameplayDamage( Event *ev );
-		virtual void	processGameplayData( Event *ev ) {}
+		virtual void	processGameplayData( Event* ) {}
 
 		// Think interface
 

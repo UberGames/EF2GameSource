@@ -34,9 +34,9 @@
 
 //#pragma warning(disable : 4018)     // signed/unsigned mismatch
 //#pragma warning(disable : 4032)     // formal parameter 'number' has different type when promoted
-#pragma warning(disable : 4051)     // type conversion, possible loss of data
-#pragma warning(disable : 4057)		// slightly different base types
-#pragma warning(disable : 4100)		// unreferenced formal parameter
+//#pragma warning(disable : 4051)     // type conversion, possible loss of data
+//#pragma warning(disable : 4057)		// slightly different base types
+//#pragma warning(disable : 4100)		// unreferenced formal parameter
 #pragma warning(disable : 4115)     // 'type' : named type definition in parentheses
 //#pragma warning(disable : 4125)		// decimal digit terminates octal escape sequence
 #pragma warning(disable : 4127)		// conditional expression is constant
@@ -174,6 +174,8 @@ void Sys_PumpEvents( void );
 #define	PATH_SEP '/'
 
 #endif
+
+#define Q_UNUSED(x) (void)x;
 
 //=============================================================
 

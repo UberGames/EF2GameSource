@@ -591,7 +591,7 @@ inline bool operator==
 	)
 
 	{
-	/// Check if lengths are equal
+	// Check if lengths are equal
 	if( a.length() != b.length() )
 		return( false );
 

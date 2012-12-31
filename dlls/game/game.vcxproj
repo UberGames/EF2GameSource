@@ -276,6 +276,9 @@
       <ObjectFileName>$(ProjectDir)Debug\</ObjectFileName>
       <ProgramDataBaseFileName>$(ProjectDir)Debug\</ProgramDataBaseFileName>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <XMLDocumentationFileName>
+      </XMLDocumentationFileName>
     </ClCompile>
     <Midl>
       <SuppressStartupBanner>true</SuppressStartupBanner>

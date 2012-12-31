@@ -136,7 +136,7 @@ class Item : public Trigger
 		void					postSpawn( Event *ev );
 
 		virtual void			Archive( Archiver &arc );
-		virtual void			ArchivePersistantData( Archiver &arc ) {};
+		virtual void			ArchivePersistantData( Archiver& ) {};
 	};
 
 inline void Item::SetSkillLevel( float skillLevel )

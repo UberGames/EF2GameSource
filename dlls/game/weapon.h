@@ -605,7 +605,8 @@ class Weapon : public Item
 
 		bool					shouldAutoSwitch( firemode_t mode );
 
-		virtual	int				getStat( int statNum ) { return 0; }
+		/* Arguments: statNum */
+		virtual	int				getStat( int ) { return 0; }
 
 		void					autoSwitch();
 

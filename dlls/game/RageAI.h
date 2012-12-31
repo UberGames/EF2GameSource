@@ -48,46 +48,46 @@ void ClearBehaviorPackageList( void );
 // sophisticated
 //
 class Strategos 
-   {
-	public:
-			 Strategos()             { }
-			 Strategos( Actor *act ) { }
-		virtual ~Strategos()             { }
-		
-		virtual void Evaluate() {	}
-		virtual void NotifySightStatusChanged ( Entity *enemy , qboolean canSee ) {	}		
-		virtual void NotifyDamageChanged( Entity *enemy , float damage ) { }
-		
-		virtual void Attack ( Entity *enemy ) {	}
-		virtual void DoArchive( Archiver &arc , Actor *act );
-		/* virtual */ void Archive( Archiver &arc );
-		virtual void SetBehaviorPackage( const str &packageName )    {  }
+{
+public:
+	Strategos()             { }
+	Strategos( Actor *act ) { Q_UNUSED(act) }
+	virtual ~Strategos()             { }
 
-      virtual float GetCheckYawMin() { assert( 0 ); return 0; }
-      virtual float GetCheckYawMax() { assert( 0 ); return 0; }
-	  virtual float GetCheckInConeDistMax() { assert( 0 ); return 0; }
-	  virtual void  SetCheckInConeDistMax( float distance ) { assert( 0 ); }
-				
-		//Accessors and Mutators
-		void  SetEvaluateInterval( float interval ) { _evaluateInterval = interval;	}
-		float GetEvaluateInterval()                 { return _evaluateInterval;       }
-		
-		void  SetNextEvaluateTime( float time )     { _nextEvaluateTime = time;    	}
-		float GetNextEvaluateTime()                 { return _nextEvaluateTime;    	}
+	virtual void Evaluate() {	}
+	virtual void NotifySightStatusChanged ( Entity *enemy , qboolean canSee ) {	Q_UNUSED(enemy) Q_UNUSED(canSee) }		
+	virtual void NotifyDamageChanged( Entity *enemy , float damage ) { Q_UNUSED(enemy) Q_UNUSED(damage) }
 
-		void  SetSightBasedHate( float hate )       { _sightBasedHate = hate;         }
-		float GetSightBasedHate()                   { return _sightBasedHate;      	}
+	virtual void Attack ( Entity *enemy ) { Q_UNUSED(enemy)	}
+	virtual void DoArchive( Archiver & , Actor * );
+	void Archive( Archiver &arc );
+	virtual void SetBehaviorPackage( const str &packageName )    { Q_UNUSED(packageName) }
 
+	virtual float GetCheckYawMin() { assert( 0 ); return 0; }
+	virtual float GetCheckYawMax() { assert( 0 ); return 0; }
+	virtual float GetCheckInConeDistMax() { assert( 0 ); return 0; }
+	virtual void  SetCheckInConeDistMax( float ) { assert( 0 ); }
 
-	private:
-		float    _sightBasedHate;
-		float    _nextEvaluateTime;
-		float    _evaluateInterval;      
-      
-      
+	//Accessors and Mutators
+	void  SetEvaluateInterval( float interval ) { _evaluateInterval = interval;	}
+	float GetEvaluateInterval()                 { return _evaluateInterval;       }
+
+	void  SetNextEvaluateTime( float time )     { _nextEvaluateTime = time;    	}
+	float GetNextEvaluateTime()                 { return _nextEvaluateTime;    	}
+
+	void  SetSightBasedHate( float hate )       { _sightBasedHate = hate;         }
+	float GetSightBasedHate()                   { return _sightBasedHate;      	}
 
 
-	};
+private:
+	float    _sightBasedHate;
+	float    _nextEvaluateTime;
+	float    _evaluateInterval;      
+
+
+
+
+};
 
 
 //============================
@@ -115,30 +115,30 @@ public:
 	float GetCheckYawMin();
 	float GetCheckYawMax();
 	float GetCheckInConeDistMax();
-	
+
 	void SetCheckInConeDistMax( float distance );
-  
+
 	void Attack ( Entity *enemy );		
 	void DoArchive ( Archiver &arc, Actor *actor );
 	/* virtual */ void Archive( Archiver &arc );
-			 
+
 private: // Functions
-	
+
 	void  _EvaluateEnemies();
 	void  _EvaluatePackages();
 	void  _EvaluateWorld();
 	void  _CheckForInTheWay();
 	void  _CheckForInConeOfFire();
-	
+
 private: // Member Variables
 
 	Actor *act;
 	float _checkYawMin;
 	float _checkYawMax;
 	float _checkInConeDistMax;
-	
-	
-	
+
+
+
 };
 
 
@@ -154,34 +154,34 @@ private: // Member Variables
 //
 
 class PackageManager 
-	{
-	public:
-		PackageManager();
-		PackageManager( Actor *actor );
-	   ~PackageManager();
-	
-		void RegisterPackage( const str &packageName );
-		void UnregisterPackage( const str &packageName );
+{
+public:
+	PackageManager();
+	PackageManager( Actor *actor );
+	~PackageManager();
 
-		void  EvaluatePackages( FuzzyEngine *fEngine );
-		int   GetHighestScoringPackage();
-		int   GetCurrentFVarIndex();
-		float GetCurrentFVarLastExecuteTime();
-		void  SetLastExecutionTime(int packageIndex);
-		void  UpdateCurrentPackageIndex( int packageIndex );		
-		int	  GetPackageIndex( const str &packageName );
-		str	  GetCurrentPackageName();
+	void RegisterPackage( const str &packageName );
+	void UnregisterPackage( const str &packageName );
 
-		void DoArchive( Archiver &arc , Actor *actor );				
+	void  EvaluatePackages( FuzzyEngine *fEngine );
+	int   GetHighestScoringPackage();
+	int   GetCurrentFVarIndex();
+	float GetCurrentFVarLastExecuteTime();
+	void  SetLastExecutionTime(int packageIndex);
+	void  UpdateCurrentPackageIndex( int packageIndex );		
+	int	  GetPackageIndex( const str &packageName );
+	str	  GetCurrentPackageName();
 
-	private: // Member Variables
-		Actor *act;
-		Container<BehaviorPackageEntry_t> _BehaviorPackages;
+	void DoArchive( Archiver &arc , Actor *actor );				
 
-		int						_currentFVarIndex;
-		float					_currentFVarLastExecuteTime;
-		int						_currentPackageIndex;
-	};
+private: // Member Variables
+	Actor *act;
+	Container<BehaviorPackageEntry_t> _BehaviorPackages;
+
+	int						_currentFVarIndex;
+	float					_currentFVarLastExecuteTime;
+	int						_currentPackageIndex;
+};
 
 
 //============================
@@ -195,51 +195,51 @@ class PackageManager
 //
 
 class Personality 
-   {
-   public: 
-		      Personality();
-				Personality( Actor *actor );
-			  ~Personality();
+{
+public: 
+	Personality();
+	Personality( Actor *actor );
+	~Personality();
 
-      void  SetBehaviorTendency( const str& packageName , float tendency );
-      void  SetTendency ( const str& tendencyName , float tendencyValue );
+	void  SetBehaviorTendency( const str& packageName , float tendency );
+	void  SetTendency ( const str& tendencyName , float tendencyValue );
 
-      qboolean WantsToExecuteCurrentPackage(float interval);
-      qboolean ExecutedPackageInLastTimeFrame(float interval);
+	qboolean WantsToExecuteCurrentPackage(float interval);
+	qboolean ExecutedPackageInLastTimeFrame(float interval);
 
-		void  SetAggressiveness( float aggressiveness );
-      float GetAggressiveness();
+	void  SetAggressiveness( float aggressiveness );
+	float GetAggressiveness();
 
-      void  SetTalkiness( float talkiness );
-      float GetTalkiness();
+	void  SetTalkiness( float talkiness );
+	float GetTalkiness();
 
-      float GetTendency( const str& tendencyName );
+	float GetTendency( const str& tendencyName );
 
-		virtual void Archive( Archiver &arc );
-		void  DoArchive ( Archiver &arc, Actor *actor );
+	virtual void Archive( Archiver &arc );
+	void  DoArchive ( Archiver &arc, Actor *actor );
 
-	protected: // Member Functions
-		float _clampValue( float value );
-      qboolean _wantsToExecutePackage(PackageTendency_t *tendency);
-      
+protected: // Member Functions
+	float _clampValue( float value );
+	qboolean _wantsToExecutePackage(PackageTendency_t *tendency);
 
-	private: // Emotions and Tendencies
-      
-      float _aggressiveness;
-      float _talkiness;
 
-      float _anger;
-      float _fear;
-      
-      
-      // Package Tendencies
-      Container<PackageTendency_t> _PackageTendencies;
-      Container<Tendency_t> _Tendencies;
-		
-	private: // Member Variables			
-		Actor *act;
+private: // Emotions and Tendencies
 
-	};
+	float _aggressiveness;
+	float _talkiness;
+
+	float _anger;
+	float _fear;
+
+
+	// Package Tendencies
+	Container<PackageTendency_t> _PackageTendencies;
+	Container<Tendency_t> _Tendencies;
+
+private: // Member Variables			
+	Actor *act;
+
+};
 
 
 #endif /* __RAGE_AI_H__ */

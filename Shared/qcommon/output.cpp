@@ -233,6 +233,7 @@ void DocFileOutput::OutputArguments(Event *ev)
 //================================================================
 void DocFileOutput::OutputArgument(EventArgDef *evarg)
 {
+	Q_UNUSED(evarg)
 	// Function does nothing.  This is the last level of nesting, and there
 	// is nothing else to go print from here.
 }

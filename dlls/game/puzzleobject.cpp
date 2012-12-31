@@ -418,7 +418,7 @@ void PuzzleObject::setCanceledThread(Event* event)
 //
 // Returns:		
 //-----------------------------------------------------
-void PuzzleObject::failed(Event* event)
+void PuzzleObject::failed(Event*)
 {
 	// close and lapse into locked mode
 	_puzzleState = PUZZLE_STATE_CLOSING_LOCKED;
@@ -447,7 +447,7 @@ void PuzzleObject::failed(Event* event)
 //
 // Returns:		
 //-----------------------------------------------------
-void PuzzleObject::canceled(Event* event)
+void PuzzleObject::canceled(Event*)
 {
 	// close and lapse into normal mode
 	_puzzleState = PUZZLE_STATE_CLOSING;
@@ -476,7 +476,7 @@ void PuzzleObject::canceled(Event* event)
 //
 // Returns:		
 //-----------------------------------------------------
-void PuzzleObject::solved(Event* event)
+void PuzzleObject::solved(Event*)
 {
 	// close and lapse into solved mode
 	_puzzleState = PUZZLE_STATE_CLOSING_SOLVED;
@@ -501,7 +501,7 @@ void PuzzleObject::solved(Event* event)
 //
 // Returns:		
 //-----------------------------------------------------
-void PuzzleObject::animationDone(Event* event)
+void PuzzleObject::animationDone(Event*)
 {
 	if( _puzzleState == PUZZLE_STATE_OPENING )
 	{
@@ -715,7 +715,7 @@ void PuzzleObject::hideTimerHud( void )
 //
 // Returns:		
 //-----------------------------------------------------
-void PuzzleObject::reset( Event* event )
+void PuzzleObject::reset( Event* )
 {
 	_puzzleState = PUZZLE_STATE_IDLE;
 	animate->RandomAnimate( "puzzle_idle" );
@@ -724,12 +724,12 @@ void PuzzleObject::reset( Event* event )
 	_usedTime = 0.0f;
 }
 
-void PuzzleObject::activate( Event* event )
+void PuzzleObject::activate( Event* )
 {
 	_puzzleState = _saveState;
 }
 
-void PuzzleObject::deActivate( Event* event )
+void PuzzleObject::deActivate( Event* )
 {
 	_saveState = _puzzleState;
 	_puzzleState = PUZZLE_STATE_DEACTIVATED;

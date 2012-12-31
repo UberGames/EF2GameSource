@@ -151,7 +151,7 @@ public:
 	virtual void				playerKilled( Player *killedPlayer, Player *attackingPlayer, Entity *inflictor, int meansOfDeath );
 	virtual void				addPlayer( Player *player );
 	virtual void				removePlayer( Player *player );
-	virtual void				update( float frameTime ) {};
+	virtual void				update( float frameTime ) { Q_UNUSED(frameTime) };
 
 	virtual int					getStat( Player *player, int statNum, int value );
 	virtual int					getIcon( Player *player, int statNum, int value );

@@ -47,7 +47,7 @@ WeaponDualWield::~WeaponDualWield()
 // Returns:			None
 //
 //--------------------------------------------------------------
-void WeaponDualWield::AttachToOwner( weaponhand_t hand )
+void WeaponDualWield::AttachToOwner( weaponhand_t )
 {
 	_leftweapon->SetOwner(owner);
 	_rightweapon->SetOwner(owner);
@@ -69,7 +69,7 @@ void WeaponDualWield::AttachToOwner( weaponhand_t hand )
 // Returns:			None
 //
 //--------------------------------------------------------------
-void WeaponDualWield::processGameplayData( Event *ev )
+void WeaponDualWield::processGameplayData( Event * )
 {
 	ClassDef *cls;
 

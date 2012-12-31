@@ -40,13 +40,13 @@ class ActorGameComponent : public Listener
 		CLASS_PROTOTYPE( ActorGameComponent );
 
 		                  ActorGameComponent()              {}							
-		virtual void	   HandleEvent( Event *ev )          {}
-		virtual void	   HandleArmorDamage( Event *ev )    {}
-		virtual void	   HandleDeath( const Entity *ent )  {}
-		virtual void	   HandleThink()                     {}
+		virtual void	   HandleEvent( Event * )			{}
+		virtual void	   HandleArmorDamage( Event * )		{}
+		virtual void	   HandleDeath( const Entity * )	{}
+		virtual void	   HandleThink()                    {}
 		
-		virtual qboolean  DoCheck( const Conditional &condition ) { return false; }		
-		virtual void      DoArchive( Archiver &arc, const Actor *act )           {}
+		virtual qboolean  DoCheck( const Conditional & ) { return false; }		
+		virtual void      DoArchive( Archiver &, const Actor * )           {}
 
 	};
 

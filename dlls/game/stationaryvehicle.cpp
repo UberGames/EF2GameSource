@@ -145,13 +145,13 @@ void StationaryVehicle::PositionVehicleAndDriver(void)
 		}
 	}
 
-	/// Adjust the yaw and normalize the degrees based upon the location of our yaw seam.
+	// Adjust the yaw and normalize the degrees based upon the location of our yaw seam.
 	angles[YAW] += _yawDeltaDegrees;
 	angles[YAW] = AngleNormalizeArbitrary( angles[YAW], _yawSeam);
 	if( _restrictYaw )
 	{
 
-		/// Clamp yaw to the range [ _minimumRotate, _maximumRotate ]
+		// Clamp yaw to the range [ _minimumRotate, _maximumRotate ]
 		if( angles[ YAW ] > _maximumYaw )
 		{
 			angles[ YAW ] = _maximumYaw;
