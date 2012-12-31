@@ -32,7 +32,7 @@
 
 #ifdef _WIN32
 
-#pragma warning(disable : 4018)     // signed/unsigned mismatch
+//#pragma warning(disable : 4018)     // signed/unsigned mismatch
 //#pragma warning(disable : 4032)     // formal parameter 'number' has different type when promoted
 #pragma warning(disable : 4051)     // type conversion, possible loss of data
 #pragma warning(disable : 4057)		// slightly different base types

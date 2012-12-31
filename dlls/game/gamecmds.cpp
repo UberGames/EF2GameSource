@@ -917,7 +917,7 @@ qboolean G_SendCommandToAllPlayers( const char *command )
 {
 	bool retVal = true ;
 
-	for( unsigned int clientIdx = 0; clientIdx < maxclients->integer; ++clientIdx )
+	for( int clientIdx = 0; clientIdx < maxclients->integer; ++clientIdx )
 	{
 		gentity_t *ent = g_entities + clientIdx ;
 		if ( !ent->inuse || !ent->client || !ent->entity ) continue;
@@ -1007,8 +1007,7 @@ qboolean G_SetWidgetTextOfPlayer( const gentity_t *ent, const char *widgetName, 
 	
 	strcpy(tmpstr, widgetText);
 	
-	int i;
-	for ( i=0; i<strlen(widgetText); i++ )
+	for ( unsigned i = 0; i < strlen(widgetText); i++ )
 	{
 		if ( tmpstr[i] == '\n' )
 			tmpstr[i] = '~';

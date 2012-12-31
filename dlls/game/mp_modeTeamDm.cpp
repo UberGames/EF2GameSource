@@ -144,7 +144,6 @@ void ModeTeamDeathmatch::score( const Player *player )
 {
 	char		   string[1400];
 	char		   entry[1024];
-	int            i;
 	int            tempStringlength;
 	int            count        = 0;
 	int            stringlength = 0;
@@ -167,7 +166,7 @@ void ModeTeamDeathmatch::score( const Player *player )
 
 	// This for loop builds a string containing all the players scores.
 
-	for ( i = 0 ; i < _maxPlayers ; i++ )
+	for ( unsigned i = 0 ; i < _maxPlayers ; i++ )
 	{
 		currentPlayer = multiplayerManager.getPlayer( i );
 

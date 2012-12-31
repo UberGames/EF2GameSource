@@ -125,7 +125,7 @@ class MultiplayerModeBase : public Class
 
 		void								handleKill( Player *killedPlayer, Player *attackingPlayer, Entity *inflictor, int meansOfDeath, bool goodKill );
 
-		Player *							getPlayer( int entnum );
+		Player *							getPlayer( unsigned entnum );
 
 	public:
 		CLASS_PROTOTYPE( MultiplayerModeBase );

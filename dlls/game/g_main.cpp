@@ -1867,7 +1867,6 @@ extern "C" void G_ClientUserinfoChanged( gentity_t *ent, const char *userinfo )
 	//Event       *ev;
 	bool			autoSwitchWeapons;
 	char tempName[ MAX_NETNAME ];
-	int i;
 	bool validName;
 	
 	try
@@ -1904,7 +1903,7 @@ extern "C" void G_ClientUserinfoChanged( gentity_t *ent, const char *userinfo )
 
 		validName = false;
 
-		for ( i = 0 ; i < strlen( tempName ) ; i++ )
+		for ( unsigned i = 0 ; i < strlen( tempName ) ; i++ )
 		{
 			if ( ( tempName[ i ] == '^' ) && ( tempName[ i + 1 ] >= '0' ) && ( tempName[ i + 1 ] <= '9' ) )
 			{
@@ -1930,7 +1929,7 @@ extern "C" void G_ClientUserinfoChanged( gentity_t *ent, const char *userinfo )
 
 		// Strip out bad characters
 
-		for ( i = 0 ; i < strlen( ent->client->pers.netname ) ; i++ )
+		for ( unsigned i = 0 ; i < strlen( ent->client->pers.netname ) ; i++ )
 		{
 			if ( ent->client->pers.netname[ i ] == ':' )
 			{

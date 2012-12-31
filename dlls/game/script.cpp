@@ -664,11 +664,10 @@ char *Script::EvaluateMacroString( const char *theMacroString )
 	static char evalText[255];
 	char buffer[255], *bufferptr = buffer, oper = '+', newoper = '+';
 	bool haveoper = false;
-	int i;
 	float value = 0.0f, val = 0.0f;
 	memset(buffer, 0, 255);
 	
-	for ( i=0;i<=strlen(theMacroString);i++ )
+	for ( unsigned i=0;i<=strlen(theMacroString);i++ )
 	{
 		if ( theMacroString[i] == '+' ) { haveoper = true; newoper = '+'; }
 		if ( theMacroString[i] == '-' ) { haveoper = true; newoper = '-'; }

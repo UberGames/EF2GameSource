@@ -863,11 +863,11 @@ Class * Archiver::ReadObject( void )
 	if ( !fileerror )
 	{
 		endpos = readfile.Pos();
-		if ( ( endpos - objstart ) > size )
+		if ( ( endpos - objstart ) > (long)size )
 		{
 			FileError( "Object read past end of object's data" );
 		}
-		else if ( ( endpos - objstart ) < size )
+		else if ( ( endpos - objstart ) < (long)size )
 		{
 			FileError( "Object didn't read entire data from file" );
 		}
@@ -945,11 +945,11 @@ void Archiver::ArchiveObject( Class *obj )
 		if ( !fileerror )
 		{
 			endpos = readfile.Pos();
-			if ( ( endpos - objstart ) > size )
+			if ( ( endpos - objstart ) > (long)size )
 			{
 				FileError( "Object read past end of object's data" );
 			}
-			else if ( ( endpos - objstart ) < size )
+			else if ( ( endpos - objstart ) < (long)size )
 			{
 				FileError( "Object didn't read entire data from file" );
 			}

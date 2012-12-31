@@ -443,7 +443,7 @@ void HTMLDocFileOutput::OutputEvent(Event *ev)
 	if ( text )
 	{
 		char new_doc[1024];
-		int old_index;
+		unsigned old_index;
 		int new_index = 0;
 		
 		for ( old_index = 0 ; old_index < strlen ( text ) ; old_index++ )
@@ -701,7 +701,7 @@ void ToolDocFileOutput::OutputEvent(Event *ev)
 {
 	int numargs;
 	const char *text;
-	int i;
+	unsigned i;
 	
 	fprintf(fileptr, "\n");
 	fprintf(fileptr, "\t%s\n", ev->getName() );

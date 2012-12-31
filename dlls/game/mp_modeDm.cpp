@@ -180,10 +180,9 @@ bool ModeDeathmatch::checkGameType( const char *gameType )
 
 int ModeDeathmatch::getHighestPoints( int entnum )
 {
-	int i;
 	int highestPoints = -999999999;
 
-	for ( i = 0 ; i < _maxPlayers ; i++ )
+	for ( unsigned i = 0 ; i < _maxPlayers ; i++ )
 	{
 		if ( _playerGameData[ i ]._playing && ( _playerGameData[ i ]._entnum != entnum ) )
 		{
@@ -207,7 +206,6 @@ bool ModeDeathmatch::checkRule( const char *rule, bool defaultValue, Player *pla
 
 void ModeDeathmatch::update( float frameTime )
 {
-	int i;
 	Player *player;
 	int place;
 	bool tied;
@@ -218,7 +216,7 @@ void ModeDeathmatch::update( float frameTime )
 
 	if ( _gameStarted )
 	{
-		for ( i = 0 ; i < _maxPlayers ; i++ )
+		for ( unsigned i = 0 ; i < _maxPlayers ; i++ )
 		{
 			player = multiplayerManager.getPlayer( i );
 
