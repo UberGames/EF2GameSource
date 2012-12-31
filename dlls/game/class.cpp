@@ -51,51 +51,51 @@
 int totalmemallocated = 0;
 int numclassesallocated = 0;
 
-static ClassDef *classlist = NULL;
+static ClassDef* classlist = NULL;
 
 
 ClassDef::ClassDef()
 {
-	this->classname		= NULL;
+	this->classname			= NULL;
 	this->classID			= NULL;
 	this->superclass		= NULL;
-	this->responses		= NULL;
-	this->numEvents		= 0;
-	this->responseLookup = NULL;
+	this->responses			= NULL;
+	this->numEvents			= 0;
+	this->responseLookup	= NULL;
 	this->newInstance		= NULL;
-	this->classSize		= 0;
+	this->classSize			= 0;
 	this->super				= NULL;
 	this->prev				= this;
 	this->next				= this;
 }
 
-ClassDef::ClassDef( const char *classname, const char *classID, const char *superclass, ResponseDef<Class> *responses,
-		void *( *newInstance )( void ), int classSize )
+ClassDef::ClassDef( const char* classname, const char* classID, const char* superclass, ResponseDef<Class>* responses,
+				   void* ( *newInstance )( void ), int classSize )
 {
-	ClassDef *node;
-	
+	ClassDef* node;
+
 	if ( classlist == NULL )
 	{
 		classlist = new ClassDef;
 	}
-	
+
 	this->classname			= classname;
-	this->classID				= classID;
-	this->superclass			= superclass;
+	this->classID			= classID;
+	this->superclass		= superclass;
 	this->responses			= responses;
 	this->numEvents			= 0;
-	this->responseLookup		= NULL;
-	this->newInstance			= newInstance;
+	this->responseLookup	= NULL;
+	this->newInstance		= newInstance;
 	this->classSize			= classSize;
-	this->super					= getClass( superclass );
-	
+	this->super				= getClass( superclass );
+
 	// It's not uncommon for classes to not have a class id, so just set it
 	// to an empty string so that we're not checking for it all the time.
 	if ( !classID )
 	{
 		this->classID = "";
 	}
-	
+
 	// Check if any subclasses were initialized before their superclass
 	for( node = classlist->next; node != classlist; node = node->next )
 	{
@@ -105,7 +105,7 @@ ClassDef::ClassDef( const char *classname, const char *classID, const char *supe
 			node->super	= this;
 		}
 	}
-	
+
 	// Add to front of list
 	LL_Add( classlist, this, prev, next );
 }
@@ -121,12 +121,12 @@ void ClassDef::Shutdown( void )
 
 ClassDef::~ClassDef()
 {
-	ClassDef *node;
-	
+	ClassDef* node;
+
 	if ( classlist != this )
 	{
 		LL_Remove( this, prev, next );
-		
+
 		// Check if any subclasses were initialized before their superclass
 		for( node = classlist->next; node != classlist; node = node->next )
 		{
@@ -141,7 +141,7 @@ ClassDef::~ClassDef()
 		// If the head of the list is deleted before the list is cleared, then we may have problems
 		assert( this->next == this->prev );
 	}
-	
+
 	if ( responseLookup )
 	{
 		delete[] responseLookup;
@@ -151,28 +151,28 @@ ClassDef::~ClassDef()
 
 void ClassDef::BuildResponseList( void )
 {
-	ClassDef		*c;
-	ResponseDef<Class> *r;
-	int			ev;
-	int			i;
-	qboolean		*set;
-	int			num;
-	
+	ClassDef*			c;
+	ResponseDef<Class>*	r;
+	int					ev;
+	int					i;
+	qboolean*			set;
+	int					num;
+
 	if ( responseLookup )
 	{
 		delete[] responseLookup;
 		responseLookup = NULL;
 	}
-	
+
 	num = Event::NumEventCommands();
 	responseLookup = ( Response ** )new char[ sizeof( Response * ) * num ];
 	memset( responseLookup, 0, sizeof( Response * ) * num );
-	
+
 	set = new qboolean[ num ];
 	memset( set, 0, sizeof( qboolean ) * num );
-	
+
 	this->numEvents = num;
-	
+
 	for( c = this; c != NULL; c = c->super )
 	{
 		r = c->responses;
@@ -196,34 +196,34 @@ void ClassDef::BuildResponseList( void )
 			}
 		}
 	}
-	
+
 	delete[] set;
 }
 
 void BuildEventResponses( void )
 {
-	ClassDef *c;
-	int amount;
-	int numclasses;
-	
+	ClassDef*	c;
+	int			amount;
+	int			numclasses;
+
 	amount = 0;
 	numclasses = 0;
 	for( c = classlist->next; c != classlist; c = c->next )
 	{
 		c->BuildResponseList();
-		
+
 		amount += c->numEvents * sizeof( Response * );
 		numclasses++;
 	}
-	
+
 	CLASS_DPrintf( "\n------------------\nEvent system initialized: "
 		"%d classes %d events %d total memory in response list\n\n", numclasses, Event::NumEventCommands(), amount );
 }
 
-ClassDef *getClassForID( const char *name )
+ClassDef* getClassForID( const char* name )
 {
-	ClassDef *c;
-	
+	ClassDef* c;
+
 	for( c = classlist->next; c != classlist; c = c->next )
 	{
 		if ( c->classID && !Q_stricmp( c->classID, name ) )
@@ -231,14 +231,14 @@ ClassDef *getClassForID( const char *name )
 			return c;
 		}
 	}
-	
+
 	return NULL;
 }
 
-ClassDef *getClass( const char *name )
+ClassDef* getClass( const char* name )
 {
-	ClassDef *c;
-	
+	ClassDef* c;
+
 	for( c = classlist->next; c != classlist; c = c->next )
 	{
 		if ( !Q_stricmp( c->classname, name ) )
@@ -246,30 +246,30 @@ ClassDef *getClass( const char *name )
 			return c;
 		}
 	}
-	
+
 	return NULL;
 }
 
-ClassDef *getClassList( void )
+ClassDef* getClassList( void )
 {
 	return classlist;
 }
 
 void listAllClasses( void )
 {
-	ClassDef *c;
-	
+	ClassDef* c;
+
 	for( c = classlist->next; c != classlist; c = c->next )
 	{
 		CLASS_DPrintf( "%s\n", c->classname );
 	}
 }
 
-void listInheritanceOrder( const char *classname )
+void listInheritanceOrder( const char* classname )
 {
-	ClassDef *cls;
-	ClassDef *c;
-	
+	ClassDef* cls;
+	ClassDef* c;
+
 	cls = getClass( classname );
 	if ( !cls )
 	{
@@ -282,10 +282,10 @@ void listInheritanceOrder( const char *classname )
 	}
 }
 
-qboolean checkInheritance( const ClassDef *superclass, const ClassDef *subclass )
+qboolean checkInheritance( const ClassDef* superclass, const ClassDef* subclass )
 {
-	const ClassDef *c;
-	
+	const ClassDef* c;
+
 	for( c = subclass; c != NULL; c = c->super )
 	{
 		if ( c == superclass )
@@ -296,10 +296,10 @@ qboolean checkInheritance( const ClassDef *superclass, const ClassDef *subclass 
 	return false;
 }
 
-qboolean checkInheritance( ClassDef *superclass, const char *subclass )
+qboolean checkInheritance( ClassDef* superclass, const char* subclass )
 {
-	ClassDef *c;
-	
+	ClassDef* c;
+
 	c = getClass( subclass );
 	if ( c == NULL )
 	{
@@ -309,11 +309,11 @@ qboolean checkInheritance( ClassDef *superclass, const char *subclass )
 	return checkInheritance( superclass, c );
 }
 
-qboolean checkInheritance( const char *superclass, const char *subclass )
+qboolean checkInheritance( const char* superclass, const char* subclass )
 {
-	ClassDef *c1;
-	ClassDef *c2;
-	
+	ClassDef* c1;
+	ClassDef* c2;
+
 	c1 = getClass( superclass );
 	c2 = getClass( subclass );
 	if ( c1 == NULL )
@@ -329,15 +329,15 @@ qboolean checkInheritance( const char *superclass, const char *subclass )
 	return checkInheritance( c1, c2 );
 }
 
-void CLASS_Print( FILE *class_file, const char *fmt, ... )
+void CLASS_Print( FILE* class_file, const char* fmt, ... )
 {
 	va_list	argptr;
-	char		text[ 1024 ];
-	
+	char	text[ 1024 ];
+
 	va_start( argptr, fmt );
 	vsprintf( text, fmt, argptr );
 	va_end( argptr );
-	
+
 	if ( class_file )
 		fprintf( class_file, text );
 	else
@@ -351,13 +351,13 @@ CLASS_DECLARATION( NULL, Class, NULL )
 
 #ifdef NDEBUG
 
-void * Class::operator new( size_t s )
+void* Class::operator new( size_t s )
 {
-	int *p;
-	
+	int* p;
+
 	if ( s == 0 )
 		return 0;
-	
+
 	s += sizeof( int );
 #if defined( GAME_DLL )
 	p = ( int * )gi.Malloc( s );
@@ -372,10 +372,10 @@ void * Class::operator new( size_t s )
 	return p + 1;
 }
 
-void Class::operator delete( void *ptr )
+void Class::operator delete( void* ptr )
 {
-	int *p;
-	
+	int* p;
+
 	p = ( ( int * )ptr ) - 1;
 	totalmemallocated -= *p;
 	numclassesallocated--;
@@ -394,10 +394,10 @@ void Class::operator delete( void *ptr )
 int classindex = 0;
 #endif
 
-void * Class::operator new( size_t s )
+void* Class::operator new( size_t s )
 {
 	int *p;
-	
+
 	s += sizeof( int ) * 3;
 #if defined( GAME_DLL )
 	p = ( int * )gi.Malloc( s );
@@ -420,16 +420,16 @@ void * Class::operator new( size_t s )
 	return p + 2;
 }
 
-void Class::operator delete( void *ptr )
+void Class::operator delete( void* ptr )
 {
-	int *p;
-	
+	int* p;
+
 	p = ( ( int * )ptr ) - 2;
 #ifndef MEMORY_LEAK_TEST
 	assert( p[ 0 ] == 0x12348765 );
 #endif
 	assert( *( int * )( ((byte *)p) + p[ 1 ] - sizeof( int ) ) == 0x56784321 );
-	
+
 	totalmemallocated -= p[ 1 ];
 	numclassesallocated--;
 #if defined( GAME_DLL )
@@ -475,15 +475,15 @@ void Class::ClearSafePointers( void )
 }
 
 
-void Class::warning( const char *function, const char *fmt, ... )
+void Class::warning( const char* function, const char* fmt, ... )
 {
 	va_list	argptr;
-	char		text[ 1024 ];
-	
+	char	text[ 1024 ];
+
 	va_start( argptr, fmt );
 	vsprintf( text, fmt, argptr );
 	va_end( argptr );
-	
+
 	if ( getClassID() )
 	{
 		CLASS_WDPrintf( "%s::%s : %s\n", getClassID(), function, text );
@@ -494,15 +494,15 @@ void Class::warning( const char *function, const char *fmt, ... )
 	}
 }
 
-void Class::error( const char *function, const char *fmt, ... )
+void Class::error( const char* function, const char* fmt, ... )
 {
 	va_list	argptr;
-	char		text[ 1024 ];
-	
+	char	text[ 1024 ];
+
 	va_start( argptr, fmt );
 	vsprintf( text, fmt, argptr );
 	va_end( argptr );
-	
+
 	if ( getClassID() )
 	{
 		CLASS_Error( ERR_DROP, "%s::%s : %s\n", getClassID(), function, text );
@@ -513,10 +513,10 @@ void Class::error( const char *function, const char *fmt, ... )
 	}
 }
 
-qboolean Class::inheritsFrom( const char *name ) const
+qboolean Class::inheritsFrom( const char* name ) const
 {
-	ClassDef *c;
-	
+	ClassDef* c;
+
 	c = getClass( name );
 	if ( c == NULL )
 	{
@@ -526,10 +526,10 @@ qboolean Class::inheritsFrom( const char *name ) const
 	return checkInheritance( c, classinfo() );
 }
 
-qboolean Class::isInheritedBy( const char *name	) const
+qboolean Class::isInheritedBy( const char* name	) const
 {
-	ClassDef *c;
-	
+	ClassDef* c;
+
 	c = getClass( name );
 	if ( c == NULL )
 	{
@@ -539,62 +539,62 @@ qboolean Class::isInheritedBy( const char *name	) const
 	return checkInheritance( classinfo(), c );
 }
 
-const char *Class::getClassname( void )
+const char* Class::getClassname( void )
 {
-	ClassDef *cls;
-	
+	ClassDef* cls;
+
 	cls = classinfo();
 	return cls->classname;
 }
 
-const char *Class::getClassID( void )
+const char* Class::getClassID( void )
 {
-	ClassDef *cls;
-	
+	ClassDef* cls;
+
 	cls = classinfo();
 	return cls->classID;
 }
 
-const char *Class::getSuperclass( void )
+const char* Class::getSuperclass( void )
 {
-	ClassDef *cls;
-	
+	ClassDef* cls;
+
 	cls = classinfo();
 	return cls->superclass;
 }
 
-void *Class::newInstance( void )
+void* Class::newInstance( void )
 {
-	ClassDef *cls;
-	
+	ClassDef* cls;
+
 	cls = classinfo();
 	return cls->newInstance();
 }
 
 #define MAX_INHERITANCE 64
-void ClassEvents( const char *classname, qboolean print_to_disk )
+void ClassEvents( const char* classname, qboolean print_to_disk )
 {
-	ClassDef		*c;
-	ResponseDef<Class> *r;
-	int			ev;
-	int			i, j;
-	qboolean    *set;
-	int			num, orderNum;
-	Event       **events;
-	byte        *order;
-	FILE        *class_file;
-	str         classNames[ MAX_INHERITANCE ];
-	str         class_filename;
-	
+	ClassDef*			c;
+	ResponseDef<Class>* r;
+	int					ev;
+	int					i, j;
+	qboolean*			set;
+	int					num, orderNum;
+	Event**				events;
+	byte*				order;
+	FILE*				class_file;
+	str					classNames[ MAX_INHERITANCE ];
+	str					class_filename;
+
 	c = getClass( classname );
 	if ( !c )
 	{
 		CLASS_WDPrintf( "Unknown class: %s\n", classname );
 		return;
 	}
-	
+
 	class_file = NULL;
-	
+
 	if ( print_to_disk )
 	{
 		class_filename = str ( classname ) + ".txt";
@@ -602,18 +602,18 @@ void ClassEvents( const char *classname, qboolean print_to_disk )
 		if ( class_file == NULL )
 			return;
 	}
-	
+
 	num = Event::NumEventCommands();
-	
+
 	set = new qboolean[ num ];
 	memset( set, 0, sizeof( qboolean ) * num );
-	
-	events = new Event *[ num ];
+
+	events = new Event*[ num ];
 	memset( events, 0, sizeof( Event * ) * num );
-	
+
 	order = new byte[ num ];
 	memset( order, 0, sizeof( byte ) * num );
-	
+
 	orderNum = 0;
 	for( ; c != NULL; c = c->super )
 	{
@@ -630,7 +630,7 @@ void ClassEvents( const char *classname, qboolean print_to_disk )
 				if ( !set[ ev ] )
 				{
 					set[ ev ] = true;
-					
+
 					if ( r[ i ].response )
 					{
 						events[ ev ] = r[ i ].event;
@@ -641,13 +641,13 @@ void ClassEvents( const char *classname, qboolean print_to_disk )
 		}
 		orderNum++;
 	}
-	
+
 	CLASS_Print( class_file, "********************************************************\n" );
 	CLASS_Print( class_file, "********************************************************\n" );
 	CLASS_Print( class_file, "* All Events For Class: %s\n", classname );
 	CLASS_Print( class_file, "********************************************************\n" );
 	CLASS_Print( class_file, "********************************************************\n\n" );
-	
+
 	for( j = orderNum - 1; j >= 0; j-- )
 	{
 		CLASS_Print( class_file, "\n********************************************************\n" );
@@ -656,21 +656,21 @@ void ClassEvents( const char *classname, qboolean print_to_disk )
 		for( i = 1; i < num; i++ )
 		{
 			int index;
-			
+
 			index = Event::MapSortedEventIndex( i );
 			if ( events[ index ] && ( order[ index ] == j ) )
-            {
+			{
 				Event::PrintEventDocumentation( events[ index ], class_file );
-            }
+			}
 		}
 	}
-	
+
 	if ( class_file != NULL )
 	{
 		CLASS_DPrintf( "Printed class info to file %s\n", class_filename.c_str() );
 		fclose( class_file );
 	}
-	
+
 	delete[] events;
 	delete[] order;
 	delete[] set;
@@ -678,26 +678,26 @@ void ClassEvents( const char *classname, qboolean print_to_disk )
 
 static int dump_numclasses;
 static int dump_numevents;
-void DumpClass( FILE * class_file, const char * className, int typeFlag )
+void DumpClass( FILE* class_file, const char* className, int typeFlag )
 {
-	ClassDef		*c;
-	ResponseDef<Class> *r;
-	int			ev;
-	int			i;
-	int			num;
-	Event       **events;
-	
+	ClassDef*			c;
+	ResponseDef<Class>*	r;
+	int					ev;
+	int					i;
+	int					num;
+	Event**				events;
+
 	c = getClass( className );
 	if ( !c )
 	{
 		return;
 	}
-	
+
 	num = Event::NumEventCommands();
-	
+
 	events = new Event *[ num ];
 	memset( events, 0, sizeof( Event * ) * num );
-	
+
 	// gather event responses for this class
 	r = c->responses;
 	if ( r )
@@ -711,7 +711,7 @@ void DumpClass( FILE * class_file, const char * className, int typeFlag )
 			}
 		}
 	}
-	
+
 	CLASS_Print( class_file, "\n");
 	if ( c->classID[ 0 ] )
 	{
@@ -721,21 +721,21 @@ void DumpClass( FILE * class_file, const char * className, int typeFlag )
 	{
 		CLASS_Print( class_file, "<h2> <a name=\"%s\">%s</a>", c->classname, c->classname );
 	}
-	
+
 	// print out lineage
 	for( c = c->super; c != NULL; c = c->super )
 	{
 		CLASS_Print( class_file, " -> <a href=\"#%s\">%s</a>", c->classname, c->classname );
 	}
 	CLASS_Print( class_file, "</h2>\n");
-	
+
 	dump_numclasses++;
-	
+
 	CLASS_Print( class_file, "<BLOCKQUOTE>\n");
 	for( i = 1; i < num; i++ )
 	{
 		int index;
-		
+
 		index = Event::MapSortedEventIndex( i );
 		if ( events[ index ] )
 		{
@@ -747,7 +747,7 @@ void DumpClass( FILE * class_file, const char * className, int typeFlag )
 	delete[] events;
 }
 
-void DumpAllClasses( int typeFlag, int outputType, const char *filename )
+void DumpAllClasses( int typeFlag, int outputType, const char* filename )
 {
 	str defaultname;
 #if defined( GAME_DLL )
@@ -757,7 +757,7 @@ void DumpAllClasses( int typeFlag, int outputType, const char *filename )
 #else
 	defaultname = "cl_allclasses";
 #endif
-	
+
 	if ( outputType == OUTPUT_HTML || !outputType )
 	{
 		HTMLDocFileOutput *hdout = new HTMLDocFileOutput();
@@ -767,7 +767,7 @@ void DumpAllClasses( int typeFlag, int outputType, const char *filename )
 			hdout->Write(defaultname, classlist, typeFlag);
 		delete hdout;
 	}
-	
+
 	if ( outputType == OUTPUT_CMD || !outputType )
 	{
 		ToolDocFileOutput *dout = new ToolDocFileOutput();
@@ -778,111 +778,111 @@ void DumpAllClasses( int typeFlag, int outputType, const char *filename )
 		delete dout;
 	}
 
-/*
-   int i, j, num, smallest;
+	/*
+	int i, j, num, smallest;
 	ClassDef *c;
-   FILE * class_file;
-   str class_filename;
-   str class_title;
-   str classes[ MAX_CLASSES ];
+	FILE * class_file;
+	str class_filename;
+	str class_title;
+	str classes[ MAX_CLASSES ];
 
-#if defined( GAME_DLL )
+	#if defined( GAME_DLL )
 	class_filename = "g_allclasses.html";
-   class_title = "Game Module";
-#elif defined( CGAME_DLL )
+	class_title = "Game Module";
+	#elif defined( CGAME_DLL )
 	class_filename = "cg_allclasses.html";
-   class_title = "Client Game Module";
-#else
+	class_title = "Client Game Module";
+	#else
 	class_filename = "cl_allclasses.html";
-   class_title = "Client Module";
-#endif
+	class_title = "Client Module";
+	#endif
 
 	class_file = fopen( class_filename.c_str(), "w" );
 	if ( class_file == NULL )
-		return;
+	return;
 
-   // construct the HTML header for the document
-   CLASS_Print( class_file, "<HTML>\n");
-   CLASS_Print( class_file, "<HEAD>\n");
-   CLASS_Print( class_file, "<Title>%s Classes</Title>\n", class_title.c_str() );
-   CLASS_Print( class_file, "</HEAD>\n");
-   CLASS_Print( class_file, "<BODY>\n");
-   CLASS_Print( class_file, "<H1>\n");
-   CLASS_Print( class_file, "<center>%s Classes</center>\n", class_title.c_str() );
-   CLASS_Print( class_file, "</H1>\n");
-#if defined( GAME_DLL )
-   //
-   // print out some commonly used classnames
-   //
-   CLASS_Print( class_file, "<h2>" );
-   CLASS_Print( class_file, "<a href=\"#Actor\">Actor</a>, " );
-   CLASS_Print( class_file, "<a href=\"#Animate\">Animate</a>, " );
-   CLASS_Print( class_file, "<a href=\"#Entity\">Entity</a>, " );
-   CLASS_Print( class_file, "<a href=\"#ScriptSlave\">ScriptSlave</a>, " );
-   CLASS_Print( class_file, "<a href=\"#ScriptThread\">ScriptThread</a>, " );
-   CLASS_Print( class_file, "<a href=\"#Sentient\">Sentient</a>, " );
-   CLASS_Print( class_file, "<a href=\"#Trigger\">Trigger</a>, " );
-   CLASS_Print( class_file, "<a href=\"#World\">World</a>" );
-   CLASS_Print( class_file, "</h2>" );
-#endif
+	// construct the HTML header for the document
+	CLASS_Print( class_file, "<HTML>\n");
+	CLASS_Print( class_file, "<HEAD>\n");
+	CLASS_Print( class_file, "<Title>%s Classes</Title>\n", class_title.c_str() );
+	CLASS_Print( class_file, "</HEAD>\n");
+	CLASS_Print( class_file, "<BODY>\n");
+	CLASS_Print( class_file, "<H1>\n");
+	CLASS_Print( class_file, "<center>%s Classes</center>\n", class_title.c_str() );
+	CLASS_Print( class_file, "</H1>\n");
+	#if defined( GAME_DLL )
+	//
+	// print out some commonly used classnames
+	//
+	CLASS_Print( class_file, "<h2>" );
+	CLASS_Print( class_file, "<a href=\"#Actor\">Actor</a>, " );
+	CLASS_Print( class_file, "<a href=\"#Animate\">Animate</a>, " );
+	CLASS_Print( class_file, "<a href=\"#Entity\">Entity</a>, " );
+	CLASS_Print( class_file, "<a href=\"#ScriptSlave\">ScriptSlave</a>, " );
+	CLASS_Print( class_file, "<a href=\"#ScriptThread\">ScriptThread</a>, " );
+	CLASS_Print( class_file, "<a href=\"#Sentient\">Sentient</a>, " );
+	CLASS_Print( class_file, "<a href=\"#Trigger\">Trigger</a>, " );
+	CLASS_Print( class_file, "<a href=\"#World\">World</a>" );
+	CLASS_Print( class_file, "</h2>" );
+	#endif
 
-   dump_numclasses = 0;
-   dump_numevents = 0;
+	dump_numclasses = 0;
+	dump_numevents = 0;
 
-   // get all the classes
-   num = 0;
+	// get all the classes
+	num = 0;
 	for( c = classlist->next; c != classlist; c = c->next )
-		{
-      if ( num < MAX_CLASSES )
-         {
-         classes[ num++ ] = c->classname;
-         }
-		}
+	{
+	if ( num < MAX_CLASSES )
+	{
+	classes[ num++ ] = c->classname;
+	}
+	}
 
-   // go through and process each class from smallest to greatest
-   for( i = 0; i < num; i++ )
-      {
-      smallest = -1;
-      for( j = 0; j < num; j++ )
-         {
-         if ( classes[ j ].length() > 1 )
-            {
-            if ( smallest >= 0 )
-               {
-               if ( classes[ j ].icmp( classes[ smallest ] ) < 0 )
-                  {
-                  smallest = j;
-                  }
-               }
-            else
-               {
-               smallest = j;
-               }
-            }
-         }
-      DumpClass( class_file, classes[ smallest ], typeFlag );
-      // delete the name from the list
-      classes[ smallest ] = "";
-      }
+	// go through and process each class from smallest to greatest
+	for( i = 0; i < num; i++ )
+	{
+	smallest = -1;
+	for( j = 0; j < num; j++ )
+	{
+	if ( classes[ j ].length() > 1 )
+	{
+	if ( smallest >= 0 )
+	{
+	if ( classes[ j ].icmp( classes[ smallest ] ) < 0 )
+	{
+	smallest = j;
+	}
+	}
+	else
+	{
+	smallest = j;
+	}
+	}
+	}
+	DumpClass( class_file, classes[ smallest ], typeFlag );
+	// delete the name from the list
+	classes[ smallest ] = "";
+	}
 
 	if ( class_file != NULL )
-		{
-      CLASS_Print( class_file, "<H2>\n");
-      CLASS_Print( class_file, "%d %s Classes.<BR>%d %s Events.\n", dump_numclasses, class_title.c_str(), dump_numevents, class_title.c_str() );
-      CLASS_Print( class_file, "</H2>\n");
-      CLASS_Print( class_file, "</BODY>\n");
-      CLASS_Print( class_file, "</HTML>\n");
-		CLASS_DPrintf( "Dumped all classes to file %s\n", class_filename.c_str() );
-		fclose( class_file );
-		}
-*/
+	{
+	CLASS_Print( class_file, "<H2>\n");
+	CLASS_Print( class_file, "%d %s Classes.<BR>%d %s Events.\n", dump_numclasses, class_title.c_str(), dump_numevents, class_title.c_str() );
+	CLASS_Print( class_file, "</H2>\n");
+	CLASS_Print( class_file, "</BODY>\n");
+	CLASS_Print( class_file, "</HTML>\n");
+	CLASS_DPrintf( "Dumped all classes to file %s\n", class_filename.c_str() );
+	fclose( class_file );
+	}
+	*/
 }
 
 
 void ShutdownClasses( void )
 {
-	ClassDef *c;
-	
+	ClassDef* c;
+
 	for( c = classlist->next; c != classlist; c = c->next )
 	{
 		c->Shutdown();

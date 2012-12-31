@@ -85,162 +85,154 @@ typedef void ( Class::*Response )( Event *event );
 
 template< class Type >
 struct ResponseDef
-	{
-	Event		      *event;
-   void           ( Type::*response )( Event *event );
-	};
+{
+	Event*		event;
+	void		( Type::*response )( Event *event );
+};
 
 /***********************************************************************
 
-  ClassDef
+ClassDef
 
 ***********************************************************************/
 
 class ClassDef
-	{
-	public:
-		const char	*classname;
-		const char	*classID;
-		const char	*superclass;
-		void			*( *newInstance )( void );
-		int			classSize;
-		ResponseDef<Class> *responses;
-		int			numEvents;
-		Response		**responseLookup;
-		ClassDef		*super;
-		ClassDef		*next;
-		ClassDef		*prev;
+{
+public:
+	const char*			classname;
+	const char*			classID;
+	const char*			superclass;
+	void*				( *newInstance )( void );
+	int					classSize;
+	ResponseDef<Class>*	responses;
+	int					numEvents;
+	Response**			responseLookup;
+	ClassDef*			super;
+	ClassDef*			next;
+	ClassDef*			prev;
 
-		ClassDef();
-		~ClassDef();
-		ClassDef( const char *classname, const char *classID, const char *superclass,
-			ResponseDef<Class> *responses, void *( *newInstance )( void ), int classSize );
-		void	BuildResponseList( void );
-      void  Shutdown( void );
-	};
+	ClassDef();
+	~ClassDef();
+	ClassDef( const char* classname, const char* classID, const char* superclass, ResponseDef<Class>* responses, void* ( *newInstance )( void ), int classSize );
+
+	void	BuildResponseList( void );
+	void	Shutdown( void );
+};
 
 /***********************************************************************
 
-  SafePtr
+SafePtr
 
 ***********************************************************************/
 
 class SafePtrBase;
-
 class Class;
 
 class SafePtrBase
-	{
-   private:
-		void	AddReference( Class *ptr );
-		void	RemoveReference( Class *ptr );
+{
+private:
+	void	AddReference( Class* ptr );
+	void	RemoveReference( Class* ptr );
 
-	protected:
-		SafePtrBase *prevSafePtr;
-		SafePtrBase *nextSafePtr;
-		Class       *ptr;
+protected:
+	SafePtrBase* prevSafePtr;
+	SafePtrBase* nextSafePtr;
+	Class*		 ptr;
 
-	public:
-                  SafePtrBase();
-		virtual     ~SafePtrBase();
-		void	      InitSafePtr( Class *newptr );
-      Class       *Pointer( void );
-      void	      Clear( void );
-	};
+public:
+	SafePtrBase();
+	virtual     ~SafePtrBase();
+	void	    InitSafePtr( Class* newptr );
+	Class*		Pointer( void );
+	void		Clear( void );
+};
 
 /***********************************************************************
 
-  Class
+Class
 
 ***********************************************************************/
 
 #define CLASS_DECLARATION( nameofsuperclass, nameofclass, classid )	\
-	ClassDef nameofclass::ClassInfo												\
-		(																					\
-		#nameofclass, classid, #nameofsuperclass,								\
-		( ResponseDef<Class> * )nameofclass::Responses,                \
-      nameofclass::_newInstance,	sizeof( nameofclass )					\
-		);																					\
-	void *nameofclass::_newInstance( void )				               \
-		{																					\
-		return new nameofclass;														\
-		}																					\
-	ClassDef *nameofclass::classinfo( void ) const								   \
-		{																					\
-		return &( nameofclass::ClassInfo );										\
-      }                                                              \
-   ResponseDef<nameofclass> nameofclass::Responses[] =
+	ClassDef nameofclass::ClassInfo									\
+	(																\
+		#nameofclass, classid, #nameofsuperclass,					\
+		( ResponseDef<Class>* )nameofclass::Responses,				\
+		nameofclass::_newInstance,	sizeof( nameofclass )			\
+	);																\
+	void* nameofclass::_newInstance( void )				            \
+	{																\
+		return new nameofclass;										\
+	}																\
+	ClassDef* nameofclass::classinfo( void ) const					\
+	{																\
+		return &( nameofclass::ClassInfo );							\
+	}																\
+	ResponseDef<nameofclass> nameofclass::Responses[] =
 
-#define CLASS_PROTOTYPE( nameofclass )											\
-	public:																				\
-	static	ClassDef			ClassInfo;											\
-	static	void				*_newInstance( void );			            \
-	virtual	ClassDef			*classinfo( void ) const;			               \
+#define CLASS_PROTOTYPE( nameofclass )										\
+	public:																	\
+	static	ClassDef			ClassInfo;									\
+	static	void*				_newInstance( void );			            \
+	virtual	ClassDef*			classinfo( void ) const;			        \
 	static	ResponseDef<nameofclass>	Responses[]
 
 class Class
-	{
-   private:
-		SafePtrBase	 *SafePtrList;
-		friend class SafePtrBase;
+{
+private:
+	SafePtrBase*	SafePtrList;
+	friend class	SafePtrBase;
 
-   protected:
-      void              ClearSafePointers( void );
+protected:
+	void			ClearSafePointers( void );
 
-	public:
-		CLASS_PROTOTYPE( Class );
-		void * operator	new( size_t );
-		void operator		delete( void * );
+public:
+	CLASS_PROTOTYPE( Class );
+	void* operator new( size_t );
+	void  operator delete( void* );
 
-								Class();
-		virtual				~Class();
-		void					warning( const char *function, const char *fmt, ... );
-		void					error( const char *function, const char *fmt, ... );
-		qboolean				inheritsFrom( ClassDef *c ) const;
-		qboolean				inheritsFrom( const char *name ) const;
-		qboolean				isInheritedBy( const char *name ) const;
-		qboolean				isInheritedBy( ClassDef *c ) const;
-		const char			*getClassname( void );
-		const char			*getClassID( void );
-		const char			*getSuperclass( void );
-		void					*newInstance( void );
+	Class();
+	virtual	~Class();
+
+	void				warning( const char* function, const char* fmt, ... );
+	void				error( const char* function, const char* fmt, ... );
+	qboolean			inheritsFrom( ClassDef* c ) const;
+	qboolean			inheritsFrom( const char* name ) const;
+	qboolean			isInheritedBy( const char* name ) const;
+	qboolean			isInheritedBy( ClassDef* c ) const;
+	const char*			getClassname( void );
+	const char*			getClassID( void );
+	const char*			getSuperclass( void );
+	void*				newInstance( void );
 
 #ifdef GAME_DLL
-		virtual void		Archive( Archiver &arc );
+	virtual void		Archive( Archiver &arc );
 #endif
-	};
+};
 
 void		BuildEventResponses( void );
-ClassDef	*getClassForID( const char *name );
-ClassDef	*getClass( const char *name );
-ClassDef	*getClassList( void );
+ClassDef*	getClassForID( const char* name );
+ClassDef*	getClass( const char* name );
+ClassDef*	getClassList( void );
 void		listAllClasses( void );
-void		listInheritanceOrder( const char *classname );
-qboolean	checkInheritance( const ClassDef * const superclass, const ClassDef * const subclass );
-qboolean	checkInheritance( ClassDef * const superclass, const char * const subclass );
-qboolean	checkInheritance( const char * const superclass, const char * const subclass );
-void     DisplayMemoryUsage( void );
-void     ClassEvents( const char *classname, qboolean dump = false );
-void     DumpAllClasses( int typeFlag = EVENT_ALL, int outputType = OUTPUT_ALL, const char *filename = NULL);
-void		DumpClass( FILE * class_file, const char * className, int typeFlag = 0);
+void		listInheritanceOrder( const char* classname );
+qboolean	checkInheritance( const ClassDef* const superclass, const ClassDef* const subclass );
+qboolean	checkInheritance( ClassDef* const superclass, const char* const subclass );
+qboolean	checkInheritance( const char* const superclass, const char* const subclass );
+void		DisplayMemoryUsage( void );
+void		ClassEvents( const char* classname, qboolean dump = false );
+void		DumpAllClasses( int typeFlag = EVENT_ALL, int outputType = OUTPUT_ALL, const char* filename = NULL);
+void		DumpClass( FILE* class_file, const char* className, int typeFlag = 0);
 
-inline qboolean Class::inheritsFrom
-	(
-	ClassDef *c
-	) const
-
-	{
+inline qboolean Class::inheritsFrom(ClassDef* c) const
+{
 	return checkInheritance( c, classinfo() );
-	}
+}
 
-inline qboolean Class::isInheritedBy
-	(
-	ClassDef *c
-	) const
-
-	{
+inline qboolean Class::isInheritedBy(ClassDef*c ) const
+{
 	return checkInheritance( classinfo(), c );
-	}
+}
 
 // The lack of a space between the ")" and "inheritsFrom" is intentional.
 // It allows the macro to compile like a function call.  However, this
@@ -252,239 +244,189 @@ inline qboolean Class::isInheritedBy
 
 /***********************************************************************
 
-  SafePtr
+SafePtr
 
 ***********************************************************************/
 
-inline void SafePtrBase::AddReference
-	(
-	Class *ptr
-	)
-
-	{
+inline void SafePtrBase::AddReference(Class* ptr)
+{
 	if ( !ptr->SafePtrList )
-		{
+	{
 		ptr->SafePtrList = this;
 		LL_Reset( this, nextSafePtr, prevSafePtr );
-		}
-	else
-		{
-		LL_Add( ptr->SafePtrList, this, nextSafePtr, prevSafePtr );
-		}
 	}
-
-inline void SafePtrBase::RemoveReference
-	(
-	Class *ptr
-	)
-
+	else
 	{
+		LL_Add( ptr->SafePtrList, this, nextSafePtr, prevSafePtr );
+	}
+}
+
+inline void SafePtrBase::RemoveReference(Class* ptr)
+{
 	if ( ptr->SafePtrList == this )
-		{
+	{
 		if ( ptr->SafePtrList->nextSafePtr == this )
-			{
+		{
 			ptr->SafePtrList = NULL;
-			}
+		}
 		else
-			{
+		{
 			ptr->SafePtrList = nextSafePtr;
 			LL_Remove( this, nextSafePtr, prevSafePtr );
-			}
-		}
-	else
-		{
-		LL_Remove( this, nextSafePtr, prevSafePtr );
 		}
 	}
-
-inline void SafePtrBase::Clear
-   (
-   void
-   )
-
+	else
 	{
+		LL_Remove( this, nextSafePtr, prevSafePtr );
+	}
+}
+
+inline void SafePtrBase::Clear(void)
+{
 	if ( ptr )
-		{
+	{
 		RemoveReference( ptr );
 		ptr = NULL;
-		}
 	}
+}
 
 inline SafePtrBase::SafePtrBase()
-	{
-   prevSafePtr = NULL;
+{
+	prevSafePtr = NULL;
 	nextSafePtr = NULL;
-   ptr = NULL;
-   }
+	ptr = NULL;
+}
 
 inline SafePtrBase::~SafePtrBase()
-	{
-   Clear();
-   }
+{
+	Clear();
+}
 
-inline Class * SafePtrBase::Pointer
-   (
-   void
-   )
+inline Class* SafePtrBase::Pointer(void)
+{
+	return ptr;
+}
 
-	{
-   return ptr;
-	}
-
-inline void SafePtrBase::InitSafePtr
-   (
-   Class *newptr
-   )
-
-	{
+inline void SafePtrBase::InitSafePtr(Class* newptr)
+{
 	if ( ptr != newptr )
-		{
+	{
 		if ( ptr )
-			{
+		{
 			RemoveReference( ptr );
-			}
+		}
 
 		ptr = newptr;
-	   if ( ptr == NULL )
-		   {
-		   return;
-   	   }
+		if ( ptr == NULL )
+		{
+			return;
+		}
 
-      AddReference( ptr );
-      }
+		AddReference( ptr );
 	}
+}
 
 template<class T>
 class SafePtr : public SafePtrBase
-	{
-	public:
-		SafePtr( T* objptr = 0 );
-		SafePtr( const SafePtr& obj );
+{
+public:
+	SafePtr( T* objptr = 0 );
+	SafePtr( const SafePtr& obj );
 
-		SafePtr& operator=( const SafePtr& obj );
-		SafePtr& operator=( T * const obj );
+	SafePtr& operator=( const SafePtr& obj );
+	SafePtr& operator=( T* const obj );
 
-		template <class F> friend int operator==( SafePtr<F> a, F *b );
-		template <class F> friend int operator!=( SafePtr<F> a, F *b );
-		template <class F> friend int operator==( F *a, SafePtr<F> b );
-		template <class F> friend int operator!=( F *a, SafePtr<F> b );
-		template <class F> friend int operator==( SafePtr<F> a, SafePtr<F> b );
-		template <class F> friend int operator!=( SafePtr<F> a, SafePtr<F> b );
+	template <class F> friend int operator==( SafePtr<F> a, F* b );
+	template <class F> friend int operator!=( SafePtr<F> a, F* b );
+	template <class F> friend int operator==( F* a, SafePtr<F> b );
+	template <class F> friend int operator!=( F* a, SafePtr<F> b );
+	template <class F> friend int operator==( SafePtr<F> a, SafePtr<F> b );
+	template <class F> friend int operator!=( SafePtr<F> a, SafePtr<F> b );
 
-		operator	T*() const;
-		T* operator->() const;
-		T& operator*() const;
-	};
+	operator	T*() const;
+	T* operator->() const;
+	T& operator*() const;
+};
 
 template<class T>
 inline SafePtr<T>::SafePtr( T* objptr )
-	{
-   InitSafePtr( objptr );
-	}
+{
+	InitSafePtr( objptr );
+}
 
 template<class T>
 inline SafePtr<T>::SafePtr( const SafePtr& obj )
-	{
-   InitSafePtr( obj.ptr );
-	}
+{
+	InitSafePtr( obj.ptr );
+}
 
 template<class T>
 inline SafePtr<T>& SafePtr<T>::operator=( const SafePtr& obj )
-	{
-   InitSafePtr( obj.ptr );
+{
+	InitSafePtr( obj.ptr );
 	return *this;
-	}
+}
 
 template<class T>
-inline SafePtr<T>& SafePtr<T>::operator=( T * const obj )
-	{
-   InitSafePtr( obj );
+inline SafePtr<T>& SafePtr<T>::operator=( T* const obj )
+{
+	InitSafePtr( obj );
 	return *this;
-	}
+}
 
 template<class T>
-inline int operator==
-	(
-	SafePtr<T> a,
-	T* b
-	)
-
-	{
+inline int operator==(SafePtr<T> a, T* b)
+{
 	return a.ptr == b;
-	}
+}
 
 template<class T>
-inline int operator!=
-	(
-	SafePtr<T> a,
-	T* b
-	)
-
-	{
+inline int operator!=(SafePtr<T> a, T* b)
+{
 	return a.ptr != b;
-	}
+}
 
 template<class T>
-inline int operator==
-	(
-	T* a,
-	SafePtr<T> b
-	)
-
-	{
+inline int operator==(T* a, SafePtr<T> b)
+{
 	return a == b.ptr;
-	}
+}
 
 template<class T>
-inline int operator!=
-	(
-	T* a,
-	SafePtr<T> b
-	)
-
-	{
+inline int operator!=(T* a, SafePtr<T> b)
+{
 	return a != b.ptr;
-	}
+}
 
 template<class T>
-inline int operator==
-	(
-	SafePtr<T> a,
-	SafePtr<T> b
-	)
-
-	{
+inline int operator==(SafePtr<T> a, SafePtr<T> b)
+{
 	return a.ptr == b.ptr;
-	}
+}
 
 template<class T>
-inline int operator!=
-	(
-	SafePtr<T> a,
-	SafePtr<T> b
-	)
-
-	{
+inline int operator!=(SafePtr<T> a,SafePtr<T> b)
+{
 	return a.ptr != b.ptr;
-	}
+}
 
 template<class T>
 inline SafePtr<T>::operator T*() const
-	{
+{
 	return ( T * )ptr;
-	}
+}
 
 template<class T>
 inline T* SafePtr<T>::operator->() const
-	{
+{
 	return ( T * )ptr;
-	}
+}
 
 template<class T>
 inline T& SafePtr<T>::operator*() const
-	{
+{
 	return *( T * )ptr;
-	}
+}
 
 typedef SafePtr<Class> ClassPtr;
 
@@ -497,10 +439,10 @@ extern int totalmemallocated;
 
 #ifndef GAME_DLL
 extern "C"
-   {
-   // interface functions
-   void	        ShutdownClasses( void );
-   }
+{
+	// interface functions
+	void	ShutdownClasses( void );
+}
 #endif
 
 #endif /* class.h */
