@@ -64,7 +64,7 @@ Body::Body()
 //=============================================================
 //Body::Damage
 //=============================================================
-void Body::Damage( Event *ev )
+void Body::Damage( Event * )
 {
 	/* str gib_name;
 	int number_of_gibs;

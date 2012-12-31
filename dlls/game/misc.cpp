@@ -503,7 +503,7 @@ void ExplodingWall::SetupSecondStage( void )
 	takedamage = DAMAGE_YES;
 }
 
-void ExplodingWall::StopRotating( Event *ev )
+void ExplodingWall::StopRotating( Event * )
 {
 	avelocity = vec_zero;
 	setAngles( land_angles );
@@ -592,7 +592,7 @@ void ExplodingWall::TouchFunc( Event *ev )
 	}
 }
 
-void ExplodingWall::Setup( Event *ev )
+void ExplodingWall::Setup( Event * )
 {
 	if ( spawnflags & INVISIBLE )
 	{
@@ -1324,6 +1324,8 @@ bool UseAnim::GetInformation( const Entity *activator, Vector *org, Vector *angl
 {
 	Entity		         *dest;
 	UseAnimDestination   *uadest;
+
+	Q_UNUSED(activator);
 	
 	// if this is no longer usable, return false
 	if ( !count )
@@ -1440,7 +1442,7 @@ void UseAnim::TriggerTargets( Entity *activator )
 	}
 }
 
-void UseAnim::Reset( Event *ev )
+void UseAnim::Reset( Event * )
 {
 	//
 	// find out if our triggertarget is of type door and only reset if the door is closed
@@ -1956,7 +1958,7 @@ UseObject::UseObject()
 	look_at_me = true;
 }
 
-void UseObject::SetActiveState( Event *ev )
+void UseObject::SetActiveState( Event * )
 {
 	if ( !useMaterial.length() )
 	{
@@ -1986,7 +1988,7 @@ void UseObject::SetMoveThread( Event *ev )
 	move_thread = ev->GetString( 1 );
 }
 
-void UseObject::MoveThePlayer( Event *ev)
+void UseObject::MoveThePlayer( Event *)
 {
 	movetheplayer = true;
 }
@@ -2001,13 +2003,13 @@ void UseObject::SetResetThread( Event *ev )
 	reset_thread = ev->GetString( 1 );
 }
 
-void UseObject::ActivateEvent( Event *ev )
+void UseObject::ActivateEvent( Event * )
 {
 	active = true;
 	PostEvent( EV_UseObject_SetActiveState, 0.0f );
 }
 
-void UseObject::DeactivateEvent( Event *ev )
+void UseObject::DeactivateEvent( Event * )
 {
 	active = false;
 	PostEvent( EV_UseObject_SetActiveState, 0.0f );
@@ -2058,12 +2060,12 @@ void UseObject::SetResetTime( Event *ev )
 	reset_time = ev->GetFloat( 1 );
 }
 
-void UseObject::Reset( Event *ev )
+void UseObject::Reset( Event * )
 {
 	animate->RandomAnimate( "move_backward", EV_UseObject_Resetting );
 }
 
-void UseObject::Resetting( Event *ev )
+void UseObject::Resetting( Event * )
 {
 	SetActiveState( NULL );
 	animate->RandomAnimate( "start" );
@@ -2115,6 +2117,8 @@ bool UseObject::canBeUsed( const Vector &org, const Vector &dir )
 	Vector   forward;
 	Vector   diff;
 	Vector   ang;
+
+	Q_UNUSED(org);
 	
 	// see if it is active
 	if ( !active )
@@ -2207,6 +2211,8 @@ void UseObject::DamageTriggered( Event * ev )
 
 void UseObject::Setup( const Entity *activator, Vector *org, Vector *ang, str *newstate )
 {
+	Q_UNUSED(activator);
+
 	if ( ( spawnflags & MULTI_STATE ) && objectState )
 	{
 		*newstate = state_backwards;
@@ -2434,7 +2440,7 @@ void TossObject::SetBounceSoundChance( Event *ev )
 	bouncesoundchance = ev->GetFloat( 1 );
 }
 
-void TossObject::Stop( Event *ev )
+void TossObject::Stop( Event * )
 {
 	setMoveType( MOVETYPE_NONE );
 	setSolidType( SOLID_NOT );
@@ -2601,7 +2607,7 @@ void PushObject::SetPushSound( Event *ev )
 	pushsound = ev->GetString( 1 );
 }
 
-void PushObject::Start( Event *ev )
+void PushObject::Start( Event * )
 {
 	// make sure that this touches triggers
 	flags |= FL_TOUCH_TRIGGERS;
@@ -2897,7 +2903,7 @@ void FallingRock::NextBounce( void )
 	groundentity = NULL;
 }
 
-void FallingRock::Rotate( Event *ev )
+void FallingRock::Rotate( Event * )
 {
 	float mat[ 3 ][ 3 ];
 	float ang;
@@ -2968,7 +2974,7 @@ void FallingRock::Activate( Event *ev )
 	}
 }
 
-void FallingRock::StartFalling( Event *ev )
+void FallingRock::StartFalling( Event * )
 {
 	if ( current )
 	{
@@ -3030,7 +3036,7 @@ void FallingRock::Touch( Event *ev )
 	PostEvent( EV_FallingRock_Bounce, 0.0f );
 }
 
-void FallingRock::Bounce( Event *ev )
+void FallingRock::Bounce( Event * )
 {
 	Vector delta;
 	

@@ -466,7 +466,7 @@ qboolean Door::isCompletelyClosed( void )
 	return ( state == STATE_CLOSED );
 }
 
-void Door::OpenEnd( Event *ev )
+void Door::OpenEnd( Event * )
 {
 	if ( sound_stop.length() > 1 )
 	{
@@ -493,7 +493,7 @@ void Door::OpenEnd( Event *ev )
 	}
 }
 
-void Door::CloseEnd( Event *ev )
+void Door::CloseEnd( Event * )
 {
 	if ( sound_stop.length() > 1 )
 	{
@@ -514,7 +514,7 @@ void Door::CloseEnd( Event *ev )
 	state = STATE_CLOSED;
 }
 
-void Door::Close( Event *ev )
+void Door::Close( Event * )
 {
 	Door *door;
 
@@ -933,7 +933,7 @@ qboolean Door::DoorTouches( const Door *e1 )
 	return true;
 }
 
-void Door::LinkDoors( Event *ev )
+void Door::LinkDoors( Event * )
 {
 	Entity *entptr;
 	Door	*ent;
@@ -1067,12 +1067,12 @@ void Door::SetTime( Event *ev )
 	speed = 1.0f / traveltime;
 }
 
-void Door::LockDoor( Event *ev )
+void Door::LockDoor( Event * )
 {
 	locked = true;
 }
 
-void Door::UnlockDoor( Event *ev )
+void Door::UnlockDoor( Event * )
 {
 	locked = false;
 }
@@ -1165,7 +1165,7 @@ void RotatingDoor::DoOpen( Event *ev )
 	mover->MoveTo( origin, ang, fabs( speed*angle ), EV_Door_OpenEnd );
 }
 
-void RotatingDoor::DoClose( Event *ev )
+void RotatingDoor::DoClose( Event * )
 {
 	mover->MoveTo( origin, startangle, fabs( speed*angle ), EV_Door_CloseEnd );
 }
@@ -1269,12 +1269,12 @@ void SlidingDoor::SetMoveDir( Event *ev )
 	dir[ 1 ] = t;
 }
 
-void SlidingDoor::DoOpen( Event *ev )
+void SlidingDoor::DoOpen( Event * )
 {
 	mover->MoveTo( pos2, angles, speed*totalmove, EV_Door_OpenEnd );
 }
 
-void SlidingDoor::DoClose( Event *ev )
+void SlidingDoor::DoClose( Event * )
 {
 	mover->MoveTo( pos1, angles, speed*totalmove, EV_Door_CloseEnd );
 }
@@ -1293,7 +1293,7 @@ void SlidingDoor::SetSpeed( Event *ev )
 	PostEvent( EV_SlidingDoor_Setup, EV_POSTSPAWN );
 }
 
-void SlidingDoor::Setup( Event *ev )
+void SlidingDoor::Setup( Event * )
 {
 	totalmove = fabs( movedir[0] * size[0] ) + fabs( movedir[1] * size[1] ) + fabs( movedir[2] * size[2] ) - lip;
 	pos1 = origin;
@@ -1548,7 +1548,7 @@ void ScriptDoor::SetMoveDir( float moveDir )
 	dir[ 1 ] = t;
 }
 
-void ScriptDoor::SetUpMovement(Event *ev)
+void ScriptDoor::SetUpMovement(Event *)
 {
 	SetUpMovement();
 }
@@ -1565,7 +1565,7 @@ void ScriptDoor::SetUpMovement()
 	
 }
 
-void ScriptDoor::SetUpScriptDoor( Event *ev )
+void ScriptDoor::SetUpScriptDoor( Event * )
 {
 	SetUpScriptDoor();
 }
@@ -1580,7 +1580,7 @@ void ScriptDoor::SetUpScriptDoor()
 	_toggle = false;
 }
 
-void ScriptDoor::DoOpen( Event *ev )
+void ScriptDoor::DoOpen( Event * )
 {
 	DoOpen();
 }
@@ -1591,7 +1591,7 @@ void ScriptDoor::DoOpen()
 	_currentPercentage = _openPercentage;
 }
 
-void ScriptDoor::DoClose( Event *ev )
+void ScriptDoor::DoClose( Event * )
 {
 	DoClose();
 }
@@ -1750,7 +1750,7 @@ void ScriptDoor::ScriptDoorOpen( Event *ev )
 	}
 }
 
-void ScriptDoor::ScriptDoorClose( Event *ev )
+void ScriptDoor::ScriptDoorClose( Event * )
 {
 	Door *door;
 
@@ -1807,12 +1807,12 @@ void ScriptDoor::ScriptDoorFieldTouched( Event *ev )
 	TryOpen( ev );
 }
 
-void ScriptDoor::ScriptDoorForceOpen( Event *ev )
+void ScriptDoor::ScriptDoorForceOpen( Event * )
 {
 	DoOpen();
 }
 
-void ScriptDoor::ScriptDoorForceClose( Event *ev )
+void ScriptDoor::ScriptDoorForceClose( Event * )
 {
 	DoClose();
 }

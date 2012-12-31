@@ -38,7 +38,7 @@ CLASS_DECLARATION( Entity, PortalSurface, "portal_surface" )
 	{ NULL, NULL }
 };
 
-void PortalSurface::LocateCamera( Event *ev )
+void PortalSurface::LocateCamera( Event * )
 {
 	Entity   *owner;
 	Entity   *target;

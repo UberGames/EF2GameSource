@@ -471,7 +471,7 @@ void Player::SpawnActor( Event *ev )
 	}
 }
 
-void Player::ListInventoryEvent( Event *ev )
+void Player::ListInventoryEvent( Event * )
 {
 	ListInventory();
 }
@@ -538,7 +538,7 @@ void ClosePlayerLogFile( void )
 	}
 }
 
-void Player::SkipCinematic( Event *ev )
+void Player::SkipCinematic( Event * )
 {
 	if ( level.cinematic && ( world->skipthread.length() > 1 ) )
 	{

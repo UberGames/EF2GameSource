@@ -66,6 +66,8 @@ Abort the server with a game error
 */
 void G_Error( int level, const char *fmt, ... )
 {
+	Q_UNUSED(level);
+
 	va_list	argptr;
 	char		error[ 4096 ];
 	
@@ -1746,6 +1748,8 @@ to be placed into the game.  This will happen every level load.
 */
 extern "C" void G_ClientBegin( gentity_t *ent, const usercmd_t *cmd )
 {
+	Q_UNUSED(cmd);
+
 	try
 	{
 		if ( ent->inuse && ent->entity )

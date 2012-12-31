@@ -266,6 +266,8 @@ qboolean G_CameraCmd( const gentity_t *ent )
 	const char *cmd;
 	int   i;
 	int   n;
+
+	Q_UNUSED(ent);
 	
 	n = gi.argc();
 	if ( !n )
@@ -317,6 +319,8 @@ qboolean G_CinematicCmd( const gentity_t *ent )
 	const char	*cmd ;
 	int			 n		= gi.argc();
 	
+	Q_UNUSED(ent);
+
 	if ( !n )
 	{
 		gi.WPrintf( "Usage: cin <command> <arg1> ... <argn>\n");
@@ -351,6 +355,8 @@ qboolean G_SoundCmd( const gentity_t *ent )
 	const char *cmd;
 	int   i;
 	int   n;
+
+	Q_UNUSED(ent);
 	
 	n = gi.argc();
 	if ( !n )
@@ -384,6 +390,7 @@ qboolean G_SoundCmd( const gentity_t *ent )
 char *ClientName(int client, char *name, int size);
 qboolean G_VTaunt( const gentity_t *ent )
 {
+	Q_UNUSED(ent);
 // NOTE: vtant, vsay, vosay are q3's specific hotkey chat mechanisms.  we don't have these so this is a stub
 // function right now.
 /*
@@ -652,6 +659,8 @@ qboolean G_EventListCmd( const gentity_t *ent )
 {
 	const char *mask;
 	
+	Q_UNUSED(ent);
+
 	mask = NULL;
 	if ( gi.argc() > 1 )
 	{
@@ -666,6 +675,8 @@ qboolean G_EventListCmd( const gentity_t *ent )
 qboolean G_PendingEventsCmd( const gentity_t *ent )
 {
 	const char *mask;
+
+	Q_UNUSED(ent);
 	
 	mask = NULL;
 	if ( gi.argc() > 1 )
@@ -682,6 +693,8 @@ qboolean G_EventHelpCmd( const gentity_t *ent )
 {
 	const char *mask;
 	
+	Q_UNUSED(ent);
+
 	mask = NULL;
 	if ( gi.argc() > 1 )
 	{
@@ -697,6 +710,8 @@ qboolean G_DumpEventsCmd( const gentity_t *ent )
 {
 	const char *mask;
 	
+	Q_UNUSED(ent);
+
 	mask = NULL;
 	if ( gi.argc() > 1 )
 	{
@@ -711,6 +726,8 @@ qboolean G_DumpEventsCmd( const gentity_t *ent )
 qboolean G_ClassEventsCmd( const gentity_t *ent )
 {
 	const char *className;
+
+	Q_UNUSED(ent);
 	
 	className = NULL;
 	if ( gi.argc() < 2 )
@@ -730,6 +747,8 @@ qboolean G_DumpClassEventsCmd( const gentity_t *ent )
 {
 	const char *className;
 	
+	Q_UNUSED(ent);
+
 	className = NULL;
 	if ( gi.argc() < 2 )
 	{
@@ -750,6 +769,8 @@ qboolean G_DumpAllClassesCmd( const gentity_t *ent )
 	const char *filename = NULL;
 	int typeFlag = EVENT_ALL;
 	int outputFlag = OUTPUT_ALL;
+
+	Q_UNUSED(ent);
 	
 	if ( gi.argc() > 1 )
 	{   
@@ -779,6 +800,8 @@ qboolean G_DumpAllClassesCmd( const gentity_t *ent )
 
 qboolean G_ClassListCmd( const gentity_t *ent )
 {
+	Q_UNUSED(ent);
+
 	listAllClasses();
 	
 	return true;
@@ -821,7 +844,9 @@ qboolean G_ScriptCmd( const gentity_t *ent )
 	int i, argc;
 	const char *argv[ 32 ];
 	char args[ 32 ][ 64 ];
-	
+
+	Q_UNUSED(ent);
+
 	argc = 0;
 	for( i = 1; i < gi.argc(); i++ )
 	{
@@ -845,6 +870,8 @@ qboolean G_ClientRunThreadCmd( const gentity_t *ent )
 	str		threadName;
 	CThread	*thread;
 	
+	Q_UNUSED(ent);
+
 	// Get the thread name
 	
 	if ( !gi.argc() )
@@ -875,6 +902,7 @@ qboolean G_ClientSetVarCmd( const gentity_t *ent )
 	str		varName;
 	str		value;
 	
+	Q_UNUSED(ent);
 	
 	if ( gi.argc() != 3 )
 		return true;
@@ -1038,6 +1066,8 @@ void PrintVariableList( ScriptVariableList * list )
 
 qboolean G_LevelVarsCmd( const gentity_t *ent )
 {
+	Q_UNUSED(ent);
+
 	gi.Printf( "Level Variables\n" );
 	PrintVariableList( &levelVars );
 	
@@ -1046,6 +1076,8 @@ qboolean G_LevelVarsCmd( const gentity_t *ent )
 
 qboolean G_GameVarsCmd( const gentity_t *ent )
 {
+	Q_UNUSED(ent);
+
 	gi.Printf( "Game Variables\n" );
 	PrintVariableList( &gameVars );
 	
@@ -1070,6 +1102,8 @@ qboolean G_SetGameplayFloatCmd( const gentity_t *ent )
 	str propname;
 	str create = "0";
 	float value = 1.0f;
+
+	Q_UNUSED(ent);
 
 	// Check for not enough args
 	if ( gi.argc() < 4 )
@@ -1110,6 +1144,8 @@ qboolean G_SetGameplayStringCmd( const gentity_t *ent )
 	str propname;
 	str valuestr;
 	str create = "0";
+
+	Q_UNUSED(ent);
 
 	// Check for not enough args
 	if ( gi.argc() < 4 )

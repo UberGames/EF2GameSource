@@ -419,7 +419,7 @@ void Spawn::postSpawn( Entity *spawn )
 	}
 }
 
-void Spawn::DoSpawn( Event *ev )
+void Spawn::DoSpawn( Event * )
 {
 	Entity *spawn;
 	SpawnArgs args;
@@ -534,13 +534,13 @@ void Spawn::setSpawnKeyValue( Event *ev )
 	_values.AddObject( value );
 }
 
-void Spawn::clearSpawnKeyValues( Event *ev )
+void Spawn::clearSpawnKeyValues( Event * )
 {
 	_keys.ClearObjectList();
 	_values.ClearObjectList();
 }
 
-void Spawn::setCheckForSpace( Event *ev )
+void Spawn::setCheckForSpace( Event * )
 {
 	_checkForSpace = true;
 }
@@ -612,7 +612,7 @@ void RandomSpawn::MaxTime( Event *ev )
 	max_time = ev->GetFloat( 1 );
 }
 
-void RandomSpawn::ToggleSpawn( Event *ev )
+void RandomSpawn::ToggleSpawn( Event * )
 {
 	if ( EventPending( EV_RandomSpawn_Think ) )
 	{
@@ -625,7 +625,7 @@ void RandomSpawn::ToggleSpawn( Event *ev )
 	}
 }
 
-void RandomSpawn::Think( Event *ev )
+void RandomSpawn::Think( Event * )
 {
 	CancelEventsOfType( EV_RandomSpawn_Think );
 	
@@ -654,7 +654,7 @@ CLASS_DECLARATION( Spawn, ReSpawn, "func_respawn" )
 	{ NULL, NULL }
 };
 
-void ReSpawn::DoSpawn( Event *ev )
+void ReSpawn::DoSpawn( Event * )
 {
 	Entity      *spawn;
 	SpawnArgs   args;

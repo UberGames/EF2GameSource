@@ -1315,7 +1315,7 @@ void CThread::TerminateThread( Event *ev )
 	Director.KillThread( threadnum );
 }
 
-void CThread::EventPause( Event *ev )
+void CThread::EventPause( Event * )
 {
 	DoMove();
 	
@@ -1546,7 +1546,7 @@ void CThread::EventWaitForAnimation( Event *ev )
 	doneProcessing = true;
 }
 
-void CThread::EventWaitForPlayer( Event *ev )
+void CThread::EventWaitForPlayer( Event * )
 {
 	if ( !Director.PlayerReady() )
 	{
@@ -1594,7 +1594,7 @@ void CThread::PrintVector( Event *ev )
 	gi.DPrintf( "(%.2f %.2f %.2f)", vec.x, vec.y, vec.z );
 }
 
-void CThread::NewLine( Event *ev )
+void CThread::NewLine( Event * )
 {
 	gi.DPrintf( "\n" );
 }
@@ -1604,7 +1604,7 @@ void CThread::Assert( Event *ev )
 	assert( ev->GetFloat( 1 ) );
 }
 
-void CThread::Break( Event *ev )
+void CThread::Break( Event * )
 {
 	// Break into the debugger
 #ifdef _WIN32
@@ -1662,7 +1662,7 @@ void CThread::ThreadCallback( Event *ev )
 	}
 }
 
-void CThread::DeathCallback( Event *ev )
+void CThread::DeathCallback( Event * )
 {
 	if ( threadDying )
 	{
@@ -1848,12 +1848,12 @@ void CThread::MapEvent( Event *ev )
 	doneProcessing = true;
 }
 
-void CThread::noIntermission( Event *ev )
+void CThread::noIntermission( Event * )
 {
 	level._showIntermission = false;
 }
 
-void CThread::dontSaveOrientation( Event *ev )
+void CThread::dontSaveOrientation( Event * )
 {
 	level._saveOrientation = false;
 }
@@ -1863,7 +1863,7 @@ void CThread::setPlayerDeathThread( Event *ev )
 	level.setPlayerDeathThread( ev->GetString( 1 ) );
 }
 
-void CThread::endPlayerDeathThread( Event *ev )
+void CThread::endPlayerDeathThread( Event * )
 {
 	G_FinishMissionFailed();
 }
@@ -1941,17 +1941,17 @@ void CThread::CuePlayer( Event *ev )
 	SetCamera( NULL, switchTime );
 }
 
-void CThread::FreezePlayer( Event *ev )
+void CThread::FreezePlayer( Event * )
 {
 	level.playerfrozen = true;
 }
 
-void CThread::ReleasePlayer( Event *ev )
+void CThread::ReleasePlayer( Event * )
 {
 	level.playerfrozen = false;
 }
 
-void CThread::FakePlayer( Event *ev )
+void CThread::FakePlayer( Event * )
 {
 	Player *player;
 	
@@ -1962,7 +1962,7 @@ void CThread::FakePlayer( Event *ev )
 	}
 }
 
-void CThread::RemoveFakePlayer( Event *ev )
+void CThread::RemoveFakePlayer( Event * )
 {
 	Player *player;
 	
@@ -2132,7 +2132,7 @@ void CThread::FadeIn( Event *ev )
 	}
 }
 
-void CThread::ClearFade( Event *ev )
+void CThread::ClearFade( Event * )
 {
 	// this is now handled server side
 	//gi.SendServerCommand( NULL, "clearfade" );
@@ -2271,17 +2271,17 @@ void CThread::SoundtrackEvent( Event *ev )
 	ChangeSoundtrack( ev->GetString( 1 ) );
 }
 
-void CThread::RestoreSoundtrackEvent( Event *ev )
+void CThread::RestoreSoundtrackEvent( Event * )
 {
 	RestoreSoundtrack();
 }
 
-void CThread::SetCinematic( Event *ev )
+void CThread::SetCinematic( Event * )
 {
 	G_StartCinematic();
 }
 
-void CThread::SetNonCinematic( Event *ev )
+void CThread::SetNonCinematic( Event * )
 {
 	G_StopCinematic();
 	//level.cinematic = false;

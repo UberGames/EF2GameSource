@@ -858,7 +858,7 @@ void Animate::StopAnimatingAtEnd( bodypart_t part )
 
 // Legs
 
-void Animate::Legs_AnimDoneEvent( Event *ev )
+void Animate::Legs_AnimDoneEvent( Event * )
 {
 	EndAnim( legs );
 }
@@ -887,7 +887,7 @@ void Animate::Legs_SetFrameEvent( Event *ev )
 }
 
 // HACK HACK HACK
-void Animate::Legs_StopAnimating( Event *ev )
+void Animate::Legs_StopAnimating( Event * )
 {
 	CancelFlaggedEvents( EVENT_LEGS_ANIM );
 	self->CancelFlaggedEvents( EVENT_LEGS_ANIM );
@@ -895,7 +895,7 @@ void Animate::Legs_StopAnimating( Event *ev )
 
 // Torso
 
-void Animate::Torso_AnimDoneEvent( Event *ev )
+void Animate::Torso_AnimDoneEvent( Event * )
 {
 	EndAnim( torso );
 }
@@ -924,7 +924,7 @@ void Animate::Torso_SetFrameEvent( Event *ev )
 }
 
 // HACK HACK HACK
-void Animate::Torso_StopAnimating( Event *ev )
+void Animate::Torso_StopAnimating( Event * )
 {
 	CancelFlaggedEvents( EVENT_TORSO_ANIM );
 	self->CancelFlaggedEvents( EVENT_TORSO_ANIM );

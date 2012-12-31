@@ -307,7 +307,7 @@ bool CinematicArmature::loadCinematic( const str &cinematicName )
 // Returns:		None
 // 
 //===============================================================
-void CinematicArmature::debugCinematics( Event *ev )
+void CinematicArmature::debugCinematics( Event * )
 {
 	_debug = !_debug ;
 }
@@ -481,7 +481,7 @@ void CinematicActor::setAfterBehavior( const str &actorBehaviorName )
 // Returns:		None
 // 
 //===============================================================
-void CinematicActor::actorControlLostEvent( Event *ev )
+void CinematicActor::actorControlLostEvent( Event * )
 {
 	_hasActorControl = false ;
 }
@@ -499,7 +499,7 @@ void CinematicActor::actorControlLostEvent( Event *ev )
 // Returns:		None
 // 
 //===============================================================
-void CinematicActor::actorBehaviorFinishedEvent( Event *ev )
+void CinematicActor::actorBehaviorFinishedEvent( Event * )
 {
 	assert( _actor );
 
@@ -1274,7 +1274,7 @@ void CinematicCamera::_spawn( void )
 // Returns:		None
 // 
 //===============================================================
-void CinematicCamera::_handleStopPlayingEvent( Event *ev )
+void CinematicCamera::_handleStopPlayingEvent( Event * )
 {
 	_playing = false ;
 }
@@ -1530,7 +1530,7 @@ bool CinematicCut::parse( Script &cinematicFile )
 // Returns:		
 // 
 //===============================================================
-void CinematicCut::_handleFadeOutEvent( Event *ev )
+void CinematicCut::_handleFadeOutEvent( Event * )
 {
 	level.m_fade_color		= Vector( 0.0f, 0.0f, 0.0f );
 	level.m_fade_time_start	= _fadeOut * 0.05 ;
@@ -1554,7 +1554,7 @@ void CinematicCut::_handleFadeOutEvent( Event *ev )
 // Returns:		None
 // 
 //===============================================================
-void CinematicCut::_handleCutEvent( Event *ev )
+void CinematicCut::_handleCutEvent( Event * )
 {
 	if ( _cinematicCamera )
 	{

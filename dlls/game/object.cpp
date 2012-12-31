@@ -105,7 +105,7 @@ void Object::SetAnim( Event *ev )
 	}
 }
 
-void Object::Setup( Event *ev )
+void Object::Setup( Event * )
 {
 	if ( !health )
 	{
@@ -114,7 +114,7 @@ void Object::Setup( Event *ev )
 	}
 }
 
-void Object::MakeShootable( Event *ev )
+void Object::MakeShootable( Event * )
 {
 	setContents( CONTENTS_SHOOTABLE_ONLY );
 	link();

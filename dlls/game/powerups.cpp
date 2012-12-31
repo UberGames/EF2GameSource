@@ -138,6 +138,8 @@ Item *PowerupBase::ItemPickup( Entity *other, qboolean add_to_inventory, qboolea
 	Player *player;
 	str      realname;
 
+	Q_UNUSED(add_to_inventory);
+
 	if ( !other->isSubclassOf( Player ) )
 		return NULL;
 
@@ -378,6 +380,8 @@ CLASS_DECLARATION( Powerup, PowerupProtection, NULL )
 
 float PowerupProtection::getDamageTaken( Entity *attacker, float damage, int meansOfDeath )
 {
+	Q_UNUSED(attacker);
+
 	// Always take telefrag damage
 
 	if ( meansOfDeath == MOD_TELEFRAG )
@@ -397,6 +401,8 @@ CLASS_DECLARATION( PowerupProtection, PowerupProtectionTemp, NULL )
 float PowerupProtectionTemp::getDamageDone( float damage, int meansOfDeath )
 {
 	_timeLeft = 0.0f;
+
+	Q_UNUSED(meansOfDeath);
 
 	if ( owner )
 	{
@@ -458,6 +464,8 @@ PowerupInvisibility::~PowerupInvisibility()
 
 void PowerupInvisibility::specificUpdate( float frameTime )
 {
+	Q_UNUSED(frameTime);
+
 	if ( _owner )
 	{
 		// Start the invisibility effect
@@ -627,7 +635,7 @@ void Rune::cacheStrings( void )
 	G_FindConfigstringIndex( va( "$$Dropping$$ $$Item-%s$$", getName().c_str() ), CS_GENERAL_STRINGS, MAX_GENERAL_STRINGS, true );
 }
 
-void Rune::respawnAtOriginalOrigin( Event *ev )
+void Rune::respawnAtOriginalOrigin( Event * )
 {
 	if ( _originalOriginSet )
 	{
@@ -669,6 +677,8 @@ void RuneAmmoRegen::specificUpdate( float frameTime )
 {
 	str ammoType;
 	Weapon *weapon;
+
+	Q_UNUSED(frameTime);
 
 	if ( _owner && ( level.time > _nextGiveTime ) && _owner->isSubclassOf( Player ) )
 	{
@@ -1046,6 +1056,8 @@ bool HoldableItemExplosive::findPlaceToSet( Vector &newOrigin, Vector &newAngles
 
 void HoldableItemExplosive::specificUpdate( float frameTime )
 {
+	Q_UNUSED(frameTime);
+
 	if ( _explosiveArmed )
 	{
 		if ( _explosiveAlive )

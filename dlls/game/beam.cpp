@@ -497,7 +497,7 @@ void FuncBeam::SetDelay( Event *ev )
 	}
 }
 
-void FuncBeam::Deactivate( Event *ev )
+void FuncBeam::Deactivate( Event * )
 {
 	hideModel();
 	
@@ -523,7 +523,7 @@ void FuncBeam::SetPersist( Event *ev )
 		edict->s.skinNum &= ~BEAM_PERSIST_EFFECT;
 }
 
-void FuncBeam::Shoot( Event *ev )
+void FuncBeam::Shoot( Event * )
 {
 	trace_t  trace;
 	Vector   start, end;
@@ -546,7 +546,7 @@ void FuncBeam::Shoot( Event *ev )
 	PostEvent( EV_FuncBeam_Shoot, 0.1f );
 }
 
-void FuncBeam::Activate( Event *ev )
+void FuncBeam::Activate( Event * )
 {
 	Vector      forward;
 	trace_t     trace;
@@ -617,7 +617,7 @@ void FuncBeam::UpdateOrigin( Event *ev )
 	}
 }
 
-void FuncBeam::FindEndpoint( Event *ev )
+void FuncBeam::FindEndpoint( Event * )
 {
 	if ( target && strlen( target ) )
 	{

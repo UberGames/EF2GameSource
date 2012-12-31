@@ -51,7 +51,7 @@ Mover::~Mover()
 {
 }
 
-void Mover::MoveDone( Event *ev )
+void Mover::MoveDone( Event * )
 {
 	Event * event;
 	Vector move;

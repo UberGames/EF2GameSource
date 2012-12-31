@@ -773,6 +773,7 @@ __declspec(naked) float Q_rsqrt ( float f )
 		fsubp		st(1), st
 		ret
 	}
+	Q_UNUSED(f);
 }
 #endif
 
@@ -1327,6 +1328,9 @@ LSetSides:
 Lerror:
 		int 3
 	}
+	Q_UNUSED(p);
+	Q_UNUSED(emins);
+	Q_UNUSED(emaxs);
 }
 #pragma warning( default: 4035 )
 #endif
@@ -1657,7 +1661,7 @@ unsigned short NormalToLatLong( const vec3_t normal )
 
 float bias(float a, float b)
 {
-	return (float)( pow(a, log(b) / log(0.5)) );
+	return (float)( pow(a, (float)(log(b) / log(0.5))) );
 }
 
 float gain(float a, float b)
@@ -1669,9 +1673,9 @@ float gain(float a, float b)
 	else if ( a > .999f )
 		return 1.0f;
 	if ( a < 0.5f )
-		return (float)pow( 2.0 * a, p) / 2.0f;
+		return (float)pow( (float)(2.0 * a), p) / 2.0f;
 	else
-		return 1.0f - (float)pow( 2.0 * (1.0 - a), p ) / 2.0f;
+		return 1.0f - (float)pow( (float)(2.0 * (1.0 - a)), p ) / 2.0f;
 }
 
 float noise(float vec[], int len)

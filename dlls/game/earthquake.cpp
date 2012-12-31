@@ -128,7 +128,7 @@ void Earthquake::SetDistance( Event *ev )
 	_distance = ev->GetFloat( 1 );
 }
 
-void Earthquake::Activate( Event *ev )
+void Earthquake::Activate( Event * )
 {
 	// The eartquake has been activated
 
@@ -219,7 +219,7 @@ void Earthquake::Think( void )
 }
 
 
-void Earthquake::Deactivate( Event *ev )
+void Earthquake::Deactivate( Event * )
 {
 	// Remove ourselves from the level list of earthquakes
 

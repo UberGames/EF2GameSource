@@ -677,7 +677,7 @@ void SplinePath::SetThread( Event *ev )
 	SetThread( ev->GetString( 1 ) );
 }
 
-void SplinePath::CreatePath( Event *ev )
+void SplinePath::CreatePath( Event * )
 {
 	const char  *target;
 	Entity      *ent;

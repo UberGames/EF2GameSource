@@ -612,7 +612,7 @@ void ExplodeObject::SetSeverity( Event *ev )
 	severity = ev->GetFloat( 1 );
 }
 
-void ExplodeObject::ExplodeTiki( Event *ev )
+void ExplodeObject::ExplodeTiki( Event * )
 {
 	spawnflags |= VISIBLE;
 	spawnflags |= NO_EXPLOSIONS;
@@ -818,7 +818,7 @@ ExplodeObject::ExplodeObject()
 	_earthquakeDistance = 500.0f;
 }
 
-void ExplodeObject::setSpawnEarthquake( Event *ev )
+void ExplodeObject::setSpawnEarthquake( Event * )
 { 
 	_spawnEarthquake = true;
 }

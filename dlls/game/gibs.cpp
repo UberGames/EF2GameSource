@@ -117,7 +117,7 @@ Gib::Gib()
 	scale             = 2.0f;
 }
 
-void Gib::Stop( Event *ev )
+void Gib::Stop( Event * )
 {
 	//setSolidType( SOLID_NOT );
 	if ( blood )
@@ -125,7 +125,7 @@ void Gib::Stop( Event *ev )
 	blood = NULL;
 }
 
-void Gib::Splat( Event *ev )
+void Gib::Splat( Event * )
 {
 	if ( multiplayerManager.inMultiplayer() )
 		return;
@@ -268,5 +268,5 @@ void Gib::Throw( Event *ev )
 
 void CreateGibs( Entity * ent, float damage, float scale, int num, const char * modelname )
 {
-	
+	Q_UNUSED(ent); Q_UNUSED(damage); Q_UNUSED(scale); Q_UNUSED(num); Q_UNUSED(modelname);
 }

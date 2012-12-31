@@ -48,6 +48,8 @@ Item *AmmoEntity::ItemPickup( Entity *other, qboolean add_to_inventory, qboolean
 	Sentient *player;
 	str      realname;
 	int amountUsed;
+
+	Q_UNUSED(add_to_inventory);
 	
 	if ( !other->isSubclassOf( Player ) )
 		return NULL;

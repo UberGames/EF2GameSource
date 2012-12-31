@@ -79,6 +79,8 @@ EFGameComponent::EFGameComponent( const Actor *actor )
 
 void EFGameComponent::DoArchive( Archiver &arc , const Actor *actor )
 {
+	Q_UNUSED(arc);
+
 	if ( actor )
 		act = (Actor *)actor;
 	else
@@ -90,7 +92,7 @@ void EFGameComponent::DoArchive( Archiver &arc , const Actor *actor )
 // Parameters:  Entity *ent
 // Description: Custom Game Death Handler
 //
-void EFGameComponent::HandleDeath( const Entity *ent )
+void EFGameComponent::HandleDeath( const Entity * )
 {
 	
 }
@@ -101,7 +103,7 @@ void EFGameComponent::HandleDeath( const Entity *ent )
 // Parameters:  Event *ev
 // Description: Custom Game Armor Damage Handler
 //
-void EFGameComponent::HandleArmorDamage( Event *ev )
+void EFGameComponent::HandleArmorDamage( Event * )
 {
 	
 	
@@ -136,7 +138,7 @@ void EFGameComponent::HandleEvent( Event *ev )
 // Parameters: Conditional &condition
 // Description: Custom Game conditional check handler
 //
-qboolean EFGameComponent::DoCheck ( const Conditional &condition )
+qboolean EFGameComponent::DoCheck ( const Conditional & )
 {
 	return false;
 }

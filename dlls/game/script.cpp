@@ -649,7 +649,8 @@ const char *Script::GetMacroString( const char *theMacroName )
 //================================================================
 void Script::AddMacro(const char *name, const char *value)
 {
-
+	Q_UNUSED(name);
+	Q_UNUSED(value);
 }
 
 /*

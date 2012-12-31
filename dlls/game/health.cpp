@@ -201,7 +201,7 @@ void Health::PickupHealth( Event *ev )
 // Returns:			None
 //
 //--------------------------------------------------------------
-void HealthInventoryItem::processGameplayData( Event *ev )
+void HealthInventoryItem::processGameplayData( Event * )
 {
 	GameplayManager *gpm = GameplayManager::getTheGameplayManager();
 	if ( !gpm->hasObject(getArchetype()) )

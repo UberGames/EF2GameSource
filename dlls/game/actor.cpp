@@ -3451,7 +3451,7 @@ Actor::~Actor()
 // Parameters:  Event *ev
 // Description: Event Interface for Sleep()
 //
-void Actor::Sleep( Event *ev )
+void Actor::Sleep( Event * )
    {
    Sleep();
    }
@@ -3488,7 +3488,7 @@ void Actor::Sleep( void )
 // Parameters:  Event *ev
 // Description: Event interface for Wakeup()
 //
-void Actor::Wakeup( Event *ev )
+void Actor::Wakeup( Event * )
    {
    Wakeup();
    }
@@ -3534,7 +3534,7 @@ void Actor::Wakeup( void )
 // Parameters:  Event *ev
 // Description: Handles some initialization of the Actor
 //
-void Actor::Start( Event *ev )
+void Actor::Start( Event * )
 	{
 	// Register with other parts of self if there are any
 	if ( target.length() > 0 )
@@ -3968,7 +3968,7 @@ void Actor::ResetEyeEvent(	Event *ev )
 // Parameters:  Event *ev
 // Description: Resets the torso
 //
-void Actor::ResetTorsoEvent( Event *ev	)
+void Actor::ResetTorsoEvent( Event *	)
 	{
 	/*
    Event *event;
@@ -5902,7 +5902,7 @@ void Actor::SetTorsoBehavior(	Behavior *newTorsoBehavior, Event *startevent, CTh
 // Parameters:  Event *ev
 // Description: Calls EndBehavior
 //
-void Actor::EndBehaviorEvent( Event *ev )
+void Actor::EndBehaviorEvent( Event * )
 	{
 	EndBehavior();
 	}
@@ -5913,7 +5913,7 @@ void Actor::EndBehaviorEvent( Event *ev )
 // Parameters:  Event *ev
 // Description: Calls EndHeadBehavior
 //
-void Actor::EndHeadBehaviorEvent( Event *ev )
+void Actor::EndHeadBehaviorEvent( Event * )
 	{
 	EndHeadBehavior();
 	}
@@ -5924,7 +5924,7 @@ void Actor::EndHeadBehaviorEvent( Event *ev )
 // Parameters:  Event *ev
 // Description: Calls EndEyeBehavior
 //
-void Actor::EndEyeBehaviorEvent( Event *ev )
+void Actor::EndEyeBehaviorEvent( Event * )
 	{
    EndEyeBehavior();
 	}
@@ -5935,7 +5935,7 @@ void Actor::EndEyeBehaviorEvent( Event *ev )
 // Parameters:  Event *ev
 // Description: Calls EndTorsoBehavior
 //
-void Actor::EndTorsoBehaviorEvent( Event *ev	)
+void Actor::EndTorsoBehaviorEvent( Event *	)
 	{
    EndTorsoBehavior();
 	}
@@ -5946,7 +5946,7 @@ void Actor::EndTorsoBehaviorEvent( Event *ev	)
 // Parameters:  Event *ev
 // Description: Tells the current behavior that the anim is done
 //
-void Actor::NotifyBehavior( Event *ev )
+void Actor::NotifyBehavior( Event * )
 	{
 	if ( behavior )
 		{
@@ -5961,7 +5961,7 @@ void Actor::NotifyBehavior( Event *ev )
 // Parameters:  Event *ev
 // Description: Tells the current head behavior that the anim is done
 //
-void Actor::NotifyHeadBehavior( Event *ev	)	
+void Actor::NotifyHeadBehavior( Event *	)	
 	{
 	if ( headBehavior )
 		{
@@ -5976,7 +5976,7 @@ void Actor::NotifyHeadBehavior( Event *ev	)
 // Parameters:  Event *ev
 // Description: Tells the current eye behavior that the anim is done
 //
-void Actor::NotifyEyeBehavior( Event *ev )
+void Actor::NotifyEyeBehavior( Event * )
 	{
 	if ( eyeBehavior )
 		{
@@ -5991,7 +5991,7 @@ void Actor::NotifyEyeBehavior( Event *ev )
 // Parameters:  Event *ev
 // Description: Tells the current torso behavior that the anim is done
 //
-void Actor::NotifyTorsoBehavior( Event *ev )
+void Actor::NotifyTorsoBehavior( Event * )
 	{
 	if ( torsoBehavior )
 		{
@@ -6039,7 +6039,7 @@ void Actor::SetDialogMode( Event *ev )
 
 
 
-void Actor::RunAlertThread ( Event *ev	)
+void Actor::RunAlertThread ( Event *	)
 	{
 	if (alert_thread.length() )
 		RunThread(alert_thread);
@@ -6073,6 +6073,9 @@ qboolean Actor::CloseToEnemy ( const Vector &pos, float howclose	)
 	{
 		// Get our current enemy
 	Entity *currentEnemy;
+
+	Q_UNUSED(pos);
+
 	currentEnemy = enemyManager->GetCurrentEnemy();
 	if ( !currentEnemy )
 		return false;
@@ -6452,12 +6455,12 @@ void Actor::ChangeAnim( void )
 	
 	}
 
-void Actor::AnimDone( Event *ev )
+void Actor::AnimDone( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_ANIM_DONE, true );
 	}
 
-void Actor::TorsoAnimDone(	Event *ev )	
+void Actor::TorsoAnimDone(	Event * )	
 	{
 	SetActorFlag( ACTOR_FLAG_TORSO_ANIM_DONE, true );
 	}
@@ -6750,7 +6753,7 @@ void Actor::IfEnemyWithinEvent( Event *ev	)
 //
 //***********************************************************************************************
 
-void Actor::NoPainSounds( Event *ev	)
+void Actor::NoPainSounds( Event *	)
 	{
 	SetActorFlag( ACTOR_FLAG_NO_PAIN_SOUNDS, true );
 	}
@@ -7017,7 +7020,7 @@ void Actor::CheckStun( void )
 		SetActorFlag( ACTOR_FLAG_STUNNED, false );
 	}
 
-void Actor::Dead( Event *ev )
+void Actor::Dead( Event * )
 	{
    Vector   min, max;
 
@@ -8003,7 +8006,7 @@ void Actor::SpawnBlood(	Event *ev )
 	PostEvent( attach_event, 0.0f );
 	}
 
-void Actor::RemoveUselessBody( Event *ev )
+void Actor::RemoveUselessBody( Event * )
    {
 
    PostEvent( EV_FadeOut, 5.0f );
@@ -8019,7 +8022,7 @@ void Actor::SetKillThreadEvent( Event *ev )
    kill_thread = ev->GetString( 1 );
    }
 
-void Actor::DeathFadeEvent( Event *ev )
+void Actor::DeathFadeEvent( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_DEATHFADE, true );
 	}
@@ -8029,17 +8032,17 @@ void Actor::setDeathEffect( Event *ev )
 	_deathEffect = ev->GetString( 1 );
 }
 
-void Actor::DeathShrinkEvent(	Event *ev )
+void Actor::DeathShrinkEvent(	Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_DEATHSHRINK, true );
 	}
 
-void Actor::DeathSinkEvent( Event *ev )
+void Actor::DeathSinkEvent( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_DEATHSINK, true );
 	}
 
-void Actor::StaySolidEvent( Event *ev )
+void Actor::StaySolidEvent( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_STAYSOLID, true );
 	}
@@ -8097,7 +8100,7 @@ void Actor::SetDeathSize( Event *ev	)
 		setSize( death_min, death_max );
 	}
 
-void Actor::FadeEvent( Event *ev	)
+void Actor::FadeEvent( Event *	)
 	{
 	SetActorFlag( ACTOR_FLAG_FADING_OUT, true );
 
@@ -8130,12 +8133,12 @@ void Actor::FadeEvent( Event *ev	)
 //
 //***********************************************************************************************
 
-void Actor::SimplePathfinding( Event *ev )
+void Actor::SimplePathfinding( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_SIMPLE_PATHFINDING, true );
 	}
 
-void Actor::SetCanWalkOnOthers( Event *ev )
+void Actor::SetCanWalkOnOthers( Event * )
    {
    SetActorFlag( ACTOR_FLAG_CAN_WALK_ON_OTHERS, true );
    }
@@ -8150,7 +8153,7 @@ void Actor::ForwardSpeedEvent( Event *ev )
    movementSubsystem->setForwardSpeed( ev->GetFloat( 1 ) );
    }
 
-void Actor::SwimEvent( Event *ev )
+void Actor::SwimEvent( Event * )
    {
    flags &= ~FL_FLY;
    flags |= FL_SWIM;
@@ -8180,7 +8183,7 @@ void Actor::FlyEvent( Event *ev )
 		}
    }
 
-void Actor::NotLandEvent( Event *ev )
+void Actor::NotLandEvent( Event * )
    {
    flags &= FL_SWIM | FL_FLY;
    }
@@ -8364,7 +8367,7 @@ void Actor::ShowInfo(void)
 //
 //***********************************************************************************************
 
-void Actor::TurnAIOn(Event *ev)
+void Actor::TurnAIOn(Event *)
 	{
    TurnAIOn();
 	}
@@ -8385,7 +8388,7 @@ void Actor::TurnAIOn( void	)
 	
 	}
 
-void Actor::TurnAIOff( Event *ev	)
+void Actor::TurnAIOff( Event *	)
 	{
    TurnAIOff();
 	}
@@ -8502,7 +8505,7 @@ Player *GetPlayer( int index )
 
 
 // Temporary
-qboolean Actor::checkInAIMode( Conditional &condition )
+qboolean Actor::checkInAIMode( Conditional & )
 	{
 	if ( mode == ACTOR_MODE_AI )
 		return true;
@@ -8562,27 +8565,27 @@ qboolean Actor::checkActorFlag( Conditional &condition )
   
    }
 
-qboolean Actor::checkinactive( Conditional &condition )
+qboolean Actor::checkinactive( Conditional & )
    {
 	return GetActorFlag( ACTOR_FLAG_INACTIVE );
    }
 
-qboolean Actor::checkanimdone( Conditional &condition )
+qboolean Actor::checkanimdone( Conditional & )
    {
 	return GetActorFlag( ACTOR_FLAG_ANIM_DONE );
    }
 
-qboolean Actor::checktorsoanimdone( Conditional &condition )
+qboolean Actor::checktorsoanimdone( Conditional & )
    {
 	return GetActorFlag( ACTOR_FLAG_TORSO_ANIM_DONE );
    }
    
-qboolean Actor::checkdead( Conditional &condition )
+qboolean Actor::checkdead( Conditional & )
    {
 	return deadflag != 0;
    }
 
-qboolean Actor::checkhaveenemy( Conditional &condition )
+qboolean Actor::checkhaveenemy( Conditional & )
    {
 	// Get our current enemy
 	Entity *currentEnemy;	
@@ -8602,7 +8605,7 @@ qboolean Actor::checkhaveenemy( Conditional &condition )
 	return false;
    }
 
-qboolean Actor::checkenemydead( Conditional &condition )
+qboolean Actor::checkenemydead( Conditional & )
    {
 	return checkenemydead();
    }
@@ -8621,7 +8624,7 @@ qboolean Actor::checkenemydead( void )
 	return false;
 	}
 
-qboolean Actor::checkenemynoclip( Conditional &condition )
+qboolean Actor::checkenemynoclip( Conditional & )
    {
 	// Get our current enemy
 	Entity *currentEnemy;
@@ -8766,7 +8769,7 @@ qboolean Actor::checkcanseeplayer( Conditional &condition )
 
 	return real_can_see;
    }
-qboolean Actor::checkcanshootenemy( Conditional &condition )
+qboolean Actor::checkcanshootenemy( Conditional & )
    {
 	str tag_name;
 	
@@ -8786,7 +8789,7 @@ qboolean Actor::checkcanshootenemy( Conditional &condition )
    return combatSubsystem->CanAttackTarget( currentEnemy );
 	}
 
-qboolean Actor::checkCanAttackAnyEnemy ( Conditional &condition )
+qboolean Actor::checkCanAttackAnyEnemy ( Conditional & )
    {
    return enemyManager->CanAttackAnyEnemy();
    }
@@ -8818,7 +8821,7 @@ qboolean Actor::checkenemyinfov( Conditional &condition )
 		}
 	}
 
-qboolean Actor::checkenemyonground( Conditional &condition )
+qboolean Actor::checkenemyonground( Conditional & )
 	{
 	// Get our current enemy
 	Entity *currentEnemy;
@@ -8944,7 +8947,7 @@ qboolean Actor::checkenemyyawrange ( Conditional &condition )
 	
 	}
 
-qboolean Actor::checkcanjumptoenemy( Conditional &condition )
+qboolean Actor::checkcanjumptoenemy( Conditional & )
    {
 	// Get our current enemy
 	Entity *currentEnemy;
@@ -8955,7 +8958,7 @@ qboolean Actor::checkcanjumptoenemy( Conditional &condition )
 	return ( movementSubsystem->CanWalkTo( currentEnemy->origin, 0.0f, currentEnemy->entnum ) );
    }
 
-qboolean Actor::checkcanflytoenemy( Conditional &condition )
+qboolean Actor::checkcanflytoenemy( Conditional & )
    {
 	trace_t trace;
 
@@ -8976,12 +8979,12 @@ qboolean Actor::checkcanflytoenemy( Conditional &condition )
 	return false;
    }
 
-qboolean Actor::checkinpain( Conditional &condition )
+qboolean Actor::checkinpain( Conditional & )
    {
 	return ( state_flags & STATE_FLAG_IN_PAIN );
    }
 
-qboolean Actor::checksmallpain( Conditional &condition )
+qboolean Actor::checksmallpain( Conditional & )
    {
 	return ( state_flags & STATE_FLAG_SMALL_PAIN );
    }
@@ -9010,27 +9013,27 @@ qboolean Actor::checkpainpitch( Conditional &condition )
 		return false;
    }
 
-qboolean Actor::checkstunned( Conditional &condition )
+qboolean Actor::checkstunned( Conditional & )
    {
 	return GetActorFlag( ACTOR_FLAG_STUNNED );
    }
 
-qboolean Actor::checkfinished( Conditional &condition )
+qboolean Actor::checkfinished( Conditional & )
    {
 	return GetActorFlag( ACTOR_FLAG_FINISHED );
    }
 
-qboolean Actor::checkmeleehit( Conditional &condition )
+qboolean Actor::checkmeleehit( Conditional & )
    {
 	return ( state_flags & STATE_FLAG_MELEE_HIT );
    }
 
-qboolean Actor::checkblockedhit( Conditional &condition )
+qboolean Actor::checkblockedhit( Conditional & )
    {
 	return ( state_flags & STATE_FLAG_BLOCKED_HIT );
    }
 
-qboolean Actor::checkblocked( Conditional &condition )
+qboolean Actor::checkblocked( Conditional & )
    {
 	if ( attack_blocked && ( attack_blocked_time + .75 > level.time ) )
 		{
@@ -9041,47 +9044,47 @@ qboolean Actor::checkblocked( Conditional &condition )
 		return false;
    }
 
-qboolean Actor::checkonfire( Conditional &condition )
+qboolean Actor::checkonfire( Conditional & )
    {
 	return on_fire;
    }
 
-qboolean Actor::checkotherdied( Conditional &condition )
+qboolean Actor::checkotherdied( Conditional & )
    {
 	return ( state_flags & STATE_FLAG_OTHER_DIED );
    }
 
-qboolean Actor::checkstuck( Conditional &condition )
+qboolean Actor::checkstuck( Conditional & )
    {
 	return ( state_flags & STATE_FLAG_STUCK );
    }
 
-qboolean Actor::checknopath( Conditional &condition )
+qboolean Actor::checknopath( Conditional & )
    {
 	return ( state_flags & STATE_FLAG_NO_PATH );
    }
 
-qboolean Actor::checkbehaviordone( Conditional &condition )
+qboolean Actor::checkbehaviordone( Conditional & )
    {
 	return ( behavior == NULL );
    }
 
-qboolean Actor::checkheadbehaviordone( Conditional &condition )	
+qboolean Actor::checkheadbehaviordone( Conditional & )	
 	{
 	return ( headBehavior == NULL );
 	}
 
-qboolean Actor::checkeyebehaviordone( Conditional &condition )
+qboolean Actor::checkeyebehaviordone( Conditional & )
 	{
 	return ( eyeBehavior == NULL );
 	}
 
-qboolean Actor::checktorsobehaviordone( Conditional &condition )
+qboolean Actor::checktorsobehaviordone( Conditional & )
 	{
 	return ( torsoBehavior == NULL );
 	}
 
-qboolean Actor::checktorsobehaviorfailed( Conditional &condition )
+qboolean Actor::checktorsobehaviorfailed( Conditional & )
 {
 	return ( 
 			(torsoBehaviorCode != BEHAVIOR_SUCCESS) 
@@ -9089,12 +9092,12 @@ qboolean Actor::checktorsobehaviorfailed( Conditional &condition )
 		);
 }
 
-qboolean Actor::checktorsobehaviorsuccess( Conditional &condition )
+qboolean Actor::checktorsobehaviorsuccess( Conditional & )
 {
 	return (torsoBehaviorCode == BEHAVIOR_SUCCESS);
 }
 
-qboolean Actor::checktimedone( Conditional &condition )
+qboolean Actor::checktimedone( Conditional & )
    {
 	if ( GetActorFlag( ACTOR_FLAG_STATE_DONE_TIME_VALID ) )
       {
@@ -9169,7 +9172,7 @@ qboolean Actor::checkenemyrange ( Conditional &condition )
 	
 	}
 
-qboolean Actor::checkEnemyAttached( Conditional &condition )
+qboolean Actor::checkEnemyAttached( Conditional & )
 	{
    return haveAttached;
 	}
@@ -9605,12 +9608,12 @@ qboolean Actor::checkcommand( Conditional &condition )
 	return ( command == condition.getParm( 1 ) );
 	}
 
-qboolean Actor::checktouched( Conditional &condition )
+qboolean Actor::checktouched( Conditional & )
 	{
 	return state_flags & STATE_FLAG_TOUCHED;
 	}
 
-qboolean Actor::checktouchedbyplayer ( Conditional &condition )
+qboolean Actor::checktouchedbyplayer ( Conditional & )
    {
 	return checktouchedbyplayer();
    }
@@ -9620,7 +9623,7 @@ qboolean Actor::checktouchedbyplayer()
 	return state_flags & STATE_FLAG_TOUCHED_BY_PLAYER;	
 	}
 
-qboolean Actor::checkInTheWay( Conditional &condition )
+qboolean Actor::checkInTheWay( Conditional & )
 {
 	return checkInTheWay();
 }
@@ -9637,17 +9640,17 @@ qboolean Actor::checkInTheWay()
 	
 }
 
-qboolean Actor::checkactivated( Conditional &condition )
+qboolean Actor::checkactivated( Conditional & )
 	{
 	return state_flags & STATE_FLAG_ACTIVATED;
 	}
 
-qboolean Actor::checkused( Conditional &condition )
+qboolean Actor::checkused( Conditional & )
 	{
 	return ( state_flags & STATE_FLAG_USED );
 	}
 
-qboolean Actor::checktwitch( Conditional &condition )
+qboolean Actor::checktwitch( Conditional & )
 	{
 	return ( state_flags & STATE_FLAG_TWITCH );
 	}
@@ -9657,18 +9660,18 @@ qboolean Actor::checkhealth( Conditional &condition )
 	return ( health < (float)atof( condition.getParm( 1 ) ) );
 	}
 
-qboolean Actor::checkonground( Conditional &condition )
+qboolean Actor::checkonground( Conditional & )
 	{
 	CheckGround();
 	return groundentity != NULL;
 	}
 
-qboolean Actor::checkinwater( Conditional &condition )
+qboolean Actor::checkinwater( Conditional & )
 	{
 	return (waterlevel > 0 );
 	}
 
-qboolean Actor::checkincomingmeleeattack( Conditional &condition )
+qboolean Actor::checkincomingmeleeattack( Conditional & )
 	{
 	return checkincomingmeleeattack();
 	}
@@ -9711,7 +9714,7 @@ qboolean Actor::checkincomingmeleeattack()
 	return false;   
    }
 
-qboolean Actor::checkincomingrangedattack( Conditional &condition )
+qboolean Actor::checkincomingrangedattack( Conditional & )
    {  
 	//Entity *enemy_ent;
 	Sentient *enemy;
@@ -9788,7 +9791,7 @@ qboolean Actor::checkincomingprojectile( Conditional &condition )
 	return false;
 	}
 
-qboolean Actor::checkenemystunned( Conditional &condition )
+qboolean Actor::checkenemystunned( Conditional & )
 	{
 	Sentient *enemy;
 
@@ -9812,7 +9815,7 @@ qboolean Actor::checkenemystunned( Conditional &condition )
 	return false;
 	}
 
-qboolean Actor::checkenemyinpath( Conditional &condition )
+qboolean Actor::checkenemyinpath( Conditional & )
 	{
 	trace_t  trace;
 	Vector   end_pos;
@@ -9855,12 +9858,12 @@ qboolean Actor::checkstage( Conditional &condition )
 	return ( stage == (float)atoi( condition.getParm( 1 ) ) );
 	}
 
-qboolean Actor::checkheld( Conditional &condition )
+qboolean Actor::checkheld( Conditional & )
 	{
 	return ( edict->s.parent != ENTITYNUM_NONE );
 	}
 
-qboolean Actor::checkenemymelee( Conditional &condition )
+qboolean Actor::checkenemymelee( Conditional & )
 	{
 		// Get our current enemy
 	Entity *currentEnemy;
@@ -9871,7 +9874,7 @@ qboolean Actor::checkenemymelee( Conditional &condition )
 	return ( EntityHasFireType( currentEnemy, FT_MELEE ) );
 	}
 
-qboolean Actor::checkenemyranged( Conditional &condition )
+qboolean Actor::checkenemyranged( Conditional & )
 	{
 	// Get our current enemy
 	Entity *currentEnemy;
@@ -9882,7 +9885,7 @@ qboolean Actor::checkenemyranged( Conditional &condition )
 	return ( EntityHasFireType( currentEnemy, FT_BULLET ) || EntityHasFireType( currentEnemy, FT_PROJECTILE ) );
 	}
 
-qboolean Actor::checkplayerranged( Conditional &condition )
+qboolean Actor::checkplayerranged( Conditional & )
    {
 	return checkplayerranged();
    }
@@ -9932,12 +9935,12 @@ qboolean Actor::checkhasthing( Conditional &condition )
 	return false;
    }
 
-qboolean Actor::checkatcovernode( Conditional &condtion )
+qboolean Actor::checkatcovernode( Conditional & )
 	{
 	return GetActorFlag( ACTOR_FLAG_AT_COVER_NODE );
 	}
 
-qboolean Actor::checkallowhangback( Conditional &condition )
+qboolean Actor::checkallowhangback( Conditional & )
    {
 	return GetActorFlag( ACTOR_FLAG_ALLOW_HANGBACK );
    }
@@ -10025,7 +10028,7 @@ qboolean Actor::checkNodeExists(	Conditional &condition )
 	
 	}
 
-qboolean Actor::checkCoverNodes( Conditional &condition )
+qboolean Actor::checkCoverNodes( Conditional & )
 	{
 	for ( int i = 1 ; i <= thePathManager.NumberOfSpecialNodes(); i++ )   
 	{   
@@ -10101,7 +10104,7 @@ qboolean Actor::checkRegionDamaged( Conditional &condition )
 	return ( last_region_hit & region_bit );
 	}
 
-qboolean Actor::checkCaptured( Conditional &condition	)
+qboolean Actor::checkCaptured( Conditional &	)
 	{
    return ( GetActorFlag(ACTOR_FLAG_CAPTURED) );
 	}
@@ -10135,12 +10138,12 @@ qboolean Actor::checkCanWalkForward( Conditional &condition )
 		return false;
 	}
 
-qboolean Actor::checkHasThrowObject( Conditional &condition	)
+qboolean Actor::checkHasThrowObject( Conditional &	)
 	{
 	return haveThrowObject;
 	}
 
-qboolean Actor::checkEnemyIsThrowObject( Conditional &condition )
+qboolean Actor::checkEnemyIsThrowObject( Conditional & )
 	{
 	Entity* ent = 0;
 	
@@ -10159,7 +10162,7 @@ qboolean Actor::checkEnemyIsThrowObject( Conditional &condition )
 		
 	}
 
-qboolean Actor::checkTurretMode(	Conditional &condition )
+qboolean Actor::checkTurretMode(	Conditional & )
 	{
 	return GetActorFlag( ACTOR_FLAG_TURRET_MODE );
 	}
@@ -10173,12 +10176,12 @@ qboolean Actor::checkGameSpecific( Conditional &condition )
 	
 	}
 
-qboolean Actor::checkWeaponReady( Conditional &condition	)
+qboolean Actor::checkWeaponReady( Conditional &	)
 	{
 	return GetActorFlag( ACTOR_FLAG_WEAPON_READY );
 	}
 
-qboolean Actor::checkMeleeHitWorld(	Conditional &condition )
+qboolean Actor::checkMeleeHitWorld(	Conditional & )
 	{
 	qboolean hit;
 	if ( GetActorFlag( ACTOR_FLAG_MELEE_HIT_WORLD ) )
@@ -10192,7 +10195,7 @@ qboolean Actor::checkMeleeHitWorld(	Conditional &condition )
 	return hit;
 	}
 
-qboolean Actor::checkPlayerValid( Conditional &condition )
+qboolean Actor::checkPlayerValid( Conditional & )
 	{
  	Player *player = GetPlayer(0);
 
@@ -10262,27 +10265,27 @@ qboolean Actor::checkInPreferredRange( Conditional &condition )
 	return false;
 	}
 
-qboolean Actor::checkCrippled( Conditional &condition )
+qboolean Actor::checkCrippled( Conditional & )
    {
    return GetActorFlag( ACTOR_FLAG_CRIPPLED );
    }
 
-qboolean Actor::checkDisabled( Conditional &condition )
+qboolean Actor::checkDisabled( Conditional & )
 	{
 	return GetActorFlag( ACTOR_FLAG_DISABLED );
 	}
 
-qboolean Actor::checkInAlcove( Conditional &condition )
+qboolean Actor::checkInAlcove( Conditional & )
 	{
 	return GetActorFlag( ACTOR_FLAG_IN_ALCOVE );
 	}
 
-qboolean Actor::checkPlayerInCallVolume( Conditional &condition )
+qboolean Actor::checkPlayerInCallVolume( Conditional & )
    {
    return GetActorFlag(ACTOR_FLAG_PLAYER_IN_CALL_VOLUME);
    }
 
-qboolean Actor::checkInCallVolume( Conditional &condition )
+qboolean Actor::checkInCallVolume( Conditional & )
    {
    return GetActorFlag(ACTOR_FLAG_IN_CALL_VOLUME);
    }
@@ -10299,12 +10302,12 @@ qboolean Actor::checkUsingWeaponNamed ( const str &name )
    return combatSubsystem->UsingWeaponNamed( name );
    }
 
-qboolean Actor::checkOutOfTorsoRange( Conditional &condition )
+qboolean Actor::checkOutOfTorsoRange( Conditional & )
    {
    return GetActorFlag( ACTOR_FLAG_OUT_OF_TORSO_RANGE );
    }
 
-qboolean Actor::returntrue( Conditional &condition )
+qboolean Actor::returntrue( Conditional & )
    {
    return true;
    }
@@ -10627,7 +10630,7 @@ void Actor::PartName( Event *ev )
 	part_name = ev->GetString( 1 );
 	}
 
-void Actor::RegisterSelf( Event *ev	)
+void Actor::RegisterSelf( Event *	)
 	{
 	Entity *targetent;
 	Actor *targetact;
@@ -11195,7 +11198,7 @@ void Actor::PlayRadiusDialog( Sentient* user )
 	PlayDialog( user, DEFAULT_VOL, -1.0f, real_dialog.c_str() , NULL );
 	}
 
-void Actor::StopDialog(	Event *ev )
+void Actor::StopDialog(	Event * )
 	{
 	StopDialog();
 	}
@@ -11412,7 +11415,7 @@ void Actor::SetActorToActorDamageModifier( Event *ev )
 
 	}
 
-void Actor::ReturnProjectile(	Event *ev )
+void Actor::ReturnProjectile(	Event * )
 	{
 	// Get our current enemy
 	Entity *currentEnemy;
@@ -11465,7 +11468,7 @@ void Actor::FreeDialogList( void )
 
 
 
-void Actor::DialogDone( Event *ev )
+void Actor::DialogDone( Event * )
    {
 	SetActorFlag( ACTOR_FLAG_DIALOG_PLAYING, false );
 	SetActorFlag( ACTOR_FLAG_RADIUS_DIALOG_PLAYING, false );
@@ -11512,7 +11515,7 @@ void Actor::SetMouthAngle( Event *ev )
 		}
 	}
 
-void Actor::DialogAnimDone( Event *ev )
+void Actor::DialogAnimDone( Event * )
 	{
 	SetAnim( "idle" );
 	}
@@ -11846,7 +11849,7 @@ qboolean Actor::InLimbo( void	)
 //
 //***********************************************************************************************
 
-void Actor::IgnorePainFromActors( Event *ev )
+void Actor::IgnorePainFromActors( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_IGNORE_PAIN_FROM_ACTORS, true );
 	}
@@ -11889,7 +11892,7 @@ void Actor::IgnoreWater( Event *ev )
 	SetActorFlag( ACTOR_FLAG_IGNORE_WATER, ev->GetBoolean( 1 ) );
 	}
 
-void Actor::SetNotAllowedToKill( Event *ev )
+void Actor::SetNotAllowedToKill( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_ALLOWED_TO_KILL, false );
 	}
@@ -11934,7 +11937,7 @@ void Actor::AddSpawnItem( Event *ev )
 	spawn_items.AddObject( spawn_item_name );
 	}
 
-void Actor::ClearSpawnItems( Event *ev )
+void Actor::ClearSpawnItems( Event * )
 	{
 	spawn_items.ClearObjectList();
 	}
@@ -12335,7 +12338,7 @@ qboolean Actor::GetNotifyFlag( int flag )
 
 
 
-void Actor::SetBounceOff( Event *ev )
+void Actor::SetBounceOff( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_BOUNCE_OFF, true );
 	}
@@ -12362,12 +12365,12 @@ void Actor::SetBounceOffEffect( Event *ev )
 	bounce_off_effect = ev->GetString( 1 );
 	}
 
-void Actor::GotoNextStage( Event *ev )
+void Actor::GotoNextStage( Event * )
 	{
 	stage++;
 	}
 
-void Actor::GotoPrevStage( Event *ev )
+void Actor::GotoPrevStage( Event * )
 	{
 	stage--;
 
@@ -12399,7 +12402,7 @@ void Actor::GetStage( Event *ev )
 	ev->ReturnFloat( (float)stage );
 	}
 
-void Actor::NotifyOthersAtDeath( Event *ev )
+void Actor::NotifyOthersAtDeath( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_NOTIFY_OTHERS_AT_DEATH, true );
 	}
@@ -12490,27 +12493,27 @@ void Actor::Throw( Event *ev )
 		}
 	}
 
-void Actor::SolidMask( Event *ev )
+void Actor::SolidMask( Event * )
 	{
 	edict->clipmask = MASK_MONSTERSOLID;
 	}
 
-void Actor::IgnoreMonsterClip( Event *ev )
+void Actor::IgnoreMonsterClip( Event * )
 	{
 	edict->clipmask &= ~CONTENTS_MONSTERCLIP;
 	}
 
-void Actor::NotSolidMask( Event *ev )
+void Actor::NotSolidMask( Event * )
 	{
 	edict->clipmask = MASK_SOLID;
 	}
 
-void Actor::NoMask( Event *ev )
+void Actor::NoMask( Event * )
 	{
 	edict->clipmask = 0;
 	}
 
-void Actor::ResetMoveDir( Event *ev )
+void Actor::ResetMoveDir( Event * )
    {
    Vector newForward;
    angles.AngleVectors( &newForward );
@@ -12731,7 +12734,7 @@ void Actor::ClearStateFlags( void )
 	movementSubsystem->clearBlockingEntity();
 	}
 
-void Actor::NoChatterEvent( Event *ev )
+void Actor::NoChatterEvent( Event * )
 	{
 	SetActorFlag( ACTOR_FLAG_NOCHATTER, true );
 	}
@@ -12771,7 +12774,7 @@ void Actor::Chatter( const char *snd, float chance, float volume,	int channel	)
 		}
 	}
 
-void Actor::ActivateEvent(	Event *ev )
+void Actor::ActivateEvent(	Event * )
 	{
 	if ( ( deadflag ) && ( actortype != IS_INANIMATE ) )
 		{
@@ -12842,7 +12845,7 @@ void Actor::SetOnUseThread( Event *ev )
 	onuse_thread_name = ev->GetString( 1 );
 	}
 
-void Actor::ClearOnUseThread( Event *ev )
+void Actor::ClearOnUseThread( Event * )
 	{
 	onuse_thread_name = "";
 	}
@@ -13653,7 +13656,7 @@ void Actor::SetFlagOnEnemy( Event *ev )
 		act->SetActorFlag( flag, flag_bool );	
 	}
 
-void Actor::TurnOnEnemyAI(	Event *ev )
+void Actor::TurnOnEnemyAI(	Event * )
 	{
 	Actor* act = 0;
 	
@@ -13672,7 +13675,7 @@ void Actor::TurnOnEnemyAI(	Event *ev )
 		act->TurnAIOn();
 	}
 
-void Actor::TurnOffEnemyAI( Event *ev )
+void Actor::TurnOffEnemyAI( Event * )
 	{
 	Actor* act = 0;
 
@@ -13915,7 +13918,7 @@ void Actor::SetVisionDistance( Event *ev )
    sensoryPerception->SetVisionDistance( ev->GetFloat( 1 ) );
 	}
 
-void Actor::ClearCurrentEnemy( Event *ev )
+void Actor::ClearCurrentEnemy( Event * )
 	{
 	enemyManager->ClearCurrentEnemy();
 	}
@@ -14642,13 +14645,13 @@ void Actor::ChargeWater( Event *ev )
 		}
 	}
 
-void Actor::DamageOnceStart( Event *ev )
+void Actor::DamageOnceStart( Event * )
    {
 	SetActorFlag( ACTOR_FLAG_DAMAGE_ONCE_ON, true );
 	SetActorFlag( ACTOR_FLAG_DAMAGE_ONCE_DAMAGED, false );
 	}
 
-void Actor::DamageOnceStop( Event *ev )
+void Actor::DamageOnceStop( Event * )
    {
 	SetActorFlag( ACTOR_FLAG_DAMAGE_ONCE_ON, false );
 	}
@@ -14906,12 +14909,12 @@ qboolean Actor::TakeDamage ( void )
 	}
 
 
-void Actor::FireWeapon( Event *ev )
+void Actor::FireWeapon( Event * )
 	{
 	combatSubsystem->FireWeapon();
 	}
 
-void Actor::StopFireWeapon( Event *ev )
+void Actor::StopFireWeapon( Event * )
 	{
 	combatSubsystem->StopFireWeapon();
 	}
@@ -16087,12 +16090,12 @@ qboolean Actor::checkIsAggressive( Conditional &condition )
       
    }
 
-qboolean Actor::checkInConeOfFire( Conditional &condition )
+qboolean Actor::checkInConeOfFire( Conditional & )
    {
    return GetActorFlag( ACTOR_FLAG_IN_CONE_OF_FIRE );
    }
 
-qboolean Actor::checkInPlayerConeOfFire( Conditional &condition )
+qboolean Actor::checkInPlayerConeOfFire( Conditional & )
 {
 	return GetActorFlag( ACTOR_FLAG_IN_PLAYER_CONE_OF_FIRE );
 }
@@ -16479,7 +16482,7 @@ qboolean Actor::_WorkNodeInDistance( float dist )
    return false;
    }
 
-void Actor::ClearArmorAdaptions( Event *ev )
+void Actor::ClearArmorAdaptions( Event * )
    {
    AdaptiveArmor::ClearAdaptionList();
    }
@@ -16655,7 +16658,7 @@ qboolean Actor::checkRightDirectionClear(float dist)
    
    }
 
-qboolean Actor::checkbehaviorsuccess( Conditional &condition )
+qboolean Actor::checkbehaviorsuccess( Conditional & )
    {
    if ( behaviorCode == BEHAVIOR_SUCCESS )
       return true;
@@ -16663,7 +16666,7 @@ qboolean Actor::checkbehaviorsuccess( Conditional &condition )
    return false;
    }
 
-qboolean Actor::checkbehaviorfailed( Conditional &condition )
+qboolean Actor::checkbehaviorfailed( Conditional & )
    {
    if ( behaviorCode == BEHAVIOR_FAILED                              ||
         behaviorCode == BEHAVIOR_FAILED_STEERING_BLOCKED_BY_ENEMY    ||
@@ -17028,7 +17031,7 @@ qboolean Actor::checkActorType( Conditional &condition )
 	return false;
 }
 
-qboolean Actor::checkIsTeammate( Conditional &condition )
+qboolean Actor::checkIsTeammate( Conditional & )
 {
 	if ( actortype == IS_TEAMMATE )
 		return true;
@@ -17036,17 +17039,17 @@ qboolean Actor::checkIsTeammate( Conditional &condition )
 		return false;
 }
 
-qboolean Actor::checkHaveActiveWeapon( Conditional &condition )
+qboolean Actor::checkHaveActiveWeapon( Conditional & )
 {
 	return combatSubsystem->HaveWeapon();
 }
 
-qboolean Actor::checkWeaponIsMelee( Conditional &condition )
+qboolean Actor::checkWeaponIsMelee( Conditional & )
 {
 	return combatSubsystem->WeaponIsFireType( FT_MELEE );
 }
 
-qboolean Actor::checkWeaponChanged( Conditional &condition )
+qboolean Actor::checkWeaponChanged( Conditional & )
 {
 	return ( state_flags & STATE_FLAG_CHANGED_WEAPON );
 }
@@ -17134,7 +17137,7 @@ bool Actor::canBeDamagedBy(meansOfDeath_t MeansOfDeath)
 //	
 // Returns:		None
 //--------------------------------------------------------------
-void Actor::ForceSetClip( Event *ev )
+void Actor::ForceSetClip( Event * )
 {
 	edict->contents = CONTENTS_SETCLIP ;
 	edict->clipmask = MASK_SETCLIP ;
@@ -17195,7 +17198,7 @@ qboolean Actor::checkCountOfIdenticalNamesInGroup( const str &checkName , int ch
 	return false;
 }
 
-qboolean Actor::checkCanAttackEnemy(Conditional &condition)
+qboolean Actor::checkCanAttackEnemy(Conditional &)
 {
 	return checkCanAttackEnemy();
 }
@@ -17458,7 +17461,7 @@ void Actor::ChildSetAnim( const str &childName , const str &animName )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void Actor::WhatsWrong( Event *ev )
+void Actor::WhatsWrong( Event * )
 {
 	gi.Printf( "\n------------------------------------------" );
 
@@ -17485,7 +17488,7 @@ void Actor::WhatsWrong( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void Actor::WhatAreYouDoing( Event *ev )
+void Actor::WhatAreYouDoing( Event * )
 {
 	str tName;
 	tName = targetname;
@@ -17729,7 +17732,7 @@ void Actor::UseWeaponDamage( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void Actor::HelperNodeCommand( Event *ev )
+void Actor::HelperNodeCommand( Event * )
 {
 }
 
@@ -17749,13 +17752,13 @@ void Actor::SetIgnoreNextContext( Event *ev )
 	_nextContextToIgnore = ev->GetString( 2 );
 }
 
-void Actor::EvaluateEnemies( Event *ev )
+void Actor::EvaluateEnemies( Event * )
 {
 	if ( !enemyManager->IsLockedOnCurrentEnemy() )		
 		enemyManager->FindHighestHateEnemy();		
 }
 
-void Actor::ForgetEnemies( Event* ev )
+void Actor::ForgetEnemies( Event*  )
 {
 	if( enemyManager )
 	{
@@ -17909,7 +17912,7 @@ void Actor::LoadPostureStateMachine( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void Actor::PostureAnimDone( Event *ev )
+void Actor::PostureAnimDone( Event * )
 {
 	SetActorFlag(ACTOR_FLAG_POSTURE_ANIM_DONE , true );
 }
@@ -17947,7 +17950,7 @@ qboolean Actor::checkRequestedPosture( Conditional &condition )
 //
 // Returns:		true or false
 //--------------------------------------------------------------
-qboolean Actor::checkPostureAnimDone( Conditional &condition )
+qboolean Actor::checkPostureAnimDone( Conditional & )
 {
 	return GetActorFlag(ACTOR_FLAG_POSTURE_ANIM_DONE );
 }
@@ -17962,7 +17965,7 @@ qboolean Actor::checkPostureAnimDone( Conditional &condition )
 //
 // Returns:		true or false
 //--------------------------------------------------------------
-qboolean Actor::checkDamageThresholdExceeded( Conditional &condition )
+qboolean Actor::checkDamageThresholdExceeded( Conditional & )
 {
 	return checkDamageThresholdExceeded();
 }
@@ -18294,7 +18297,7 @@ void Actor::PrintDebugMessage( Event *ev )
 		
 }
 
-qboolean Actor::checkAttacked( Conditional &condition )
+qboolean Actor::checkAttacked( Conditional & )
 {
 	return checkAttacked();
 }
@@ -18304,7 +18307,7 @@ qboolean Actor::checkAttacked()
 	return state_flags & STATE_FLAG_ATTACKED;	
 }
 
-qboolean Actor::checkAttackedByPlayer( Conditional &condition )
+qboolean Actor::checkAttackedByPlayer( Conditional & )
 {
 	return checkAttackedByPlayer();
 }
@@ -18314,7 +18317,7 @@ qboolean Actor::checkAttackedByPlayer()
 	return state_flags & STATE_FLAG_ATTACKED_BY_PLAYER;
 }
 
-qboolean Actor::checkShowPain( Conditional &condition )
+qboolean Actor::checkShowPain( Conditional & )
 {
 	return checkShowPain();
 }
@@ -18366,7 +18369,7 @@ qboolean Actor::checkPropEnemyRange( const str& objname , const str& propname )
 	return EntityInRange( currentEnemy, range, 0, 0 , false );	
 }
 
-void Actor::processGameplayData( Event *ev )
+void Actor::processGameplayData( Event * )
 {
 
 	GameplayManager *gpm = GameplayManager::getTheGameplayManager();
@@ -18386,12 +18389,12 @@ void Actor::processGameplayData( Event *ev )
 		sensoryPerception->SetVisionDistance( gpm->getFloatValue( objname , "visiondistance" ) );
 }
 
-void Actor::SelectNextEnemy( Event* ev )
+void Actor::SelectNextEnemy( Event*  )
 {
 	enemyManager->FindNextEnemy();
 }
 
-void Actor::SelectClosestEnemy( Event *ev )
+void Actor::SelectClosestEnemy( Event * )
 {
 	enemyManager->FindClosestEnemy();
 }
@@ -18462,7 +18465,7 @@ void Actor::SetGroupDeathThread( Event *ev )
 	groupcoordinator->SetGroupDeathThread( ev->GetString( 1 ) , GetGroupID() );
 }
 
-qboolean Actor::checkHaveBestWeapon( Conditional &condition )
+qboolean Actor::checkHaveBestWeapon( Conditional & )
 {
 	return checkHaveBestWeapon();
 }
@@ -18558,7 +18561,7 @@ const str Actor::GetStateVar( const str& varName )
 	return "";
 }
 
-void Actor::ClearTorsoAnim( Event *ev )
+void Actor::ClearTorsoAnim( Event * )
 {
 	ClearTorsoAnim();
 }
@@ -18699,7 +18702,7 @@ qboolean Actor::checkValidCombatNodeInRange( float maxDistanceFromSelf , float m
 	return false;
 }
 
-qboolean Actor::checkEnemyCanSeeCurrentNode( Conditional &condition )
+qboolean Actor::checkEnemyCanSeeCurrentNode( Conditional & )
 {
 	return checkEnemyCanSeeCurrentNode();
 }
@@ -18873,7 +18876,7 @@ qboolean Actor::checkValidCustomNodeInRange( const str &customType , float maxDi
 	return false;
 }
 
-qboolean Actor::checkSpecifiedFollowTargetOutOfRange( Conditional &condition )
+qboolean Actor::checkSpecifiedFollowTargetOutOfRange( Conditional & )
 {
 	return checkSpecifiedFollowTargetOutOfRange();
 }
@@ -19113,7 +19116,7 @@ const str Actor::FindDialog( Sentient *user, DialogType_t dialogType , const str
 }
 
 
-qboolean Actor::checkHaveArmor( Conditional &condition )
+qboolean Actor::checkHaveArmor( Conditional & )
 {
 	return checkHaveArmor();
 }
@@ -19129,7 +19132,7 @@ qboolean Actor::checkHaveArmor()
 	return true;
 }
 
-qboolean Actor::checkWithinFollowRangeMin( Conditional &condition )
+qboolean Actor::checkWithinFollowRangeMin( Conditional & )
 {
 	return checkWithinFollowRangeMin();
 }
@@ -19213,7 +19216,7 @@ void Actor::SetTalkWatchMode( Event *ev )
 		useConvAnims = ev->GetBoolean(2);
 }
 
-qboolean Actor::checkAllowedToMeleeEnemy( Conditional &condition )
+qboolean Actor::checkAllowedToMeleeEnemy( Conditional & )
 {
 	return checkAllowedToMeleeEnemy();
 }
@@ -19295,19 +19298,19 @@ void Actor::FailMission( Event *ev )
 	G_MissionFailed(reason);
 }
 
-void Actor::DebugEvent( Event *ev )
+void Actor::DebugEvent( Event * )
 {
 	//Here to catch when a state hits a debug event
 	int x;
 	x = 0;
 }
 
-qboolean Actor::checkSteeringFailed( Conditional &condition )
+qboolean Actor::checkSteeringFailed( Conditional & )
 {
 	return ( state_flags & STATE_FLAG_STEERING_FAILED );
 }
 
-qboolean Actor::checkHavePathToEnemy( Conditional &condition )
+qboolean Actor::checkHavePathToEnemy( Conditional & )
 {
 	return checkHavePathToEnemy();
 }
@@ -19352,7 +19355,7 @@ qboolean Actor::checkHavePathToEnemy()
 	return _havePathToEnemy;
 }
 
-void Actor::UnreserveCurrentHelperNode( Event *ev )
+void Actor::UnreserveCurrentHelperNode( Event * )
 {
 	UnreserveCurrentHelperNode();
 }
@@ -19363,7 +19366,7 @@ void Actor::UnreserveCurrentHelperNode()
 		currentHelperNode.node->UnreserveNode();
 }
 
-qboolean Actor::checkBlockedByEnemy( Conditional &condition )
+qboolean Actor::checkBlockedByEnemy( Conditional & )
 {
 	if ( !(state_flags & STATE_FLAG_BLOCKED_BY_ENTITY) )
 		return false;
@@ -19395,7 +19398,7 @@ void Actor::ProjectileClose( Event *ev )
 		}
 }
 
-qboolean Actor::checkEnemyProjectileClose( Conditional &condition )
+qboolean Actor::checkEnemyProjectileClose( Conditional & )
 {
 	return checkEnemyProjectileClose();
 }
@@ -19405,7 +19408,7 @@ qboolean Actor::checkEnemyProjectileClose()
 	return ( state_flags & STATE_FLAG_ENEMY_PROJECTILE_CLOSE );
 }
 
-void Actor::SaveOffLastHitBone( Event *ev )
+void Actor::SaveOffLastHitBone( Event * )
 {
 	saved_bone_hit = last_bone_hit;
 }
@@ -19465,7 +19468,7 @@ void Actor::SetActivationDelay( float delay )
 	activationDelay = delay;
 }
 
-void Actor::SetActivationStart( Event *ev )
+void Actor::SetActivationStart( Event * )
 {
 	SetActivationStart();
 }
@@ -19475,7 +19478,7 @@ void Actor::SetActivationStart()
 	activationStart = level.time;
 }
 
-qboolean Actor::checkActivationDelayTime( Conditional &condition )
+qboolean Actor::checkActivationDelayTime( Conditional & )
 {
 	return checkActivationDelayTime();
 }
@@ -19641,7 +19644,7 @@ void Actor::SetBounceOffVelocity( Event *ev )
 	bounce_off_velocity = ev->GetFloat( 1 );
 }
 
-qboolean Actor::checkTalking( Conditional &condition )
+qboolean Actor::checkTalking( Conditional & )
 {
 	return checkTalking();
 }

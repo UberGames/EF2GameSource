@@ -62,7 +62,7 @@ GoDirectlyToPoint::GoDirectlyToPoint()
 //
 // Returns:			None
 //----------------------------------------------------------------
-void GoDirectlyToPoint::Begin(Actor &self)
+void GoDirectlyToPoint::Begin(Actor &)
 {
 }
 

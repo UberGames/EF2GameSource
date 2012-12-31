@@ -58,7 +58,7 @@ CLASS_DECLARATION( Behavior, PatrolWorkHibernate, NULL )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void PatrolWorkHibernate::SetArgs ( Event *ev)
+void PatrolWorkHibernate::SetArgs ( Event *)
 {
 
 }
@@ -133,7 +133,7 @@ void PatrolWorkHibernate::Begin( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void PatrolWorkHibernate::_init( Actor &self )
+void PatrolWorkHibernate::_init( Actor & )
 {
 	_nextStateCheck			= 0.0f;
 	_nextWorkCheck			= 0.0f;
@@ -221,7 +221,7 @@ BehaviorReturnCode_t	PatrolWorkHibernate::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void PatrolWorkHibernate::End ( Actor &self	)
+void PatrolWorkHibernate::End ( Actor &	)
 {
 }
 
@@ -372,7 +372,7 @@ void PatrolWorkHibernate::_setupHold( Actor &self )
 	_nextStateCheck = level.time + G_Random() + 1.0f;   
 }
 
-void PatrolWorkHibernate::_hold( Actor &self )
+void PatrolWorkHibernate::_hold( Actor & )
 {
 	if ( level.time >= _nextStateCheck )
 		_state = PATROLWORKHIBERNATE_SELECT_STATE;
@@ -528,7 +528,7 @@ CLASS_DECLARATION( Behavior, PatrolWorkWander, NULL )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void PatrolWorkWander::SetArgs ( Event *ev)
+void PatrolWorkWander::SetArgs ( Event *)
 {
 }
 
@@ -589,7 +589,7 @@ void PatrolWorkWander::Begin( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void PatrolWorkWander::_init( Actor &self )
+void PatrolWorkWander::_init( Actor & )
 {
    _nextStateCheck     = 0.0f;
    _nextWorkCheck      = 0.0f; 
@@ -660,7 +660,7 @@ BehaviorReturnCode_t PatrolWorkWander::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void PatrolWorkWander::End ( Actor &self	)
+void PatrolWorkWander::End ( Actor &	)
 {
    
 }
@@ -914,7 +914,7 @@ void PatrolWorkWander::_setupHold( Actor &self )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void PatrolWorkWander::_hold( Actor &self )
+void PatrolWorkWander::_hold( Actor & )
 {
    if ( level.time >= _nextStateCheck )
       _state = PATROLWORKWANDER_SELECT_STATE;
@@ -1025,7 +1025,7 @@ bool PatrolWorkWander::_wantsToPatrol( Actor &self )
 //
 // Returns:		True or False
 //--------------------------------------------------------------
-bool PatrolWorkWander::_wantsToWander( Actor &self )
+bool PatrolWorkWander::_wantsToWander( Actor & )
 {
 	if ( _wanderFailures > 5 )
 		return false;

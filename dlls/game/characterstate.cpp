@@ -207,6 +207,8 @@ bool Expression::getResult( const State &state, Entity &ent, const Container<Con
 	int i;
 	condition_t *cond;
 	Conditional *conditional;
+
+	Q_UNUSED(state);
 	
 	for( i = 1; i <= conditions.NumObjects(); i++ )
 	{
@@ -227,6 +229,8 @@ bool Expression::getResult( const FuzzyVar &fVar, Entity &ent, const Container<C
 	int i;
 	condition_t *cond;
 	Conditional *conditional;
+
+	Q_UNUSED(fVar);
 	
 	for( i = 1; i <= conditions.NumObjects(); i++ )
 	{

@@ -1347,6 +1347,8 @@ float Level::getEarthquakeMagnitudeAtPosition( const Vector &origin )
 
 void Level::enemySpawned( Entity *enemy )
 {
+	Q_UNUSED(enemy);
+
 	_totalEnemiesSpawned++;
 	levelVars.SetVariable( "total_enemies_spawned", _totalEnemiesSpawned );
 }

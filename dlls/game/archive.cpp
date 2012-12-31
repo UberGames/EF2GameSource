@@ -487,6 +487,8 @@ inline void Archiver::CheckType( int type )
 
 inline void Archiver::ArchiveData( int type, void *data, size_t size )
 {
+	Q_UNUSED(type);
+
 	if ( archivemode == ARCHIVE_READ )
 	{
 #ifndef NDEBUG

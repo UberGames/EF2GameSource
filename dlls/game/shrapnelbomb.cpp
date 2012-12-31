@@ -67,7 +67,7 @@ void ShrapnelBomb::Think( void )
 	}
 }
 
-void ShrapnelBomb::Explode( Event *ev )
+void ShrapnelBomb::Explode( Event * )
 {
 	Explode();
 }

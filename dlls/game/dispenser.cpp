@@ -612,7 +612,7 @@ void Dispenser::setDispenserAlpha( void )
 // Returns:			None
 //----------------------------------------------------------------
 
-void Dispenser::setInstant( Event *ev )
+void Dispenser::setInstant( Event * )
 {
 	_instant = qtrue;
 }

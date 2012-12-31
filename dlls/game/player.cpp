@@ -1520,7 +1520,7 @@ CLASS_DECLARATION( Sentient, Player, "player" )
 	{ NULL, NULL }
 };
 
-qboolean Player::checkturnleft( Conditional &condition )
+qboolean Player::checkturnleft( Conditional & )
 {
 	float yaw;
 	
@@ -1529,7 +1529,7 @@ qboolean Player::checkturnleft( Conditional &condition )
 	return ( angledist( old_v_angle[ YAW ] - yaw ) < -8.0f );
 }
 
-qboolean Player::checkturnright( Conditional &condition )
+qboolean Player::checkturnright( Conditional & )
 {
 	float yaw;
 	
@@ -1538,27 +1538,27 @@ qboolean Player::checkturnright( Conditional &condition )
 	return ( angledist( old_v_angle[ YAW ] - yaw ) > 8.0f );
 }
 
-qboolean Player::checkforward( Conditional &condition )
+qboolean Player::checkforward( Conditional & )
 {
 	return last_ucmd.forwardmove > 0;
 }
 
-qboolean Player::checkbackward( Conditional &condition )
+qboolean Player::checkbackward( Conditional & )
 {
 	return last_ucmd.forwardmove < 0;
 }
 
-qboolean Player::checkstrafeleft( Conditional &condition )
+qboolean Player::checkstrafeleft( Conditional & )
 {
 	return last_ucmd.rightmove < 0;
 }
 
-qboolean Player::checkstraferight( Conditional &condition )
+qboolean Player::checkstraferight( Conditional & )
 {
 	return last_ucmd.rightmove > 0;
 }
 
-qboolean Player::checkleanleft(Conditional &condition)
+qboolean Player::checkleanleft(Conditional &)
 {
 	if( client->ps.leanDelta > 0 )
 	{
@@ -1568,7 +1568,7 @@ qboolean Player::checkleanleft(Conditional &condition)
 	return qfalse;
 }
 
-qboolean Player::checkleanright( Conditional &condition )
+qboolean Player::checkleanright( Conditional & )
 {
 	
 	if(client->ps.leanDelta < 0)
@@ -1579,7 +1579,7 @@ qboolean Player::checkleanright( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkduck( Conditional &condition )
+qboolean Player::checkduck( Conditional & )
 {
 	if ( client->ps.pm_flags & PMF_DUCKED )
 		return qtrue;
@@ -1587,7 +1587,7 @@ qboolean Player::checkduck( Conditional &condition )
 		return qfalse;
 }
 
-qboolean Player::checkrise( Conditional &condition )
+qboolean Player::checkrise( Conditional & )
 {
 	if ( ( do_rise ) && ( velocity.z > 32.0f ) )
 	{
@@ -1598,7 +1598,7 @@ qboolean Player::checkrise( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkjump( Conditional &condition )
+qboolean Player::checkjump( Conditional & )
 {
 	if ( sv_instantjump->integer )
 		return client->ps.jumped;
@@ -1606,7 +1606,7 @@ qboolean Player::checkjump( Conditional &condition )
 		return last_ucmd.upmove > 0;
 }
 
-qboolean Player::checkcrouch( Conditional &condition )
+qboolean Player::checkcrouch( Conditional & )
 {
 	if ( last_ucmd.upmove < 0 ) // check for downward movement
 		return qtrue;
@@ -1614,12 +1614,12 @@ qboolean Player::checkcrouch( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkjumpflip( Conditional &condition )
+qboolean Player::checkjumpflip( Conditional & )
 {
 	return velocity.z < ( sv_currentGravity->value * 0.5f );
 }
 
-qboolean Player::checkanimdone_legs( Conditional &condition )
+qboolean Player::checkanimdone_legs( Conditional & )
 {
 	if ( ( edict->s.anim & ANIM_BLEND ) == 0 )
 		return true;
@@ -1627,7 +1627,7 @@ qboolean Player::checkanimdone_legs( Conditional &condition )
 	return animdone_Legs;
 }
 
-qboolean Player::checkanimdone_torso( Conditional &condition )
+qboolean Player::checkanimdone_torso( Conditional & )
 {
 	if ( ( edict->s.torso_anim & ANIM_BLEND ) == 0 )
 		return true;
@@ -1635,7 +1635,7 @@ qboolean Player::checkanimdone_torso( Conditional &condition )
 	return animdone_Torso;
 }
 
-qboolean Player::checkattackleft( Conditional &condition )
+qboolean Player::checkattackleft( Conditional & )
 {
 	if ( level.playerfrozen || ( flags & FL_IMMOBILE ) )
 	{
@@ -1688,7 +1688,7 @@ qboolean Player::checkattackleft( Conditional &condition )
 	}
 }
 
-qboolean Player::checkattackbuttonleft( Conditional &condition )
+qboolean Player::checkattackbuttonleft( Conditional & )
 {
 	if ( level.playerfrozen || ( flags & FL_IMMOBILE ) )
 	{
@@ -1705,7 +1705,7 @@ qboolean Player::checkattackbuttonleft( Conditional &condition )
 	}
 }
 
-qboolean Player::checkattackright( Conditional &condition )
+qboolean Player::checkattackright( Conditional & )
 {
 	Weapon *weapon;
 	
@@ -1766,7 +1766,7 @@ qboolean Player::checkattackright( Conditional &condition )
 	}
 }
 
-qboolean Player::checkattackbuttonright( Conditional &condition )
+qboolean Player::checkattackbuttonright( Conditional & )
 {
 	if ( level.playerfrozen || ( flags & FL_IMMOBILE ) )
 	{
@@ -1783,22 +1783,22 @@ qboolean Player::checkattackbuttonright( Conditional &condition )
 	}
 }
 
-qboolean Player::checksneak( Conditional &condition )
+qboolean Player::checksneak( Conditional & )
 {
 	return qfalse; //( last_ucmd.buttons & BUTTON_SNEAK ) != 0;
 }
 
-qboolean Player::checkrun( Conditional &condition )
+qboolean Player::checkrun( Conditional & )
 {
 	return ( last_ucmd.buttons & BUTTON_RUN ) != 0;
 }
 
-qboolean Player::checkwasrunning( Conditional &condition )
+qboolean Player::checkwasrunning( Conditional & )
 {
 	return ( pm_lastruntime > MINIMUM_RUNNING_TIME );
 }
 
-qboolean Player::checkholsterweapon( Conditional &condition )
+qboolean Player::checkholsterweapon( Conditional & )
 {
 	if(client->ps.pm_flags & PMF_DISABLE_INVENTORY || _disableUseWeapon)
 	{
@@ -1808,7 +1808,7 @@ qboolean Player::checkholsterweapon( Conditional &condition )
 	return ( last_ucmd.buttons & BUTTON_HOLSTERWEAPON ) != 0;
 }
 
-qboolean Player::checkuse( Conditional &condition )
+qboolean Player::checkuse( Conditional & )
 {
 	return ( last_ucmd.buttons & BUTTON_USE ) != 0;
 }
@@ -1848,12 +1848,12 @@ qboolean Player::checkblocked( Conditional &condition )
 	return test_moveresult >= MOVERESULT_BLOCKED;
 }
 
-qboolean Player::checkonground( Conditional &condition )
+qboolean Player::checkonground( Conditional & )
 {
 	return client->ps.walking;
 }
 
-qboolean Player::check22degreeslope( Conditional &condition )
+qboolean Player::check22degreeslope( Conditional & )
 {
 	if ( client->ps.walking && client->ps.groundPlane && ( client->ps.groundTrace.plane.normal[ 2 ] < SLOPE_22_MAX ) &&
 		( client->ps.groundTrace.plane.normal[ 2 ] >= SLOPE_22_MIN ) )
@@ -1864,7 +1864,7 @@ qboolean Player::check22degreeslope( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::check45degreeslope( Conditional &condition )
+qboolean Player::check45degreeslope( Conditional & )
 {
 	if ( client->ps.walking && client->ps.groundPlane && ( client->ps.groundTrace.plane.normal[ 2 ] < SLOPE_45_MAX ) &&
 		( client->ps.groundTrace.plane.normal[ 2 ] >= SLOPE_45_MIN ) )
@@ -1875,7 +1875,7 @@ qboolean Player::check45degreeslope( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkrightleghigh( Conditional &condition )
+qboolean Player::checkrightleghigh( Conditional & )
 {
 	float groundyaw;
 	float yawdelta;
@@ -1888,7 +1888,7 @@ qboolean Player::checkrightleghigh( Conditional &condition )
 	return ( which == 3 );
 }
 
-qboolean Player::checkleftleghigh( Conditional &condition )
+qboolean Player::checkleftleghigh( Conditional & )
 {
 	float groundyaw;
 	float yawdelta;
@@ -1901,7 +1901,7 @@ qboolean Player::checkleftleghigh( Conditional &condition )
 	return ( which == 1 );
 }
 
-qboolean Player::checkfacingupslope( Conditional &condition )
+qboolean Player::checkfacingupslope( Conditional & )
 {
 	float groundyaw;
 	float yawdelta;
@@ -1914,7 +1914,7 @@ qboolean Player::checkfacingupslope( Conditional &condition )
 	return ( which == 2 );
 }
 
-qboolean Player::checkfacingdownslope( Conditional &condition )
+qboolean Player::checkfacingdownslope( Conditional & )
 {
 	float groundyaw;
 	float yawdelta;
@@ -1927,33 +1927,33 @@ qboolean Player::checkfacingdownslope( Conditional &condition )
 	return ( ( which == 0 ) || ( which == 4 ) );
 }
 
-qboolean Player::checkfalling( Conditional &condition )
+qboolean Player::checkfalling( Conditional & )
 {
 	return falling;
 }
 
-qboolean Player::checkgroundentity( Conditional &condition )
+qboolean Player::checkgroundentity( Conditional & )
 {
 	return ( groundentity != NULL );
 }
 
-qboolean Player::checkhardimpact( Conditional &condition )
+qboolean Player::checkhardimpact( Conditional & )
 {
 	return hardimpact;
 }
 
-qboolean Player::checkcanfall( Conditional &condition )
+qboolean Player::checkcanfall( Conditional & )
 {
 	return canfall;
 }
 
-qboolean Player::checkatdoor( Conditional &condition )
+qboolean Player::checkatdoor( Conditional & )
 {
 	// Check if the player is at a door
 	return ( atobject && atobject->isSubclassOf( Door ) );
 }
 
-qboolean Player::checkatuseanim( Conditional &condition )
+qboolean Player::checkatuseanim( Conditional & )
 {
 	// Check if the player is at a useanim
 	if ( atobject && atobject->isSubclassOf( UseAnim ) )
@@ -1964,7 +1964,7 @@ qboolean Player::checkatuseanim( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checktouchuseanim( Conditional &condition )
+qboolean Player::checktouchuseanim( Conditional & )
 {
 	if ( toucheduseanim )
 	{
@@ -1974,12 +1974,12 @@ qboolean Player::checktouchuseanim( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkuseanimfinished( Conditional &condition )
+qboolean Player::checkuseanimfinished( Conditional & )
 {
 	return ( useanim_numloops <= 0 );
 }
 
-qboolean Player::checkatuseobject( Conditional &condition )
+qboolean Player::checkatuseobject( Conditional & )
 {
 	// Check if the player is at a useanim
 	if ( atobject && atobject->isSubclassOf( UseObject ) )
@@ -1990,7 +1990,7 @@ qboolean Player::checkatuseobject( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkloopuseobject( Conditional &condition )
+qboolean Player::checkloopuseobject( Conditional & )
 {
 	// Check if the player is at a useanim
 	if ( useitem_in_use && useitem_in_use->isSubclassOf( UseObject ) )
@@ -2001,7 +2001,7 @@ qboolean Player::checkloopuseobject( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkdead( Conditional &condition )
+qboolean Player::checkdead( Conditional & )
 {
 	return ( deadflag );
 }
@@ -2011,12 +2011,12 @@ qboolean Player::checkhealth( Conditional &condition )
 	return health < atoi( condition.getParm( 1 ) );
 }
 
-qboolean Player::checkpain( Conditional &condition )
+qboolean Player::checkpain( Conditional & )
 {
 	return ( ( pain != 0 ) || ( knockdown != 0 ) );
 }
 
-qboolean Player::checkknockdown( Conditional &condition )
+qboolean Player::checkknockdown( Conditional & )
 {
 	if ( knockdown )
 	{
@@ -2129,12 +2129,12 @@ qboolean Player::checkhasweapon( Conditional &condition )
 	return WeaponsOut();
 }
 
-qboolean Player::checkhasdualweapon( Conditional & condition )
+qboolean Player::checkhasdualweapon( Conditional & )
 {
 	return IsDualWeaponActive();
 }
 
-qboolean Player::checknewweapon( Conditional &condition )
+qboolean Player::checknewweapon( Conditional & )
 {
 	Weapon * weapon;
 	
@@ -2284,7 +2284,7 @@ qboolean Player::checkweaponactive( Conditional &condition )
 	return ( weapon && !strcmp( weaponName, weapon->item_name ) );
 }
 
-qboolean Player::checkweaponreload( Conditional &condition )
+qboolean Player::checkweaponreload( Conditional & )
 {
 	Weapon *weapon = GetActiveWeapon( WEAPON_DUAL );
 	
@@ -2295,7 +2295,7 @@ qboolean Player::checkweaponreload( Conditional &condition )
 		return qfalse;
 }
 
-qboolean Player::checkweaponswitchmode( Conditional &condition )
+qboolean Player::checkweaponswitchmode( Conditional & )
 {
 	Weapon *weapon = GetActiveWeapon( WEAPON_DUAL );
 	
@@ -2324,7 +2324,7 @@ qboolean Player::checkweaponinmode( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkweapondonefiring( Conditional &condition )
+qboolean Player::checkweapondonefiring( Conditional & )
 {
 	Weapon      *weapon = GetActiveWeapon( WEAPON_DUAL );
 	
@@ -2433,7 +2433,7 @@ qboolean Player::checkdualweaponreadytofire( Conditional &condition )
 	return( ready );
 }
 
-qboolean Player::checkweaponlowered( Conditional &condition )
+qboolean Player::checkweaponlowered( Conditional & )
 {
 	Weapon *weapon = GetActiveWeapon( WEAPON_DUAL );
 	
@@ -2459,7 +2459,7 @@ qboolean Player::checkweaponfiretimer( Conditional &condition )
 	return qtrue;
 }
 
-qboolean Player::checkweaponfullclip( Conditional &condition )
+qboolean Player::checkweaponfullclip( Conditional & )
 {
 	Weapon *weapon = GetActiveWeapon( WEAPON_DUAL );
 	
@@ -2469,12 +2469,12 @@ qboolean Player::checkweaponfullclip( Conditional &condition )
 	return weapon->HasFullClip();
 }
 
-qboolean Player::checkweaponforcereload( Conditional &condition )
+qboolean Player::checkweaponforcereload( Conditional & )
 {
 	return ( last_ucmd.buttons & BUTTON_RELOAD ) != 0;
 }
 
-qboolean Player::checkweaponcanreload( Conditional &condition )
+qboolean Player::checkweaponcanreload( Conditional & )
 {
 	Weapon *weapon = GetActiveWeapon( WEAPON_DUAL );
 	
@@ -2485,33 +2485,33 @@ qboolean Player::checkweaponcanreload( Conditional &condition )
 }
 
 // Check to see if any of the active weapons need to be put away
-qboolean Player::checkputawayleft( Conditional &condition )
+qboolean Player::checkputawayleft( Conditional & )
 {
 	Weapon *weapon = GetActiveWeapon( WEAPON_LEFT );
 	
 	return weapon && weapon->GetPutaway();
 }
 
-qboolean Player::checkputawayright( Conditional &condition )
+qboolean Player::checkputawayright( Conditional & )
 {
 	Weapon *weapon = GetActiveWeapon( WEAPON_RIGHT );
 	
 	return weapon && weapon->GetPutaway();
 }
 
-qboolean Player::checkputawayboth( Conditional &condition )
+qboolean Player::checkputawayboth( Conditional & )
 {
 	Weapon *weapon = GetActiveWeapon( WEAPON_DUAL );
 	
 	return weapon && weapon->GetPutaway();
 }
 
-qboolean Player::checktargetacquired( Conditional &condition )
+qboolean Player::checktargetacquired( Conditional & )
 {
 	return (targetEnemy != NULL);
 }
 
-qboolean Player::returntrue( Conditional &condition )
+qboolean Player::returntrue( Conditional & )
 {
 	return qtrue;
 }
@@ -2533,7 +2533,7 @@ qboolean Player::checkstatename( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkattackblocked( Conditional &condition )
+qboolean Player::checkattackblocked( Conditional & )
 {
 	if ( attack_blocked )
 	{
@@ -2552,7 +2552,7 @@ qboolean Player::checkblockdelay( Conditional &condition )
 	return ( level.time > ( attack_blocked_time + t ) );
 }
 
-qboolean Player::checkpush( Conditional &condition )
+qboolean Player::checkpush( Conditional & )
 {
 	// Check if the player is at a pushobject
 	if ( atobject && atobject->isSubclassOf( PushObject ) && ( atobject_dist < ( PUSH_OBJECT_DISTANCE + 15.0f ) ) )
@@ -2566,7 +2566,7 @@ qboolean Player::checkpush( Conditional &condition )
 	return qfalse;
 }
 
-qboolean Player::checkpull( Conditional &condition )
+qboolean Player::checkpull( Conditional & )
 {
 	// Check if the player is at a pushobject
 	if ( atobject && atobject->isSubclassOf( PushObject ) && ( atobject_dist < ( PUSH_OBJECT_DISTANCE + 15.0f ) ) )
@@ -2590,12 +2590,12 @@ qboolean Player::checkcharavailable( Conditional &condition )
 	return false;
 }
 
-qboolean Player::checkOnLadder( Conditional &condition )
+qboolean Player::checkOnLadder( Conditional & )
 {
 	return _onLadder;
 }
 
-qboolean Player::checkcanstand( Conditional &condition )
+qboolean Player::checkcanstand( Conditional & )
 {
 	Vector newmins( mins );
 	Vector newmaxs( maxs );
@@ -2618,7 +2618,7 @@ qboolean Player::checkcanstand( Conditional &condition )
 	return qtrue;
 }
 
-qboolean Player::checkdualwield( Conditional &condition )
+qboolean Player::checkdualwield( Conditional & )
 {
 	// Only start the dual wield state if dual wield is set and the hands have no weapons
 	
@@ -2661,12 +2661,12 @@ qboolean Player::checkchance( Conditional &condition )
 	return ( G_Random() < percent_chance );
 }
 
-qboolean Player::checkturnedleft( Conditional &condition )
+qboolean Player::checkturnedleft( Conditional & )
 {
 	return yawing_left;
 }
 
-qboolean Player::checkturnedright( Conditional &condition )
+qboolean Player::checkturnedright( Conditional & )
 {
 	return yawing_right;
 }
@@ -2704,7 +2704,7 @@ qboolean Player::checksolidforward( Conditional &condition )
 	return ( trace.fraction < 0.7f );
 }
 
-qboolean Player::checkweaponsholstered( Conditional &condition )
+qboolean Player::checkweaponsholstered( Conditional & )
 {
 	
 	if (
@@ -2721,24 +2721,24 @@ qboolean Player::checkweaponsholstered( Conditional &condition )
 	}
 }
 
-qboolean Player::checkfakeplayeractive( Conditional &condition )
+qboolean Player::checkfakeplayeractive( Conditional & )
 {
 	return fakePlayer_active;
 }
 
-qboolean Player::checkspecialmovecharge( Conditional &condition )
+qboolean Player::checkspecialmovecharge( Conditional & )
 {
 	if ( specialMoveCharge >= specialMoveEndTime )
 		return true;
 	return false;
 }
 
-qboolean Player::checkstancechangedtorso( Conditional &condition )
+qboolean Player::checkstancechangedtorso( Conditional & )
 {
 	return changedStanceTorso;
 }
 
-qboolean Player::checkstancechangedlegs( Conditional &condition )
+qboolean Player::checkstancechangedlegs( Conditional & )
 {
 	return changedStanceLegs;
 }
@@ -2765,13 +2765,13 @@ qboolean Player::checkpoints( Conditional &condition )
 	return false;
 }
 
-qboolean Player::checkincomingmeleeattack( Conditional &condition )
+qboolean Player::checkincomingmeleeattack( Conditional & )
 {
 	return incomingMeleeAttack;
 }
 
 
-qboolean Player::checkfinishingmove( Conditional &condition )
+qboolean Player::checkfinishingmove( Conditional & )
 {
 	if ( _finishActor )
 		return true;
@@ -2790,7 +2790,7 @@ qboolean Player::checkfinishingmove( Conditional &condition )
 // Returns:			qboolean
 //
 //--------------------------------------------------------------
-qboolean Player::checkatuseentity(Conditional &condition)
+qboolean Player::checkatuseentity(Conditional &)
 {
 	// Check if the player is at a useentity
 	if ( atobject )
@@ -2816,7 +2816,7 @@ qboolean Player::checkatuseentity(Conditional &condition)
 // Returns:			qboolean
 //
 //--------------------------------------------------------------
-qboolean Player::checkusingentity(Conditional &condition)
+qboolean Player::checkusingentity(Conditional &)
 {
 	return _usingEntity;
 }
@@ -2833,7 +2833,7 @@ qboolean Player::checkusingentity(Conditional &condition)
 // Returns:			qboolean
 //
 //--------------------------------------------------------------
-qboolean Player::checkthirdperson(Conditional &condition)
+qboolean Player::checkthirdperson(Conditional &)
 {
 	return _isThirdPerson;
 }
@@ -2973,7 +2973,7 @@ qboolean Player::checkHasAnim( Conditional &condition )
 		return true;
 }
 
-qboolean Player::checkIsWeaponControllingProjectile( Conditional &condition )
+qboolean Player::checkIsWeaponControllingProjectile( Conditional & )
 {
 	Weapon *weapon;
 
@@ -3708,7 +3708,7 @@ void Player::ChooseSpawnPoint( void )
 	}
 }
 
-void Player::EndLevel( Event *ev )
+void Player::EndLevel( Event * )
 {
 	// this happens here to avoid the last frame (displayed while loading) from being fullbright or whatever
 	setViewMode( "none" );
@@ -3744,7 +3744,7 @@ void Player::LevelCleanup( void )
 	client->ps.pm_flags &= ~PMF_NIGHTVISION;
 }
 
-void Player::Respawn( Event *ev )
+void Player::Respawn( Event * )
 {
 	if ( multiplayerManager.inMultiplayer() )
 	{
@@ -3782,7 +3782,7 @@ void Player::SetDeltaAngles( void )
 	}
 }
 
-void Player::Dead( Event *ev )
+void Player::Dead( Event * )
 {
 	
 	CancelEventsOfType( EV_Player_Dead );
@@ -5117,6 +5117,7 @@ void Player::ClientMoveDuck( usercmd_t *ucmd )
 //-----------------------------------------------
 void Player::ClientMoveLean( usercmd_t *ucmd )
 {
+	Q_UNUSED(ucmd);
 /*
 	client->ps.pm_flags &= ~(PMF_LEAN_RIGHT | PMF_LEAN_LEFT);
 	
@@ -5339,7 +5340,7 @@ This will be called once for each client frame, which will
 usually be a couple times for each server frame.
 ==============
 */
-void Player::ClientThink( Event *ev )
+void Player::ClientThink( Event * )
 {
 	// sanity check the command time to prevent speedup cheating
 	if ( current_ucmd->serverTime > level.inttime )
@@ -5866,7 +5867,7 @@ void Player::LoadStateTable()
 	SetState("STAND", "START");
 }
 
-void Player::ResetState( Event *ev )
+void Player::ResetState( Event * )
 {
 	movecontrol = MOVECONTROL_USER;
 	LoadStateTable();
@@ -5971,7 +5972,7 @@ void Player::StartLoopUseAnim( void )
 	useanim_numloops--;
 }
 
-void Player::FinishUseAnim( Event *ev )
+void Player::FinishUseAnim( Event * )
 {
 	UseAnim  *ua;
 	
@@ -6038,7 +6039,7 @@ void Player::SetupUseObject()
 	}
 }
 
-void Player::StartUseObject( Event *ev )
+void Player::StartUseObject( Event * )
 {
 	UseObject  *uo;
 	
@@ -6049,7 +6050,7 @@ void Player::StartUseObject( Event *ev )
 	uo->Start();
 }
 
-void Player::FinishUseObject( Event *ev )
+void Player::FinishUseObject( Event * )
 {
 	UseObject  *uo;
 	
@@ -6618,7 +6619,7 @@ void Player::GodCheat( Event *ev )
 	}
 }
 
-void Player::Kill( Event *ev )
+void Player::Kill( Event * )
 {
 	if ( ( level.time - respawn_time ) < 5.0f )
 	{
@@ -6630,7 +6631,7 @@ void Player::Kill( Event *ev )
 	Damage( this, this, 10.0f, origin, vec_zero, vec_zero, 0, DAMAGE_NO_PROTECTION, MOD_SUICIDE );
 }
 
-void Player::NoTargetCheat( Event *ev )
+void Player::NoTargetCheat( Event * )
 {
 	const char *msg;
 	
@@ -6659,7 +6660,7 @@ void Player::NoTargetCheat( Event *ev )
 // Returns:			None
 //
 //--------------------------------------------------------------
-void Player::NoclipCheat( Event *ev	)
+void Player::NoclipCheat( Event *	)
 {
 	const char *msg;
 	
@@ -6685,7 +6686,7 @@ void Player::NoclipCheat( Event *ev	)
 	gi.SendServerCommand( edict-g_entities, "print \"%s\"", msg );
 }
 
-void Player::GameVersion( Event *ev )
+void Player::GameVersion( Event * )
 {
 	gi.SendServerCommand( edict-g_entities, "print \"%s : %s\n\"", GAME_NAME, __DATE__ );
 }
@@ -9075,7 +9076,7 @@ void Player::UpdateReverb( void )
 	client->ps.reverb_level = reverb_level;
 }
 
-void Player::EndAnim_Legs( Event *ev )
+void Player::EndAnim_Legs( Event * )
 {
 	if ( vehicle )
 		return;
@@ -9085,7 +9086,7 @@ void Player::EndAnim_Legs( Event *ev )
 	EvaluateState();
 }
 
-void Player::EndAnim_Torso( Event *ev )
+void Player::EndAnim_Torso( Event * )
 {
 	if ( vehicle )
 		return;
@@ -9235,7 +9236,7 @@ Called for each player at the end of the server frame
 and right after spawning
 =================
 */
-void Player::EndFrame( Event *ev )
+void Player::EndFrame( Event * )
 {
 	AutoAim();
 	
@@ -9323,7 +9324,7 @@ void Player::GibEvent( Event *ev )
 	}
 }
 
-void Player::GotKill( Event *ev )
+void Player::GotKill( Event * )
 {
 }
 
@@ -9650,7 +9651,7 @@ void Player::SetViewAngles( Vector newViewangles )
 	leftfoot_pos += origin;
 }
 
-void Player::DumpState( Event *ev )
+void Player::DumpState( Event * )
 {
 	gi.DPrintf( "Legs: %s Torso: %s\n", currentState_Legs ? currentState_Legs->getName() : "NULL", currentState_Torso->getName() );
 }
@@ -9666,7 +9667,7 @@ void Player::TouchedUseAnim( Entity * ent )
 	toucheduseanim = ent;
 }
 
-void Player::ClearTarget( Event *ev )
+void Player::ClearTarget( Event * )
 {
 	targetEnemy = NULL;
 }
@@ -9676,7 +9677,7 @@ void Player::AdjustTorso( Event *ev )
 	adjust_torso = ev->GetBoolean( 1 );
 }
 
-void Player::UseDualWield( Event *ev )
+void Player::UseDualWield( Event * )
 {
 	// This is triggered by the state machine.
 	// If there is a weapon in the dual wield list, use it, then remove it from the list.
@@ -9766,7 +9767,7 @@ void Player::DualWield( Event *ev )
 	dual_wield_active = true;
 }
 
-void Player::EvaluateTorsoAnim( Event *ev )
+void Player::EvaluateTorsoAnim( Event * )
 {
 	str torsoAnim( currentState_Torso->getTorsoAnim( *this, &torso_conditionals ) );
 	if ( !animate->HasAnim(torsoAnim) )
@@ -9836,7 +9837,7 @@ void Player::EnterVehicle( Event *ev )
 	}
 }
 
-void Player::ExitVehicle( Event *ev )
+void Player::ExitVehicle( Event * )
 {
 	flags &= ~FL_PARTIAL_IMMOBILE;
 	setMoveType( MOVETYPE_WALK );
@@ -9981,7 +9982,7 @@ void Player::setTargeted( bool targeted )
 		}
 }
 
-void Player::NightvisionToggle( Event *ev )
+void Player::NightvisionToggle( Event * )
 {
 	if ( level.cinematic )
 		return;
@@ -10000,7 +10001,7 @@ void Player::NightvisionToggle( Event *ev )
 	ProcessEvent( newEvent );
 }
 
-void Player::HolsterToggle( Event *ev )
+void Player::HolsterToggle( Event * )
 {
 	if ( WeaponsOut() )
 	{
@@ -10049,7 +10050,7 @@ void Player::WatchEntity( Event *ev )
 	entity_to_watch = ev->GetEntity( 1 );
 }
 
-void Player::StopWatchingEntity( Event *ev )
+void Player::StopWatchingEntity( Event * )
 {
 	StopWatchingEntity();
 }
@@ -10137,7 +10138,7 @@ qboolean TryPush( int entnum, vec3_t move_origin, vec3_t move_end )
 	return false;
 }
 
-void Player::PlayerDone( Event *ev )
+void Player::PlayerDone( Event * )
 {
 	// This is used to let scripts know that the player is done doing something
 	
@@ -10323,7 +10324,7 @@ void Player::SpawnDamageEffect( meansOfDeath_t mod )
 	}
 }
 
-void Player::ActivateDualWeapons( Event *ev )
+void Player::ActivateDualWeapons( Event * )
 {
 	int i;
 	
@@ -10560,7 +10561,7 @@ void Player::AmmoAmountChanged( Ammo * ammo, int ammo_in_clip )
 	}
 }
 
-void Player::StartCoolItem( Event *ev )
+void Player::StartCoolItem( Event * )
 {
 	// turn off ai off during the cinematic
 	level.ai_on = false;
@@ -10586,7 +10587,7 @@ void Player::StartCoolItem( Event *ev )
 	SetCamera( cool_camera, 1.0f );
 }
 
-void Player::ShowCoolItem( Event *ev )
+void Player::ShowCoolItem( Event * )
 {
 	Entity *fx;
 	Vector org;
@@ -10615,7 +10616,7 @@ void Player::ShowCoolItem( Event *ev )
 	}
 }
 
-void Player::HideCoolItem( Event *ev )
+void Player::HideCoolItem( Event * )
 {
 	Entity *fx;
 	Vector org;
@@ -10656,7 +10657,7 @@ void Player::StartCoolItemAnim( void )
 	}
 }
 
-void Player::StopCoolItem( Event *ev )
+void Player::StopCoolItem( Event * )
 {
 	if ( cool_item && cool_anim.length() )
 	{
@@ -10713,7 +10714,7 @@ void Player::Loaded( void )
 {
 }
 
-void Player::PlayerShowModel( Event *ev )
+void Player::PlayerShowModel( Event * )
 {
 	Entity::showModel();
 }
@@ -10904,7 +10905,7 @@ void Player::ArmorDamage( Event *ev )
 	}
 }
 
-void Player::DeadBody( Event *ev )
+void Player::DeadBody( Event * )
 {
 	// Spawn a dead body at the spot
 	Body *body;
@@ -10942,7 +10943,7 @@ void Player::DeadBody( Event *ev )
 	}
 }
 
-void Player::ShowHeuristics( Event *ev )
+void Player::ShowHeuristics( Event * )
 {
 	
 	if ( p_heuristics )
@@ -10970,7 +10971,7 @@ void Player::SetAimType( Event *ev )
 	weapon->SetAimType( ev );
 }
 
-void Player::ReloadWeapon( Event *ev )
+void Player::ReloadWeapon( Event * )
 {
 	Weapon* weapon = 0;
 	weapon = GetActiveWeapon( WEAPON_DUAL );
@@ -11000,7 +11001,7 @@ void Player::AnimateWeapon( Event *ev )
 	weapon->playAnim( ev->GetString( 1 ), animatingFlag );
 }
 
-void Player::SwitchWeaponMode( Event *ev )
+void Player::SwitchWeaponMode( Event * )
 {
 	Weapon* weapon = 0;
 	weapon = GetActiveWeapon( WEAPON_DUAL );
@@ -11252,7 +11253,7 @@ void Player::handlePickupItem( Item *item )
 // Returns:			None
 //
 //--------------------------------------------------------------
-void Player::doUseEntity( Event *ev )
+void Player::doUseEntity( Event * )
 {
 	Entity *ent = NULL;
 	Event *event = NULL;
@@ -11295,7 +11296,7 @@ void Player::doUseEntity( Event *ev )
 // Returns:			None
 //
 //--------------------------------------------------------------
-void Player::doneUseEntity( Event *ev )
+void Player::doneUseEntity( Event * )
 {
 	_usingEntity = false;
 	level.playerfrozen = false;
@@ -11410,7 +11411,7 @@ void Player::handleTextDialogSetup( const str& soundName )
 }
 
 
-void Player::ClearDialog( Event *ev )
+void Player::ClearDialog( Event * )
 {
 	ClearDialog();
 }
@@ -11434,7 +11435,7 @@ void Player::ClearDialog( void )
 //
 // Returns:		
 //-----------------------------------------------------
-void Player::ClearTextDialog( Event* ev )
+void Player::ClearTextDialog( Event*  )
 {
 	ClearTextDialog();
 }
@@ -11753,13 +11754,13 @@ void Player::SetObjectiveShow( Event* ev )
 		Sound( "snd_objectivechanged", CHAN_LOCAL );
 }
 
-void Player::SpecialMoveChargeStart( Event* ev )
+void Player::SpecialMoveChargeStart( Event* )
 {
 	specialMoveCharge = level.time;
 	specialMoveEndTime = level.time + specialMoveChargeTime;
 }
 
-void Player::SpecialMoveChargeEnd( Event* ev )
+void Player::SpecialMoveChargeEnd( Event* )
 {
 	specialMoveCharge = 0.0f;
 	specialMoveChargeTime = 0.0f;
@@ -12392,7 +12393,7 @@ void Player::ChangeStance(Event *ev)
 //
 // Returns:			None
 //----------------------------------------------------------------
-void Player::ClearStanceTorso(Event *ev)
+void Player::ClearStanceTorso(Event *)
 {
 	changedStanceTorso = false;
 }
@@ -12407,7 +12408,7 @@ void Player::ClearStanceTorso(Event *ev)
 //
 // Returns:			None
 //----------------------------------------------------------------
-void Player::ClearStanceLegs(Event *ev)
+void Player::ClearStanceLegs(Event *)
 {
 	changedStanceLegs = false;
 }
@@ -12422,7 +12423,7 @@ void Player::ClearStanceLegs(Event *ev)
 //
 // Returns:			None
 //----------------------------------------------------------------
-void Player::ClearIncomingMelee(Event *ev)
+void Player::ClearIncomingMelee(Event *)
 {
 	incomingMeleeAttack = false;
 }
@@ -12490,7 +12491,7 @@ str	Player::GetCurrentCallVolume()
 // Multiplayer stuff
 //
 
-void Player::Score( Event *ev )
+void Player::Score( Event * )
 {
 	multiplayerManager.score( this );
 }
@@ -12668,7 +12669,7 @@ void Player::removePowerup( void )
 	}
 }
 
-void Player::removePowerupEvent( Event *ev )
+void Player::removePowerupEvent( Event * )
 {
 	removePowerup();
 }
@@ -12814,7 +12815,7 @@ meansOfDeath_t Player::changetMeansOfDeath( meansOfDeath_t meansOfDeath )
 	return realMeansOfDeath;
 }
 
-void Player::dropRune( Event *ev )
+void Player::dropRune( Event * )
 {
 	if ( _rune )
 	{
@@ -13107,7 +13108,7 @@ void Player::addFinishingMove( Event *ev )
 // Returns:			None
 //
 //--------------------------------------------------------------
-void Player::clearFinishingMove( Event *ev )
+void Player::clearFinishingMove( Event * )
 {
 	int i;
 	for ( i=1; i<=finishingMoveList.NumObjects(); i++ )
@@ -13130,7 +13131,7 @@ void Player::clearFinishingMove( Event *ev )
 // Returns:			None
 //
 //--------------------------------------------------------------
-void Player::doFinishingMove( Event *ev )
+void Player::doFinishingMove( Event * )
 {
 	movecontrol = MOVECONTROL_ABSOLUTE;
 	
@@ -13424,7 +13425,7 @@ void Player::skillChanged(const str& objname)
 // Returns:			None
 //
 //--------------------------------------------------------------
-void Player::equipItems( Event *ev )
+void Player::equipItems( Event * )
 {
 	GameplayManager *gpm = GameplayManager::getTheGameplayManager();
 
@@ -13533,7 +13534,7 @@ void Player::usePlayer( Event *ev )
 //
 // Returns:		None
 //-----------------------------------------------------
-void Player::addRosterTeammate1( Event* ev )
+void Player::addRosterTeammate1( Event*  )
 {
 }
 
@@ -13549,7 +13550,7 @@ void Player::addRosterTeammate1( Event* ev )
 //
 // Returns:		None
 //-----------------------------------------------------
-void Player::addRosterTeammate2( Event* ev )
+void Player::addRosterTeammate2( Event*  )
 {
 }
 
@@ -13565,7 +13566,7 @@ void Player::addRosterTeammate2( Event* ev )
 //
 // Returns:		None
 //-----------------------------------------------------
-void Player::addRosterTeammate3( Event* ev )
+void Player::addRosterTeammate3( Event*  )
 {
 
 }
@@ -13582,7 +13583,7 @@ void Player::addRosterTeammate3( Event* ev )
 //
 // Returns:		None
 //-----------------------------------------------------
-void Player::addRosterTeammate4( Event* ev )
+void Player::addRosterTeammate4( Event*  )
 {
 
 }
@@ -13599,7 +13600,7 @@ void Player::addRosterTeammate4( Event* ev )
 //
 // Returns:		None
 //-----------------------------------------------------
-void Player::removeRosterTeammate1( Event* ev )
+void Player::removeRosterTeammate1( Event*  )
 {
 }
 
@@ -13615,7 +13616,7 @@ void Player::removeRosterTeammate1( Event* ev )
 //
 // Returns:		None
 //-----------------------------------------------------
-void Player::removeRosterTeammate2( Event* ev )
+void Player::removeRosterTeammate2( Event*  )
 {
 }
 
@@ -13631,7 +13632,7 @@ void Player::removeRosterTeammate2( Event* ev )
 //
 // Returns:		None
 //-----------------------------------------------------
-void Player::removeRosterTeammate3( Event* ev )
+void Player::removeRosterTeammate3( Event*  )
 {
 }
 
@@ -13647,7 +13648,7 @@ void Player::removeRosterTeammate3( Event* ev )
 //
 // Returns:		None
 //-----------------------------------------------------
-void Player::removeRosterTeammate4( Event* ev )
+void Player::removeRosterTeammate4( Event*  )
 {
 }
 
@@ -13662,11 +13663,16 @@ bool Player::isButtonDown( int button )
 
 void Player::notifyPlayerOfMultiplayerEvent( const char *eventName, const char *eventItemName, Player *eventPlayer )
 {
+	Q_UNUSED(eventName);
+	Q_UNUSED(eventItemName);
+	Q_UNUSED(eventPlayer);
 	// Put stuff here :)
 }
 
 void Player::touchingLadder( Trigger *ladder, const Vector &normal, float top )
 {
+	Q_UNUSED(ladder);
+
 	// Make sure we are allowed to get on the ladder time wise
 
 	if ( level.time < _nextLadderTime )
@@ -13730,7 +13736,7 @@ void Player::clearItemText( void )
 	CancelEventsOfType( EV_Player_ClearItemText );
 }
 
-void Player::clearItemText( Event *ev )
+void Player::clearItemText( Event * )
 {
 	clearItemText();
 }
@@ -13822,7 +13828,7 @@ void Player::loadUseItem( const str &item )
 	}
 }
 
-void Player::setValidPlayerModel( Event *ev )
+void Player::setValidPlayerModel( Event * )
 {
 	_validPlayerModel = true;
 }
@@ -13944,7 +13950,7 @@ void Player::removeHudFromClient( const str &hudName )
 	gi.SendServerCommand( entnum, commandString.c_str() );
 }
 
-void Player::killAllDialog( Event *ev )
+void Player::killAllDialog( Event * )
 {
 	killAllDialog();
 }

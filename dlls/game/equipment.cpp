@@ -202,7 +202,7 @@ void Equipment::Think()
 //
 // Returns:			none
 //----------------------------------------------------------------
-void Equipment::airStrike(Event *ev)
+void Equipment::airStrike(Event *)
 {
 	str modeName;
 	Player* player;
@@ -335,7 +335,7 @@ void Equipment::airStrike(Event *ev)
 	Sound( airStrikeSound );
 }
 
-void Equipment::scanStart(Event* ev)
+void Equipment::scanStart(Event* )
 {
 	if(scanner == true)
 		scanning = qtrue;
@@ -361,7 +361,7 @@ void Equipment::scanStart(Event* ev)
 }
 
 
-void Equipment::scanEnd(Event* ev)
+void Equipment::scanEnd(Event* )
 {
 	if(scanner == true)
 		scanning = false;
@@ -374,7 +374,7 @@ void Equipment::scanEnd(Event* ev)
 	CancelEventsOfType( EV_Scan );
 }
 
-void Equipment::scan( Event *ev )
+void Equipment::scan( Event * )
 {
 	
 	if ( owner && owner->isSubclassOf( Player ) )

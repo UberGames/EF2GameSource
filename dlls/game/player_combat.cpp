@@ -197,7 +197,7 @@ Entity* Player::FindHeadTarget( const Vector &origin, const Vector &forward, con
 //====================
 //ActivateNewWeapon
 //====================
-void Player::ActivateNewWeapon( Event *ev )
+void Player::ActivateNewWeapon( Event * )
 {
 	// Change the weapon to the currently active weapon as specified by useWeapon
 	ChangeWeapon( newActiveWeapon.weapon, newActiveWeapon.hand );
@@ -412,7 +412,7 @@ bool Player::useWeapon( Weapon *weapon, weaponhand_t hand )
 //====================
 //ActivateShield
 //====================
-void Player::ActivateShield( Event *ev )
+void Player::ActivateShield( Event * )
 {
 	shield_active = true;
 }
@@ -420,7 +420,7 @@ void Player::ActivateShield( Event *ev )
 //====================
 //DeactivateShield
 //====================
-void Player::DeactivateShield( Event *ev )
+void Player::DeactivateShield( Event * )
 {
 	shield_active = false;
 }

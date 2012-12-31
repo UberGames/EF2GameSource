@@ -75,6 +75,7 @@ padded to 20 field width
 */
 const char *Interpreter::GlobalString( int ofs )
 {
+	Q_UNUSED(ofs);
 /****************************************************************************
 Squirrel : #if 0 / 1 block demoted to comment
 
@@ -117,6 +118,7 @@ Squirrel : #if 0 / 1 block demoted to comment
 
 const char *Interpreter::GlobalStringNoContents( int ofs )
 {
+	Q_UNUSED(ofs);
 /****************************************************************************
 Squirrel : #if 0 / 1 block demoted to comment
 
@@ -610,7 +612,7 @@ void Interpreter::DoMove( void )
 ExecuteProgram
 ====================
 */
-void Interpreter::Execute( Event *e )
+void Interpreter::Execute( Event * )
 {
 	eval_t	      *a;
 	eval_t	      *b;

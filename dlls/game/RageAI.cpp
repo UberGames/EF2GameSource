@@ -23,6 +23,7 @@
 
 void Strategos::DoArchive( Archiver &arc , Actor *actor )
 {
+	Q_UNUSED(actor);
 	Archive( arc );
 }
 
@@ -86,6 +87,8 @@ DefaultStrategos::~DefaultStrategos()
 //
 void DefaultStrategos::NotifySightStatusChanged( Entity *enemy , qboolean canSee )
 {
+	Q_UNUSED(enemy);
+	Q_UNUSED(canSee);
 	//if ( canSee )
 	//	act->enemyManager->AdjustHate( enemy , GetSightBasedHate() );
 	//else
@@ -102,6 +105,8 @@ void DefaultStrategos::NotifySightStatusChanged( Entity *enemy , qboolean canSee
 //
 void DefaultStrategos::NotifyDamageChanged( Entity *enemy , float damage )
 {
+	Q_UNUSED(enemy);
+	Q_UNUSED(damage);
 	//act->enemyManager->AdjustHate( enemy , damage );
 }
 

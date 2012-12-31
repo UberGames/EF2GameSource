@@ -737,7 +737,7 @@ void SoundManager::UpdateTriggerReverb( TriggerReverb * reverb )
 	UpdateUI();
 }
 
-void SoundManager::UpdateEvent( Event *ev )
+void SoundManager::UpdateEvent( Event * )
 {
 	if ( !current )
 	{
@@ -761,7 +761,7 @@ void SoundManager::UpdateEvent( Event *ev )
 	}
 }
 
-void SoundManager::AddSpeaker( Event *ev )
+void SoundManager::AddSpeaker( Event * )
 {
 	Player *player;
 	Vector ang;
@@ -783,7 +783,7 @@ void SoundManager::AddSpeaker( Event *ev )
 	UpdateUI();
 }
 
-void SoundManager::AddRandomSpeaker( Event *ev )
+void SoundManager::AddRandomSpeaker( Event * )
 {
 	Player *player;
 	Vector ang;
@@ -805,7 +805,7 @@ void SoundManager::AddRandomSpeaker( Event *ev )
 	UpdateUI();
 }
 
-void SoundManager::AddMusicTrigger( Event *ev )
+void SoundManager::AddMusicTrigger( Event * )
 {
 	Player *player;
 	Vector ang;
@@ -830,7 +830,7 @@ void SoundManager::AddMusicTrigger( Event *ev )
 	UpdateUI();
 }
 
-void SoundManager::AddReverbTrigger( Event *ev )
+void SoundManager::AddReverbTrigger( Event * )
 {
 	Player *player;
 	Vector ang;
@@ -855,7 +855,7 @@ void SoundManager::AddReverbTrigger( Event *ev )
 	UpdateUI();
 }
 
-void SoundManager::Replace( Event *ev )
+void SoundManager::Replace( Event * )
 {
 	Player *player;
 	Vector ang;
@@ -879,7 +879,7 @@ void SoundManager::Replace( Event *ev )
 	UpdateUI();
 }
 
-void SoundManager::Delete( Event *ev )
+void SoundManager::Delete( Event * )
 {
 	int index = 0;
 	
@@ -907,7 +907,7 @@ void SoundManager::Delete( Event *ev )
 	UpdateUI();
 }
 
-void SoundManager::MovePlayer( Event *ev )
+void SoundManager::MovePlayer( Event * )
 {
 	Player *player;
 	Vector pos;
@@ -951,7 +951,7 @@ void SoundManager::CurrentGainsFocus( void )
 	}
 }
 
-void SoundManager::Next( Event *ev )
+void SoundManager::Next( Event * )
 {
 	int index;
 	
@@ -986,7 +986,7 @@ void SoundManager::Next( Event *ev )
 	}
 }
 
-void SoundManager::Previous( Event *ev )
+void SoundManager::Previous( Event * )
 {
 	int index;
 	
@@ -1021,7 +1021,7 @@ void SoundManager::Previous( Event *ev )
 	}
 }
 
-void SoundManager::ResetEvent( Event *ev )
+void SoundManager::ResetEvent( Event * )
 {
 	int i;
 	Entity * ent;
@@ -1065,7 +1065,7 @@ void SoundManager::GlobalTranslateEvent( Event *ev )
 	}
 }
 
-void SoundManager::SwitchFacetEvent( Event *ev )
+void SoundManager::SwitchFacetEvent( Event * )
 {
 	if ( current && current->isSubclassOf( Trigger ) )
 	{
@@ -1084,7 +1084,7 @@ void SoundManager::SwitchFacetEvent( Event *ev )
 	UpdateUI();
 }
 
-void SoundManager::PreviewReverbEvent( Event *ev )
+void SoundManager::PreviewReverbEvent( Event * )
 {
 	cvar_t   *cvar;
 	int      reverbtype;
@@ -1107,7 +1107,7 @@ void SoundManager::PreviewReverbEvent( Event *ev )
 	}
 }
 
-void SoundManager::ResetReverbEvent( Event *ev )
+void SoundManager::ResetReverbEvent( Event * )
 {
 	if ( g_entities[ 0 ].inuse && g_entities[ 0 ].client )
 	{
@@ -1118,7 +1118,7 @@ void SoundManager::ResetReverbEvent( Event *ev )
 	}
 }
 
-void SoundManager::ShowingSounds( Event *ev )
+void SoundManager::ShowingSounds( Event * )
 {
 	int i;
 	Entity * ent;
@@ -1280,12 +1280,12 @@ void SoundManager::Show( void )
 	UpdateUI();
 }
 
-void SoundManager::Show( Event *ev )
+void SoundManager::Show( Event * )
 {
 	Show();
 }
 
-void SoundManager::Hide( Event *ev )
+void SoundManager::Hide( Event * )
 {
 	CurrentLostFocus();
 	CancelEventsOfType( EV_SoundManager_ShowingSounds );
@@ -1614,7 +1614,7 @@ void SoundManager::Save( void )
 	gi.Printf( "done.\n" );
 }
 
-void SoundManager::Save( Event *ev )
+void SoundManager::Save( Event * )
 {
 	Save();
 }

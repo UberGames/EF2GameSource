@@ -348,12 +348,12 @@ Item::~Item()
 	}
 }
 
-void Item::postSpawn( Event *ev )
+void Item::postSpawn( Event * )
 {
 	cacheStrings();
 }
 
-void Item::SetNoRemove( Event *ev )
+void Item::SetNoRemove( Event * )
 {
 	no_remove = true;
 }
@@ -391,7 +391,7 @@ DropToFloor
 plants the object on the floor
 ============
 */
-void Item::DropToFloor( Event *ev )
+void Item::DropToFloor( Event * )
 {
 	str fullname;
 	Vector save;
@@ -639,7 +639,7 @@ Item * Item::ItemPickup( Entity *other, qboolean add_to_inventory, qboolean chec
 	return item;
 }
 
-void Item::Respawn( Event *ev )
+void Item::Respawn( Event * )
 {
 	if ( _missingSkin )
 	{
@@ -684,12 +684,12 @@ void Item::setRespawnTime( Event *ev )
 	setRespawnTime( ev->GetFloat( 1 ) );
 }
 
-void Item::RespawnDone( Event *ev )
+void Item::RespawnDone( Event * )
 {
 	animate->RandomAnimate( "idle" );
 }
 
-void Item::PickupDone( Event *ev )
+void Item::PickupDone( Event * )
 {
 	if ( !no_remove )
 	{
@@ -874,7 +874,7 @@ qboolean Item::Removable( void )
 	return true;
 }
 
-void Item::RespawnSound( Event *ev )
+void Item::RespawnSound( Event * )
 {
 	playrespawn = true;
 }
@@ -895,7 +895,7 @@ str Item::GetDialogNeeded( void )
 //
 // once item has landed on the floor, go to movetype none
 //
-void Item::Landed( Event *ev )
+void Item::Landed( Event * )
 {
 	if ( groundentity && ( groundentity->entity != world ) )
 	{
@@ -1105,6 +1105,9 @@ SecretItem::SecretItem()
 Item* SecretItem::ItemPickup( Entity *other, qboolean add_to_inventory = true, qboolean checkautopickup = true )
 {
 	str pickupSoundName;
+
+	Q_UNUSED(checkautopickup);
+	Q_UNUSED(add_to_inventory);
 
 	PostEvent( EV_Remove, 0.0f );
 

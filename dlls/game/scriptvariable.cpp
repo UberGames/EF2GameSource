@@ -1073,7 +1073,7 @@ void ScriptVariable::Var_Vector_Scale( Event *ev )
 	setVectorValue( tempvec );
 }
 
-void ScriptVariable::Var_Vector_Normalize( Event *ev )
+void ScriptVariable::Var_Vector_Normalize( Event * )
 {
 	Vector vec( vectorValue() );
 	vec.normalize();

@@ -701,7 +701,7 @@ void HelperNode::SetWaitForAnim( Event *ev )
 //
 // Returns:     None
 //
-void HelperNode::SetCriticalChange( Event *ev )
+void HelperNode::SetCriticalChange( Event * )
 {
 	SetCriticalChange( true );
 }
@@ -2244,6 +2244,7 @@ HelperNode* HelperNode::FindClosestHelperNodeThatCannotSeeEntity( Actor &self , 
 	int					nodeID;
 	trace_t				trace;
 	
+	Q_UNUSED(clipMask);
 	
 	// Set up our pathing heuristics
 	find.heuristic.self = &self;

@@ -1126,6 +1126,8 @@ const Vector MovementSubsystem::SteerTowardsPoint( const Vector &targetPosition,
 //
 qboolean MovementSubsystem::_canMoveSimplePath( const Vector &mins, const Vector &maxs , const Vector &pos ) const
 {
+	Q_UNUSED(maxs); Q_UNUSED(mins);
+
 	trace_t trace = act->Trace( act->origin + _step, pos + _step, "Actor::_canMoveSimplePath" );
 	if ( trace.fraction == 1.0f )
 		return true;

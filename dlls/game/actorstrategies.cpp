@@ -55,7 +55,7 @@ extern cvar_t	*ai_showfailure;
 //
 // Returns:			None
 //----------------------------------------------------------------
-void ActorThink::DoArchive( Archiver &arc )
+void ActorThink::DoArchive( Archiver & )
 {
 }
 

@@ -2524,7 +2524,7 @@ void Entity::ProcessInitCommandsEvent
 
 void Entity::EventHideModel
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -2533,7 +2533,7 @@ void Entity::EventHideModel
 
 void Entity::EventShowModel
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -3729,7 +3729,7 @@ void Entity::CheckGround
 
 void Entity::BecomeSolid
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -3745,7 +3745,7 @@ void Entity::BecomeSolid
 
 void Entity::BecomeNonSolid
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -3754,7 +3754,7 @@ void Entity::BecomeNonSolid
 
 void Entity::Ghost
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -3836,7 +3836,7 @@ void Entity::LoopSound( const str &sound_name, float volume, float min_dist )
 		}
 	}
 
-void Entity::StopLoopSound( Event *ev )
+void Entity::StopLoopSound( Event * )
 	{
    StopLoopSound();
 	}
@@ -3947,7 +3947,7 @@ void Entity::SetLight
 
 void Entity::LightOn
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -3956,7 +3956,7 @@ void Entity::LightOn
 
 void Entity::LightOff
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -4656,7 +4656,7 @@ qboolean Entity::attach
 
 void Entity::KillAttach
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -5150,6 +5150,7 @@ void Entity::DamageSkin
    )
 
    {
+	   Q_UNUSED(damage); Q_UNUSED(trace);
    /* FIXME : Do we need damage skins?
    int surface;
 
@@ -5164,7 +5165,7 @@ void Entity::DamageSkin
 
 void Entity::Kill
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -5554,7 +5555,7 @@ void Entity::removeAttachedModelByTargetname( const str &targetNameToRemove )
 
 void Entity::DetachEvent
 	(
-	Event * ev
+	Event * 
 	)
 
 	{
@@ -5567,7 +5568,7 @@ void Entity::DetachEvent
 
 void Entity::TakeDamageEvent
 	(
-	Event * ev
+	Event * 
 	)
 	{
    takedamage = DAMAGE_YES;
@@ -5575,7 +5576,7 @@ void Entity::TakeDamageEvent
 
 void Entity::NoDamageEvent
 	(
-	Event * ev
+	Event * 
 	)
 	{
    takedamage = DAMAGE_NO;
@@ -5592,7 +5593,7 @@ void Entity::Gravity
 
 void Entity::UseBoundingBoxEvent
    (
-   Event *ev
+   Event *
    )
    {
 	edict->svflags |= SVF_USEBBOX;
@@ -5668,7 +5669,7 @@ void Entity::IfSkillEvent
 
 void Entity::Censor
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -5694,7 +5695,7 @@ void Entity::Censor
 
 void Entity::StationaryEvent
    (
-   Event *ev
+   Event *
    )
 
 	{
@@ -5804,7 +5805,7 @@ void Entity::DoRadiusDamage( Event *ev )
 
 void Entity::SelfDetonate
    (
-	Event *ev
+	Event *
 	)
 	{
 	if ( explosionModel.length() == 0 )
@@ -6101,7 +6102,7 @@ void Entity::unbind
 
 void Entity::EventUnbind
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -6289,7 +6290,7 @@ void Entity::quitTeam
 
 void Entity::EventQuitTeam
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -6314,7 +6315,7 @@ void Entity::JoinTeam
 
 void Entity::AddToSoundManager
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -6414,7 +6415,7 @@ void Entity::TouchTriggersEvent(Event *ev)
 
 void Entity::IncreaseShotCount 
    (
-	Event *ev
+	Event *
 	)
 	{
 	int parent_ent_num = edict->s.parent;
@@ -6431,7 +6432,7 @@ void Entity::IncreaseShotCount
 
 void Entity::DeathSinkStart
 	(
-	Event *ev
+	Event *
 	)
 	{
 	float time;
@@ -6452,7 +6453,7 @@ void Entity::DeathSinkStart
 
 void Entity::DeathSink
 	(
-	Event *ev
+	Event *
 	)
 	{
 	// Sink just a little
@@ -6500,7 +6501,7 @@ void Entity::VelocityModified
 // Returns:			None
 //
 //--------------------------------------------------------------
-void Entity::DetachAllChildren(Event *ev)
+void Entity::DetachAllChildren(Event *)
 	{
 	if ( !bind_info ) // Abort if bind_info is NULL for some reason
 		return;
@@ -7190,7 +7191,7 @@ void Entity::UnmorphEvent
 
 void Entity::MorphControl
 	(
-	Event *ev
+	Event *
 	)
 	{
 	int i;
@@ -7422,7 +7423,7 @@ void Entity::CinematicAnimDone
 
 void Entity::CinematicAnimDone
 	(
-	Event *ev
+	Event *
 	)
 	{
 	CinematicAnimDone();
@@ -9575,10 +9576,10 @@ void Entity::AddToGroup( int ID )
 //
 // Returns:			None
 //----------------------------------------------------------------
-void Entity::TikiTodo( Event *ev )
+void Entity::TikiTodo( Event * )
 	{
 	}
-void Entity::TikiNote( Event *ev )
+void Entity::TikiNote( Event * )
 	{
 	}
 
@@ -9946,12 +9947,12 @@ void Entity::SetVelocity( Event *ev )
 	velocity = ev->GetVector( 1 );
 }
 
-void Entity::startStasis( Event *ev )
+void Entity::startStasis( Event * )
 {
 	startStasis();
 }
 
-void Entity::stopStasis( Event *ev )
+void Entity::stopStasis( Event * )
 {
 	stopStasis();
 }
@@ -10188,7 +10189,7 @@ void Entity::traceHitsEntity( Event *ev )
 		ev->ReturnFloat( 0.0f );
 }
 
-void Entity::setOriginEveryFrame( Event *ev )
+void Entity::setOriginEveryFrame( Event * )
 {
 	Event *repost;
 	repost = new Event(EV_SetOriginEveryFrame);
@@ -10215,7 +10216,7 @@ void Entity::isWithinDistanceOf( Event *ev )
 	ev->ReturnFloat( returnValue );
 }
 
-void Entity::setNetworkDetail( Event *ev )
+void Entity::setNetworkDetail( Event * )
 {
 	_networkDetail = true;
 }

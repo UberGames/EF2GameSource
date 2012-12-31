@@ -557,7 +557,7 @@ void PathNode::Archive( Archiver &arc )
 	}
 }
 
-void PathNode::FindEntities( Event *ev )
+void PathNode::FindEntities( Event * )
 {
 	for( int i = 0; i < NumberOfConnections(); i++ )
 	{
@@ -597,6 +597,8 @@ qboolean PathNode::TestMove( Entity *ent, const Vector &original_start, const Ve
 	float    dist;
 	Vector	start;
 	Vector	end;
+
+	Q_UNUSED(allowdoors);
 	
 	// By requiring that paths have STEPSIZE headroom above the path, we simplify the test
 	// to see if an actor can move to a node down to a simple trace.  By stepping up the start
@@ -825,6 +827,7 @@ Door *PathNode::CheckDoor( const Vector &pos )
 
 qboolean PathNode::CheckMove( const Vector &pos, const Vector &min, const Vector &max )
 {
+	Q_UNUSED(pos); Q_UNUSED(min); Q_UNUSED(max);
 	return true;
 }
 
@@ -1055,7 +1058,7 @@ void PathNode::ConnectTo( PathNode *node, const byte maxheight[ NUM_WIDTH_VALUES
 	ConnectTo( node, maxheight, delta.length(), door );
 }
 
-void PathNode::FindChildren( Event *ev )
+void PathNode::FindChildren( Event * )
 {
 	trace_t	trace;
 	Vector	end;
@@ -1618,6 +1621,8 @@ void PathManager::Teleport( const Entity *teleportee, const Vector &from, const 
 	PathNode	*node2;
 	byte maxheight[ NUM_WIDTH_VALUES ];
 	int j;
+
+	Q_UNUSED(teleportee);
 	
 	if ( ai_createnodes->integer )
 	{
@@ -1716,7 +1721,7 @@ void PathManager::Archive( Archiver &arc )
 	}
 }
 
-void PathManager::ClearNodes( Event *ev )
+void PathManager::ClearNodes( Event * )
 {
 	for( int i = 0; i < _pathNodes.NumObjects(); i++ )
 	{
@@ -1968,7 +1973,7 @@ qboolean PathManager::CanDropPath( const PathNode *node, const PathNode *node2, 
 	return false;
 }
 
-void PathManager::OptimizeNodes( Event *ev )
+void PathManager::OptimizeNodes( Event * )
 {
 	
 	gi.ProcessLoadingScreen( "$$OptimizingPathnodeConnections$$" );
@@ -2169,7 +2174,7 @@ void PathManager::SavePaths( void )
 	}
 }
 
-void PathManager::SavePathsEvent( Event *ev )
+void PathManager::SavePathsEvent( Event * )
 {
 	str temp;
 	
@@ -2278,7 +2283,7 @@ void PathManager::FindAllTargets( void )
 	}
 }
 
-void PathManager::CalcAllPaths( Event *ev )
+void PathManager::CalcAllPaths( Event * )
 {
 	for( int i = 0; i < _pathNodes.NumObjects(); i++ )
 	{

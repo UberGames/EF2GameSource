@@ -805,7 +805,7 @@ Camera::Camera()
 //---------------------------------------------------------------------------
 // Camera::SetupCamera
 //---------------------------------------------------------------------------
-void Camera::SetupCamera( Event* ev )
+void Camera::SetupCamera( Event*  )
 {
 	currentstate.Initialize( this );
 	newstate.Initialize( this );
@@ -985,6 +985,8 @@ float Camera::AutomaticStart( Entity* player )
 //---------------------------------------------------------------------------
 float Camera::AutomaticStop( Entity* player )
 {
+	Q_UNUSED(player);
+
 	Stop();
 	return automatic_stopTime;
 }
@@ -1230,7 +1232,7 @@ void Camera::EvaluateCameraKeyFramePath( void )
 //---------------------------------------------------------------------------
 // Camera::CameraThink
 //---------------------------------------------------------------------------
-void Camera::CameraThink( Event* ev )
+void Camera::CameraThink( Event*  )
 {
 	/// Check if this camera is using a key-framed camera path
 	if( newCameraPath )
@@ -1723,7 +1725,7 @@ void Camera::SetAutoStopTimeEvent( Event* ev )
 //---------------------------------------------------------------------------
 // Camera::StopMoving
 //---------------------------------------------------------------------------
-void Camera::StopMoving( Event* ev )
+void Camera::StopMoving( Event*  )
 {
 	Stop();
 }
@@ -1732,7 +1734,7 @@ void Camera::StopMoving( Event* ev )
 //---------------------------------------------------------------------------
 // Camera::Pause
 //---------------------------------------------------------------------------
-void Camera::Pause( Event* ev )
+void Camera::Pause( Event*  )
 {
 	CancelEventsOfType( EV_Camera_CameraThink );
 }
@@ -1741,7 +1743,7 @@ void Camera::Pause( Event* ev )
 //---------------------------------------------------------------------------
 // Camera::Continue
 //---------------------------------------------------------------------------
-void Camera::Continue( Event* ev )
+void Camera::Continue( Event*  )
 {
 	CancelEventsOfType( EV_Camera_CameraThink );
 	PostEvent( EV_Camera_CameraThink, 0.0f );
@@ -1808,7 +1810,7 @@ void Camera::SetFollowYaw( Event* ev )
 //---------------------------------------------------------------------------
 // Camera::AbsoluteYaw
 //---------------------------------------------------------------------------
-void Camera::AbsoluteYaw( Event* ev )
+void Camera::AbsoluteYaw( Event*  )
 {
 	follow_yaw_fixed = true;
 }
@@ -1817,7 +1819,7 @@ void Camera::AbsoluteYaw( Event* ev )
 //---------------------------------------------------------------------------
 // Camera::RelativeYaw
 //---------------------------------------------------------------------------
-void Camera::RelativeYaw( Event* ev )
+void Camera::RelativeYaw( Event*  )
 {
 	follow_yaw_fixed = false;
 }
@@ -1835,7 +1837,7 @@ void Camera::SetNextCamera( Event* ev )
 //---------------------------------------------------------------------------
 // Camera::Cut
 //---------------------------------------------------------------------------
-void Camera::Cut( Event* ev )
+void Camera::Cut( Event*  )
 {
 	int         j;
 
@@ -2750,7 +2752,7 @@ void CameraManager::UpdateUI( void )
 //---------------------------------------------------------------------------
 // CameraManager::UpdateEvent
 //---------------------------------------------------------------------------
-void CameraManager::UpdateEvent( Event* ev )
+void CameraManager::UpdateEvent( Event*  )
 {
 	Vector tempvec;
 	cvar_t * cvar;
@@ -2817,7 +2819,7 @@ void CameraManager::SetPathName( const str& name )
 //---------------------------------------------------------------------------
 // CameraManager::NewPath
 //---------------------------------------------------------------------------
-void CameraManager::NewPath( Event* ev )
+void CameraManager::NewPath( Event*  )
 {
 	if ( path )
 	{
@@ -2986,7 +2988,7 @@ void CameraManager::SetThread( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::AddPoint
 //---------------------------------------------------------------------------
-void CameraManager::AddPoint( Event* ev )
+void CameraManager::AddPoint( Event*  )
 {
 	Player *player;
 	SplinePath *prev;
@@ -3031,7 +3033,7 @@ void CameraManager::AddPoint( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::ReplacePoint
 //---------------------------------------------------------------------------
-void CameraManager::ReplacePoint( Event* ev )
+void CameraManager::ReplacePoint( Event*  )
 {
 	Player *player;
 	Vector ang;
@@ -3054,7 +3056,7 @@ void CameraManager::ReplacePoint( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::DeletePoint
 //---------------------------------------------------------------------------
-void CameraManager::DeletePoint( Event* ev )
+void CameraManager::DeletePoint( Event*  )
 {
 	SplinePath *node;
 
@@ -3082,7 +3084,7 @@ void CameraManager::DeletePoint( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::MovePlayer
 //---------------------------------------------------------------------------
-void CameraManager::MovePlayer( Event* ev )
+void CameraManager::MovePlayer( Event*  )
 {
 	Player *player;
 	Vector pos;
@@ -3101,7 +3103,7 @@ void CameraManager::MovePlayer( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::NextPoint
 //---------------------------------------------------------------------------
-void CameraManager::NextPoint( Event* ev )
+void CameraManager::NextPoint( Event*  )
 {
 	SplinePath *next;
 
@@ -3120,7 +3122,7 @@ void CameraManager::NextPoint( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::PreviousPoint
 //---------------------------------------------------------------------------
-void CameraManager::PreviousPoint( Event* ev )
+void CameraManager::PreviousPoint( Event*  )
 {
 	SplinePath *prev;
 
@@ -3139,7 +3141,7 @@ void CameraManager::PreviousPoint( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::NextPath
 //---------------------------------------------------------------------------
-void CameraManager::NextPath( Event* ev )
+void CameraManager::NextPath( Event*  )
 {
 	int index;
 
@@ -3161,7 +3163,7 @@ void CameraManager::NextPath( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::PreviousPath
 //---------------------------------------------------------------------------
-void CameraManager::PreviousPath( Event* ev )
+void CameraManager::PreviousPath( Event*  )
 {
 	int index;
 
@@ -3183,7 +3185,7 @@ void CameraManager::PreviousPath( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::ShowingPath
 //---------------------------------------------------------------------------
-void CameraManager::ShowingPath( Event* ev )
+void CameraManager::ShowingPath( Event*  )
 {
 	int        count;
 	SplinePath *node;
@@ -3336,7 +3338,7 @@ void CameraManager::ShowPath( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::HidePath
 //---------------------------------------------------------------------------
-void CameraManager::HidePath( Event* ev )
+void CameraManager::HidePath( Event*  )
 {
 	CancelEventsOfType( EV_CameraManager_ShowingPath );
 	UpdateUI();
@@ -3346,7 +3348,7 @@ void CameraManager::HidePath( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::StopPlayback
 //---------------------------------------------------------------------------
-void CameraManager::StopPlayback( Event* ev )
+void CameraManager::StopPlayback( Event*  )
 {
 	isPreviewPlaybackRunning = false;
 
@@ -3487,7 +3489,7 @@ void CameraManager::Watch( Event* ev )
 //---------------------------------------------------------------------------
 // CameraManager::NoWatch
 //---------------------------------------------------------------------------
-void CameraManager::NoWatch( Event* ev )
+void CameraManager::NoWatch( Event*  )
 {
 	if ( current )
 	{

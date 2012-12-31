@@ -450,6 +450,8 @@ void Path::DrawPath( float r, float g, float b, float time )
 	PathNode	*node;
 	int		num;
 	int		i;
+
+	Q_UNUSED(time);
 	
 	num = NumNodes();
 	

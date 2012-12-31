@@ -50,7 +50,7 @@ InventoryItem::InventoryItem()
 	} */
 }
 
-void InventoryItem::UseEvent( Event *ev )
+void InventoryItem::UseEvent( Event * )
 {
 }
 

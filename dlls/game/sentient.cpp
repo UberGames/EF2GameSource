@@ -705,7 +705,7 @@ Sentient::~Sentient()
 
 
 // HACK HACK HACK
-void Sentient::UpdateOffsetColor( Event *ev )
+void Sentient::UpdateOffsetColor( Event * )
 {
 	G_SetConstantLight( &edict->s.constantLight, &offset_color[ 0 ], &offset_color[ 1 ], &offset_color[ 2 ], NULL );
 	offset_color -= offset_delta;
@@ -890,7 +890,7 @@ void Sentient::StartChargeFire( Event *ev )
 }
 
 
-void Sentient::BeginAttack( Event *ev )
+void Sentient::BeginAttack( Event * )
 {
 	if ( !inheritsFrom( "Player" ) )
 	{
@@ -918,7 +918,7 @@ void Sentient::BeginAttack( Event *ev )
 	animate->SetAnimationRate( animationRate );
 }
 
-void Sentient::EndAttack( Event *ev )
+void Sentient::EndAttack( Event * )
 {
 	animate->RestoreAnimationRate();
 }
@@ -1334,7 +1334,7 @@ void Sentient::DetachAllActiveWeapons( void )
 	}
 }
 
-void Sentient::FreeInventory( Event *ev )
+void Sentient::FreeInventory( Event * )
 {
 	FreeInventory();
 }
@@ -2149,6 +2149,7 @@ void Sentient::ArmorDamage( float damage, Entity *inflictor, Entity *attacker, c
 	qboolean		set_means_of_death;
 	Vector			normalizedDirection;
 	
+	Q_UNUSED(normal);
 
 	if ( ( takedamage == DAMAGE_NO ) || ( movetype == MOVETYPE_NOCLIP ) )
 	   {
@@ -3141,12 +3142,12 @@ void Sentient::setModel( const char *mdl )
 	AttachAllActiveWeapons();
 }
 
-void Sentient::TurnOffShadow( Event *ev )
+void Sentient::TurnOffShadow( Event * )
 {
 	edict->s.renderfx &= ~RF_SHADOW;
 }
 
-void Sentient::TurnOnShadow( Event *ev )
+void Sentient::TurnOnShadow( Event * )
 {
 	edict->s.renderfx |= RF_SHADOW;
 }
@@ -3291,6 +3292,7 @@ void Sentient::ArchivePersistantData( Archiver &arc, qboolean sublevelTransition
 	int i;
 	int num;
 	
+	Q_UNUSED(sublevelTransition);
 	
 	if ( arc.Loading() )
 		FreeInventory();
@@ -3849,7 +3851,7 @@ void Sentient::JumpXY( Event *ev )
 	velocity[ 2 ] = sv_currentGravity->integer * time * 0.5f;
 }
 
-void Sentient::MeleeAttackStart( Event *ev )
+void Sentient::MeleeAttackStart( Event * )
 {
 	int i;
 	Entity *victim;
@@ -3874,7 +3876,7 @@ void Sentient::MeleeAttackStart( Event *ev )
 	SetMeleeAttack(true);
 }
 
-void Sentient::MeleeAttackEnd( Event *ev )
+void Sentient::MeleeAttackEnd( Event * )
 {
 	SetMeleeAttack(false);
 }
@@ -3884,32 +3886,32 @@ void Sentient::SetMeleeAttack(bool value)
 	in_melee_attack = value;
 }
 
-void Sentient::RangedAttackStart( Event *ev )
+void Sentient::RangedAttackStart( Event * )
 {
 	in_ranged_attack = true;
 }
 
-void Sentient::RangedAttackEnd( Event *ev )
+void Sentient::RangedAttackEnd( Event * )
 {
 	in_ranged_attack = false;
 }
 
-void Sentient::BlockStart( Event *ev )
+void Sentient::BlockStart( Event * )
 {
 	in_block = true;
 }
 
-void Sentient::BlockEnd( Event *ev )
+void Sentient::BlockEnd( Event * )
 {
 	in_block = false;
 }
 
-void Sentient::StunStart( Event *ev )
+void Sentient::StunStart( Event * )
 {
 	in_stun = true;
 }
 
-void Sentient::StunEnd( Event *ev )
+void Sentient::StunEnd( Event * )
 {
 	in_stun = false;
 }
@@ -3962,7 +3964,7 @@ void Sentient::SetMaxMouthAngle( Event *ev )
 //
 // Returns:			None
 //----------------------------------------------------------------
-void Sentient::CatchOnFire( Event *ev )
+void Sentient::CatchOnFire( Event * )
 {
 	TryLightOnFire(MOD_FIRE, NULL);
 }
@@ -4090,7 +4092,7 @@ void Sentient::TryLightOnFire( int meansofdeath, Entity *attacker )
 	}
 }
 
-void Sentient::OnFire( Event *ev )
+void Sentient::OnFire( Event * )
 {
 	float damage;
 	
@@ -4133,7 +4135,7 @@ void Sentient::OnFire( Event *ev )
 	PostEvent( EV_Sentient_OnFire, FRAMETIME );
 }
 
-void Sentient::StopOnFire( Event *ev )
+void Sentient::StopOnFire( Event * )
 {
 	int i;
 	const char *tag_name;
@@ -4249,9 +4251,10 @@ void Sentient::SetMaxGibs( Event *ev )
 
 void Sentient::GetStateAnims( Container<const char *> *c )
 {
+	Q_UNUSED(c);
 }
 
-void Sentient::CheckAnimations( Event *ev )
+void Sentient::CheckAnimations( Event * )
 {
 	int i,j;
 	Container<const char *>co;
@@ -4322,16 +4325,18 @@ void Sentient::SetStateFile( Event *ev )
 	// If Sentient was an abstract class then this would be pure virtual
 }
 
-void Sentient::ReceivedItem( Item * item )
+void Sentient::ReceivedItem( Item * )
 {
 }
 
-void Sentient::RemovedItem( Item * item )
+void Sentient::RemovedItem( Item * )
 {
 }
 
 void Sentient::AmmoAmountChanged( Ammo * ammo, int ammo_in_clip )
 {
+	Q_UNUSED(ammo);
+	Q_UNUSED(ammo_in_clip);
 }
 
 //
@@ -4822,7 +4827,7 @@ void Sentient::DisplayFireEffect( Event *ev )
 		_displayFireEffect = true;
 }
 
-void Sentient::ClearDamageThreshold( Event *ev )
+void Sentient::ClearDamageThreshold( Event * )
 {
 	ClearDamageThreshold();
 }

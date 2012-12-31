@@ -121,7 +121,7 @@ void WarpToPosition::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void WarpToPosition::Begin( Actor &self )
+void WarpToPosition::Begin( Actor & )
 	{	
 	_state = WARP_TO_POSITION_CHECK_POSITION;	
 	}
@@ -173,7 +173,7 @@ BehaviorReturnCode_t WarpToPosition::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void WarpToPosition::End ( Actor &self	)
+void WarpToPosition::End ( Actor &	)
 	{
 	}
 
@@ -286,7 +286,7 @@ void WarpToEntity::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void WarpToEntity::Begin( Actor &self )
+void WarpToEntity::Begin( Actor & )
 {	
 	_state = WARP_TO_ENTITY_SELECT_POSITION;
 	_position = POSITION_REAR;
@@ -339,7 +339,7 @@ BehaviorReturnCode_t WarpToEntity::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void WarpToEntity::End ( Actor &self	)
+void WarpToEntity::End ( Actor &	)
 {
 }
 
@@ -445,7 +445,7 @@ void WarpToEntity::warpToPosition( Actor &self )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void WarpToEntity::warpToPositionFailed( Actor &self )
+void WarpToEntity::warpToPositionFailed( Actor & )
 {
 	_position++;
 
@@ -987,7 +987,7 @@ void MoveDirectlyToPoint::SetArgs( Event *ev )
 // Returns:     None
 //
 //--------------------------------------------------------------
-void MoveDirectlyToPoint::Begin( Actor &self )
+void MoveDirectlyToPoint::Begin( Actor & )
 {       
 	_dist = 16.0f;
 	_motion.SetRadius( _dist );
@@ -1248,7 +1248,7 @@ void GotoSpecified::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GotoSpecified::AnimDone ( Event *ev )
+void GotoSpecified::AnimDone ( Event * )
 {
 }
 
@@ -1361,7 +1361,7 @@ BehaviorReturnCode_t GotoSpecified::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void GotoSpecified::End ( Actor &self	)
+void GotoSpecified::End ( Actor &	)
 {
 }
 
@@ -2250,7 +2250,7 @@ void MoveFromConeOfFire::_foundDestination( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void MoveFromConeOfFire::_noDestination( Actor &self )
+void MoveFromConeOfFire::_noDestination( Actor & )
 	{
 	_state = MOVE_FCOF_STATE_SEARCHING_FOR_NODE; 
 	_nextsearch = 0.0f;	
@@ -2414,7 +2414,7 @@ void Strafe::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Strafe::AnimDone( Event *ev )
+void Strafe::AnimDone( Event * )
    {
    _strafeComplete = true;
    }
@@ -2569,7 +2569,7 @@ void Strafe::_setAnim( Actor &self )
 //
 // Returns:     True or False
 //--------------------------------------------------------------
-BehaviorReturnCode_t	Strafe::Evaluate ( Actor &self )
+BehaviorReturnCode_t	Strafe::Evaluate ( Actor & )
 	{      
    //self.SetAnim( _anim , EV_Actor_NotifyBehavior , legs );
 
@@ -2594,7 +2594,7 @@ BehaviorReturnCode_t	Strafe::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void Strafe::End ( Actor &self	)
+void Strafe::End ( Actor &	)
 	{
    
 	}
@@ -3551,7 +3551,7 @@ void GroupFollow::SetArgs ( Event *ev)
 //
 // Returns:      None
 //--------------------------------------------------------------
-void GroupFollow::AnimDone( Event *ev )
+void GroupFollow::AnimDone( Event * )
 {
 	_animationRateNeedsUpdate = true;
 }
@@ -4544,7 +4544,7 @@ void BackAwayFromEnemy::SetArgs ( Event *ev)
 	_minDist = ev->GetFloat( 3 );
 	}
 
-void BackAwayFromEnemy::AnimDone( Event *ev )
+void BackAwayFromEnemy::AnimDone( Event * )
 {
 }
 
@@ -4558,7 +4558,7 @@ void BackAwayFromEnemy::AnimDone( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void BackAwayFromEnemy::Begin( Actor &self )
+void BackAwayFromEnemy::Begin( Actor & )
 	{
 	_state = BAFE_SELECT_STATE;
 	}
@@ -4782,7 +4782,7 @@ void AlertIdle::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void AlertIdle::AnimDone( Event *ev )
+void AlertIdle::AnimDone( Event * )
    {
 
    }
@@ -5209,7 +5209,7 @@ void AlertIdle::_doWander( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void AlertIdle::_setNextWanderTime( Actor &self )
+void AlertIdle::_setNextWanderTime( Actor & )
 	{
 	_nextWanderTime = level.time + G_Random( 3.0 ) + _baseIdleTime;
 	}
@@ -5346,7 +5346,7 @@ void DoBeamAttack::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void DoBeamAttack::AnimDone( Event *ev )
+void DoBeamAttack::AnimDone( Event * )
    {
    if ( _state == BEAMATTACK_START_ANIM )
       _state = BEAMATTACK_START_ATTACK;
@@ -5366,7 +5366,7 @@ void DoBeamAttack::AnimDone( Event *ev )
 // Returns:     None
 //
 //--------------------------------------------------------------
-void DoBeamAttack::Begin( Actor &self )
+void DoBeamAttack::Begin( Actor & )
 	{       
    _initialRotationComplete = false;
    _state = BEAMATTACK_SETUP;   
@@ -5442,7 +5442,7 @@ BehaviorReturnCode_t	DoBeamAttack::Evaluate( Actor &self )
 // Returns:     None
 //
 //--------------------------------------------------------------
-void DoBeamAttack::End(Actor &self)
+void DoBeamAttack::End(Actor &)
 	{   
 
 	}
@@ -5630,7 +5630,7 @@ void DoBeamAttack::_updateBeam( Actor &self )
 
    }
 
-void DoBeamAttack::_attackFailed( Actor &self )
+void DoBeamAttack::_attackFailed( Actor & )
    {
    _state = BEAMATTACK_FAILED;
    }
@@ -5986,7 +5986,7 @@ BehaviorReturnCode_t	SimpleMelee::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void SimpleMelee::End ( Actor &self	)
+void SimpleMelee::End ( Actor &	)
 {   
 }
 
@@ -6146,7 +6146,7 @@ void SimpleMelee::_meleeAttack( Actor &self )
 
 }
 
-void SimpleMelee::_setupHold( Actor &self )
+void SimpleMelee::_setupHold( Actor & )
 {
 	_holdCount++;
 	_holdTime = level.time + G_Random(0.25f) + 0.50f;
@@ -6351,7 +6351,7 @@ BehaviorReturnCode_t FollowPathBlindly::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void FollowPathBlindly::End ( Actor &self	)
+void FollowPathBlindly::End ( Actor &	)
 {
 }
 
@@ -6366,7 +6366,7 @@ void FollowPathBlindly::End ( Actor &self	)
 //
 // Returns:     bool - whether node was found
 //--------------------------------------------------------------
-HelperNodePtr FollowPathBlindly::FindNextNode( Actor &self )
+HelperNodePtr FollowPathBlindly::FindNextNode( Actor & )
 {
 	if ( _node != NULL)
 	{
@@ -6530,7 +6530,7 @@ CLASS_DECLARATION( Behavior, Hibernate, NULL )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void Hibernate::SetArgs ( Event *ev)
+void Hibernate::SetArgs ( Event *)
 	{
 
 	}
@@ -6547,7 +6547,7 @@ void Hibernate::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Hibernate::AnimDone( Event *ev )
+void Hibernate::AnimDone( Event * )
    {
    switch ( _state )
       {
@@ -6685,7 +6685,7 @@ void Hibernate::_wait( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void Hibernate::End ( Actor &self	)
+void Hibernate::End ( Actor &	)
 	{
    
 	}
@@ -6720,7 +6720,7 @@ bool Hibernate::_setupFindClosestHibernateNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Hibernate::_setupFindClosestHibernateNodeFailed( Actor &self )
+void Hibernate::_setupFindClosestHibernateNodeFailed( Actor & )
    {
    _state = HIBERNATE_FAILED;
    }
@@ -6766,7 +6766,7 @@ void Hibernate::_findClosestHibernateNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Hibernate::_findClosestHibernateNodeFailed( Actor &self )
+void Hibernate::_findClosestHibernateNodeFailed( Actor & )
    {
    _state = HIBERNATE_FAILED;
    }
@@ -6805,7 +6805,7 @@ bool Hibernate::_setupMovingToHibernateNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Hibernate::_setupMovingToHibernateNodeFailed( Actor &self )
+void Hibernate::_setupMovingToHibernateNodeFailed( Actor & )
    {
    _state = HIBERNATE_FAILED;
    }
@@ -6909,7 +6909,7 @@ bool Hibernate::_setupAtHibernateNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Hibernate::_setupAtHibernateNodeFailed( Actor &self )
+void Hibernate::_setupAtHibernateNodeFailed( Actor & )
    {
    _state = HIBERNATE_FAILED;
    }
@@ -6966,7 +6966,7 @@ bool Hibernate::_setupHold( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Hibernate::_setupHoldFailed( Actor &self )
+void Hibernate::_setupHoldFailed( Actor & )
    {
    _state = HIBERNATE_FAILED;
    }
@@ -7048,7 +7048,7 @@ CLASS_DECLARATION( Behavior, GotoLiftPosition, NULL )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void GotoLiftPosition::SetArgs ( Event *ev)
+void GotoLiftPosition::SetArgs ( Event * )
 	{
 	}
 
@@ -7064,7 +7064,7 @@ void GotoLiftPosition::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GotoLiftPosition::AnimDone( Event *ev )
+void GotoLiftPosition::AnimDone( Event * )
    {
    }
 
@@ -7164,7 +7164,7 @@ BehaviorReturnCode_t	GotoLiftPosition::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void GotoLiftPosition::End ( Actor &self	)
+void GotoLiftPosition::End ( Actor &	)
 	{
 	if ( _node )
 		_node->UnreserveNode();

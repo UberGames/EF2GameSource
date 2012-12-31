@@ -108,7 +108,7 @@ CLASS_DECLARATION( Entity, PuffDaddy, "plant_puffdaddy" )
 	{ NULL, NULL }
 };
 
-void PuffDaddy::Idle( Event *ev )
+void PuffDaddy::Idle( Event * )
 {
 	animate->RandomAnimate( "idle" );
 }

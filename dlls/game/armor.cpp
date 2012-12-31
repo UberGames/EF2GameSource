@@ -153,6 +153,8 @@ Armor::~Armor()
 //
 float Armor::ResolveDamage( float damage , int meansOfDeath , const Vector &direction , const Vector &position , Entity *attacker )
 {
+	Q_UNUSED(attacker); Q_UNUSED(position); Q_UNUSED(direction); Q_UNUSED(meansOfDeath); Q_UNUSED(damage);
+
 	gi.Error( ERR_FATAL, "Armor::ResolveDamage -- Do Not Use Armor Base Class -- You MUST use a subclassed" );
 	return 0.0f;
 }
@@ -170,6 +172,8 @@ float Armor::ResolveDamage( float damage , int meansOfDeath , const Vector &dire
 //--------------------------------------------------------------
 bool Armor::CanBeDamagedBy( int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+
 	gi.Error( ERR_FATAL, "Armor::CanBeDamagedBy -- Do Not Use Armor Base Class -- You MUST use a subclassed" );
 	return true;
 }
@@ -191,6 +195,8 @@ Item *Armor::ItemPickup( Entity *other, qboolean add_to_inventory, qboolean )
 {
 	Sentient *sent;
 	str      realname;
+
+	Q_UNUSED(add_to_inventory);
 	
 	// For right now, we only want players to pick up armor
 	if ( !other->isSubclassOf( Player ) )
@@ -738,7 +744,7 @@ void AdaptiveArmor::LoadAdaptionData( const str &name )
 	}		
 }
 
-void AdaptiveArmor::LoadDataFromGameVars( Event *ev )
+void AdaptiveArmor::LoadDataFromGameVars( Event * )
 {
 	LoadDataFromGameVars();
 }
@@ -811,6 +817,7 @@ float BasicArmor::ResolveDamage( float damage , int meansOfDeath , const Vector 
 	float highRangeCutoff;
 	float midRangeCutoff;
 
+	Q_UNUSED(attacker); Q_UNUSED(position); Q_UNUSED(direction);
 
 	if ( ( meansOfDeath == MOD_ARMOR_PIERCING ) || ( meansOfDeath == MOD_IMOD_PRIMARY ) || 
 		 ( meansOfDeath == MOD_IMOD_SECONDARY ) || ( meansOfDeath == MOD_DEATH_QUAD ) )
@@ -889,6 +896,8 @@ void BasicArmor::Add( int num )
 //--------------------------------------------------------------
 bool BasicArmor::CanBeDamagedBy( int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+
 	return true;
 }
 
@@ -974,6 +983,8 @@ bool ShieldArmor::CanBeUsed()
 //
 float ShieldArmor::ResolveDamage( float damage , int meansOfDeath , const Vector &direction , const Vector &position , Entity *attacker )
 {
+	Q_UNUSED(attacker);
+
 	//Shield Armor basically acts as a "life meter" for a shield.  If the armor is actor 
 	//and he have an armor value greater than 0, then we take 0 damage.  The as soon as the 
 	//amount is less than 0, then we start taking full damage.
@@ -1046,6 +1057,8 @@ float ShieldArmor::ResolveDamage( float damage , int meansOfDeath , const Vector
 //--------------------------------------------------------------
 bool ShieldArmor::CanBeDamagedBy( int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+
 	return true;
 }
 

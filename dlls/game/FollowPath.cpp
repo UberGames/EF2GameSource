@@ -433,6 +433,8 @@ void FollowNodePath::Draw( void ) const
 //----------------------------------------------------------------
 void FollowNodePath::BuildFromPathNodes(Path *path, const Actor &self)
 {
+	Q_UNUSED(self);
+
 	assert(path->NumNodes() > 0);
 	
 	int sourceNodeNumber=1;

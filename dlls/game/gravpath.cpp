@@ -280,7 +280,7 @@ float GravPathNode::MaxSpeed( void )
 	return max_speed;
 }
 
-void GravPathNode::Activate( Event *ev )
+void GravPathNode::Activate( Event * )
 {
 	GravPathNode   *node;
 	Entity         *ent;
@@ -307,7 +307,7 @@ void GravPathNode::Activate( Event *ev )
 	}
 }
 
-void GravPathNode::Deactivate(Event *ev)
+void GravPathNode::Deactivate(Event *)
 {
 	GravPathNode   *node;
 	Entity         *ent;
@@ -334,7 +334,7 @@ void GravPathNode::Deactivate(Event *ev)
 	}
 }
 
-void GravPathNode::CreatePath(Event *ev)
+void GravPathNode::CreatePath(Event *)
 {
 	const char     *target;
 	GravPath       *path = new GravPath;
@@ -480,6 +480,8 @@ Vector GravPath::ClosestPointOnPath( const Vector &pos, Entity &ent, float *ret_
 	Vector	      p3;
 	float		      t;
 	//trace_t	      trace;
+
+	Q_UNUSED(ent);
 	
 	num = NumNodes();
 	s = GetNode( 1 );

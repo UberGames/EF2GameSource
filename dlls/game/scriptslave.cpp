@@ -870,7 +870,7 @@ void ScriptSlave::setOrigin( void )
 	SetNewPosition( GetLocalOrigin() );
 }
 
-void ScriptSlave::NewOrders( Event *ev )
+void ScriptSlave::NewOrders( Event * )
 {
 	// make sure position and angles are current
 	SetNewAngles( localangles );
@@ -892,7 +892,7 @@ void ScriptSlave::BindEvent( Event *ev )
 	SetNewPosition( GetLocalOrigin() );
 }
 
-void ScriptSlave::EventUnbind( Event *ev )
+void ScriptSlave::EventUnbind( Event * )
 {
 	unbind();
 	
@@ -954,7 +954,7 @@ void ScriptSlave::DoMove( Event *ev )
 
 
 
-void ScriptSlave::MoveEnd( Event *ev )
+void ScriptSlave::MoveEnd( Event * )
 {
 	Event *event;
 	
@@ -1552,7 +1552,7 @@ void ScriptSlave::OnTouch( Event *ev )
 	touchlabel = jumpto;
 }
 
-void ScriptSlave::NoTouch( Event *ev )
+void ScriptSlave::NoTouch( Event * )
 {
 	touchlabel = "";
 	// if it is a trigger than it wasn't solid, so restore that condition
@@ -1608,7 +1608,7 @@ void ScriptSlave::OnBlock( Event *ev )
 	blocklabel = jumpto;
 }
 
-void ScriptSlave::NoBlock( Event *ev )
+void ScriptSlave::NoBlock( Event * )
 {
 	blocklabel = "";
 }
@@ -1668,7 +1668,7 @@ void ScriptSlave::OnTrigger( Event *ev )
 	triggerlabel = jumpto;
 }
 
-void ScriptSlave::NoTrigger( Event *ev )
+void ScriptSlave::NoTrigger( Event * )
 {
 	triggerlabel = "";
 }
@@ -1721,7 +1721,7 @@ void ScriptSlave::OnUse( Event *ev )
 	uselabel = jumpto;
 }
 
-void ScriptSlave::NoUse( Event *ev )
+void ScriptSlave::NoUse( Event * )
 {
 	uselabel = "";
 }
@@ -1840,7 +1840,7 @@ void ScriptSlave::OnDamage( Event *ev )
 	damagelabel = jumpto;
 }
 
-void ScriptSlave::NoDamage( Event *ev )
+void ScriptSlave::NoDamage( Event * )
 {
 	damagelabel = "";
 }
@@ -2068,7 +2068,7 @@ void ScriptSlave::FollowPath( Event *ev )
 	}
 }
 
-void ScriptSlave::EndPath( Event *ev )
+void ScriptSlave::EndPath( Event * )
 {
 	if ( !splinePath )
 		return;
@@ -2082,7 +2082,7 @@ void ScriptSlave::EndPath( Event *ev )
 	}
 }
 
-void ScriptSlave::FollowingPath( Event *ev )
+void ScriptSlave::FollowingPath( Event * )
 {
 	Vector	pos;
 	Vector	orient;
@@ -2218,12 +2218,12 @@ void ScriptSlave::Explode( Event *ev )
 	CreateExplosion( origin, damage, this, this, this );
 }
 
-void ScriptSlave::NotShootable( Event *ev )
+void ScriptSlave::NotShootable( Event * )
 {
 	setContents( 0 );
 }
 
-void ScriptSlave::OpenPortal( Event *ev )
+void ScriptSlave::OpenPortal( Event * )
 {
 	if ( !_portalOpen )
 	{
@@ -2232,7 +2232,7 @@ void ScriptSlave::OpenPortal( Event *ev )
 	}
 }
 
-void ScriptSlave::ClosePortal( Event *ev )
+void ScriptSlave::ClosePortal( Event * )
 {
 	if ( _portalOpen )
 	{
@@ -2241,7 +2241,7 @@ void ScriptSlave::ClosePortal( Event *ev )
 	}
 }
 
-void ScriptSlave::PhysicsOn( Event *ev )
+void ScriptSlave::PhysicsOn( Event * )
 {
 	commandswaiting = false;
 	setMoveType( MOVETYPE_BOUNCE );
@@ -2250,7 +2250,7 @@ void ScriptSlave::PhysicsOn( Event *ev )
 	edict->clipmask = MASK_SOLID|CONTENTS_BODY;
 }
 
-void ScriptSlave::PhysicsOff( Event *ev )
+void ScriptSlave::PhysicsOff( Event * )
 {
 	Event * event;
 	
@@ -2268,7 +2268,7 @@ void ScriptSlave::PhysicsVelocity( Event *ev )
 	velocity += ev->GetVector( 1 );
 }
 
-void ScriptSlave::StopEvent( Event *ev )
+void ScriptSlave::StopEvent( Event * )
 {
 	Stop();
 }
@@ -2278,7 +2278,7 @@ void ScriptSlave::Stop( void )
 	thinking = false;
 }
 
-void ScriptSlave::ContinueEvent( Event *ev )
+void ScriptSlave::ContinueEvent( Event * )
 {
 	Continue();
 }

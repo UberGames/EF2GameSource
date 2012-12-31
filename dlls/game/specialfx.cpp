@@ -136,7 +136,7 @@ Fulcrum::Fulcrum()
 	PostEvent( EV_Fulcrum_Setup, FRAMETIME );
 }
 
-void Fulcrum::Setup( Event *ev )
+void Fulcrum::Setup( Event * )
 {
 	startangles = angles;
 }
@@ -167,7 +167,7 @@ void Fulcrum::SetMoveSound( Event *ev )
 	movesound = ev->GetString( 1 );
 }
 
-void Fulcrum::Reset( Event *ev )
+void Fulcrum::Reset( Event * )
 {
 	StopLoopSound();
 	touched = false;
@@ -265,7 +265,7 @@ void Fulcrum::Touched( Event *ev )
 	PostEvent( EV_Fulcrum_AdjustFulcrum, 0.0f );
 }
 
-void Fulcrum::Adjust( Event *ev )
+void Fulcrum::Adjust( Event * )
 {
 	if ( !touched )
 	{
@@ -682,7 +682,7 @@ SinkObject::SinkObject()
 	PostEvent( EV_SinkObject_Setup, FRAMETIME );
 }
 
-void SinkObject::Setup( Event *ev )
+void SinkObject::Setup( Event * )
 {
 	startpos = origin;
 }
@@ -728,7 +728,7 @@ void SinkObject::SetLimit( Event *ev )
 	limit = ev->GetFloat( 1 );
 }
 
-void SinkObject::Reset( Event *ev )
+void SinkObject::Reset( Event * )
 {
 	time_reset = -1;
 	time_touched = -1;
@@ -796,7 +796,7 @@ void SinkObject::Touched( Event *ev )
 	PostEvent( EV_SinkObject_AdjustSinkObject, FRAMETIME );
 }
 
-void SinkObject::Fall( Event *ev )
+void SinkObject::Fall( Event * )
 {
 	velocity.z -= speed;
 	
@@ -814,7 +814,7 @@ void SinkObject::Fall( Event *ev )
 	}
 }
 
-void SinkObject::Adjust( Event *ev )
+void SinkObject::Adjust( Event * )
 {
 	if ( !touched )
 	{
@@ -869,12 +869,12 @@ void SinkObject::Adjust( Event *ev )
 	PostEvent( EV_SinkObject_AdjustSinkObject, FRAMETIME );
 }
 
-void SinkObject::MakeActive( Event *ev )
+void SinkObject::MakeActive( Event * )
 {
 	active = true;
 }
 
-void SinkObject::MakeNonActive( Event *ev )
+void SinkObject::MakeNonActive( Event * )
 {
 	active = false;
 }

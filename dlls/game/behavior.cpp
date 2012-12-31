@@ -72,7 +72,7 @@ Behavior::Behavior()
 
 void Behavior::ShowInfo
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -89,7 +89,7 @@ void Behavior::ShowInfo
 
 void Behavior::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -97,7 +97,7 @@ void Behavior::Begin
 
 BehaviorReturnCode_t	Behavior::Evaluate
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -106,7 +106,7 @@ BehaviorReturnCode_t	Behavior::Evaluate
 
 void Behavior::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -183,7 +183,7 @@ BehaviorReturnCode_t	Idle::Evaluate
 
 void Idle::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -308,7 +308,7 @@ void Pain::Begin
 
 void Pain::AnimDone
 	(
-	Event *ev
+	Event *
 	)
 	{
 	anim_done = true;
@@ -480,7 +480,7 @@ void Turn::SetArgs
 
 void Turn::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -501,7 +501,7 @@ BehaviorReturnCode_t	Turn::Evaluate
 
 void Turn::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -548,7 +548,7 @@ void Aim::ShowInfo
 
 void Aim::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -593,7 +593,7 @@ BehaviorReturnCode_t	Aim::Evaluate
 
 void Aim::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -654,7 +654,7 @@ void TurnTo::SetTarget
 
 void TurnTo::AnimDone
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -855,7 +855,7 @@ void RotateToEnemy::SetArgs
 
 void RotateToEnemy::Begin
    (
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -892,7 +892,7 @@ BehaviorReturnCode_t RotateToEnemy::Evaluate
 
 void RotateToEnemy::End
    (
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -1824,7 +1824,7 @@ void HeadAndEyeWatch::Begin
 
 BehaviorReturnCode_t	HeadAndEyeWatch::Evaluate
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -2373,7 +2373,7 @@ void GotoPathNode::SetArgs
 
 void GotoPathNode::AnimDone
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -2903,7 +2903,7 @@ void FindCover::ShowInfo
 
 void FindCover::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -3134,7 +3134,7 @@ void FindFlee::ShowInfo
 
 void FindFlee::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -3265,7 +3265,7 @@ void FindEnemy::ShowInfo
 
 void FindEnemy::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -3561,7 +3561,7 @@ void AimAndShoot::SetArgs
 
 void AimAndShoot::AnimDone
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -3767,7 +3767,7 @@ void AimAndMelee::SetArgs
 
 void AimAndMelee::AnimDone
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -5811,7 +5811,7 @@ BehaviorReturnCode_t	FlyStrafe::Evaluate
 
 void FlyStrafe::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -6797,7 +6797,7 @@ BehaviorReturnCode_t	Land::Evaluate
 
 void Land::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -6887,7 +6887,7 @@ BehaviorReturnCode_t	VerticalTakeOff::Evaluate
 
 void VerticalTakeOff::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -7050,7 +7050,7 @@ BehaviorReturnCode_t	Wander::Evaluate
 
 void Wander::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -7906,7 +7906,7 @@ void TurnToEnemy::Begin
 
 void TurnToEnemy::AnimDone
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -7985,7 +7985,7 @@ BehaviorReturnCode_t	TurnToEnemy::Evaluate
 
 void TurnToEnemy::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -8029,7 +8029,7 @@ void PickupEntity::Begin
 
 void PickupEntity::AnimDone
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -8039,7 +8039,7 @@ void PickupEntity::AnimDone
 
 BehaviorReturnCode_t	PickupEntity::Evaluate
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -8096,7 +8096,7 @@ void ThrowEntity::Begin
 
 void ThrowEntity::AnimDone
 	(
-	Event *ev
+	Event *
 	)
 
 	{
@@ -8106,7 +8106,7 @@ void ThrowEntity::AnimDone
 
 BehaviorReturnCode_t	ThrowEntity::Evaluate
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -8489,7 +8489,7 @@ void BurrowAttack::SpawnArm
 
 void BurrowAttack::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -8538,6 +8538,8 @@ float CircleEnemy::GetAngleDiff
 	Vector enemy_angles;
 	Vector actor_angles;
 	float angle_diff;
+
+	Q_UNUSED(self);
 
 	if ( !ent_to_circle )
 		return 0.0f;
@@ -8672,7 +8674,7 @@ BehaviorReturnCode_t	CircleEnemy::Evaluate
 
 void CircleEnemy::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -8821,7 +8823,7 @@ BehaviorReturnCode_t	CircleCurrentEnemy::Evaluate
 
 void CircleCurrentEnemy::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -8935,7 +8937,7 @@ float ChaoticDodge::GetNewYaw
 
 void ChaoticDodge::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -8962,7 +8964,7 @@ ShockWater::ShockWater()
 
 void ShockWater::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -9060,7 +9062,7 @@ BehaviorReturnCode_t	ShockWater::Evaluate
 
 void ShockWater::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -9116,7 +9118,7 @@ void Shock::SetArgs
 
 void Shock::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -9211,7 +9213,7 @@ BehaviorReturnCode_t	Shock::Evaluate
 
 void Shock::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -9262,7 +9264,7 @@ void MultiShock::SetArgs
 
 void MultiShock::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -9391,7 +9393,7 @@ BehaviorReturnCode_t	MultiShock::Evaluate
 
 void MultiShock::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -9446,7 +9448,7 @@ void ShockDown::SetArgs
 
 void ShockDown::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -9515,7 +9517,7 @@ BehaviorReturnCode_t	ShockDown::Evaluate
 
 void ShockDown::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -9694,7 +9696,7 @@ BehaviorReturnCode_t	CircleAttack::Evaluate
 
 void CircleAttack::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -10230,7 +10232,7 @@ void Teleport::ShowInfo
 
 void Teleport::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -10422,7 +10424,7 @@ BehaviorReturnCode_t	Teleport::Evaluate
 
 void Teleport::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -10451,7 +10453,7 @@ void TeleportToPlayer::ShowInfo
 
 void TeleportToPlayer::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -10473,6 +10475,7 @@ qboolean	TeleportToPlayer::TestPosition
 	Vector player_left;
 	trace_t trace;
 
+	Q_UNUSED(test_pos);
 
 	// Get the position to test
 	test_position = player->origin;
@@ -10594,7 +10597,7 @@ BehaviorReturnCode_t	TeleportToPlayer::Evaluate
 
 void TeleportToPlayer::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -10634,7 +10637,7 @@ void TeleportToPosition::SetArgs
 
 void TeleportToPosition::Begin
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -10747,7 +10750,7 @@ BehaviorReturnCode_t	TeleportToPosition::Evaluate
 
 void TeleportToPosition::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -11105,7 +11108,7 @@ BehaviorReturnCode_t	Levitate::Evaluate
 
 void Levitate::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -11614,7 +11617,7 @@ BehaviorReturnCode_t	FlyCircleAroundWaypoint::Evaluate
 	return BEHAVIOR_EVALUATING;
 	}
 
-WayPointNode *FlyCircleAroundWaypoint::GetWayPoint( Actor &self )
+WayPointNode *FlyCircleAroundWaypoint::GetWayPoint( Actor & )
 	{
 	Entity* ent_in_range;
 	gentity_t *ed;
@@ -12488,6 +12491,8 @@ WayPointNode *HelicopterStrafeAttack::GetWayPoint( Actor &self , const str &name
 	Entity* ent_in_range;
 	gentity_t *ed;
 
+	Q_UNUSED(self);
+
 	for ( int i = 0; i < MAX_GENTITIES; i++ )
 		{
 		ed = &g_entities[i];
@@ -12537,7 +12542,7 @@ void HelicopterStrafeAttack::LerpToNewAngle( Actor &self )
 
 void HelicopterStrafeAttack::End
 	(
-	Actor &self
+	Actor &
 	)
 
 	{
@@ -12671,7 +12676,7 @@ BehaviorReturnCode_t	HelicopterFlyToWaypoint::Evaluate
 	return BEHAVIOR_EVALUATING;
 	}
 
-WayPointNode *HelicopterFlyToWaypoint::GetWayPoint( Actor &self )
+WayPointNode *HelicopterFlyToWaypoint::GetWayPoint( Actor & )
 	{
 	Entity* ent_in_range;
 	gentity_t *ed;
