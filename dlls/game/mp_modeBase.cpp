@@ -245,6 +245,8 @@ Team* MultiplayerModeBase::getPlayersTeam( const Player *player )
 
 void MultiplayerModeBase::update( float frameTime )
 {
+	Q_UNUSED(frameTime);
+
 	if ( !_gameStarted )
 	{
 		if ( shouldStartMatch() )
@@ -815,11 +817,18 @@ void MultiplayerModeBase::RemovePlayer( Player *player )
 
 float MultiplayerModeBase::playerDamaged( Player *damagedPlayer, Player *attackingPlayer, float damage, int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(attackingPlayer);
+	Q_UNUSED(damagedPlayer);
+
 	return damage;
 }
 
 void MultiplayerModeBase::playerTookDamage( Player *damagedPlayer, Player *attackingPlayer, float damage, int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(damage);
+
 	if ( attackingPlayer && ( attackingPlayer != damagedPlayer ) )
 	{
 		// Play the hurt someone sound
@@ -894,6 +903,9 @@ bool MultiplayerModeBase::parseConfigToken( const char *key, Script *buffer )
 
 int MultiplayerModeBase::getIcon( Player *player, int statNum, int value )
 {
+	Q_UNUSED(statNum);
+	Q_UNUSED(player);
+
 	/* if ( statNum == STAT_MP_TEAMHUD_ICON && multiplayerManager.isPlayerSpectator( player ) )
 		return _spectatorIconIndex;
 	else */
@@ -971,6 +983,8 @@ bool MultiplayerModeBase::shouldStartMatch( void )
 
 int MultiplayerModeBase::getStat( Player *player, int statNum, int value )
 {
+	Q_UNUSED(player);
+
 	if ( statNum == STAT_MP_STATE )
 	{
 		int numPlayers;

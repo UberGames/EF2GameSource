@@ -72,7 +72,7 @@ void AnimatedTeleportToPlayer::SetArgs( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void AnimatedTeleportToPlayer::Begin( Actor &self )
+void AnimatedTeleportToPlayer::Begin( Actor & )
 {
 	_state = ANIM_TELEPORT_BEGIN;
 }
@@ -222,7 +222,7 @@ BehaviorReturnCode_t AnimatedTeleportToPlayer::Evaluate ( Actor &self )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void AnimatedTeleportToPlayer::End( Actor &self )
+void AnimatedTeleportToPlayer::End( Actor & )
 {
 }
 
@@ -248,6 +248,8 @@ bool AnimatedTeleportToPlayer::testPosition( Actor &self, int test_pos, Vector &
 	Vector player_forward;
 	Vector player_left;
 	trace_t trace;
+
+	Q_UNUSED(test_pos);
 
 
 	// Get the position to test

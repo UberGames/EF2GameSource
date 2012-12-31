@@ -88,11 +88,11 @@ HoldPosition::~HoldPosition()
 // Returns:     None
 //
 //--------------------------------------------------------------
-void HoldPosition::SetArgs( Event *ev )
+void HoldPosition::SetArgs( Event * )
 {
 }
 
-void HoldPosition::AnimDone( Event *ev )
+void HoldPosition::AnimDone( Event * )
 {
 	_animDone = true;
 }
@@ -127,7 +127,7 @@ void HoldPosition::Begin( Actor &self )
 // Returns:     BehaviorReturnCode_t
 //
 //--------------------------------------------------------------
-BehaviorReturnCode_t HoldPosition::Evaluate( Actor &self )
+BehaviorReturnCode_t HoldPosition::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 
@@ -207,7 +207,7 @@ BehaviorReturnCode_t HoldPosition::Evaluate( Actor &self )
 // Returns:     None
 //
 //--------------------------------------------------------------
-void HoldPosition::End(Actor &self)
+void HoldPosition::End(Actor &)
 {
 	_self->SetIgnoreWatchTarget( false );
 }
@@ -295,6 +295,7 @@ BehaviorReturnCode_t HoldPosition::evaluateStateHold()
 
 void HoldPosition::failureStateHold( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 void HoldPosition::	setupStateTwitch()
@@ -318,6 +319,7 @@ BehaviorReturnCode_t HoldPosition::evaluateStateTwitch()
 
 void HoldPosition::	failureStateTwitch( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -356,4 +358,5 @@ BehaviorReturnCode_t HoldPosition::evaluateStateWeaponTwitch()
 
 void HoldPosition::	failureStateWeaponTwitch( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }

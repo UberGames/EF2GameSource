@@ -124,7 +124,7 @@ void PlayAnim::Begin( Actor &self )
 // Returns:     BehaviorReturnCode_t
 //
 //--------------------------------------------------------------
-BehaviorReturnCode_t	PlayAnim::Evaluate( Actor &self )
+BehaviorReturnCode_t	PlayAnim::Evaluate( Actor & )
 {
 
 	BehaviorReturnCode_t stateResult;
@@ -387,6 +387,7 @@ BehaviorReturnCode_t PlayAnim::evaluateStateSetup()
 //--------------------------------------------------------------
 void PlayAnim::failureStateSetup( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -438,5 +439,6 @@ BehaviorReturnCode_t PlayAnim::evaluateStateAnimate()
 //--------------------------------------------------------------
 void PlayAnim::failureStateAnimate( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 

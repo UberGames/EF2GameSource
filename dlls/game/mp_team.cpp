@@ -135,6 +135,8 @@ void Team::addPoints( Player *killer, int points )
 {
 	int oldPoints;
 
+	Q_UNUSED(killer);
+
 	/* if ( killer && !_playerList.ObjectInList(killer))
 	{
 		assert( !"Player not in list" );

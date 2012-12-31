@@ -175,7 +175,7 @@ void Sys_PumpEvents( void );
 
 #endif
 
-#define Q_UNUSED(x) (void)x;
+#define Q_UNUSED(x) (void)x
 
 //=============================================================
 

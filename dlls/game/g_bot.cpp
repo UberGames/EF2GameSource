@@ -118,6 +118,7 @@ G_LoadArenasFromFile
 ===============
 */
 static void G_LoadArenasFromFile( char *filename ) {
+	Q_UNUSED(filename);
 	return;
 
 	/* int				len;
@@ -326,6 +327,8 @@ int G_RemoveRandomBot( int team ) {
 	char netname[36];
 	gclient_t	*cl;
 
+	Q_UNUSED(team);
+
 	for ( i=0 ; i< maxclients->integer ; i++ ) {
 		cl = game.clients + i;
 //		if ( cl->pers.connected != CON_CONNECTED ) {
@@ -354,6 +357,8 @@ int G_CountHumanPlayers( int team ) {
 	int i, num;
 	gclient_t	*cl;
 
+	Q_UNUSED(team);
+
 	num = 0;
 	for ( i=0 ; i< maxclients->integer ; i++ ) {
 		cl = game.clients + i;
@@ -379,6 +384,8 @@ G_CountBotPlayers
 int G_CountBotPlayers( int team ) {
 	int i, n, num;
 	gclient_t	*cl;
+
+	Q_UNUSED(team);
 
 	num = 0;
 	for ( i=0 ; i< maxclients->integer ; i++ ) {

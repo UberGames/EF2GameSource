@@ -134,9 +134,9 @@ class MultiplayerModeBase : public Class
 		virtual void						init( int maxPlayers );
 		virtual void						initItems( void );
 		virtual void						start( void ) {};
-		virtual bool						shouldKeepItem( MultiplayerItem *item ) { Q_UNUSED(item) return false; }
+		virtual bool						shouldKeepItem( MultiplayerItem *item ) { Q_UNUSED(item); return false; }
 		virtual bool						shouldKeepNormalItem( Item *item );
-		virtual void						itemKept( MultiplayerItem *item ) { Q_UNUSED(item) };
+		virtual void						itemKept( MultiplayerItem *item ) { Q_UNUSED(item); };
 		virtual void						update( float frameTime );
 
 		virtual void						matchOver( void ) {};
@@ -147,7 +147,7 @@ class MultiplayerModeBase : public Class
 
 		int									findPlayer( const Player *player );
 
-		virtual bool						canGivePlayerItem( int entnum, const str &itemName ) { Q_UNUSED(entnum) Q_UNUSED(itemName) return true; }
+		virtual bool						canGivePlayerItem( int entnum, const str &itemName ) { Q_UNUSED(entnum); Q_UNUSED(itemName); return true; }
 
 		// Queries
 		virtual bool                        isEndOfMatch( void );
@@ -166,14 +166,14 @@ class MultiplayerModeBase : public Class
 		int									getKills( Player *player );
 		int									getDeaths( Player *player );
 		Team*								getPlayersTeam( const Player *player );
-		virtual int							getTeamPoints( Player *player ) { Q_UNUSED(player) return 0; }
-		virtual int							getTeamPoints( const str & teamName ) { Q_UNUSED(teamName) return 0; }
-		virtual void						addTeamPoints( const str & teamName, int points ) { Q_UNUSED(teamName) Q_UNUSED(points) return; }
+		virtual int							getTeamPoints( Player *player ) { Q_UNUSED(player); return 0; }
+		virtual int							getTeamPoints( const str & teamName ) { Q_UNUSED(teamName); return 0; }
+		virtual void						addTeamPoints( const str & teamName, int points ) { Q_UNUSED(teamName); Q_UNUSED(points); return; }
 
 		virtual int							getStat( Player *player, int statNum, int value );
 		virtual int							getIcon( Player *player, int statNum, int value );
-		virtual int							getScoreIcon( Player *player, int index, int value ) { Q_UNUSED(player) Q_UNUSED(index) return value; }
-		virtual int							getInfoIcon( Player *player ) { Q_UNUSED(player) return 0; }
+		virtual int							getScoreIcon( Player *player, int index, int value ) { Q_UNUSED(player); Q_UNUSED(index); return value; }
+		virtual int							getInfoIcon( Player *player ) { Q_UNUSED(player); return 0; }
 
 		virtual Player *					getLastKilledByPlayer( Player *player, int *meansOfDeath );
 		virtual Player *					getLastKillerOfPlayer( Player *player, int *meansOfDeath );
@@ -202,34 +202,34 @@ class MultiplayerModeBase : public Class
 		virtual bool						canJoinTeam( Player *player, const str &teamName );
 		virtual void						joinTeam( Player *player, const str &teamName );
 
-		virtual bool						canPickup( Player *player, MultiplayerItemType itemType, const char *item_name ) { Q_UNUSED(player) Q_UNUSED(itemType) Q_UNUSED(item_name) return true; }
-		virtual void						pickedupItem( Player *player, MultiplayerItemType itemType, const char *itemName ) { Q_UNUSED(player) Q_UNUSED(itemType) Q_UNUSED(itemName) };
+		virtual bool						canPickup( Player *player, MultiplayerItemType itemType, const char *item_name ) { Q_UNUSED(player); Q_UNUSED(itemType); Q_UNUSED(item_name); return true; }
+		virtual void						pickedupItem( Player *player, MultiplayerItemType itemType, const char *itemName ) { Q_UNUSED(player); Q_UNUSED(itemType); Q_UNUSED(itemName); };
 
 		virtual void						applySpeedModifiers( Player *player, int *moveSpeed );
-		virtual void						applyJumpModifiers( Player *player, int *jumpSpeed ) { Q_UNUSED(player) Q_UNUSED(jumpSpeed) };
-		virtual void						applyAirAccelerationModifiers( Player *player, int *airAcceleration ) { Q_UNUSED(player) Q_UNUSED(airAcceleration) };
+		virtual void						applyJumpModifiers( Player *player, int *jumpSpeed ) { Q_UNUSED(player); Q_UNUSED(jumpSpeed); };
+		virtual void						applyAirAccelerationModifiers( Player *player, int *airAcceleration ) { Q_UNUSED(player); Q_UNUSED(airAcceleration); };
 
 		virtual void						setupMultiplayerUI( Player *player );
 
 		virtual void						playerKilled( Player *killedPlayer, Player *attackingPlayer, Entity *inflictor, int meansOfDeath );
 		virtual float						playerDamaged( Player *damagedPlayer, Player *attackingPlayer, float damage, int meansOfDeath );
 		virtual void						playerTookDamage( Player *damagedPlayer, Player *attackingPlayer, float damage, int meansOfDeath );
-		virtual void						playerFired( Player *attackingPlayer ) { Q_UNUSED(attackingPlayer) };
+		virtual void						playerFired( Player *attackingPlayer ) { Q_UNUSED(attackingPlayer); };
 		virtual void						obituary( Player *killedPlayer, Player *attackingPlayer, int meansOfDeath );
 		virtual void						playerDead( Player *player );
 
-		virtual void						itemTouched( Player *player, MultiplayerItem *item ) { Q_UNUSED(player) Q_UNUSED(item) };
-		virtual void						itemDestroyed( Player *player, MultiplayerItem *item ) { Q_UNUSED(player) Q_UNUSED(item) };
-		virtual float						itemDamaged( MultiplayerItem *item, Player *attackingPlayer, float damage, int meansOfDeath ) { Q_UNUSED(item) Q_UNUSED(attackingPlayer) Q_UNUSED(meansOfDeath) return damage; }
-		virtual void						itemUsed( Entity *entity, MultiplayerItem *item ) { Q_UNUSED(entity) Q_UNUSED(item) };
+		virtual void						itemTouched( Player *player, MultiplayerItem *item ) { Q_UNUSED(player); Q_UNUSED(item); };
+		virtual void						itemDestroyed( Player *player, MultiplayerItem *item ) { Q_UNUSED(player); Q_UNUSED(item); };
+		virtual float						itemDamaged( MultiplayerItem *item, Player *attackingPlayer, float damage, int meansOfDeath ) { Q_UNUSED(item); Q_UNUSED(attackingPlayer); Q_UNUSED(meansOfDeath); return damage; }
+		virtual void						itemUsed( Entity *entity, MultiplayerItem *item ) { Q_UNUSED(entity); Q_UNUSED(item); };
 
-		virtual void						playerUsed( Player *usedPlayer, Player *usingPlayer, Equipment *equipment ) { Q_UNUSED(usedPlayer) Q_UNUSED(usingPlayer) Q_UNUSED(equipment) };
+		virtual void						playerUsed( Player *usedPlayer, Player *usingPlayer, Equipment *equipment ) { Q_UNUSED(usedPlayer); Q_UNUSED(usingPlayer); Q_UNUSED(equipment); };
 
 		virtual void						score( const Player *player );
 
-		virtual void						respawnPlayer( Player *player ) { Q_UNUSED(player) };
+		virtual void						respawnPlayer( Player *player ) { Q_UNUSED(player); };
 
-		virtual void						playerEventNotification( const char *eventName, const char *eventItemName, Player *eventPlayer ) { Q_UNUSED(eventName) Q_UNUSED(eventItemName) Q_UNUSED(eventPlayer) };
+		virtual void						playerEventNotification( const char *eventName, const char *eventItemName, Player *eventPlayer ) { Q_UNUSED(eventName); Q_UNUSED(eventItemName); Q_UNUSED(eventPlayer); };
 
 		// Utility functions
 		void								AddStartingWeapon(const str& weaponViewmodel);
@@ -245,21 +245,21 @@ class MultiplayerModeBase : public Class
 		void								endMatch( void );
 		void								restartMatch( void );
 
-		virtual bool						checkGameType( const char *rule ) { Q_UNUSED(rule) return false; }
-		virtual bool						doesPlayerHaveItem( Player *player, const char *itemName ) { Q_UNUSED(player) Q_UNUSED(itemName) return false; }
+		virtual bool						checkGameType( const char *rule ) { Q_UNUSED(rule); return false; }
+		virtual bool						doesPlayerHaveItem( Player *player, const char *itemName ) { Q_UNUSED(player); Q_UNUSED(itemName); return false; }
 
-		virtual void						playerCommand( Player *player, const char *command, const char *parm ) { Q_UNUSED(player) Q_UNUSED(command) Q_UNUSED(parm) };
+		virtual void						playerCommand( Player *player, const char *command, const char *parm ) { Q_UNUSED(player); Q_UNUSED(command); Q_UNUSED(parm); };
 
-		virtual void						teamPointsChanged( Team *team, int oldPoints, int newPoints ) { Q_UNUSED(team) Q_UNUSED(oldPoints) Q_UNUSED(newPoints) };
+		virtual void						teamPointsChanged( Team *team, int oldPoints, int newPoints ) { Q_UNUSED(team); Q_UNUSED(oldPoints); Q_UNUSED(newPoints); };
 
-		virtual bool						checkRule( const char *rule, bool defaultValue, Player *player = NULL ) { Q_UNUSED(rule) Q_UNUSED(player) return defaultValue; }
+		virtual bool						checkRule( const char *rule, bool defaultValue, Player *player = NULL ) { Q_UNUSED(rule); Q_UNUSED(player); return defaultValue; }
 
 		virtual int							getHighestPoints( void );
 
-		virtual bool						isValidPlayerModel( Player *player, str modelToUse, bool defaultValue ) { Q_UNUSED(player) Q_UNUSED(modelToUse) return defaultValue; }
-		virtual str							getDefaultPlayerModel( Player *player, str modelName ) { Q_UNUSED(player) return modelName; }
+		virtual bool						isValidPlayerModel( Player *player, str modelToUse, bool defaultValue ) { Q_UNUSED(player); Q_UNUSED(modelToUse); return defaultValue; }
+		virtual str							getDefaultPlayerModel( Player *player, str modelName ) { Q_UNUSED(player); return modelName; }
 
-		virtual void						playerChangedModel( Player *player ) {};
+		virtual void						playerChangedModel( Player * ) {};
 
 		virtual bool						skipWeaponReloads( void ) { return false; }
 	};

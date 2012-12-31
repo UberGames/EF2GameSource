@@ -1341,6 +1341,8 @@ BotMatch_WhoIsTeamLeader
 void BotMatch_WhoIsTeamLeader(bot_state_t *bs, bot_match_t *match) {
 	char netname[MAX_MESSAGE_SIZE];
 
+	Q_UNUSED(match);
+
 	if (!TeamPlayIsOn()) return;
 
 	ClientName(bs->client, netname, sizeof(netname));
@@ -1451,6 +1453,8 @@ BotMatch_WhatIsMyCommand
 */
 void BotMatch_WhatIsMyCommand(bot_state_t *bs, bot_match_t *match) {
 	char netname[MAX_NETNAME];
+
+	Q_UNUSED(match);
 
 	ClientName(bs->client, netname, sizeof(netname));
 	if (Q_stricmp(netname, bs->teamleader) != 0) return;
@@ -1753,6 +1757,8 @@ void BotMatch_CTF(bot_state_t *bs, bot_match_t *match) {
 void BotMatch_EnterGame(bot_state_t *bs, bot_match_t *match) {
 	int client;
 	char netname[MAX_NETNAME];
+
+	Q_UNUSED(bs);
 
 	gi.BotMatchVariable(match, NETNAME, netname, sizeof(netname));
 	client = FindClientByName(netname);

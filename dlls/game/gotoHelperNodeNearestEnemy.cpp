@@ -96,7 +96,7 @@ void GotoHelperNodeNearestEnemy::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GotoHelperNodeNearestEnemy::AnimDone( Event *ev )
+void GotoHelperNodeNearestEnemy::AnimDone( Event * )
 {
 }
 
@@ -129,7 +129,7 @@ void GotoHelperNodeNearestEnemy::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t GotoHelperNodeNearestEnemy::Evaluate( Actor &self )
+BehaviorReturnCode_t GotoHelperNodeNearestEnemy::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 
@@ -198,7 +198,7 @@ BehaviorReturnCode_t GotoHelperNodeNearestEnemy::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void GotoHelperNodeNearestEnemy::End(Actor &self)
+void GotoHelperNodeNearestEnemy::End(Actor &)
 {   
 }
 

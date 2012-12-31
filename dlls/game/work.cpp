@@ -99,7 +99,7 @@ void Work::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Work::AnimDone( Event *ev )
+void Work::AnimDone( Event * )
 {
 	switch( _state )
 		{
@@ -124,7 +124,7 @@ void Work::AnimDone( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void Work::HandleNodeCommand( Event *ev )
+void Work::HandleNodeCommand( Event * )
 {
 	switch( _state )
 		{
@@ -377,7 +377,7 @@ BehaviorReturnCode_t	Work::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void Work::End ( Actor &self	)
+void Work::End ( Actor&)
 {
 	if ( _node )
 	{
@@ -570,6 +570,7 @@ BehaviorReturnCode_t Work::evaluateStateFindNode()
 //--------------------------------------------------------------
 void Work::failureStateFindNode( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -618,6 +619,7 @@ BehaviorReturnCode_t Work::evaluateStateMoveToNode()
 //--------------------------------------------------------------
 void Work::failureStateMoveToNode( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -670,6 +672,7 @@ BehaviorReturnCode_t Work::evaluateStateAtNode()
 //--------------------------------------------------------------
 void Work::failureStateAtNode( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -725,6 +728,7 @@ BehaviorReturnCode_t Work::evaluateStateAnimateWaitOnTime()
 //--------------------------------------------------------------
 void Work::failureStateAnimateWaitOnTime( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -775,6 +779,7 @@ BehaviorReturnCode_t Work::evaluateStateAnimateWaitOnAnim()
 //--------------------------------------------------------------
 void Work::failureStateAnimateWaitOnAnim( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -825,6 +830,7 @@ BehaviorReturnCode_t Work::evaluateStateAnimateWaitOnSignal()
 //--------------------------------------------------------------
 void Work::failureStateAnimateWaitOnSignal( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -871,6 +877,7 @@ BehaviorReturnCode_t Work::evaluateStateAnimateConstant()
 //--------------------------------------------------------------
 void Work::failureStateAnimateConstant( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -933,6 +940,7 @@ BehaviorReturnCode_t Work::evaluateStateAnimateListWaitOnTime()
 //--------------------------------------------------------------
 void Work::failureStateAnimateListWaitOnTime( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -995,6 +1003,7 @@ BehaviorReturnCode_t Work::evaluateStateAnimateListWaitOnAnim()
 //--------------------------------------------------------------
 void Work::failureStateAnimateListWaitOnAnim( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -1057,6 +1066,7 @@ BehaviorReturnCode_t Work::evaluateStateAnimateListWaitOnSignal()
 //--------------------------------------------------------------
 void Work::failureStateAnimateListWaitOnSignal( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 

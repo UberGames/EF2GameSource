@@ -198,6 +198,8 @@ int ModeDeathmatch::getHighestPoints( int entnum )
 
 bool ModeDeathmatch::checkRule( const char *rule, bool defaultValue, Player *player )
 {
+	Q_UNUSED(player);
+
 	if ( stricmp( rule, "usingIndividualScore" ) == 0 )
 		return true;
 	else

@@ -98,7 +98,7 @@ void UseAlarm::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void UseAlarm::AnimDone( Event *ev )
+void UseAlarm::AnimDone( Event * )
 {
 	switch( _state )
 		{
@@ -119,7 +119,7 @@ void UseAlarm::AnimDone( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void UseAlarm::HandleNodeCommand( Event *ev )
+void UseAlarm::HandleNodeCommand( Event * )
 {
 }
 
@@ -149,7 +149,7 @@ void UseAlarm::Begin( Actor &self )
 //
 // Returns:     True or False
 //--------------------------------------------------------------
-BehaviorReturnCode_t UseAlarm::Evaluate ( Actor &self )
+BehaviorReturnCode_t UseAlarm::Evaluate ( Actor & )
 {      
 	BehaviorReturnCode_t stateResult;
 
@@ -246,7 +246,7 @@ BehaviorReturnCode_t UseAlarm::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void UseAlarm::End ( Actor &self	)
+void UseAlarm::End ( Actor &	)
 {
 	if ( _node )
 	{
@@ -406,6 +406,7 @@ BehaviorReturnCode_t UseAlarm::evaluateStateFindNode()
 //--------------------------------------------------------------
 void UseAlarm::failureStateFindNode( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -454,7 +455,9 @@ BehaviorReturnCode_t UseAlarm::evaluateStateMoveToNode()
 //--------------------------------------------------------------
 void UseAlarm::failureStateMoveToNode( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
+
 
 //--------------------------------------------------------------
 // Name:		setupStateAtNode()
@@ -505,6 +508,7 @@ BehaviorReturnCode_t UseAlarm::evaluateStateAtNode()
 //--------------------------------------------------------------
 void UseAlarm::failureStateAtNode( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -565,6 +569,7 @@ BehaviorReturnCode_t UseAlarm::evaluateStateWaitOnAnim()
 //--------------------------------------------------------------
 void UseAlarm::failureStateWaitOnAnim( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -618,6 +623,6 @@ BehaviorReturnCode_t UseAlarm::evaluateStateRotateToEnemy()
 //--------------------------------------------------------------
 void UseAlarm::failureStateRotateToEnemy( const str &failureReason )
 {
-
+	Q_UNUSED(failureReason);
 }
 

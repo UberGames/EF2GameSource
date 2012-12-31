@@ -94,7 +94,7 @@ void Patrol::SetArgs ( Event *ev)
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::AnimDone( Event *ev )
+void Patrol::AnimDone( Event * )
 {
 	if ( _state == PATROL_WAITING_AT_NODE_FOR_ANIM )
 		{
@@ -219,7 +219,7 @@ BehaviorReturnCode_t	Patrol::Evaluate ( Actor &self )
 //
 // Returns:      None
 //--------------------------------------------------------------
-void Patrol::End ( Actor &self	)
+void Patrol::End ( Actor &	)
 {   
 }
 
@@ -235,7 +235,7 @@ void Patrol::End ( Actor &self	)
 //
 // Returns:     true or false
 //--------------------------------------------------------------
-bool Patrol::_setupFindClosestPatrolNode( Actor &self )
+bool Patrol::_setupFindClosestPatrolNode( Actor & )
 {
 	_node = NULL;
 	return true;
@@ -253,7 +253,7 @@ bool Patrol::_setupFindClosestPatrolNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::_setupFindClosestPatrolNodeFailed( Actor &self )
+void Patrol::_setupFindClosestPatrolNodeFailed( Actor & )
 {
 	_state = PATROL_FAILED;
 }
@@ -333,7 +333,7 @@ void Patrol::_findClosestPatrolNode( Actor &self )
 //
 // Returns:
 //--------------------------------------------------------------
-void Patrol::_findClosestPatrolNodeFailed( Actor &self )
+void Patrol::_findClosestPatrolNodeFailed( Actor & )
 {
 	SetFailureReason( "Unable to find a patrol node within 512.0 units" );
 		_state = PATROL_FAILED;
@@ -384,7 +384,7 @@ bool Patrol::_setupMovingToPatrolNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::_setupMovingToPatrolNodeFailed( Actor &self )
+void Patrol::_setupMovingToPatrolNodeFailed( Actor & )
 {
 	_state = PATROL_FAILED;
 }
@@ -444,7 +444,7 @@ void Patrol::_moveToPatrolNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::_moveToPatrolNodeFailed( Actor &self )
+void Patrol::_moveToPatrolNodeFailed( Actor & )
 {
 	_moveFailures++;
 
@@ -473,7 +473,7 @@ void Patrol::_moveToPatrolNodeFailed( Actor &self )
 //
 // Returns:     true or false
 //--------------------------------------------------------------
-bool Patrol::_setupAtPatrolNode( Actor &self )
+bool Patrol::_setupAtPatrolNode( Actor & )
 {
 	//self.SetAnim( "walk" );
 	return true;
@@ -490,7 +490,7 @@ bool Patrol::_setupAtPatrolNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::_setupAtPatrolNodeFailed( Actor &self )
+void Patrol::_setupAtPatrolNodeFailed( Actor & )
 {
 	_state = PATROL_FAILED;
 }
@@ -570,7 +570,7 @@ void Patrol::_atPatrolNode( Actor &self )
 //
 // Returns:     true or false
 //--------------------------------------------------------------
-bool Patrol::_setupWaitingAtPatrolNode( Actor &self )
+bool Patrol::_setupWaitingAtPatrolNode( Actor & )
 {
 	return true;
 }
@@ -587,7 +587,7 @@ bool Patrol::_setupWaitingAtPatrolNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::_setupWaitingAtPatrolNodeFailed(Actor &self )
+void Patrol::_setupWaitingAtPatrolNodeFailed(Actor & )
 {
 	_state = PATROL_FAILED;
 }
@@ -644,7 +644,7 @@ bool Patrol::_setupWaitingAtPatrolNodeForAnim( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::_setupWaitingAtPatrolNodeForAnimFailed( Actor &self )
+void Patrol::_setupWaitingAtPatrolNodeForAnimFailed( Actor & )
 {
 	_state = PATROL_FAILED;
 }
@@ -661,7 +661,7 @@ void Patrol::_setupWaitingAtPatrolNodeForAnimFailed( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::_waitAtPatrolNodeForAnim( Actor &self )
+void Patrol::_waitAtPatrolNodeForAnim( Actor & )
 {
 	// Transition is handled by the AnimDone Event
 }
@@ -678,7 +678,7 @@ void Patrol::_waitAtPatrolNodeForAnim( Actor &self )
 //
 // Returns:     true or false
 //--------------------------------------------------------------
-bool Patrol::_setupFindNextPatrolNode( Actor &self )
+bool Patrol::_setupFindNextPatrolNode( Actor & )
 {
 	return true;
 }
@@ -695,7 +695,7 @@ bool Patrol::_setupFindNextPatrolNode( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::_setupFindNextPatrolNodeFailed( Actor &self )
+void Patrol::_setupFindNextPatrolNodeFailed( Actor & )
 {
 	SetFailureReason( "Unable to find the next Node in the patrol path" );
 	_state = PATROL_FAILED;
@@ -751,7 +751,7 @@ void Patrol::_findNextPatrolNode( Actor &self )
 //
 // Returns:     true or false
 //--------------------------------------------------------------
-bool Patrol::_setupHold( Actor &self )
+bool Patrol::_setupHold( Actor & )
 {
 	_nextMoveAttempt = level.time + 0.5f + G_Random();
 	return true;
@@ -769,7 +769,7 @@ bool Patrol::_setupHold( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void Patrol::_setupHoldFailed( Actor &self )
+void Patrol::_setupHoldFailed( Actor & )
 {
 	_state = PATROL_FAILED;
 }

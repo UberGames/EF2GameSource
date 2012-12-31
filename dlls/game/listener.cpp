@@ -158,7 +158,7 @@ void EventVar::Archive( Archiver &arc )
 
 #endif
 
-const char *EventVar::GetToken( Event &ev )
+const char *EventVar::GetToken( Event & )
 {
 	if ( dirtyFlags & DIRTY_STRING )
 	{
@@ -187,7 +187,7 @@ const char *EventVar::GetToken( Event &ev )
 	return stringValue.c_str();
 }
 
-const char *EventVar::GetString( Event &ev )
+const char *EventVar::GetString( Event & )
 {
 	if ( dirtyFlags & DIRTY_STRING )
 	{
@@ -216,7 +216,7 @@ const char *EventVar::GetString( Event &ev )
 	return stringValue.c_str();
 }
 
-int EventVar::GetInteger( Event &ev )
+int EventVar::GetInteger( Event & )
 {
 	if ( dirtyFlags & DIRTY_INTEGER )
 	{
@@ -241,7 +241,7 @@ int EventVar::GetInteger( Event &ev )
 	return intValue;
 }
 
-float EventVar::GetFloat( Event &ev )
+float EventVar::GetFloat( Event & )
 {
 	if ( dirtyFlags & DIRTY_FLOAT )
 	{
@@ -267,7 +267,7 @@ float EventVar::GetFloat( Event &ev )
 	return floatValue;
 }
 
-Vector EventVar::GetVector( Event &ev )
+Vector EventVar::GetVector( Event & )
 {
 	if ( dirtyFlags & DIRTY_VECTOR )
 	{
@@ -542,7 +542,7 @@ qboolean IsNumeric( const char *str )
 
 #endif
 
-qboolean EventVar::IsVector( Event &ev )
+qboolean EventVar::IsVector( Event & )
 {
 	switch( type )
 	{
@@ -561,7 +561,7 @@ qboolean EventVar::IsVector( Event &ev )
 	return false;
 }
 
-qboolean EventVar::IsNumeric( Event &ev )
+qboolean EventVar::IsNumeric( Event & )
 {
 	switch( type )
 	{
@@ -2322,12 +2322,12 @@ CLASS_DECLARATION( Class, Listener, NULL )
 	{ NULL, NULL }
 };
 
-void Listener::Remove( Event *e )
+void Listener::Remove( Event * )
 {
 	delete this;
 }
 
-void Listener::ScriptRemove( Event *e )
+void Listener::ScriptRemove( Event * )
 {
 	// Forces the remove to be done at a safe time
 	PostEvent( EV_Remove, 0.0f );

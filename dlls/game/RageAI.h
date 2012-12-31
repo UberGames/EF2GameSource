@@ -51,17 +51,17 @@ class Strategos
 {
 public:
 	Strategos()             { }
-	Strategos( Actor *act ) { Q_UNUSED(act) }
+	Strategos( Actor *act ) { Q_UNUSED(act); }
 	virtual ~Strategos()             { }
 
 	virtual void Evaluate() {	}
-	virtual void NotifySightStatusChanged ( Entity *enemy , qboolean canSee ) {	Q_UNUSED(enemy) Q_UNUSED(canSee) }		
-	virtual void NotifyDamageChanged( Entity *enemy , float damage ) { Q_UNUSED(enemy) Q_UNUSED(damage) }
+	virtual void NotifySightStatusChanged ( Entity *enemy , qboolean canSee ) {	Q_UNUSED(enemy); Q_UNUSED(canSee); }		
+	virtual void NotifyDamageChanged( Entity *enemy , float damage ) { Q_UNUSED(enemy); Q_UNUSED(damage); }
 
-	virtual void Attack ( Entity *enemy ) { Q_UNUSED(enemy)	}
+	virtual void Attack ( Entity *enemy ) { Q_UNUSED(enemy);	}
 	virtual void DoArchive( Archiver & , Actor * );
 	void Archive( Archiver &arc );
-	virtual void SetBehaviorPackage( const str &packageName )    { Q_UNUSED(packageName) }
+	virtual void SetBehaviorPackage( const str &packageName )    { Q_UNUSED(packageName); }
 
 	virtual float GetCheckYawMin() { assert( 0 ); return 0; }
 	virtual float GetCheckYawMax() { assert( 0 ); return 0; }

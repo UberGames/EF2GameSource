@@ -54,7 +54,8 @@ BotVoiceChat_GetFlag
 ==================
 */
 void BotVoiceChat_GetFlag(bot_state_t *bs, int client, int mode) {
-	//
+	Q_UNUSED(mode);
+
 	if (gametype == GT_CTF) {
 		if (!ctf_redflag.areanum || !ctf_blueflag.areanum)
 			return;
@@ -154,6 +155,7 @@ BotVoiceChat_Defend
 ==================
 */
 void BotVoiceChat_Defend(bot_state_t *bs, int client, int mode) {
+	Q_UNUSED(mode);
 #ifdef MISSIONPACK
 	if ( gametype == GT_OBELISK || gametype == GT_HARVESTER) {
 		//
@@ -216,6 +218,7 @@ BotVoiceChat_Patrol
 ==================
 */
 void BotVoiceChat_Patrol(bot_state_t *bs, int client, int mode) {
+	Q_UNUSED(mode);
 	//
 	bs->decisionmaker = client;
 	//
@@ -242,6 +245,8 @@ void BotVoiceChat_Camp(bot_state_t *bs, int client, int mode) {
 	int areanum;
 	aas_entityinfo_t entinfo;
 	char netname[MAX_NETNAME];
+
+	Q_UNUSED(mode);
 
 	//
 	bs->teamgoal.entitynum = -1;
@@ -299,6 +304,8 @@ void BotVoiceChat_FollowMe(bot_state_t *bs, int client, int mode) {
 	aas_entityinfo_t entinfo;
 	char netname[MAX_NETNAME];
 
+	Q_UNUSED(mode);
+
 	bs->teamgoal.entitynum = -1;
 	BotEntityInfo(client, &entinfo);
 	//if info is valid (in PVS)
@@ -351,6 +358,8 @@ BotVoiceChat_FollowFlagCarrier
 void BotVoiceChat_FollowFlagCarrier(bot_state_t *bs, int client, int mode) {
 	int carrier;
 
+	Q_UNUSED(client);
+
 	carrier = BotTeamFlagCarrier(bs);
 	if (carrier >= 0)
 		BotVoiceChat_FollowMe(bs, carrier, mode);
@@ -365,6 +374,8 @@ BotVoiceChat_ReturnFlag
 ==================
 */
 void BotVoiceChat_ReturnFlag(bot_state_t *bs, int client, int mode) {
+	Q_UNUSED(mode);
+
 	//if not in CTF mode
 	if (
 		gametype != GT_CTF
@@ -397,6 +408,8 @@ BotVoiceChat_StartLeader
 ==================
 */
 void BotVoiceChat_StartLeader(bot_state_t *bs, int client, int mode) {
+	Q_UNUSED(mode);
+
 	ClientName(client, bs->teamleader, sizeof(bs->teamleader));
 }
 
@@ -407,6 +420,8 @@ BotVoiceChat_StopLeader
 */
 void BotVoiceChat_StopLeader(bot_state_t *bs, int client, int mode) {
 	char netname[MAX_MESSAGE_SIZE];
+
+	Q_UNUSED(mode);
 
 	if (!Q_stricmp(bs->teamleader, ClientName(client, netname, sizeof(netname)))) {
 		bs->teamleader[0] = '\0';
@@ -421,6 +436,9 @@ BotVoiceChat_WhoIsLeader
 */
 void BotVoiceChat_WhoIsLeader(bot_state_t *bs, int client, int mode) {
 	char netname[MAX_MESSAGE_SIZE];
+
+	Q_UNUSED(mode);
+	Q_UNUSED(client);
 
 	if (!TeamPlayIsOn()) return;
 
@@ -441,6 +459,8 @@ BotVoiceChat_WantOnDefense
 void BotVoiceChat_WantOnDefense(bot_state_t *bs, int client, int mode) {
 	char netname[MAX_NETNAME];
 	int preference;
+
+	Q_UNUSED(mode);
 
 	preference = BotGetTeamMateTaskPreference(bs, client);
 	preference &= ~TEAMTP_ATTACKER;
@@ -463,6 +483,8 @@ void BotVoiceChat_WantOnOffense(bot_state_t *bs, int client, int mode) {
 	char netname[MAX_NETNAME];
 	int preference;
 
+	Q_UNUSED(mode);
+
 	preference = BotGetTeamMateTaskPreference(bs, client);
 	preference &= ~TEAMTP_DEFENDER;
 	preference |= TEAMTP_ATTACKER;
@@ -476,6 +498,7 @@ void BotVoiceChat_WantOnOffense(bot_state_t *bs, int client, int mode) {
 }
 
 void BotVoiceChat_Dummy(bot_state_t *bs, int client, int mode) {
+	Q_UNUSED(bs); Q_UNUSED(client); Q_UNUSED(mode);
 }
 
 voiceCommand_t voiceCommands[] = {

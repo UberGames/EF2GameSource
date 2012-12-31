@@ -110,7 +110,7 @@ void TorsoAimAndFireWeapon::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void TorsoAimAndFireWeapon::AnimDone( Event *ev )
+void TorsoAimAndFireWeapon::AnimDone( Event * )
 {
 
 	/*if ( _state == TORSO_AIM_AND_FIRE_POST_FIRE )
@@ -285,7 +285,7 @@ BehaviorReturnCode_t TorsoAimAndFireWeapon::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void TorsoAimAndFireWeapon::End(Actor &self)
+void TorsoAimAndFireWeapon::End(Actor &)
 { 
 	if ( !_self )
 		return;
@@ -805,7 +805,7 @@ BehaviorReturnCode_t TorsoAimAndFireWeapon::evaluateStatePreFire()
 //--------------------------------------------------------------
 void TorsoAimAndFireWeapon::failureStatePreFire( const str& failureReason )
 {
-
+	Q_UNUSED(failureReason);
 }
 
 
@@ -958,5 +958,5 @@ BehaviorReturnCode_t TorsoAimAndFireWeapon::evaluateStatePostFire()
 //--------------------------------------------------------------
 void TorsoAimAndFireWeapon::failureStatePostFire( const str& failureReason )
 {
-
+	Q_UNUSED(failureReason);
 }

@@ -115,7 +115,7 @@ void SuppressionFireCombat::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void SuppressionFireCombat::AnimDone( Event *ev )
+void SuppressionFireCombat::AnimDone( Event * )
 {
 }
 
@@ -148,7 +148,7 @@ void SuppressionFireCombat::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t SuppressionFireCombat::Evaluate( Actor &self )
+BehaviorReturnCode_t SuppressionFireCombat::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 
@@ -255,7 +255,7 @@ BehaviorReturnCode_t SuppressionFireCombat::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void SuppressionFireCombat::End(Actor &self)
+void SuppressionFireCombat::End(Actor &)
 {   
 }
 

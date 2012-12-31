@@ -83,6 +83,8 @@ int BotIsFirstInRankings(bot_state_t *bs) {
 //	static int maxclients->integer;
 //	playerState_t ps;
 
+	Q_UNUSED(bs);
+
 	return qfalse;
 	/* FIXME
 	score = bs->cur_ps.persistant[PERS_SCORE];
@@ -109,6 +111,8 @@ int BotIsLastInRankings(bot_state_t *bs) {
 //	int i, score;
 //	char buf[MAX_INFO_STRING];
 //	playerState_t ps;
+
+	Q_UNUSED(bs);
 
 	return qfalse;
 	/* FIXME
@@ -778,6 +782,8 @@ int BotChat_EnemySuicide(bot_state_t *bs) {
 //	char name[32];
 //	float rnd;
 
+	Q_UNUSED(bs);
+
 	return qfalse;
 	/* FIXME
 	if (bot_nochat.integer) return qfalse;
@@ -815,6 +821,8 @@ int BotChat_HitTalking(bot_state_t *bs) {
 //	char name[32], *weap;
 //	int lasthurt_client;
 //	float rnd;
+
+	Q_UNUSED(bs);
 /*
 
 	if (bot_nochat.integer) return qfalse;
@@ -857,6 +865,8 @@ int BotChat_HitNoDeath(bot_state_t *bs) {
 //	float rnd;
 //	int lasthurt_client;
 //	aas_entityinfo_t entinfo;
+
+	Q_UNUSED(bs);
 /*
 	lasthurt_client = g_entities[bs->client].client->lasthurt_client;
 	if (!lasthurt_client) return qfalse;
@@ -902,6 +912,8 @@ int BotChat_HitNoKill(bot_state_t *bs) {
 //	char name[32], *weap;
 //	float rnd;
 //	aas_entityinfo_t entinfo;
+	Q_UNUSED(bs);
+
 	return qfalse; // FIXME
 /*
 	if (bot_nochat.integer) return qfalse;

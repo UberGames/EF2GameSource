@@ -37,12 +37,16 @@ ModifierInstantKill::ModifierInstantKill()
 
 void ModifierInstantKill::init( int maxPlayers )
 {
+	Q_UNUSED(maxPlayers);
 	multiplayerManager.cacheMultiplayerFiles( "mp_instantKill" );
 }
 
 float ModifierInstantKill::playerDamaged( Player *damagedPlayer, Player *attackingPlayer, float damage, int meansOfDeath )
 {
 	float realDamage = 0.0f;
+
+	Q_UNUSED(attackingPlayer);
+	Q_UNUSED(damagedPlayer);
 
 	if ( damage > 0.0f )
 	{
@@ -67,6 +71,8 @@ float ModifierInstantKill::playerDamaged( Player *damagedPlayer, Player *attacki
 
 bool ModifierInstantKill::canGivePlayerItem( int entnum, const str &itemName )
 {
+	Q_UNUSED(entnum);
+
 	if ( strstr( itemName.c_str(), "phaser.tik" ) )
 		return false;
 	else if ( strstr( itemName.c_str(), "batleth.tik" ) )
@@ -79,6 +85,8 @@ bool ModifierInstantKill::canGivePlayerItem( int entnum, const str &itemName )
 
 bool ModifierInstantKill::checkRule( const char *rule, bool defaultValue, Player *player )
 {
+	Q_UNUSED(player);
+
 	if ( stricmp( rule, "dropWeapons" ) == 0 )
 		return false;
 	else
@@ -117,6 +125,8 @@ void ModifierInstantKill::update( float frameTime )
 {
 	int i;
 	Player *player;
+
+	Q_UNUSED(frameTime);
 
 	if ( _lastRegenTime + _regenTime < multiplayerManager.getTime() )
 	{
@@ -202,6 +212,9 @@ void ModifierDestruction::playerKilled( Player *killedPlayer, Player *attackingP
 	str printString;
 	bool objectGuarded;
 
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(inflictor);
+
 	if ( !attackingPlayer || ( killedPlayer == attackingPlayer ) )
 		return;
 	
@@ -278,6 +291,8 @@ float ModifierDestruction::findDistanceToTeamsObject( const str &teamName, const
 int ModifierDestruction::getStat( Player *player, int statNum, int value )
 {
 	float floatRealValue;
+
+	Q_UNUSED(player);
 
 	if ( statNum == STAT_MP_GENERIC1 )
 	{
@@ -365,6 +380,8 @@ bool ModifierDestruction::shouldKeepItem( MultiplayerItem *item )
 float ModifierDestruction::itemDamaged( MultiplayerItem *item, Player *attackingPlayer, float damage, int meansOfDeath )
 {
 	Team *team;
+
+	Q_UNUSED(meansOfDeath);
 
 	team = multiplayerManager.getPlayersTeam( attackingPlayer );
 
@@ -563,6 +580,7 @@ void ModifierDestruction::update( float frameTime )
 	int currentStage;
 	int lastStage;
 
+	Q_UNUSED(frameTime);
 
 	if ( _redDestructionObject )
 	{
@@ -721,6 +739,8 @@ bool ModifierDestruction::checkRule( const char *rule, bool defaultValue, Player
 {
 	// We want team spawnpoints
 
+	Q_UNUSED(player);
+
 	if ( stricmp( rule, "spawnpoints-team" ) == 0 )
 		return true;
 	else if ( stricmp( rule, "keepflags" ) == 0 )
@@ -758,6 +778,8 @@ bool ModifierOneFlag::shouldKeepItem( MultiplayerItem *item )
 bool ModifierOneFlag::checkRule( const char *rule, bool defaultValue, Player *player )
 {
 	// Check to see if we care about this rule
+
+	Q_UNUSED(player);
 
 	if ( strnicmp( rule, "flagscore-", sizeof( "flagscore-" ) - 1 ) == 0 )
 	{
@@ -891,6 +913,10 @@ void ModifierElimination::addPlayer( Player *player )
 void ModifierElimination::playerKilled( Player *killedPlayer, Player *attackingPlayer, Entity *inflictor, int meansOfDeath )
 {
 	Team *team;
+
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(inflictor);
+	Q_UNUSED(attackingPlayer);
 
 	if ( !killedPlayer )
 		return;
@@ -1077,6 +1103,7 @@ void ModifierElimination::update( float frameTime )
 	gentity_t   *edict;
 	int i;
 
+	Q_UNUSED(frameTime);
 
 	if ( _matchOver )
 		return;
@@ -1348,6 +1375,8 @@ void ModifierDiffusion::playerEventNotification( const char *eventName, const ch
 bool ModifierDiffusion::checkRule( const char *rule, bool defaultValue, Player *player )
 {
 	// We want team spawnpoints
+
+	Q_UNUSED(player);
 
 	if ( stricmp( rule, "spawnpoints-team" ) == 0 )
 	{
@@ -1743,6 +1772,8 @@ void ModifierDiffusion::attachBomb( Player *player )
 
 int ModifierDiffusion::getStat( Player *player, int statNum, int value )
 {
+	Q_UNUSED(player);
+
 	if ( statNum == STAT_MP_GENERIC1 )
 	{
 		if ( _redBombPlace._armed )
@@ -1831,6 +1862,10 @@ void ModifierDiffusion::removePlayer( Player *player )
 void ModifierDiffusion::playerKilled( Player *killedPlayer, Player *attackingPlayer, Entity *inflictor, int meansOfDeath )
 {
 	bool victimWasBomber;
+
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(inflictor);
+
 
 	if ( killedPlayer->entnum == _bomber )
 	{
@@ -1998,6 +2033,8 @@ bool ModifierDiffusion::withinGuardDistance( const Vector &origin1, const Vector
 
 void ModifierDiffusion::playerCommand( Player *player, const char *command, const char *parm )
 {
+	Q_UNUSED(parm);
+
 	if ( stricmp( command, "dropItem" ) == 0 )
 	{
 		if ( player == getBomber() )
@@ -3090,6 +3127,9 @@ void ModifierSpecialties::removePlayer( Player *player )
 
 void ModifierSpecialties::playerKilled( Player *killedPlayer, Player *attackingPlayer, Entity *inflictor, int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(inflictor);
+	Q_UNUSED(attackingPlayer);
 	putItemBack( killedPlayer );
 }
 
@@ -3132,6 +3172,8 @@ void ModifierSpecialties::applyAirAccelerationModifiers( Player *player, int *ai
 bool ModifierSpecialties::canPickup( Player *player, MultiplayerItemType itemType, const char *item_name )
 {
 	// The infiltrator can't pickup the speed powerup
+
+	Q_UNUSED(item_name);
 
 	if ( itemType == MP_ITEM_TYPE_ARMOR )
 	{
@@ -3377,6 +3419,7 @@ ModifierControlPoints::~ModifierControlPoints()
 
 void ModifierControlPoints::init( int maxPlayers )
 {
+	Q_UNUSED(maxPlayers);
 	multiplayerManager.cacheMultiplayerFiles( "mp_controlPoints" );
 }
 
@@ -3387,11 +3430,14 @@ void ModifierControlPoints::addPlayer( Player *player )
 
 str ModifierControlPoints::getSpawnPointType( Player *player )
 {
+	Q_UNUSED(player);
 	return "control";
 }
 
 bool ModifierControlPoints::checkRule( const char *rule, bool defaultValue, Player *player )
 {
+	Q_UNUSED(player);
+
 	if ( stricmp( rule, "spawnpoints-special" ) == 0 )
 		return true;
 	else
@@ -3532,6 +3578,8 @@ void ModifierControlPoints::update( float frameTime )
 	int i;
 	ControlPointData *controlPoint;
 
+	Q_UNUSED(frameTime);
+
 	// Loop through all control points
 
 	for ( i = 1 ; i <= _controlPoints.NumObjects() ; i++ )
@@ -3606,6 +3654,9 @@ void ModifierControlPoints::playerKilled( Player *killedPlayer, Player *attackin
 	float distance;
 	str printString;
 	bool controlPointGuarded;
+
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(inflictor);
 
 	if ( !attackingPlayer || ( killedPlayer == attackingPlayer ) )
 		return;
@@ -3699,6 +3750,8 @@ int ModifierControlPoints::getStat( Player *player, int statNum, int value )
 	ControlPointData *controlPoint;
 	int i;
 	ControlPointType controlPointType;
+
+	Q_UNUSED(player);
 
 
 	// Figure out which control point we are referring to (if any) and the set of icons to use
@@ -3798,6 +3851,8 @@ void ModifierAutoHandicap::addPlayer( Player *player )
 
 float ModifierAutoHandicap::playerDamaged( Player *damagedPlayer, Player *attackingPlayer, float damage, int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+
 	if ( damagedPlayer == attackingPlayer )
 		return damage;
 
@@ -3809,6 +3864,9 @@ float ModifierAutoHandicap::playerDamaged( Player *damagedPlayer, Player *attack
 
 void ModifierAutoHandicap::playerKilled( Player *killedPlayer, Player *attackingPlayer, Entity *inflictor, int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(inflictor);
+
 	if ( killedPlayer == attackingPlayer || !attackingPlayer )
 		return;
 
@@ -3837,6 +3895,7 @@ ModifierActionHero::ModifierActionHero()
 
 void ModifierActionHero::init( int maxPlayers )
 {
+	Q_UNUSED(maxPlayers);
 	multiplayerManager.cacheMultiplayerFiles( "mp_actionhero" );
 }
 
@@ -3882,6 +3941,9 @@ void ModifierActionHero::update( float frameTime )
 
 void ModifierActionHero::playerKilled( Player *killedPlayer, Player *attackingPlayer, Entity *inflictor, int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(inflictor);
+
 	// Make sure everything is ok
 
 	if ( !killedPlayer )
@@ -4010,6 +4072,8 @@ ModifierPointsPerWeapon::~ModifierPointsPerWeapon()
 
 void ModifierPointsPerWeapon::init( int maxPlayers )
 {
+	Q_UNUSED(maxPlayers);
+
 	// Read in all of the projectile/weapon points data
 
 	readMultiplayerConfig( "global/mp_PointsPerWeapon.cfg" );
@@ -4098,6 +4162,8 @@ int ModifierPointsPerWeapon::getPointsForKill( Player *killedPlayer, Player *att
 {
 	PointsPerWeaponData *pointsPerWeaponData;
 	int i;
+
+	Q_UNUSED(meansOfDeath);
 
 	// Make sure everything is ok
 

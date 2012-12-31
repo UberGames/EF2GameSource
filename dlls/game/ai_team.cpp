@@ -170,6 +170,8 @@ BotSetTeamMateTaskPreference
 void BotSetTeamMateTaskPreference(bot_state_t *bs, int teammate, int preference) {
 	char teammatename[MAX_NETNAME];
 
+	Q_UNUSED(bs);
+
 	ctftaskpreferences[teammate].preference = preference;
 	ClientName(teammate, teammatename, sizeof(teammatename));
 	strcpy(ctftaskpreferences[teammate].name, teammatename);
@@ -182,6 +184,8 @@ BotGetTeamMateTaskPreference
 */
 int BotGetTeamMateTaskPreference(bot_state_t *bs, int teammate) {
 	char teammatename[MAX_NETNAME];
+
+	Q_UNUSED(bs);
 
 	if (!ctftaskpreferences[teammate].preference) return 0;
 	ClientName(teammate, teammatename, sizeof(teammatename));
@@ -264,6 +268,7 @@ void BotSayTeamOrder(bot_state_t *bs, int toclient) {
 #else
 	BotSayTeamOrderAlways(bs, toclient);
 #endif
+	Q_UNUSED(toclient);
 }
 
 /*
@@ -1902,6 +1907,7 @@ FindHumanTeamLeader
 ==================
 */
 int FindHumanTeamLeader(bot_state_t *bs) {
+	Q_UNUSED(bs);
 //	int i;
 	// no human team leaders in ef2, 'cause we've got no voicechat commands
 /*	

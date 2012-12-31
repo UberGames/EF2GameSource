@@ -76,7 +76,7 @@ SelectBestWeapon::~SelectBestWeapon()
 //
 // Returns:     None
 //--------------------------------------------------------------
-void SelectBestWeapon::SetArgs( Event *ev )
+void SelectBestWeapon::SetArgs( Event * )
 {
 }
 
@@ -92,7 +92,7 @@ void SelectBestWeapon::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void SelectBestWeapon::AnimDone( Event *ev )
+void SelectBestWeapon::AnimDone( Event * )
 {
 	_animDone = true;
 }
@@ -124,7 +124,7 @@ void SelectBestWeapon::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t SelectBestWeapon::Evaluate( Actor &self )
+BehaviorReturnCode_t SelectBestWeapon::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 
@@ -223,7 +223,7 @@ BehaviorReturnCode_t SelectBestWeapon::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void SelectBestWeapon::End(Actor &self)
+void SelectBestWeapon::End(Actor &)
 {   
 }
 
@@ -402,6 +402,7 @@ BehaviorReturnCode_t SelectBestWeapon::evaluateStateSelectWeapon()
 //--------------------------------------------------------------
 void SelectBestWeapon::failureStateSelectWeapon(const str& failureReason)
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -453,6 +454,7 @@ BehaviorReturnCode_t SelectBestWeapon::evaluateStatePutAwayCurrentWeapon()
 //--------------------------------------------------------------
 void SelectBestWeapon::failureStatePutAwayCurrentWeapon(const str& failureReason)
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------
@@ -503,6 +505,7 @@ BehaviorReturnCode_t SelectBestWeapon::evaluateStatePullOutNewWeapon()
 //--------------------------------------------------------------
 void SelectBestWeapon::failureStatePullOutNewWeapon(const str& failureReason)
 {
+	Q_UNUSED(failureReason);
 }
 
 void SelectBestWeapon::setupStateReadyNewWeapon()
@@ -523,6 +526,7 @@ BehaviorReturnCode_t SelectBestWeapon::evaluateStateReadyNewWeapon()
 
 void SelectBestWeapon::failureStateReadyNewWeapon( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 bool SelectBestWeapon::CanExecute( Actor &self )

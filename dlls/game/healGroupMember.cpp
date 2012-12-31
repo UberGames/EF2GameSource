@@ -124,7 +124,7 @@ void HealGroupMember::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void HealGroupMember::AnimDone( Event *ev )
+void HealGroupMember::AnimDone( Event * )
 {
 }
 
@@ -242,7 +242,7 @@ BehaviorReturnCode_t HealGroupMember::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void HealGroupMember::End(Actor &self)
+void HealGroupMember::End(Actor &)
 {   
 }
 
@@ -442,7 +442,7 @@ void HealGroupMember::rotateToEntityFailed( Actor &self )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void HealGroupMember::setupAnimate( Actor &self )
+void HealGroupMember::setupAnimate( Actor & )
 {
 /*
 	PostureStates_t pState = _currentPatient->movementSubsystem->getPostureState();
@@ -524,7 +524,7 @@ void HealGroupMember::doAnimate( Actor &self )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void HealGroupMember::animateFailed( Actor &self )
+void HealGroupMember::animateFailed( Actor & )
 {
 	str FailureReason;
 	FailureReason = "Animation Not Found\n";
@@ -545,7 +545,7 @@ void HealGroupMember::animateFailed( Actor &self )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void HealGroupMember::treatedPatient( Actor &self , Entity *ent )
+void HealGroupMember::treatedPatient( Actor & , Entity *ent )
 {
 	triageEntry_t* checkEntry;
 
@@ -571,7 +571,7 @@ void HealGroupMember::treatedPatient( Actor &self , Entity *ent )
 //
 // Returns:		Actor*
 //--------------------------------------------------------------
-Actor* HealGroupMember::findHighestPriorityPatient( Actor &self )
+Actor* HealGroupMember::findHighestPriorityPatient( Actor & )
 {
 	triageEntry_t* checkEntry;
 	Actor *highestPriorityPatient;
@@ -606,7 +606,7 @@ Actor* HealGroupMember::findHighestPriorityPatient( Actor &self )
 //
 // Returns:		True or False
 //--------------------------------------------------------------
-bool HealGroupMember::allPatientsTreated( Actor &self )
+bool HealGroupMember::allPatientsTreated( Actor & )
 {
 	triageEntry_t* checkEntry;
 
@@ -633,7 +633,7 @@ bool HealGroupMember::allPatientsTreated( Actor &self )
 //
 // Returns:		True or False
 //--------------------------------------------------------------
-bool HealGroupMember::patientTreated( Actor &self , Entity *ent )
+bool HealGroupMember::patientTreated( Actor & , Entity *ent )
 {
 	triageEntry_t* checkEntry;
 

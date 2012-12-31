@@ -120,7 +120,7 @@ void WatchEntity::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void WatchEntity::AnimDone( Event *ev )
+void WatchEntity::AnimDone( Event * )
 {
 	_animDone = true;
 }
@@ -216,7 +216,7 @@ BehaviorReturnCode_t WatchEntity::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void WatchEntity::End(Actor &self)
+void WatchEntity::End(Actor &)
 {
 //	self.movementSubsystem->setTurnSpeed(_oldTurnSpeed);
 }
@@ -343,6 +343,7 @@ BehaviorReturnCode_t WatchEntity::evaluateStateRotate( Actor &self )
 
 void WatchEntity::rotateFailed( Actor &self )
 {
+	Q_UNUSED(self);
 }
 
 void WatchEntity::setupStateHold()
@@ -378,5 +379,6 @@ BehaviorReturnCode_t WatchEntity::evaluateStateHold( Actor &self )
 
 void WatchEntity::holdFailed( Actor &self )
 {
+	Q_UNUSED(self);
 }
 

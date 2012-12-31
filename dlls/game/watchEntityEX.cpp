@@ -111,7 +111,7 @@ void WatchEntityEX::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void WatchEntityEX::AnimDone( Event *ev )
+void WatchEntityEX::AnimDone( Event * )
 {
 }
 
@@ -143,7 +143,7 @@ void WatchEntityEX::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t WatchEntityEX::Evaluate( Actor &self )
+BehaviorReturnCode_t WatchEntityEX::Evaluate( Actor & )
 {  
 	BehaviorReturnCode_t stateResult;
 
@@ -224,7 +224,7 @@ BehaviorReturnCode_t WatchEntityEX::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void WatchEntityEX::End(Actor &self)
+void WatchEntityEX::End(Actor &)
 {   
 }
 
@@ -324,6 +324,7 @@ BehaviorReturnCode_t WatchEntityEX::evaluateStateSetup()
 
 void WatchEntityEX::failureStateSetup( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 
@@ -359,7 +360,9 @@ BehaviorReturnCode_t WatchEntityEX::evaluateStateRotate()
 
 void WatchEntityEX::failureStateRotate( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
+
 
 
 
@@ -384,6 +387,7 @@ BehaviorReturnCode_t WatchEntityEX::evaluateStateHold()
 
 void WatchEntityEX::failureStateHold( const str& failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 

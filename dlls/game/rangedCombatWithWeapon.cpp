@@ -175,7 +175,7 @@ void RangedCombatWithWeapon::Begin( Actor &self )
 //
 // Returns:     True or False
 //--------------------------------------------------------------
-BehaviorReturnCode_t RangedCombatWithWeapon::Evaluate ( Actor &self )
+BehaviorReturnCode_t RangedCombatWithWeapon::Evaluate ( Actor & )
 {	
 	BehaviorReturnCode_t stateResult;
 	think();

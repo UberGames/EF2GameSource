@@ -28,58 +28,58 @@ class HoldableItem;
 
 class PowerupBase : public Item
 {
-	protected:
+protected:
 
-		Sentient				*_owner;
-		str						_modelName;
+	Sentient				*_owner;
+	str						_modelName;
 
-		str						_modelToAttachOnUse;
-		str						_modelToAttachOnUseTag;
-		float					_modelToAttachOnUseRemoveTime;
-		str						_modelToSpawn;
-		str						_shaderToDisplayOnUse;
+	str						_modelToAttachOnUse;
+	str						_modelToAttachOnUseTag;
+	float					_modelToAttachOnUseRemoveTime;
+	str						_modelToSpawn;
+	str						_shaderToDisplayOnUse;
 
-		void					init( const str &modelname, Sentient *owner );
-				
+	void					init( const str &modelname, Sentient *owner );
 
-	public:
-		CLASS_PROTOTYPE( PowerupBase );
 
-								PowerupBase();
-		virtual					~PowerupBase() {}
+public:
+	CLASS_PROTOTYPE( PowerupBase );
 
-		void					realNameEvent( Event *ev );
-		virtual void			amountEvent( Event *ev );
+	PowerupBase();
+	virtual					~PowerupBase() {}
 
-		virtual void			update( float frameTime ) { specificUpdate( frameTime ); }
-		virtual void			specificUpdate( float frameTime ) {};
+	void					realNameEvent( Event *ev );
+	virtual void			amountEvent( Event *ev );
 
-		virtual float			getMoveMultiplier( void ) { return 1.0f; };
-		virtual float			getDamageDone( float damage, int meansOfDeath ) { return damage; };
-		virtual float			getDamageTaken( Entity *attacker, float damage, int meansOfDeath ) { return damage; };
+	virtual void			update( float frameTime ) { specificUpdate( frameTime ); }
+	virtual void			specificUpdate( float frameTime ) { Q_UNUSED(frameTime); }
 
-		virtual meansOfDeath_t	changetMeansOfDeath( meansOfDeath_t meansOfDeath ) { return meansOfDeath; };
+	virtual float			getMoveMultiplier( void ) { return 1.0f; };
+	virtual float			getDamageDone( float damage, int meansOfDeath ) { Q_UNUSED(meansOfDeath); return damage; }
+	virtual float			getDamageTaken( Entity *attacker, float damage, int meansOfDeath ) { Q_UNUSED(attacker); Q_UNUSED(meansOfDeath); return damage; }
 
-		virtual void			spawn( const Vector &origin ) {};
+	virtual meansOfDeath_t	changetMeansOfDeath( meansOfDeath_t meansOfDeath ) { return meansOfDeath; }
 
-		/* virtual */ Item *	ItemPickup( Entity *other, qboolean add_to_inventory, qboolean );
+	virtual void			spawn( const Vector &origin ) { Q_UNUSED(origin); }
 
-		virtual	void			givePlayerItem( Player *player ) {};
+	/* virtual */ Item *	ItemPickup( Entity *other, qboolean add_to_inventory, qboolean );
 
-		/* virtual */ float		RespawnTime( void );
+	virtual	void			givePlayerItem( Player * ) {};
 
-		void					setModelToAttachOnUse( Event *ev );
-		void					setModelToSpawnOnUse( Event *ev );
-		void					setShaderToDisplayOnUse( Event *ev );
+	/* virtual */ float		RespawnTime( void );
 
-		void					getModelToAttachOnUse( str &modelName, str &tagName, float &modelRemoveTime );
-		void					getShaderToDisplayOnUse( str &modelName );
+	void					setModelToAttachOnUse( Event *ev );
+	void					setModelToSpawnOnUse( Event *ev );
+	void					setShaderToDisplayOnUse( Event *ev );
 
-		virtual bool			canDrop( void ) { return true; }
+	void					getModelToAttachOnUse( str &modelName, str &tagName, float &modelRemoveTime );
+	void					getShaderToDisplayOnUse( str &modelName );
 
-		virtual bool			canOwnerRegenerate( void ) { return true; }
+	virtual bool			canDrop( void ) { return true; }
 
-		/* virtual */ void		Archive( Archiver &arc );
+	virtual bool			canOwnerRegenerate( void ) { return true; }
+
+	/* virtual */ void		Archive( Archiver &arc );
 };
 
 inline void PowerupBase::Archive( Archiver &arc )
@@ -96,36 +96,36 @@ inline void PowerupBase::Archive( Archiver &arc )
 
 class Powerup : public PowerupBase
 {
-	protected:
+protected:
 
-		float					_timeLeft;
+	float					_timeLeft;
 
-	public:
-		CLASS_PROTOTYPE( Powerup );
+public:
+	CLASS_PROTOTYPE( Powerup );
 
-								Powerup();
-		virtual					~Powerup() {}
+	Powerup();
+	virtual					~Powerup() {}
 
-		/* virtual */ void		amountEvent( Event *ev );
+	/* virtual */ void		amountEvent( Event *ev );
 
-		float					getTimeLeft( void ) const { return _timeLeft; };
+	float					getTimeLeft( void ) const { return _timeLeft; };
 
-		/* virtual */ void		update( float frameTime );
+	/* virtual */ void		update( float frameTime );
 
-		/* virtual */ void		spawn( const Vector &origin );
+	/* virtual */ void		spawn( const Vector &origin );
 
-		/* virtual */	void	givePlayerItem( Player *player );
+	/* virtual */	void	givePlayerItem( Player *player );
 
-		static Powerup *		CreatePowerup( const str &className, const str &modelName, Sentient *sentient );
+	static Powerup *		CreatePowerup( const str &className, const str &modelName, Sentient *sentient );
 
-		/* virtual */ void		cacheStrings( void );
+	/* virtual */ void		cacheStrings( void );
 
-		float					getTimeLeft( void ) { return _timeLeft; }
-		void					setTimeLeft( float timeLeft ) { _timeLeft = timeLeft; }
+	float					getTimeLeft( void ) { return _timeLeft; }
+	void					setTimeLeft( float timeLeft ) { _timeLeft = timeLeft; }
 
-		virtual	bool			canStack( void ) { return true; }
+	virtual	bool			canStack( void ) { return true; }
 
-		/* virtual */ void		Archive( Archiver &arc );
+	/* virtual */ void		Archive( Archiver &arc );
 };
 
 inline void Powerup::Archive( Archiver &arc )
@@ -137,99 +137,99 @@ inline void Powerup::Archive( Archiver &arc )
 
 class PowerupSpeed : public Powerup
 {
-	private:
+private:
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( PowerupSpeed );
+public:
+	CLASS_PROTOTYPE( PowerupSpeed );
 
-								PowerupSpeed() {};
-								~PowerupSpeed() {};
+	PowerupSpeed() {};
+	~PowerupSpeed() {};
 
-		virtual float			getMoveMultiplier( void ) { return 1.5f; };
+	virtual float			getMoveMultiplier( void ) { return 1.5f; };
 };
 
 class PowerupStrength : public Powerup
 {
-	private:
+private:
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( PowerupStrength );
+public:
+	CLASS_PROTOTYPE( PowerupStrength );
 
-								PowerupStrength() {};
-								~PowerupStrength() {};
+	PowerupStrength() {};
+	~PowerupStrength() {};
 
-		/* virtual */ float		getDamageDone( float damage, int meansOfDeath ) { return damage * 2.0f; };
+	float		getDamageDone( float damage, int meansOfDeath ) { Q_UNUSED(meansOfDeath); return damage * 2.0f; }
 };
 
 class PowerupProtection : public Powerup
 {
-	private:
+private:
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( PowerupProtection );
+public:
+	CLASS_PROTOTYPE( PowerupProtection );
 
-								PowerupProtection() {};
-								~PowerupProtection() {};
+	PowerupProtection() {};
+	~PowerupProtection() {};
 
-		/* virtual */ float		getDamageTaken( Entity *attacker, float damage, int meansOfDeath );
+	/* virtual */ float		getDamageTaken( Entity *attacker, float damage, int meansOfDeath );
 };
 
 class PowerupProtectionTemp : public PowerupProtection
 {
-	private:
+private:
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( PowerupProtectionTemp );
+public:
+	CLASS_PROTOTYPE( PowerupProtectionTemp );
 
-								PowerupProtectionTemp() {};
-								~PowerupProtectionTemp() {};
+	PowerupProtectionTemp() {};
+	~PowerupProtectionTemp() {};
 
-		/* virtual */ float		getDamageDone( float damage, int meansOfDeath );
-		/* virtual */ bool		canDrop( void ) { return false; }
-		/* virtual */ bool		canStack( void ) { return false; }
+	/* virtual */ float		getDamageDone( float damage, int meansOfDeath );
+	/* virtual */ bool		canDrop( void ) { return false; }
+	/* virtual */ bool		canStack( void ) { return false; }
 };
 
 class PowerupRegen : public Powerup
 {
-	private:
+private:
 
-		static const float REGEN_SPEED;
+	static const float REGEN_SPEED;
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( PowerupRegen );
+public:
+	CLASS_PROTOTYPE( PowerupRegen );
 
-								PowerupRegen() {};
-								~PowerupRegen() {};
+	PowerupRegen() {};
+	~PowerupRegen() {};
 
-		/* virtual */ void		specificUpdate( float frameTime );
+	/* virtual */ void		specificUpdate( float frameTime );
 };
 
 class PowerupInvisibility : public Powerup
 {
-	private:
-		bool			_started;
+private:
+	bool			_started;
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( PowerupInvisibility );
+public:
+	CLASS_PROTOTYPE( PowerupInvisibility );
 
-								PowerupInvisibility();
-								~PowerupInvisibility();
+	PowerupInvisibility();
+	~PowerupInvisibility();
 
-		/* virtual */ void		specificUpdate( float frameTime );
+	/* virtual */ void		specificUpdate( float frameTime );
 
-		/* virtual */ void		Archive( Archiver &arc );
+	/* virtual */ void		Archive( Archiver &arc );
 };
 
 inline void PowerupInvisibility::Archive( Archiver &arc )
@@ -241,33 +241,33 @@ inline void PowerupInvisibility::Archive( Archiver &arc )
 
 class Rune : public PowerupBase
 {
-	protected:
-		Vector					_originalOrigin;
-		bool					_originalOriginSet;
-				
-	public:
-		CLASS_PROTOTYPE( Rune );
+protected:
+	Vector					_originalOrigin;
+	bool					_originalOriginSet;
 
-								Rune();
-		virtual					~Rune() {}
+public:
+	CLASS_PROTOTYPE( Rune );
 
-		/* virtual */ void		setOrigin( const Vector &point );
-		void					setOriginalOrigin( const Vector &point, bool force );
-		Vector					getOriginalOrigin( void) { return _originalOrigin;}
+	Rune();
+	virtual					~Rune() {}
 
-		/* virtual */ void		spawn( const Vector &origin );
+	/* virtual */ void		setOrigin( const Vector &point );
+	void					setOriginalOrigin( const Vector &point, bool force );
+	Vector					getOriginalOrigin( void) { return _originalOrigin;}
 
-		/* virtual */ Item *	ItemPickup( Entity *other, qboolean add_to_inventory, qboolean );
+	/* virtual */ void		spawn( const Vector &origin );
 
-		/* virtual */	void	givePlayerItem( Player *player );
+	/* virtual */ Item *	ItemPickup( Entity *other, qboolean add_to_inventory, qboolean );
 
-		static Rune	*			CreateRune( const str &className, const str &modelName, Sentient *sentient );
+	/* virtual */	void	givePlayerItem( Player *player );
 
-		/* virtual */ void		cacheStrings( void );
+	static Rune	*			CreateRune( const str &className, const str &modelName, Sentient *sentient );
 
-		void					respawnAtOriginalOrigin( Event *ev );
+	/* virtual */ void		cacheStrings( void );
 
-		/* virtual */ void		Archive( Archiver &arc );
+	void					respawnAtOriginalOrigin( Event *ev );
+
+	/* virtual */ void		Archive( Archiver &arc );
 };
 
 inline void Rune::Archive( Archiver &arc )
@@ -280,38 +280,38 @@ inline void Rune::Archive( Archiver &arc )
 
 class RuneDeathQuad : public Rune
 {
-	private:
+private:
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( RuneDeathQuad );
+public:
+	CLASS_PROTOTYPE( RuneDeathQuad );
 
-								RuneDeathQuad() {};
-								~RuneDeathQuad() {};
+	RuneDeathQuad() {};
+	~RuneDeathQuad() {};
 
-		/* virtual */ void		specificUpdate( float frameTime );
-		/* virtual */ float		getDamageDone( float damage, int meansOfDeath ) { return damage * 4.0f; };
-		/* virtual */ bool		canOwnerRegenerate( void ) { return false; }
+	/* virtual */ void		specificUpdate( float frameTime );
+	/* virtual */ float		getDamageDone( float damage, int meansOfDeath ) { Q_UNUSED(meansOfDeath); return damage * 4.0f; }
+	/* virtual */ bool		canOwnerRegenerate( void ) { return false; }
 
 };
 
 class RuneAmmoRegen : public Rune
 {
-	private:
-		float					_nextGiveTime;
+private:
+	float					_nextGiveTime;
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( RuneAmmoRegen );
+public:
+	CLASS_PROTOTYPE( RuneAmmoRegen );
 
-								RuneAmmoRegen();
-								~RuneAmmoRegen() {};
+	RuneAmmoRegen();
+	~RuneAmmoRegen() {};
 
-		/* virtual */ void		specificUpdate( float frameTime );
+	/* virtual */ void		specificUpdate( float frameTime );
 
-		/* virtual */ void		Archive( Archiver &arc );
+	/* virtual */ void		Archive( Archiver &arc );
 };
 
 inline void RuneAmmoRegen::Archive( Archiver &arc )
@@ -323,51 +323,51 @@ inline void RuneAmmoRegen::Archive( Archiver &arc )
 
 class RuneEmpathyShield : public Rune
 {
-	private:
+private:
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( RuneEmpathyShield );
+public:
+	CLASS_PROTOTYPE( RuneEmpathyShield );
 
-								RuneEmpathyShield() {};
-								~RuneEmpathyShield() {};
+	RuneEmpathyShield() {};
+	~RuneEmpathyShield() {};
 
-		/* virtual */  float	getDamageTaken( Entity *attacker, float damage, int meansOfDeath );
+	/* virtual */  float	getDamageTaken( Entity *attacker, float damage, int meansOfDeath );
 };
 
 class RuneArmorPiercing : public Rune
 {
-	private:
+private:
 
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( RuneArmorPiercing );
+public:
+	CLASS_PROTOTYPE( RuneArmorPiercing );
 
-								RuneArmorPiercing() {};
-								~RuneArmorPiercing() {};
+	RuneArmorPiercing() {};
+	~RuneArmorPiercing() {};
 
-		/* virtual */ meansOfDeath_t	changetMeansOfDeath( meansOfDeath_t meansOfDeath ) { return MOD_ARMOR_PIERCING; };
+	/* virtual */ meansOfDeath_t	changetMeansOfDeath( meansOfDeath_t meansOfDeath ) {  Q_UNUSED(meansOfDeath); return MOD_ARMOR_PIERCING; }
 };
 
 class HoldableItem : public PowerupBase
 {
-	protected:
+protected:
 
-	public:
-		CLASS_PROTOTYPE( HoldableItem );
+public:
+	CLASS_PROTOTYPE( HoldableItem );
 
-								HoldableItem();
-		virtual					~HoldableItem() {}
+	HoldableItem();
+	virtual					~HoldableItem() {}
 
-		virtual bool			use( void ) { return true; }
+	virtual bool			use( void ) { return true; }
 
-		/* virtual */ void		givePlayerItem( Player *player );
+	/* virtual */ void		givePlayerItem( Player *player );
 
-		static HoldableItem	*createHoldableItem( const str &className, const str &modelName, Sentient *sentient );
+	static HoldableItem	*createHoldableItem( const str &className, const str &modelName, Sentient *sentient );
 
-		/* virtual */ void		cacheStrings( void );
+	/* virtual */ void		cacheStrings( void );
 };
 
 class HoldableItemHealth : public HoldableItem
@@ -375,8 +375,8 @@ class HoldableItemHealth : public HoldableItem
 public:
 	CLASS_PROTOTYPE( HoldableItemHealth );
 
-								HoldableItemHealth() {};
-								~HoldableItemHealth() {};
+	HoldableItemHealth() {};
+	~HoldableItemHealth() {};
 
 	/* virtual */ bool			use( void );
 };
@@ -386,8 +386,8 @@ class HoldableItemProtection : public HoldableItem
 public:
 	CLASS_PROTOTYPE( HoldableItemProtection );
 
-								HoldableItemProtection() {};
-								~HoldableItemProtection() {};
+	HoldableItemProtection() {};
+	~HoldableItemProtection() {};
 
 	/* virtual */ bool			use( void );
 };
@@ -397,8 +397,8 @@ class HoldableItemTransporter : public HoldableItem
 public:
 	CLASS_PROTOTYPE( HoldableItemTransporter );
 
-								HoldableItemTransporter() {};
-								~HoldableItemTransporter() {};
+	HoldableItemTransporter() {};
+	~HoldableItemTransporter() {};
 
 	/* virtual */ bool			use( void );
 };
@@ -419,8 +419,8 @@ private:
 public:
 	CLASS_PROTOTYPE( HoldableItemExplosive );
 
-								HoldableItemExplosive();
-								~HoldableItemExplosive();
+	HoldableItemExplosive();
+	~HoldableItemExplosive();
 
 	/* virtual */ bool			use( void );
 	/* virtual */ void			specificUpdate( float frameTime );

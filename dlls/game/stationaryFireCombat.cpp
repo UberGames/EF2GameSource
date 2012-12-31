@@ -101,7 +101,7 @@ void StationaryFireCombat::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void StationaryFireCombat::AnimDone( Event *ev )
+void StationaryFireCombat::AnimDone( Event * )
 {
 	_animDone = true;
 }
@@ -135,7 +135,7 @@ void StationaryFireCombat::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t StationaryFireCombat::Evaluate( Actor &self )
+BehaviorReturnCode_t StationaryFireCombat::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 
@@ -250,7 +250,7 @@ BehaviorReturnCode_t StationaryFireCombat::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void StationaryFireCombat::End(Actor &self)
+void StationaryFireCombat::End(Actor &)
 { 
 	if ( !_self )
 		return;
@@ -508,6 +508,7 @@ BehaviorReturnCode_t StationaryFireCombat::evaluateStatePreFire()
 
 void StationaryFireCombat::failureStatePreFire( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 void StationaryFireCombat::setupStatePostFire()
@@ -528,6 +529,7 @@ BehaviorReturnCode_t StationaryFireCombat::evaluateStatePostFire()
 
 void StationaryFireCombat::failureStatePostFire( const str &failureReason )
 {
+	Q_UNUSED(failureReason);
 }
 
 //--------------------------------------------------------------

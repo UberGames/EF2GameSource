@@ -107,7 +107,7 @@ void SnipeEnemy::SetArgs( Event *ev )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void SnipeEnemy::AnimDone( Event *ev )
+void SnipeEnemy::AnimDone( Event * )
 {
 	_animDone = true;
 }
@@ -145,7 +145,7 @@ void SnipeEnemy::Begin( Actor &self )
 //
 // Returns:     BehaviorReturnCode_t 
 //--------------------------------------------------------------
-BehaviorReturnCode_t SnipeEnemy::Evaluate( Actor &self )
+BehaviorReturnCode_t SnipeEnemy::Evaluate( Actor & )
 {
 	BehaviorReturnCode_t stateResult;
 
@@ -259,7 +259,7 @@ BehaviorReturnCode_t SnipeEnemy::Evaluate( Actor &self )
 //
 // Returns:     None
 //--------------------------------------------------------------
-void SnipeEnemy::End(Actor &self)
+void SnipeEnemy::End(Actor &)
 { 
 	if ( !_self )
 		return;
@@ -734,7 +734,7 @@ BehaviorReturnCode_t SnipeEnemy::evaluateStatePreFire()
 //--------------------------------------------------------------
 void SnipeEnemy::failureStatePreFire( const str& failureReason )
 {
-
+	Q_UNUSED(failureReason);
 }
 
 
@@ -851,6 +851,6 @@ BehaviorReturnCode_t SnipeEnemy::evaluateStatePostFire()
 //--------------------------------------------------------------
 void SnipeEnemy::failureStatePostFire( const str& failureReason )
 {
-
+	Q_UNUSED(failureReason);
 }
 

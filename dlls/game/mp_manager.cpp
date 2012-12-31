@@ -1361,6 +1361,9 @@ void MultiplayerManager::playerFired( Player *attackingPlayer )
 
 float MultiplayerManager::getModifiedKnockback( Player *damagedPlayer, Player *attackingPlayer, float knockback )
 {
+	Q_UNUSED(attackingPlayer);
+	Q_UNUSED(damagedPlayer);
+
 	if ( !_inMultiplayerGame )
 		return knockback;
 

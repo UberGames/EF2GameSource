@@ -263,6 +263,7 @@ EntityIsChatting
 ==================
 */
 qboolean EntityIsChatting(aas_entityinfo_t *entinfo) {
+	Q_UNUSED(entinfo);
 // BOTTODO
 //	if (entinfo->flags & EF_TALK) {
 //		return qtrue;
@@ -277,6 +278,7 @@ EntityHasQuad
 ==================
 */
 qboolean EntityHasQuad(aas_entityinfo_t *entinfo) {
+	Q_UNUSED(entinfo);
 /* BOTTODO 
 	if (entinfo->powerups & (1 << PW_QUAD)) {
 		return qtrue;
@@ -292,6 +294,7 @@ EntityHasKamikze
 ==================
 */
 qboolean EntityHasKamikaze(aas_entityinfo_t *entinfo) {
+	Q_UNUSED(entinfo);
 /* FIXME
 	if (entinfo->flags & EF_KAMIKAZE) {
 		return qtrue;
@@ -1158,6 +1161,7 @@ BotObeliskRetreatGoals
 ==================
 */
 void BotObeliskRetreatGoals(bot_state_t *bs) {
+	Q_UNUSED(bs);
 	//nothing special
 }
 
@@ -2177,6 +2181,7 @@ BotSetTeleportTime
 ==================
 */
 void BotSetTeleportTime(bot_state_t *bs) {
+	Q_UNUSED(bs);
 /* FIXME
 	if ((bs->cur_ps.eFlags ^ bs->last_eFlags) & EF_TELEPORT_BIT) {
 		bs->teleport_time = FloatTime();
@@ -2200,6 +2205,7 @@ BotIsObserver
 ==================
 */
 qboolean BotIsObserver(bot_state_t *bs) {
+	Q_UNUSED(bs);
 /*	char buf[MAX_INFO_STRING];
 	if (bs->cur_ps.pm_type == PM_SPECTATOR) return qtrue;
 	strncpy(buf,gi.getConfigstring(CS_PLAYERS+bs->client), sizeof(buf));
@@ -2213,6 +2219,7 @@ BotIntermission
 ==================
 */
 qboolean BotIntermission(bot_state_t *bs) {
+	Q_UNUSED(bs);
 	//NOTE: we shouldn't be looking at the game code...
 	if (level.intermissiontime) return qtrue;
 //	return (bs->cur_ps.pm_type == PM_FREEZE || bs->cur_ps.pm_type == PM_INTERMISSION); // FIXME
@@ -2490,6 +2497,7 @@ BotWantsToHelp
 ==================
 */
 int BotWantsToHelp(bot_state_t *bs) {
+	Q_UNUSED(bs);
 	return qtrue;
 }
 
@@ -4187,6 +4195,8 @@ int BotTriggerMultipleActivateGoal(bot_state_t *bs, int bspent, bot_activategoal
 	vec3_t start, end, mins, maxs, angles;
 	vec3_t origin, goalorigin;
 
+	Q_UNUSED(bs);
+
 	activategoal->shoot = qfalse;
 	VectorClear(activategoal->target);
 	//create a bot goal towards the trigger
@@ -4948,6 +4958,7 @@ BotCheckEvents
 ==================
 */
 void BotCheckEvents(bot_state_t *bs, entityState_t *state) {
+	Q_UNUSED(state); Q_UNUSED(bs);
 	// BOTTODO -- hook in our event system somehow?
 /*
 	int event;
@@ -5384,6 +5395,8 @@ void BotDeathmatchAI(bot_state_t *bs, float thinktime) {
 	char gender[144], name[144], buf[144];
 	char userinfo[MAX_INFO_STRING];
 	int i;
+
+	Q_UNUSED(thinktime);
 
 	//if the bot has just been setup
 	if (bs->setupcount > 0) {

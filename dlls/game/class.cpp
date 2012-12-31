@@ -460,7 +460,7 @@ Class::~Class()
 
 #ifdef GAME_DLL
 
-void Class::Archive( Archiver &arc )
+void Class::Archive( Archiver & )
 {
 }
 

@@ -88,7 +88,7 @@ void AnimatedTeleportToPosition::SetArgs( Event *ev )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void AnimatedTeleportToPosition::Begin( Actor &self )
+void AnimatedTeleportToPosition::Begin( Actor & )
 {
 	_state = ANIM_TELEPORT_BEGIN;
 }
@@ -211,7 +211,7 @@ BehaviorReturnCode_t AnimatedTeleportToPosition::Evaluate ( Actor &self )
 //
 // Returns:		None
 //--------------------------------------------------------------
-void AnimatedTeleportToPosition::End( Actor &self )
+void AnimatedTeleportToPosition::End( Actor & )
 {
 }
 

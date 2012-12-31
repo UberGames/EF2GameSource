@@ -429,6 +429,8 @@ void AwardSystem::awardTeamAward( AfterMatchTeamAwardType teamAward, const char 
 
 void AwardSystem::playerEventNotification( const char *eventName, const char *eventItemName, Player *eventPlayer )
 {
+	Q_UNUSED(eventName);
+
 	// See if we care about this player notification
 
 	if ( stricmp( eventName, "flag-captured" ) == 0 )
@@ -449,8 +451,9 @@ void AwardSystem::playerKilled( Player *killedPlayer, Player *attackingPlayer, E
 {
 	str weaponName;
 	int itemIndex;
-
 	MultiplayerPlayerAwardData *attackerAwardData;
+
+	Q_UNUSED(inflictor);
 
 	// Modify the killed player's stats
 
@@ -664,6 +667,9 @@ void AwardSystem::playerFired( Player *attackingPlayer )
 
 void AwardSystem::playerDamaged( Player *damagedPlayer, Player *attackingPlayer, float damage, int meansOfDeath )
 {
+	Q_UNUSED(meansOfDeath);
+	Q_UNUSED(damage);
+
 	if ( !attackingPlayer )
 		return;
 
