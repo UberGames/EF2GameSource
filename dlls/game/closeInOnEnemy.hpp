@@ -37,108 +37,99 @@ class CloseInOnEnemy;
 //
 // Method of Use:  Called From State Machine
 //--------------------------------------------------------------
-class CloseInOnEnemy : public Behavior
-{
+class CloseInOnEnemy : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:
-		typedef enum
-		{	
-			CLOSE_IN_ON_ENEMY_APPROACH,
-			CLOSE_IN_ON_ENEMY_SUCCESS,
-			CLOSE_IN_ON_ENEMY_FAILED
-		} closeInOnEnemyStates_t;
+	typedef enum {
+		CLOSE_IN_ON_ENEMY_APPROACH,
+		CLOSE_IN_ON_ENEMY_SUCCESS,
+		CLOSE_IN_ON_ENEMY_FAILED
+	} closeInOnEnemyStates_t;
 
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private: // Parameters
-		str							_anim;  
-		str							_torsoAnim;
-		float						_dist;
+	//-------------------------------------
+	// Public Interface
+	//-------------------------------------
+	CLASS_PROTOTYPE(CloseInOnEnemy);
+
+	CloseInOnEnemy();
+	~CloseInOnEnemy();
+
+	void SetArgs(Event* ev);
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+	virtual void Archive(Archiver& arc);
+
+	void setAnim(const str& animName);
+	void setTorsoAnim(const str& animName);
+	void setDist(float distance);
 
 	//-------------------------------------
 	// Internal Functionality
 	//-------------------------------------
 	protected:
-		void	transitionToState	( closeInOnEnemyStates_t state );
-		void	setInternalState	( closeInOnEnemyStates_t state , const str &stateName );
-		void	init				( Actor &self );
-		void	think				();
-		void	updateEnemy			();
-		void	setTorsoAnim		();	
+	void transitionToState(closeInOnEnemyStates_t state);
+	void setInternalState(closeInOnEnemyStates_t state, const str& stateName);
+	void init(Actor& self);
+	void think();
+	void updateEnemy();
+	void setTorsoAnim();
 
-		void					setupStateApproach		();
-		BehaviorReturnCode_t	evaluateStateApproach	();
-		void					failureStateApproach	( const str& failureReason );
+	void setupStateApproach();
+	BehaviorReturnCode_t evaluateStateApproach();
+	void failureStateApproach(const str& failureReason);
 
-	//-------------------------------------
-	// Public Interface
-	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( CloseInOnEnemy );
-
-												CloseInOnEnemy();
-											   ~CloseInOnEnemy();
-
-		void									SetArgs		( Event *ev     );      
-		void									Begin		( Actor &self   );		
-		BehaviorReturnCode_t					Evaluate	( Actor &self   );
-		void									End			( Actor &self   );
-		virtual void							Archive		( Archiver &arc );
-
-		void									setAnim		( const str &animName );
-		void									setTorsoAnim( const str &animName );
-		void									setDist		( float distance      );
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	str	_anim;
+	str	_torsoAnim;
+	float _dist;
 
 	//-------------------------------------
 	// Components
 	//-------------------------------------
-	private:      
-		GotoEntity								_chaseEnemy;
+	GotoEntity _chaseEnemy;
 
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private: 
-		closeInOnEnemyStates_t					_state;
-		EntityPtr								_currentEnemy;
-		Actor								   *_self;
+	closeInOnEnemyStates_t _state;
+	EntityPtr _currentEnemy;
+	Actor* _self;
 
 };
 
-inline void CloseInOnEnemy::setAnim( const str &animName )
-{
+inline void CloseInOnEnemy::setAnim(const str& animName) {
 	_anim = animName;
 }
 
-inline void CloseInOnEnemy::setTorsoAnim( const str &animName )
-{
+inline void CloseInOnEnemy::setTorsoAnim(const str& animName) {
 	_torsoAnim = animName;
 }
 
-inline void CloseInOnEnemy::setDist( float distance )
-{
+inline void CloseInOnEnemy::setDist(float distance) {
 	_dist = distance;
 }
 
-inline void CloseInOnEnemy::Archive( Archiver &arc	)
-{
-	Behavior::Archive( arc );	 
-   
-   // Archive Parameters
-	arc.ArchiveString ( &_anim );
-	arc.ArchiveString ( &_torsoAnim );
-	arc.ArchiveFloat  ( &_dist );
+inline void CloseInOnEnemy::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
-   // Archive Components
-	arc.ArchiveObject ( &_chaseEnemy );
+	// Archive Parameters
+	arc.ArchiveString(&_anim);
+	arc.ArchiveString(&_torsoAnim);
+	arc.ArchiveFloat(&_dist);
 
-   // Archive Member Variables
-	ArchiveEnum					( _state, closeInOnEnemyStates_t);
-	arc.ArchiveSafePointer		( &_currentEnemy				);
-	arc.ArchiveObjectPointer	( ( Class ** )&_self			);
-}  
+	// Archive Components
+	arc.ArchiveObject(&_chaseEnemy);
+
+	// Archive Member Variables
+	ArchiveEnum(_state, closeInOnEnemyStates_t);
+	arc.ArchiveSafePointer(&_currentEnemy);
+	arc.ArchiveObjectPointer((Class **)&_self);
+}
 
 #endif /* CLOSE_IN_ON_ENEMY_HPP */
