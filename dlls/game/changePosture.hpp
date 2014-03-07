@@ -37,91 +37,88 @@ class ChangePosture;
 //
 // Method of Use:  Called From State Machine
 //--------------------------------------------------------------
-class ChangePosture : public Behavior
-{
+class ChangePosture : public Behavior {
 	//------------------------------------
 	// States
 	//------------------------------------
 	public:
-		typedef enum
-		{	
-			CHANGE_POSTURE_SETUP,
-			CHANGE_POSTURE_CHANGE,
-			CHANGE_POSTURE_SUCCESS,
-			CHANGE_POSTURE_FAILED
-		} changePostureStates_t;
+	typedef enum {
+		CHANGE_POSTURE_SETUP,
+		CHANGE_POSTURE_CHANGE,
+		CHANGE_POSTURE_SUCCESS,
+		CHANGE_POSTURE_FAILED
+	} changePostureStates_t;
 
 	//------------------------------------
 	// Parameters
 	//------------------------------------
 	private: // Parameters
-		str							_posture;  
-		
+	str _posture;
+
 	//-------------------------------------
 	// Internal Functionality
 	//-------------------------------------
 	protected:
-		void	transitionToState	( changePostureStates_t state );
-		void	setInternalState	( changePostureStates_t state , const str &stateName );
-		void	init				();
-		void	think				();
-		
+	void transitionToState(changePostureStates_t state);
+	void setInternalState(changePostureStates_t state, const str& stateName);
+	void init();
+	void think();
 
-		void					setupStateSetup		();
-		BehaviorReturnCode_t	evaluateStateSetup	();
-		void					failureStateSetup	( const str& failureReason );
 
-		void					setupStateChange	();
-		BehaviorReturnCode_t	evaluateStateChange	();
-		void					failureStateChange	( const str& failureReason );
-		
+	void setupStateSetup();
+	BehaviorReturnCode_t evaluateStateSetup();
+	void failureStateSetup(const str& failureReason);
+
+	void setupStateChange();
+	BehaviorReturnCode_t evaluateStateChange();
+	void failureStateChange(const str& failureReason);
+
 
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
 	public:
-		CLASS_PROTOTYPE( ChangePosture );
+	CLASS_PROTOTYPE(ChangePosture);
 
-												ChangePosture();
-											   ~ChangePosture();
+	ChangePosture();
+	~ChangePosture();
 
-		void									SetArgs		( Event *ev     );      
-		void									PostureDone	( Event *ev		);
-		void									Begin		( Actor &self   );		
-		BehaviorReturnCode_t					Evaluate	( Actor &self   );
-		void									End			( Actor &self   );
-		virtual void							Archive		( Archiver &arc );
+	void SetArgs(Event* ev);
+	void PostureDone(Event* ev);
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+	virtual void Archive(Archiver& arc);
 
-		void									setPosture	( const str &postureName ) { _posture = postureName; }
+	void setPosture(const str& postureName) { _posture = postureName; }
 
 	//-------------------------------------
 	// Components
 	//-------------------------------------
-	
+
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private: 
-		changePostureStates_t					_state;
-		bool									_postureDone;
-		bool									_canChange;
+	private:
+	changePostureStates_t _state;
+	bool _postureDone;
+	bool _canChange;
 
 };
 
 
-inline void ChangePosture::Archive( Archiver &arc	)
-{
-	Behavior::Archive( arc );	 
-   
-   // Archive Parameters
-	arc.ArchiveString ( &_posture );
+inline void ChangePosture::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
-   // Archive Components
+	// Archive Parameters
+	arc.ArchiveString(&_posture);
 
-   // Archive Member Variables
-	ArchiveEnum					( _state, changePostureStates_t);
-	arc.ArchiveBool				( &_postureDone );
-	arc.ArchiveBool				( &_canChange );
-}  
+	// Archive Components
+
+	// Archive Member Variables
+	ArchiveEnum(_state, changePostureStates_t);
+	arc.ArchiveBool(&_postureDone);
+	arc.ArchiveBool(&_canChange);
+}
 
 #endif /* __CHANGE_POSTURE_HPP__ */
