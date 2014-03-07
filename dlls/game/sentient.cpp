@@ -4280,10 +4280,10 @@ void Sentient::CheckAnimations( Event * )
             }
 			else if ( !strnicmp( c, cs, strlen( cs ) ) ) // partial match
             {
-				int state_len = strlen( cs );
+				size_t state_len = strlen( cs );
 				
 				// Animation in tik file is longer than the state machine's anim
-				if ( (int)strlen( c ) > state_len )
+				if ( strlen( c ) > state_len )
 				{
 					if ( c[state_len] != '_' ) // If next character is an '_' then no match
 					{

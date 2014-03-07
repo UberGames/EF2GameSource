@@ -802,15 +802,15 @@ void Archiver::ArchiveString( str * string )
 
 Class * Archiver::ReadObject( void )
 {
-	ClassDef	*cls;
-	Class		*obj;
-	str		classname;
-	long		objstart;
-	long		endpos;
-	int      index;
-	size_t	size;
+	ClassDef* cls;
+	Class* obj;
+	str	classname;
+	size_t objstart;
+	size_t endpos;
+	int index;
+	size_t size;
 	qboolean isent;
-	int      type;
+	int type;
 	
 	CheckRead();
 	
@@ -865,11 +865,11 @@ Class * Archiver::ReadObject( void )
 	if ( !fileerror )
 	{
 		endpos = readfile.Pos();
-		if ( ( endpos - objstart ) > (long)size )
+		if ( (endpos - objstart) > size )
 		{
 			FileError( "Object read past end of object's data" );
 		}
-		else if ( ( endpos - objstart ) < (long)size )
+		else if ( (endpos - objstart) < size)
 		{
 			FileError( "Object didn't read entire data from file" );
 		}
@@ -893,8 +893,8 @@ void Archiver::ArchiveObject( Class *obj )
 	if ( archivemode == ARCHIVE_READ )
 	{
 		ClassDef	*cls;
-		long		objstart;
-		long		endpos;
+		size_t objstart;
+		size_t endpos;
 		int      type;
 		
 		CheckRead();
@@ -947,11 +947,11 @@ void Archiver::ArchiveObject( Class *obj )
 		if ( !fileerror )
 		{
 			endpos = readfile.Pos();
-			if ( ( endpos - objstart ) > (long)size )
+			if ( (endpos - objstart) > size)
 			{
 				FileError( "Object read past end of object's data" );
 			}
-			else if ( ( endpos - objstart ) < (long)size )
+			else if ( (endpos - objstart) < size)
 			{
 				FileError( "Object didn't read entire data from file" );
 			}

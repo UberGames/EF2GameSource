@@ -303,7 +303,7 @@ int BotGetPatrolWaypoints(bot_state_t *bs, bot_match_t *match) {
 	//
 	while(1) {
 		if (!gi.BotFindMatch(keyarea, &keyareamatch, MTCONTEXT_PATROLKEYAREA)) {
-			gi.EA_SayTeam(bs->client, (char*)"what do you say?");
+			gi.EA_SayTeam(bs->client, static_cast<char*>("what do you say?"));
 			BotFreeWaypoints(newpatrolpoints);
 			bs->patrolpoints = NULL;
 			return qfalse;
@@ -349,7 +349,7 @@ int BotGetPatrolWaypoints(bot_state_t *bs, bot_match_t *match) {
 	}
 	//
 	if (!newpatrolpoints || !newpatrolpoints->next) {
-		gi.EA_SayTeam(bs->client, (char*)"I need more key points to patrol\n");
+		gi.EA_SayTeam(bs->client, static_cast<char*>("I need more key points to patrol\n"));
 		BotFreeWaypoints(newpatrolpoints);
 		newpatrolpoints = NULL;
 		return qfalse;
@@ -1348,7 +1348,7 @@ void BotMatch_WhoIsTeamLeader(bot_state_t *bs, bot_match_t *match) {
 	ClientName(bs->client, netname, sizeof(netname));
 	//if this bot IS the team leader
 	if (!Q_stricmp(netname, bs->teamleader)) {
-		gi.EA_SayTeam(bs->client, (char*)"I'm the team leader\n");
+		gi.EA_SayTeam(bs->client, static_cast<char*>("I'm the team leader\n"));
 	}
 }
 
@@ -1369,74 +1369,74 @@ void BotMatch_WhatAreYouDoing(bot_state_t *bs, bot_match_t *match) {
 		case LTG_TEAMHELP:
 		{
 			EasyClientName(bs->teammate, netname, sizeof(netname));
-			BotAI_BotInitialChat(bs, (char*)"helping", netname, NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("helping"), netname, NULL);
 			break;
 		}
 		case LTG_TEAMACCOMPANY:
 		{
 			EasyClientName(bs->teammate, netname, sizeof(netname));
-			BotAI_BotInitialChat(bs, (char*)"accompanying", netname, NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("accompanying"), netname, NULL);
 			break;
 		}
 		case LTG_DEFENDKEYAREA:
 		{
 			gi.BotGoalName(bs->teamgoal.number, goalname, sizeof(goalname));
-			BotAI_BotInitialChat(bs, (char*)"defending", goalname, NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("defending"), goalname, NULL);
 			break;
 		}
 		case LTG_GETITEM:
 		{
 			gi.BotGoalName(bs->teamgoal.number, goalname, sizeof(goalname));
-			BotAI_BotInitialChat(bs, (char*)"gettingitem", goalname, NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("gettingitem"), goalname, NULL);
 			break;
 		}
 		case LTG_KILL:
 		{
 			ClientName(bs->teamgoal.entitynum, netname, sizeof(netname));
-			BotAI_BotInitialChat(bs, (char*)"killing", netname, NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("killing"), netname, NULL);
 			break;
 		}
 		case LTG_CAMP:
 		case LTG_CAMPORDER:
 		{
-			BotAI_BotInitialChat(bs, (char*)"camping", NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("camping"), NULL);
 			break;
 		}
 		case LTG_PATROL:
 		{
-			BotAI_BotInitialChat(bs, (char*)"patrolling", NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("patrolling"), NULL);
 			break;
 		}
 		case LTG_GETFLAG:
 		{
-			BotAI_BotInitialChat(bs, (char*)"capturingflag", NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("capturingflag"), NULL);
 			break;
 		}
 		case LTG_RUSHBASE:
 		{
-			BotAI_BotInitialChat(bs, (char*)"rushingbase", NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("rushingbase"), NULL);
 			break;
 		}
 		case LTG_RETURNFLAG:
 		{
-			BotAI_BotInitialChat(bs, (char*)"returningflag", NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("returningflag"), NULL);
 			break;
 		}
 #ifdef MISSIONPACK
 		case LTG_ATTACKENEMYBASE:
 		{
-			BotAI_BotInitialChat(bs, (char*)"attackingenemybase", NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("attackingenemybase"), NULL);
 			break;
 		}
 		case LTG_HARVEST:
 		{
-			BotAI_BotInitialChat(bs, (char*)"harvesting", NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("harvesting"), NULL);
 			break;
 		}
 #endif
 		default:
 		{
-			BotAI_BotInitialChat(bs, (char*)"roaming", NULL);
+			BotAI_BotInitialChat(bs, static_cast<char*>("roaming"), NULL);
 			break;
 		}
 	}
@@ -1477,7 +1477,7 @@ float BotNearestVisibleItem(bot_state_t *bs, const char *itemname, bot_goal_t *g
 	bestdist = 999999;
 	i = -1;
 	do {
-		i = gi.BotGetLevelItemGoal(i, (char*)itemname, &tmpgoal);
+		i = gi.BotGetLevelItemGoal(i, const_cast<char*>(itemname), &tmpgoal);
 		gi.BotGoalName(tmpgoal.number, name, sizeof(name));
 		if (Q_stricmp(itemname, name) != 0)
 			continue;
@@ -1891,12 +1891,12 @@ int BotMatchMessage(bot_state_t *bs, char *message) {
 		}
 		case MSG_CREATENEWFORMATION:	//start the creation of a new formation
 		{
-			gi.EA_SayTeam(bs->client, (char*)"the part of my brain to create formations has been damaged");
+			gi.EA_SayTeam(bs->client, static_cast<char*>("the part of my brain to create formations has been damaged"));
 			break;
 		}
 		case MSG_FORMATIONPOSITION:		//tell someone his/her position in the formation
 		{
-			gi.EA_SayTeam(bs->client, (char*)"the part of my brain to create formations has been damaged");
+			gi.EA_SayTeam(bs->client, static_cast<char*>("the part of my brain to create formations has been damaged"));
 			break;
 		}
 		case MSG_FORMATIONSPACE:		//set the formation space

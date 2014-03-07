@@ -608,10 +608,10 @@ int BotChat_Death(bot_state_t *bs) {
 			BotAI_BotInitialChat( bs, meansOfDeathName, enemyName, BotWeaponNameForMeansOfDeath( bs->botdeathtype ), NULL );
 		}
 		else if ( ( random() < gi.Characteristic_BFloat( bs->character, CHARACTERISTIC_CHAT_INSULT, 0, 1 ) ) &&
-				  ( gi.BotNumInitialChats( bs->cs, (char*)"death_insult" ) ) ) {
+				  ( gi.BotNumInitialChats( bs->cs, static_cast<char*>("death_insult")) ) ) {
 			BotAI_BotInitialChat(bs, "death_insult", enemyName, BotWeaponNameForMeansOfDeath( bs->botdeathtype ), NULL);
 		}
-		else if ( gi.BotNumInitialChats( bs->cs, (char*)"death_praise" ) ) {
+		else if ( gi.BotNumInitialChats( bs->cs, static_cast<char*>("death_praise")) ) {
 			BotAI_BotInitialChat(bs, "death_praise", enemyName, BotWeaponNameForMeansOfDeath( bs->botdeathtype ), NULL);
 		}
 
@@ -736,10 +736,10 @@ int BotChat_Kill(bot_state_t *bs) {
 			BotAI_BotInitialChat( bs, meansOfDeathName, name, NULL );
 		}
 		else if ( ( random() < gi.Characteristic_BFloat( bs->character, CHARACTERISTIC_CHAT_INSULT, 0, 1 ) ) &&
-				  ( gi.BotNumInitialChats( bs->cs, (char*)"kill_insult" ) ) ) {
+				  ( gi.BotNumInitialChats( bs->cs, static_cast<char*>("kill_insult")) ) ) {
 			BotAI_BotInitialChat(bs, "kill_insult", name, NULL);
 		}
-		else if ( gi.BotNumInitialChats( bs->cs, (char*)"kill_praise" ) ) {
+		else if ( gi.BotNumInitialChats( bs->cs, static_cast<char*>("kill_praise")) ) {
 			BotAI_BotInitialChat(bs, "kill_praise", name, NULL);
 		}
 
@@ -1036,7 +1036,7 @@ void BotChatTest(bot_state_t *bs) {
 //	char *weap;
 	int num, i;
 	
-	num = gi.BotNumInitialChats(bs->cs, (char*)"game_enter");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("game_enter"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "game_enter",
@@ -1048,7 +1048,7 @@ void BotChatTest(bot_state_t *bs) {
 					NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"game_exit");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("game_exit"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "game_exit",
@@ -1060,7 +1060,7 @@ void BotChatTest(bot_state_t *bs) {
 					NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"level_start");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("level_start"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "level_start",
@@ -1068,7 +1068,7 @@ void BotChatTest(bot_state_t *bs) {
 					NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"level_end_victory");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("level_end_victory"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "level_end_victory",
@@ -1080,7 +1080,7 @@ void BotChatTest(bot_state_t *bs) {
 				NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"level_end_lose");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("level_end_lose"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "level_end_lose",
@@ -1092,7 +1092,7 @@ void BotChatTest(bot_state_t *bs) {
 				NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"level_end");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("level_end"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "level_end",
@@ -1105,44 +1105,44 @@ void BotChatTest(bot_state_t *bs) {
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
 	EasyClientName(bs->lastkilledby, name, sizeof(name));
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_drown");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_drown"));
 	for (i = 0; i < num; i++)
 	{
 		//
 		BotAI_BotInitialChat(bs, "death_drown", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_slime");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_slime"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_slime", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_lava");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_lava"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_lava", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_cratered");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_cratered"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_cratered", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_suicide");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_suicide"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_suicide", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_telefrag");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_telefrag"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_telefrag", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_gauntlet");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_gauntlet"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_gauntlet",
@@ -1151,7 +1151,7 @@ void BotChatTest(bot_state_t *bs) {
 				NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_rail");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_rail"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_rail",
@@ -1160,7 +1160,7 @@ void BotChatTest(bot_state_t *bs) {
 				NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_bfg");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_bfg"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_bfg",
@@ -1169,7 +1169,7 @@ void BotChatTest(bot_state_t *bs) {
 				NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_insult");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_insult"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_insult",
@@ -1178,7 +1178,7 @@ void BotChatTest(bot_state_t *bs) {
 					NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"death_praise");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("death_praise"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "death_praise",
@@ -1190,38 +1190,38 @@ void BotChatTest(bot_state_t *bs) {
 	//
 	EasyClientName(bs->lastkilledplayer, name, 32);
 	//
-	num = gi.BotNumInitialChats(bs->cs, (char*)"kill_gauntlet");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("kill_gauntlet"));
 	for (i = 0; i < num; i++)
 	{
 		//
 		BotAI_BotInitialChat(bs, "kill_gauntlet", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"kill_rail");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("kill_rail"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "kill_rail", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"kill_telefrag");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("kill_telefrag"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "kill_telefrag", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"kill_insult");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("kill_insult"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "kill_insult", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"kill_praise");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("kill_praise"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "kill_praise", name, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"enemy_suicide");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("enemy_suicide"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "enemy_suicide", name, NULL);
@@ -1230,22 +1230,22 @@ void BotChatTest(bot_state_t *bs) {
 /*
 	ClientName(g_entities[bs->client].client->lasthurt_client, name, sizeof(name));
 	weap = BotWeaponNameForMeansOfDeath(g_entities[bs->client].client->lasthurt_client);
-	num = gi.BotNumInitialChats(bs->cs, (char*)"hit_talking");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("hit_talking"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "hit_talking", name, weap, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"hit_nodeath");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("hit_nodeath"));
 	for (i = 0; i < num; i++)
 	{
-		BotAI_BotInitialChat(bs, (char*)"hit_nodeath", name, weap, NULL);
+		BotAI_BotInitialChat(bs, static_cast<char*>("hit_nodeath"), name, weap, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
 	num = gi.BotNumInitialChats(bs->cs, "hit_nokill");
 	for (i = 0; i < num; i++)
 	{
-		BotAI_BotInitialChat(bs, (char*)"hit_nokill", name, weap, NULL);
+		BotAI_BotInitialChat(bs, static_cast<char*>("hit_nokill"), name, weap, NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
 */
@@ -1257,7 +1257,7 @@ void BotChatTest(bot_state_t *bs) {
 		EasyClientName(bs->lastkilledplayer, name, sizeof(name));
 	}
 	//
-	num = gi.BotNumInitialChats(bs->cs, (char*)"random_misc");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("random_misc"));
 	for (i = 0; i < num; i++)
 	{
 		//
@@ -1271,7 +1271,7 @@ void BotChatTest(bot_state_t *bs) {
 					NULL);
 		gi.BotEnterChat(bs->cs, 0, CHAT_ALL);
 	}
-	num = gi.BotNumInitialChats(bs->cs, (char*)"random_insult");
+	num = gi.BotNumInitialChats(bs->cs, static_cast<char*>("random_insult"));
 	for (i = 0; i < num; i++)
 	{
 		BotAI_BotInitialChat(bs, "random_insult",

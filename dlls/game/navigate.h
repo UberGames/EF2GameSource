@@ -698,13 +698,13 @@ void PathFinder<Heuristic>::PropagateDown
 	)
 
 	{
-	int			c;
-	unsigned		g;
-	unsigned		movecost;
-	PathNode		*child;
-	PathNode		*parent;
-	PathNodeConnection	*path;
-	int			n;
+	int	c;
+	int	g;
+	int	movecost;
+	PathNode* child;
+	PathNode* parent;
+	PathNodeConnection* path;
+	int	n;
 
 	g = node->g;
 	n = node->NumberOfConnections();
@@ -714,9 +714,9 @@ void PathFinder<Heuristic>::PropagateDown
 		child = thePathManager.GetNode( path->targetNodeIndex );
 
 		movecost = g + heuristic.cost( node, c );
-		if ( (long)movecost < child->g )
+		if ( movecost < child->g )
 			{
-			child->g = (long)movecost;
+			child->g = movecost;
 			child->f = child->g + child->h;
 			child->Parent = node;
 
@@ -739,9 +739,9 @@ void PathFinder<Heuristic>::PropagateDown
 			// we stop the propagation when the g value of the child is equal or better than
 			// the cost we're propagating
 			movecost = parent->g + path->moveCost;
-			if ( (long)movecost < child->g )
+			if ( movecost < child->g )
     			{
-				child->g = (long)movecost;
+				child->g = movecost;
 				child->f = child->g + child->h;
     			child->Parent = parent;
     			stack.Push( child );

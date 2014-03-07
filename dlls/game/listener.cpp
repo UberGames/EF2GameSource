@@ -615,7 +615,7 @@ void EventArgDef::Setup( const char *eventName, const char *argName, const char 
 		while( 1 )
 		{
 			// find opening '['
-			tokptr = (char *)strchr( ptr, '[' );
+			tokptr = const_cast<char*>(strchr( ptr, '[' ));
 			if ( !tokptr )
             {
 				break;
@@ -663,7 +663,7 @@ void EventArgDef::Setup( const char *eventName, const char *argName, const char 
 				qboolean second;
 				// one or two parameters
 				// see if there is anything behind the ','
-				if ( (int)strlen( scratch ) > ( tokptr - scratch + 1) )
+				if ( strlen( scratch ) > static_cast<size_t>(tokptr - scratch + 1) )
 					second = true;
 				else
 					second = false;

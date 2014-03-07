@@ -110,7 +110,7 @@ bool ModeTeamBase::isEndOfMatch( void )
 	for (int idx=1; idx <= _teamList.NumObjects(); idx++) 
 	{
 		Team* team = _teamList.ObjectAt(idx);
-		if ((int)(team->getDeaths()) > getPointLimit())
+		if (static_cast<int>(team->getDeaths()) > getPointLimit())
 		{
 			multiplayerManager.centerPrintAllClients(va("$$%s$$ $$TeamLoses$$\n", team->getName().c_str() ), CENTERPRINT_IMPORTANCE_NORMAL );
 

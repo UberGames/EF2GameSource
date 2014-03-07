@@ -498,7 +498,7 @@ void Level::setSkill( int value )
 {
 	int skill_level;
 	
-	skill_level = (int) floor( (float)value );
+	skill_level = static_cast<int>(floor(static_cast<float>(value)));
 	skill_level = bound( skill_level, 0, 3 );
 	
 	gi.cvar_set( "skill", va( "%d", skill_level ) );
@@ -541,7 +541,7 @@ void Level::SpawnEntities( const char *themapname, const char *entities, int lev
 	// Init the level variables
 	Init();
 	
-	spawnpos = (char *)strchr( themapname, '$' );
+	spawnpos = const_cast<char*>(strchr( themapname, '$' ));
 	if ( spawnpos )
 	{
 		mapname = str( themapname, 0, spawnpos - themapname );
