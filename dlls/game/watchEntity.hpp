@@ -39,70 +39,67 @@ class WatchEntity;
 //
 // Method of Use:  Called From State Machine
 //--------------------------------------------------------------
-class WatchEntity : public Behavior
-	{
+class WatchEntity : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:  
-		typedef enum
-		{
-			WATCH_HOLD,
-			WATCH_ROTATE,
-			WATCH_SUCCESS,
-			WATCH_FAILED
-		} watchEntityStates_t;
-
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private:
-		float							_time;
-		float							_turnspeed;
-		float							_oldTurnSpeed;
-		str								_anim;
-		EntityPtr						_ent;
-		unsigned int					_waitForAnim;
-		str								_holdAnim;
-		bool							_forcePlayer;
-
-	//-------------------------------------
-	// Internal Functionality
-	//-------------------------------------
-	protected:
-		void	transitionToState	( watchEntityStates_t state );
-		void	setInternalState	( watchEntityStates_t state , const str &stateName );
-		void	init				( Actor &self );
-		void	think				();				
-		
-		
-		void							setupStateRotate			();
-		BehaviorReturnCode_t			evaluateStateRotate			( Actor &self );
-		void							rotateFailed				( Actor &self );
-
-		void							setupStateHold				();
-		BehaviorReturnCode_t			evaluateStateHold			( Actor &self );
-		void							holdFailed					( Actor &self );
+	typedef enum {
+		WATCH_HOLD,
+		WATCH_ROTATE,
+		WATCH_SUCCESS,
+		WATCH_FAILED
+	} watchEntityStates_t;
 
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( WatchEntity );
+	CLASS_PROTOTYPE(WatchEntity);
 
-										WatchEntity();
-									   ~WatchEntity();
+	WatchEntity();
+	~WatchEntity();
 
-		void							SetArgs					( Event *ev );      
-		void							AnimDone				( Event *ev );
+	void SetArgs(Event* ev);
+	void AnimDone(Event* ev);
 
-		void							Begin					( Actor &self );		
-		BehaviorReturnCode_t			Evaluate				( Actor &self );
-		void							End						( Actor &self );
-		
-		void							SetEntity				( Entity *ent );
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
 
-		virtual void					Archive  ( Archiver &arc );
+	void SetEntity(Entity* ent);
+
+	virtual void Archive(Archiver& arc);
+
+	protected:
+	//-------------------------------------
+	// Internal Functionality
+	//-------------------------------------
+	void transitionToState(watchEntityStates_t state);
+	void setInternalState(watchEntityStates_t state, const str& stateName);
+	void init(Actor& self);
+	void think();
+
+
+	void setupStateRotate();
+	BehaviorReturnCode_t evaluateStateRotate(Actor& self);
+	void rotateFailed(Actor &self);
+
+	void setupStateHold();
+	BehaviorReturnCode_t evaluateStateHold(Actor& self);
+	void holdFailed(Actor &self);
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	float _time;
+	float _turnspeed;
+	float _oldTurnSpeed;
+	str _anim;
+	EntityPtr _ent;
+	unsigned int _waitForAnim;
+	str _holdAnim;
+	bool _forcePlayer;
 
 	//-------------------------------------
 	// Components
@@ -111,35 +108,32 @@ class WatchEntity : public Behavior
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private: 
-		unsigned int					_state;	
-		unsigned int					_animDone;
-		
-	};
+	unsigned int _state;
+	unsigned int _animDone;
+};
 
-inline void WatchEntity::SetEntity( Entity *ent )
-{
-	if ( ent )
+inline void WatchEntity::SetEntity(Entity* ent) {
+	if (ent) {
 		_ent = ent;
+	}
 }
 
-inline void WatchEntity::Archive( Archiver &arc	)
-{
-	Behavior::Archive ( arc );	     
+inline void WatchEntity::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	// Archive Parameters
-	arc.ArchiveFloat			( &_time );
-	arc.ArchiveFloat			( &_turnspeed );
-	arc.ArchiveFloat			( &_oldTurnSpeed );
-	arc.ArchiveString			( &_anim );
-	arc.ArchiveSafePointer		( &_ent );
-	arc.ArchiveUnsigned			( &_waitForAnim );
-	arc.ArchiveString			( &_holdAnim );
-	arc.ArchiveBool				( &_forcePlayer );
+	arc.ArchiveFloat(&_time);
+	arc.ArchiveFloat(&_turnspeed);
+	arc.ArchiveFloat(&_oldTurnSpeed);
+	arc.ArchiveString(&_anim);
+	arc.ArchiveSafePointer(&_ent);
+	arc.ArchiveUnsigned(&_waitForAnim);
+	arc.ArchiveString(&_holdAnim);
+	arc.ArchiveBool(&_forcePlayer);
 
 	// Archive Member Vars      
-	arc.ArchiveUnsigned			( &_state					);	
-	arc.ArchiveUnsigned			( &_animDone				);	
+	arc.ArchiveUnsigned(&_state);
+	arc.ArchiveUnsigned(&_animDone);
 }
 
 
