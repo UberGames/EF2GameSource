@@ -41,89 +41,82 @@ class RotateToEntity;
 //
 // Method of Use: State machine or called from another behavior
 //--------------------------------------------------------------
-class DoAttack : public Behavior
-	{
-	public:  // States
-		typedef enum
-		{
+class DoAttack : public Behavior {
+	public:  
+	// States
+	typedef enum {
 		ATTACK_STATE_SETUP,
 		ATTACK_STATE_ROTATE,
 		ATTACK_STATE_START_ANIM,
 		ATTACK_STATE_ANIMATING,
 		ATTACK_STATE_COMPLETE,
-		ATTACK_STATE_FAILED   
-		} attackStates_t;
+		ATTACK_STATE_FAILED
+	} attackStates_t;
 
-	private: // Parameters
-		str								_anim;
-		float							_turnspeed; 
-		bool							_forceAttack;
-		str								_rotateAnim;
-      
+	CLASS_PROTOTYPE(DoAttack);
+
+	void SetArgs(Event* ev);
+	void AnimDone(Event* ev);
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+	virtual void Archive(Archiver& arc);
+
+	void SetAnim(const str& animName);
+	void SetTurnSpeed(float turnSpeed);
+	void SetForceAttack(bool force);
+	void SetRotateAnim(const str& animName);
+
 	protected:
-		void							_setupRotate    ( Actor &self );
-		void							_rotate         ( Actor &self );
-		void							_playAttackAnim ( Actor &self );
+	void _setupRotate(Actor& self);
+	void _rotate(Actor& self);
+	void _playAttackAnim(Actor& self);
 
-		bool							_canAttack      ( Actor &self );
-		void							init			( Actor &self );
-
-   public:
-      CLASS_PROTOTYPE( DoAttack );
-
-		void							SetArgs  ( Event *ev     );      
-		void							AnimDone ( Event *ev     );
-		void							Begin    ( Actor &self   );		
-		BehaviorReturnCode_t			Evaluate ( Actor &self   );
-		void							End      ( Actor &self   );
-		virtual void					Archive  ( Archiver &arc );
-
-		void							SetAnim      ( const str &animName );
-		void							SetTurnSpeed ( float turnSpeed     );
-		void							SetForceAttack ( bool force        );
-		void							SetRotateAnim ( const str &animName );
+	bool _canAttack(Actor& self);
+	void init(Actor& self);
 
 	private:
-		unsigned int                     _state;
-		RotateToEntity                   _rotateBehavior;	  
-	};
+	// Parameters
+	str _anim;
+	float _turnspeed;
+	bool _forceAttack;
+	str _rotateAnim;
+
+	unsigned int _state;
+	RotateToEntity _rotateBehavior;
+};
 
 
-inline void DoAttack::SetAnim( const str &animName )
-{
+inline void DoAttack::SetAnim(const str& animName) {
 	_anim = animName;
 }
 
-inline void DoAttack::SetTurnSpeed( float turnSpeed )
-{
+inline void DoAttack::SetTurnSpeed(float turnSpeed) {
 	_turnspeed = turnSpeed;
 }
 
-inline void DoAttack::SetForceAttack( bool force )
-{
+inline void DoAttack::SetForceAttack(bool force) {
 	_forceAttack = force;
 }
 
-inline void DoAttack::SetRotateAnim( const str &animName )
-{
+inline void DoAttack::SetRotateAnim(const str& animName) {
 	_rotateAnim = animName;
 }
 
-inline void DoAttack::Archive( Archiver &arc	)
-{
-	Behavior::Archive( arc );	    
+inline void DoAttack::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
-   // Archive Parameters
-	arc.ArchiveString		( &_anim            );
-	arc.ArchiveFloat		( &_turnspeed       );
-	arc.ArchiveBool			( &_forceAttack     );
-	arc.ArchiveString		( &_rotateAnim      );
+	// Archive Parameters
+	arc.ArchiveString(&_anim);
+	arc.ArchiveFloat(&_turnspeed);
+	arc.ArchiveBool(&_forceAttack);
+	arc.ArchiveString(&_rotateAnim);
 
-   // Archive Components
+	// Archive Components
 
-   // Archive Member Vars
-	arc.ArchiveUnsigned		( &_state          );
-	arc.ArchiveObject		( &_rotateBehavior );	
+	// Archive Member Vars
+	arc.ArchiveUnsigned(&_state);
+	arc.ArchiveObject(&_rotateBehavior);
 }
 
 #endif /* __DO_ATTACK_H__ */
