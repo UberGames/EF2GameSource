@@ -36,87 +36,76 @@ class RotateToEntity;
 //
 // Method of Use: Should be aggregated by other behaviors
 //--------------------------------------------------------------
-class RotateToEntity : public Behavior
-	{
-
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private:      
-		float							_turnspeed;
-		EntityPtr						_ent;
-		str								_anim;
-		str								_entityType;
-
+class RotateToEntity : public Behavior {
+	public:
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( RotateToEntity );
+	CLASS_PROTOTYPE(RotateToEntity);
 
-										RotateToEntity();
-									   ~RotateToEntity();
+	RotateToEntity();
+	~RotateToEntity();
 
+	void SetArgs(Event* ev);
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+	virtual void Archive(Archiver& arc);
 
-		void							SetArgs      ( Event *ev                          );      
-		void							Begin        ( Actor &self                        );		
-		BehaviorReturnCode_t			Evaluate     ( Actor &self                        );
-		void							End          ( Actor &self                        );
-		virtual void					Archive      ( Archiver &arc                      );
-		
-		void							SetAnim      ( const str& animName                );
-		void							SetTurnSpeed ( float turnSpeed                    );
-		void							SetEntity    ( Entity *entity                     );      
-		void							SetEntityType( const str &ent					  );
+	void SetAnim(const str& animName);
+	void SetTurnSpeed(float turnSpeed);
+	void SetEntity(Entity* entity);
+	void SetEntityType(const str& ent);
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	float _turnspeed;
+	EntityPtr _ent;
+	str _anim;
+	str _entityType;
 
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private:		
-		float							_oldTurnSpeed;
-		
-	
-	};
+	float _oldTurnSpeed;
+};
 
-inline void RotateToEntity::SetTurnSpeed( float turnSpeed )
-	{
+inline void RotateToEntity::SetTurnSpeed(float turnSpeed) {
 	_turnspeed = turnSpeed;
-	}
+}
 
 
-inline void RotateToEntity::SetEntity( Entity *entity )
-	{
-	if ( entity )
+inline void RotateToEntity::SetEntity(Entity* entity) {
+	if (entity)
 		_ent = entity;
-	}
+}
 
-inline void RotateToEntity::SetAnim( const str &animName )
-	{
-	_anim = animName;   
-	}
+inline void RotateToEntity::SetAnim(const str& animName) {
+	_anim = animName;
+}
 
-inline void RotateToEntity::SetEntityType( const str &ent )
-	{
-		if  ( ent == "player" || ent == "enemy" )
-			_entityType = ent;
-	}
+inline void RotateToEntity::SetEntityType(const str& ent) {
+	if (ent == "player" || ent == "enemy")
+		_entityType = ent;
+}
 
-inline void RotateToEntity::Archive( Archiver &arc	)
-{
-	Behavior::Archive( arc );
+inline void RotateToEntity::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	//-------------------------------------
 	// Archive Parameters
 	//-------------------------------------
-	arc.ArchiveFloat       ( &_turnspeed );
-	arc.ArchiveSafePointer ( &_ent       );
-	arc.ArchiveString      ( &_anim      );
-	arc.ArchiveString( &_entityType );
+	arc.ArchiveFloat(&_turnspeed);
+	arc.ArchiveSafePointer(&_ent);
+	arc.ArchiveString(&_anim);
+	arc.ArchiveString(&_entityType);
 
 	//-------------------------------------
 	// Archive Member Variables
 	//-------------------------------------	
-	arc.ArchiveFloat	   ( &_oldTurnSpeed );
+	arc.ArchiveFloat(&_oldTurnSpeed);
 }
 
 
