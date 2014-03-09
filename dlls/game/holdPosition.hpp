@@ -40,104 +40,96 @@ class HoldPosition;
 //
 // Method of Use:  Called From State Machine
 //--------------------------------------------------------------
-class HoldPosition : public Behavior
-	{
+class HoldPosition : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:  
-		typedef enum
-		{
-			HOLD_POSITION_HOLD,
-			HOLD_POSITION_TWITCH,			
-			HOLD_POSITION_WEAPON_TWITCH,
-			HOLD_POSITION_SUCCESS,
-			HOLD_POSITION_FAILED
-		} HoldPositionStates_t;
-
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private:
-
-		
-	//-------------------------------------
-	// Internal Functionality
-	//-------------------------------------
-	protected:
-		void	transitionToState	( HoldPositionStates_t state );
-		void	setInternalState	( HoldPositionStates_t state , const str &stateName );
-		void	init				( Actor &self );
-		void	think				();		
-
-		void					setupStateHold				();
-		BehaviorReturnCode_t	evaluateStateHold			();
-		void					failureStateHold			( const str& failureReason );
-
-		void					setupStateTwitch			();
-		BehaviorReturnCode_t	evaluateStateTwitch			();
-		void					failureStateTwitch			( const str& failureReason );
-
-		void					setupStateWeaponTwitch		();
-		BehaviorReturnCode_t	evaluateStateWeaponTwitch	();
-		void					failureStateWeaponTwitch	( const str& failureReason );
-
+	typedef enum {
+		HOLD_POSITION_HOLD,
+		HOLD_POSITION_TWITCH,
+		HOLD_POSITION_WEAPON_TWITCH,
+		HOLD_POSITION_SUCCESS,
+		HOLD_POSITION_FAILED
+	} HoldPositionStates_t;
 
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( HoldPosition );
+	CLASS_PROTOTYPE(HoldPosition);
 
-										HoldPosition();
-									   ~HoldPosition();
+	HoldPosition();
+	~HoldPosition();
 
-		void							SetArgs			( Event *ev );      
-		void							AnimDone		( Event *ev );
-	
-		void							Begin			( Actor &self );		
-		BehaviorReturnCode_t			Evaluate		( Actor &self );
-		void							End				( Actor &self );
+	void SetArgs(Event* ev);
+	void AnimDone(Event* ev);
 
-		// Accessors		
-		virtual void					Archive  ( Archiver &arc );
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+
+	// Accessors		
+	virtual void Archive(Archiver& arc);
+
+	//-------------------------------------
+	// Internal Functionality
+	//-------------------------------------
+	protected:
+	void transitionToState(HoldPositionStates_t state);
+	void setInternalState(HoldPositionStates_t state, const str& stateName);
+	void init(Actor &self);
+	void think();
+
+	void setupStateHold();
+	BehaviorReturnCode_t evaluateStateHold();
+	void failureStateHold(const str& failureReason);
+
+	void setupStateTwitch();
+	BehaviorReturnCode_t evaluateStateTwitch();
+	void failureStateTwitch(const str& failureReason);
+
+	void setupStateWeaponTwitch();
+	BehaviorReturnCode_t evaluateStateWeaponTwitch();
+	void failureStateWeaponTwitch(const str& failureReason);
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
 
 	//-------------------------------------
 	// Components
 	//-------------------------------------
-	private: 	
-		str								_legAnim;
-		str								_torsoAnim;
-		str								_twitchAnim;
-		str								_weaponTwitchAnim;
+	str _legAnim;
+	str _torsoAnim;
+	str	_twitchAnim;
+	str	_weaponTwitchAnim;
 
-		float							_holdTimeMin;
-		float							_holdTimeMax;
-		float							_endHoldTime;
-		float							_nextTwitchTime;
-		float							_twitchInterval;
-		bool							_canTwitch;
-		bool							_animDone;
-		
+	float _holdTimeMin;
+	float _holdTimeMax;
+	float _endHoldTime;
+	float _nextTwitchTime;
+	float _twitchInterval;
+	bool _canTwitch;
+	bool _animDone;
+
 
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private: 
-		HoldPositionStates_t			_state;	
-		Actor						   *_self;		
-		
+	HoldPositionStates_t _state;
+	Actor* _self;
 
-	};
 
-inline void HoldPosition::Archive( Archiver &arc	)
-{
-	Behavior::Archive ( arc );	     
+};
+
+inline void HoldPosition::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	//
 	// Archive Parameters
 	//	
-	
+
 	//
 	// Archive Components
 	//	
@@ -145,20 +137,20 @@ inline void HoldPosition::Archive( Archiver &arc	)
 	//
 	// Archive Member Variables
 	//
-	ArchiveEnum				( _state, HoldPositionStates_t	);
-	arc.ArchiveObjectPointer( ( Class ** )&_self				);
+	ArchiveEnum(_state, HoldPositionStates_t);
+	arc.ArchiveObjectPointer((Class **)&_self);
 
-	arc.ArchiveString( &_legAnim );
-	arc.ArchiveString( &_torsoAnim );
-	arc.ArchiveString( &_twitchAnim );
-	arc.ArchiveString( &_weaponTwitchAnim );
-	arc.ArchiveFloat( &_holdTimeMin );
-	arc.ArchiveFloat( &_holdTimeMax );
-	arc.ArchiveFloat( &_endHoldTime );
-	arc.ArchiveFloat( &_nextTwitchTime );
-	arc.ArchiveFloat( &_twitchInterval );
-	arc.ArchiveBool ( &_canTwitch );
-	arc.ArchiveBool ( &_animDone );
+	arc.ArchiveString(&_legAnim);
+	arc.ArchiveString(&_torsoAnim);
+	arc.ArchiveString(&_twitchAnim);
+	arc.ArchiveString(&_weaponTwitchAnim);
+	arc.ArchiveFloat(&_holdTimeMin);
+	arc.ArchiveFloat(&_holdTimeMax);
+	arc.ArchiveFloat(&_endHoldTime);
+	arc.ArchiveFloat(&_nextTwitchTime);
+	arc.ArchiveFloat(&_twitchInterval);
+	arc.ArchiveBool(&_canTwitch);
+	arc.ArchiveBool(&_animDone);
 }
 
 
