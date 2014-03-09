@@ -40,152 +40,141 @@ class SnipeEnemy;
 //
 // Method of Use:  Called From State Machine
 //--------------------------------------------------------------
-class SnipeEnemy : public Behavior
-	{
+class SnipeEnemy : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:  
-		typedef enum
-		{
-			SNIPE_AIM_AND_FIRE_AIM,
-			SNIPE_AIM_AND_FIRE_PRE_FIRE,
-			SNIPE_AIM_AND_FIRE_ATTACK,	
-			SNIPE_AIM_AND_FIRE_POST_FIRE,
-			SNIPE_AIM_AND_FIRE_SUCCESS,
-			SNIPE_AIM_AND_FIRE_FAILED
-		} SnipeAimAndFireStates_t;
-
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private:
-		float			_aimTime;
-		float			_lockDownTime;
-		float			_maxTorsoYaw;
-		float			_maxTorsoPitch;
-		float			_maxTorsoTurnSpeed;
-		int				_shots;
-		
-		
-	//-------------------------------------
-	// Internal Functionality
-	//-------------------------------------
-	protected:
-		void	transitionToState	( SnipeAimAndFireStates_t state );
-		void	setInternalState	( SnipeAimAndFireStates_t state , const str &stateName );
-		void	init				( Actor &self );
-		void	think				();		
-		void	updateEnemy			();
-		void	AdjustTorsoAngles	( const Vector &tagPos , const Vector &watchPosition );            
-		void	LerpTorsoBySpeed	( const Vector &angleDelta );	
-
-		void					setupStateAim				();
-		BehaviorReturnCode_t	evaluateStateAim			();
-		void					failureStateAim				( const str& failureReason );
-
-		void					setupStatePreFire			();
-		BehaviorReturnCode_t	evaluateStatePreFire		();
-		void					failureStatePreFire			( const str& failureReason );
-
-		void					setupStateAttack			();
-		BehaviorReturnCode_t	evaluateStateAttack			();
-		void					failureStateAttack			( const str& failureReason );
-
-		void					setupStatePostFire			();
-		BehaviorReturnCode_t	evaluateStatePostFire		();
-		void					failureStatePostFire		( const str& failureReason );
-
-
+	typedef enum {
+		SNIPE_AIM_AND_FIRE_AIM,
+		SNIPE_AIM_AND_FIRE_PRE_FIRE,
+		SNIPE_AIM_AND_FIRE_ATTACK,
+		SNIPE_AIM_AND_FIRE_POST_FIRE,
+		SNIPE_AIM_AND_FIRE_SUCCESS,
+		SNIPE_AIM_AND_FIRE_FAILED
+	} SnipeAimAndFireStates_t;
 
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( SnipeEnemy );
+	CLASS_PROTOTYPE(SnipeEnemy);
 
-										SnipeEnemy();
-									   ~SnipeEnemy();
+	SnipeEnemy();
+	~SnipeEnemy();
 
-		void							SetArgs			( Event *ev );      
-		void							AnimDone		( Event *ev );
-	
-		void							Begin			( Actor &self );		
-		BehaviorReturnCode_t			Evaluate		( Actor &self );
-		void							End				( Actor &self );
+	void SetArgs(Event* ev);
+	void AnimDone(Event* ev);
 
-		// Accessors		
-		virtual void					Archive  ( Archiver &arc );
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+
+	// Accessors		
+	virtual void Archive(Archiver& arc);
+
+	protected:
+	//-------------------------------------
+	// Internal Functionality
+	//-------------------------------------
+	void transitionToState(SnipeAimAndFireStates_t state);
+	void setInternalState(SnipeAimAndFireStates_t state, const str& stateName);
+	void init(Actor &self);
+	void think();
+	void updateEnemy();
+	void AdjustTorsoAngles(const Vector& tagPos, const Vector& watchPosition);
+	void LerpTorsoBySpeed(const Vector& angleDelta);
+
+	void setupStateAim();
+	BehaviorReturnCode_t evaluateStateAim();
+	void failureStateAim(const str& failureReason);
+
+	void setupStatePreFire();
+	BehaviorReturnCode_t evaluateStatePreFire();
+	void failureStatePreFire(const str& failureReason);
+
+	void setupStateAttack();
+	BehaviorReturnCode_t evaluateStateAttack();
+	void failureStateAttack(const str& failureReason);
+
+	void setupStatePostFire();
+	BehaviorReturnCode_t evaluateStatePostFire();
+	void failureStatePostFire(const str& failureReason);
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	float _aimTime;
+	float _lockDownTime;
+	float _maxTorsoYaw;
+	float _maxTorsoPitch;
+	float _maxTorsoTurnSpeed;
+	int _shots;
 
 	//-------------------------------------
 	// Components
 	//-------------------------------------
-	private: 	
-		FireWeapon						_fireWeapon;
+	FireWeapon _fireWeapon;
 
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private: 
-		SnipeAimAndFireStates_t			_state;	
-		Vector							_currentTorsoAngles;		
-		float							_endAimTime;
-		float							_endLockDownTime;
-		EntityPtr						_currentEnemy;
-		bool							_canAttack;
-		bool							_animDone;
-		str								_aimAnim;
-		str								_preFireAnim;
-		str								_fireAnim;	
-		str								_postFireAnim;
-		bool							_fireFailed;
-		Vector							_lastGoodPosition;
-		Vector							_targetSpread;
-		Actor						   *_self;		
-		
+	SnipeAimAndFireStates_t _state;
+	Vector _currentTorsoAngles;
+	float _endAimTime;
+	float _endLockDownTime;
+	EntityPtr _currentEnemy;
+	bool _canAttack;
+	bool _animDone;
+	str _aimAnim;
+	str _preFireAnim;
+	str _fireAnim;
+	str _postFireAnim;
+	bool _fireFailed;
+	Vector _lastGoodPosition;
+	Vector _targetSpread;
+	Actor* _self;
+};
 
-	};
-
-inline void SnipeEnemy::Archive( Archiver &arc	)
-{
-	Behavior::Archive ( arc );	     
+inline void SnipeEnemy::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	//
 	// Archive Parameters
 	//	
-	arc.ArchiveFloat( &_aimTime );
-	arc.ArchiveFloat( &_lockDownTime );
-	arc.ArchiveFloat( &_maxTorsoYaw );
-	arc.ArchiveFloat( &_maxTorsoPitch );
-	arc.ArchiveFloat( &_maxTorsoTurnSpeed );
-	arc.ArchiveInteger( &_shots );
-	arc.ArchiveVector( &_lastGoodPosition );
-	arc.ArchiveVector( &_targetSpread );
-	
-	
+	arc.ArchiveFloat(&_aimTime);
+	arc.ArchiveFloat(&_lockDownTime);
+	arc.ArchiveFloat(&_maxTorsoYaw);
+	arc.ArchiveFloat(&_maxTorsoPitch);
+	arc.ArchiveFloat(&_maxTorsoTurnSpeed);
+	arc.ArchiveInteger(&_shots);
+	arc.ArchiveVector(&_lastGoodPosition);
+	arc.ArchiveVector(&_targetSpread);
+
+
 	//
 	// Archive Components
 	//	
-	arc.ArchiveObject		( &_fireWeapon		);
+	arc.ArchiveObject(&_fireWeapon);
 
 	//
 	// Archive Member Variables
 	//
-	ArchiveEnum				( _state, SnipeAimAndFireStates_t	);
-	arc.ArchiveVector		( &_currentTorsoAngles				);
+	ArchiveEnum(_state, SnipeAimAndFireStates_t);
+	arc.ArchiveVector(&_currentTorsoAngles);
 
-	arc.ArchiveFloat( &_endAimTime );
-	arc.ArchiveFloat( &_endLockDownTime );
-	arc.ArchiveSafePointer( &_currentEnemy );
-	arc.ArchiveBool( &_canAttack );
-	arc.ArchiveBool( &_animDone );
-	arc.ArchiveString( &_aimAnim );
-	arc.ArchiveString( &_preFireAnim );
-	arc.ArchiveString( &_fireAnim );
-	arc.ArchiveString( &_postFireAnim );
-	arc.ArchiveBool( &_fireFailed );
-	
-	arc.ArchiveObjectPointer( ( Class ** )&_self				);
+	arc.ArchiveFloat(&_endAimTime);
+	arc.ArchiveFloat(&_endLockDownTime);
+	arc.ArchiveSafePointer(&_currentEnemy);
+	arc.ArchiveBool(&_canAttack);
+	arc.ArchiveBool(&_animDone);
+	arc.ArchiveString(&_aimAnim);
+	arc.ArchiveString(&_preFireAnim);
+	arc.ArchiveString(&_fireAnim);
+	arc.ArchiveString(&_postFireAnim);
+	arc.ArchiveBool(&_fireFailed);
+
+	arc.ArchiveObjectPointer((Class **)&_self);
 }
 
 
