@@ -41,80 +41,75 @@ class MoveRandomDirection;
 //
 // Method of Use:  Called From State Machine
 //--------------------------------------------------------------
-class MoveRandomDirection : public Behavior
-	{
-	public: 
-		typedef enum
-		{
+class MoveRandomDirection : public Behavior {
+	public:
+	typedef enum {
 		RANDOM_MOVE_ANYWHERE,
 		RANDOM_MOVE_IN_FRONT,
 		RANDOM_MOVE_IN_BACK,
-		} randomMoveModes_t;
+	} randomMoveModes_t;
 
-	private: // Parameters
-		str							anim;
+	CLASS_PROTOTYPE(MoveRandomDirection);
+
+	MoveRandomDirection();
+	~MoveRandomDirection();
+
+	void SetArgs(Event* ev);
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+	virtual void Archive(Archiver& arc);
+
+	// Accessors
+	void SetDistance(float dist);
+	void SetMinDistance(float dist);
+	void SetAnim(const str& moveAnim);
+	void SetMode(unsigned int mode);
 
 	protected:
-		Vector		_chooseRandomDirection    ( Actor &self );
-		float		_getDistanceToDestination ( Actor &self );
-		void		findDestination			  ( Actor &self );
-		void		setLegAnim				  ( Actor &self );
-		void		setTorsoAnim			  ( Actor &self );
+	Vector _chooseRandomDirection(Actor& self);
+	float _getDistanceToDestination(Actor& self);
+	void findDestination(Actor& self);
+	void setLegAnim(Actor& self);
+	void setTorsoAnim(Actor& self);
 
-	public:
-		CLASS_PROTOTYPE( MoveRandomDirection );
+	private: // Parameters
+	str anim;
 
-									MoveRandomDirection();
-									~MoveRandomDirection();
+	GotoPoint _chase;
 
-		void						SetArgs( Event *ev );      
-		void						Begin( Actor &self );		
-		BehaviorReturnCode_t		Evaluate( Actor &self );
-		void						End( Actor &self );
-		virtual void				Archive( Archiver &arc );
+	Vector _destination;
+	unsigned int _mode;
+	float _dist;
+	float _minDistance;
+	float _nextChangeTime;
+	bool _foundGoodDestination;
+	bool _forever;
+	bool _faceEnemy;
+	str _torsoAnim;
 
-		// Accessors
-		void SetDistance( float dist );
-		void SetMinDistance( float dist );
-		void SetAnim( const str &moveAnim );
-		void SetMode( unsigned int mode );
+};
 
-	private: 
-		GotoPoint						_chase;
-
-		Vector							_destination;
-		unsigned int					_mode;
-		float							_dist;
-		float							_minDistance;
-		float							_nextChangeTime;      
-		bool							_foundGoodDestination;
-		bool							_forever;
-		bool							_faceEnemy;
-		str								_torsoAnim;
-
-	};
-
-inline void MoveRandomDirection::Archive( Archiver &arc	)
-	{
-	Behavior::Archive( arc );
+inline void MoveRandomDirection::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	// Archive Parameters
-	arc.ArchiveString( &anim );
+	arc.ArchiveString(&anim);
 
 	// Archive Components
-	arc.ArchiveObject( &_chase );
+	arc.ArchiveObject(&_chase);
 
 	// Archive Member Vars
-	arc.ArchiveVector( &_destination );   
-	arc.ArchiveUnsigned( &_mode );
-	arc.ArchiveFloat( &_dist );
-	arc.ArchiveFloat( &_minDistance );
-	arc.ArchiveFloat( &_nextChangeTime );
-	arc.ArchiveBool( &_foundGoodDestination );
-	arc.ArchiveBool( &_forever );
-	arc.ArchiveBool( &_faceEnemy );
-	arc.ArchiveString( &_torsoAnim );
-	}
+	arc.ArchiveVector(&_destination);
+	arc.ArchiveUnsigned(&_mode);
+	arc.ArchiveFloat(&_dist);
+	arc.ArchiveFloat(&_minDistance);
+	arc.ArchiveFloat(&_nextChangeTime);
+	arc.ArchiveBool(&_foundGoodDestination);
+	arc.ArchiveBool(&_forever);
+	arc.ArchiveBool(&_faceEnemy);
+	arc.ArchiveString(&_torsoAnim);
+}
 
 
 
