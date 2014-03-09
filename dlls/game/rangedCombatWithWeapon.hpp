@@ -44,148 +44,136 @@ class GeneralCombatWithRangedWeapon;
 // Method of Use: State machine or another behavior
 //--------------------------------------------------------------
 
-class RangedCombatWithWeapon : public Behavior
-	{
+class RangedCombatWithWeapon : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:  
-		typedef enum
-		{	
+	typedef enum {
 		RCWW_EVALUATE_OPTIONS,
-		RCWW_CHANGE_WEAPON,		
+		RCWW_CHANGE_WEAPON,
 		RCWW_GENERAL_COMBAT,
 		RCWW_CORRIDOR_COMBAT,
 		RCWW_COVER_COMBAT,
 		RCWW_FAILED,
-		} RangedCombatWithWeapon_t;
+	} RangedCombatWithWeapon_t;
 
 
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private: 
-		str                         _aimAnim;       // --Animation used to aim the weapon
-		str							_fireAnim;		// --The animation used to fire the weapon
-		float						_approachDist;
-		float						_retreatDist;
-		float						_strafeChance;
-		float						_postureChangeChance;
-
-	//-------------------------------------
-	// Internal Functionality
-	//-------------------------------------
-	protected:		
-		void	transitionToState	( RangedCombatWithWeapon_t state );
-		void	setInternalState	( RangedCombatWithWeapon_t state , const str &stateName );
-		void	init				( Actor &self );
-		void	think				();
-		void	updateEnemy			();	
-		
-		bool					checkShouldDoCorridorCombat();
-		bool					checkShouldDoGeneralCombat();
-		bool					checkShouldDoCoverCombat();
-		bool					checkShouldCheckWeapon();
-
-		void					setupStateEvaluateOptions();
-		BehaviorReturnCode_t	evaluateStateEvaluateOptions();
-		void					failureStateEvaluateOptions();
-
-		void					setupStateChangeWeapon();
-		BehaviorReturnCode_t	evaluateStateChangeWeapon();
-		void					failureStateChangeWeapon();
-
-		void					setupStateGeneralCombat();
-		BehaviorReturnCode_t	evaluateStateGeneralCombat();
-		void					failureStateGeneralCombat();
-
-		void					setupStateCoverCombat();
-		BehaviorReturnCode_t	evaluateStateCoverCombat();
-		void					failureStateCoverCombat();
-
-		void					setupStateCorridorCombat();
-		BehaviorReturnCode_t	evaluateStateCorridorCombat();
-		void					failureStateCorridorCombat();
-
-		
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------	
-	public:
-		CLASS_PROTOTYPE( RangedCombatWithWeapon );
+	CLASS_PROTOTYPE(RangedCombatWithWeapon);
 
-									RangedCombatWithWeapon();
-								   ~RangedCombatWithWeapon();
+	RangedCombatWithWeapon();
+	~RangedCombatWithWeapon();
 
-		void						SetArgs              ( Event *ev      );		
-		void                        AnimDone             ( Event *ev      );
-		void						PostureDone			 ( Event *ev	  );
+	void SetArgs(Event* ev);
+	void AnimDone(Event* ev);
+	void PostureDone(Event* ev);
 
-		void						Begin                ( Actor &self    );
-		BehaviorReturnCode_t		Evaluate             ( Actor &self    );
-		void						End                  ( Actor &self    );
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
 
-		virtual void		        Archive              ( Archiver &arc  );
+	virtual void Archive(Archiver& arc);
 
-		// Mutators       
-		void						SetFireAnim              ( const str &anim );
-		
-	
+	// Mutators       
+	void SetFireAnim(const str& anim);
 
+	protected:
+	//-------------------------------------
+	// Internal Functionality
+	//-------------------------------------
+	void transitionToState(RangedCombatWithWeapon_t state);
+	void setInternalState(RangedCombatWithWeapon_t state, const str& stateName);
+	void init(Actor& self);
+	void think();
+	void updateEnemy();
+
+	bool checkShouldDoCorridorCombat();
+	bool checkShouldDoGeneralCombat();
+	bool checkShouldDoCoverCombat();
+	bool checkShouldCheckWeapon();
+
+	void setupStateEvaluateOptions();
+	BehaviorReturnCode_t evaluateStateEvaluateOptions();
+	void failureStateEvaluateOptions();
+
+	void setupStateChangeWeapon();
+	BehaviorReturnCode_t evaluateStateChangeWeapon();
+	void failureStateChangeWeapon();
+
+	void setupStateGeneralCombat();
+	BehaviorReturnCode_t evaluateStateGeneralCombat();
+	void failureStateGeneralCombat();
+
+	void setupStateCoverCombat();
+	BehaviorReturnCode_t evaluateStateCoverCombat();
+	void failureStateCoverCombat();
+
+	void setupStateCorridorCombat();
+	BehaviorReturnCode_t evaluateStateCorridorCombat();
+	void failureStateCorridorCombat();
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	str _aimAnim;       // --Animation used to aim the weapon
+	str _fireAnim;		// --The animation used to fire the weapon
+	float _approachDist;
+	float _retreatDist;
+	float _strafeChance;
+	float _postureChangeChance;
 
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private:
-		// Component Behaviors
-		CloseInOnEnemy					_gotoEnemy;
-		GeneralCombatWithRangedWeapon	_generalCombat;
-		CorridorCombatWithRangedWeapon	_corridorCombat;
-		CoverCombatWithRangedWeapon		_coverCombat;
-		SelectBestWeapon				_selectBestWeapon;
+	// Component Behaviors
+	CloseInOnEnemy _gotoEnemy;
+	GeneralCombatWithRangedWeapon _generalCombat;
+	CorridorCombatWithRangedWeapon _corridorCombat;
+	CoverCombatWithRangedWeapon _coverCombat;
+	SelectBestWeapon _selectBestWeapon;
+
+	// Member Vars
+	int _state;          //-- Maintains our Behavior's current State
+	Actor* _self;
+	EntityPtr _currentEnemy;
+	float _nextSelectWeaponTime;
+	float _recheckTime;
+	// Constants
+};
 
 
-		// Member Vars
-		int								_state;          //-- Maintains our Behavior's current State
-		Actor*							_self;
-		EntityPtr						_currentEnemy;
-		float							_nextSelectWeaponTime;
-		float							_recheckTime;
-		// Constants
-		
-	};
-
-
-inline void RangedCombatWithWeapon::Archive( Archiver &arc	)
-	{
-	Behavior::Archive( arc );
+inline void RangedCombatWithWeapon::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	// Archive Parameters
-	arc.ArchiveString	( &_aimAnim						);
-	arc.ArchiveString	( &_fireAnim					);
-	arc.ArchiveFloat	( &_approachDist				);
-	arc.ArchiveFloat	( &_retreatDist					);
-	arc.ArchiveFloat	( &_strafeChance				);
-	arc.ArchiveFloat	( &_postureChangeChance			);
+	arc.ArchiveString(&_aimAnim);
+	arc.ArchiveString(&_fireAnim);
+	arc.ArchiveFloat(&_approachDist);
+	arc.ArchiveFloat(&_retreatDist);
+	arc.ArchiveFloat(&_strafeChance);
+	arc.ArchiveFloat(&_postureChangeChance);
 
 	// Archive Components
-	arc.ArchiveObject  ( &_gotoEnemy          );
-	arc.ArchiveObject  ( &_generalCombat      );
-	arc.ArchiveObject  ( &_corridorCombat	  );
-	arc.ArchiveObject  ( &_coverCombat		  );
-	arc.ArchiveObject  ( &_selectBestWeapon	  );
+	arc.ArchiveObject(&_gotoEnemy);
+	arc.ArchiveObject(&_generalCombat);
+	arc.ArchiveObject(&_corridorCombat);
+	arc.ArchiveObject(&_coverCombat);
+	arc.ArchiveObject(&_selectBestWeapon);
 
 	// Archive Member Variables
-	arc.ArchiveInteger ( &_state              );
-	arc.ArchiveObjectPointer ( ( Class ** )&_self      );
-	arc.ArchiveSafePointer( &_currentEnemy );
-	arc.ArchiveFloat ( &_nextSelectWeaponTime );
-	arc.ArchiveFloat ( &_recheckTime );
-	}
+	arc.ArchiveInteger(&_state);
+	arc.ArchiveObjectPointer((Class **)&_self);
+	arc.ArchiveSafePointer(&_currentEnemy);
+	arc.ArchiveFloat(&_nextSelectWeaponTime);
+	arc.ArchiveFloat(&_recheckTime);
+}
 
-inline void RangedCombatWithWeapon::SetFireAnim( const str &anim )
-	{
+inline void RangedCombatWithWeapon::SetFireAnim(const str &anim) {
 	_fireAnim = anim;
-	}
+}
 
 #endif /* __RANGEDCOMBAT_WITH_WEAPON_HPP__ */
