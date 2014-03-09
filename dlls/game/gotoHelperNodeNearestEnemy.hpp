@@ -38,116 +38,105 @@ class GotoHelperNodeNearestEnemy;
 //
 // Method of Use:  Called From State Machine
 //--------------------------------------------------------------
-class GotoHelperNodeNearestEnemy : public Behavior
-	{
+class GotoHelperNodeNearestEnemy : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:  
-		typedef enum
-		{
-			GOTO_HNODE_FIND_NODE,
-			GOTO_HNODE_MOVE_TO_NODE,
-			GOTO_HNODE_SUCCESS,
-			GOTO_HNODE_FAILED
-		} GotoHelperNodeStates_t;
-
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private:
-		str			    _nodeType;
-		str				_movementAnim;
-		float			_maxDistance;
-		
-
-	//-------------------------------------
-	// Internal Functionality
-	//-------------------------------------
-	protected:
-		void	transitionToState	( GotoHelperNodeStates_t state );
-		void	setInternalState	( GotoHelperNodeStates_t state , const str &stateName );
-		void	init				( Actor &self );
-		void	think				();
-		void	updateEnemy			();
-	
-
-		void					setupStateFindNode			();
-		BehaviorReturnCode_t	evaluateStateFindNode		();
-		void					failureStateFindNode		( const str& failureReason );
-
-		void					setupStateMoveToNode		();
-		BehaviorReturnCode_t	evaluateStateMoveToNode		();
-		void					failureStateMoveToNode		( const str& failureReason );
+	typedef enum {
+		GOTO_HNODE_FIND_NODE,
+		GOTO_HNODE_MOVE_TO_NODE,
+		GOTO_HNODE_SUCCESS,
+		GOTO_HNODE_FAILED
+	} GotoHelperNodeStates_t;
 
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( GotoHelperNodeNearestEnemy );
+	CLASS_PROTOTYPE(GotoHelperNodeNearestEnemy);
 
-										GotoHelperNodeNearestEnemy();
-									   ~GotoHelperNodeNearestEnemy();
+	GotoHelperNodeNearestEnemy();
+	~GotoHelperNodeNearestEnemy();
 
-		void							SetArgs			( Event *ev );      
-		void							AnimDone		( Event *ev );
-	
-		void							Begin			( Actor &self );		
-		BehaviorReturnCode_t			Evaluate		( Actor &self );
-		void							End				( Actor &self );
+	void SetArgs(Event* ev);
+	void AnimDone(Event* ev);
 
-		// Accessors
-		void							SetNode			( HelperNode *node );
-		void							SetMovementAnim ( const str &anim );
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+
+	// Accessors
+	void SetNode(HelperNode* node);
+	void SetMovementAnim(const str& anim);
+
+	virtual void Archive(Archiver& arc);
+
+	protected:
+	//-------------------------------------
+	// Internal Functionality
+	//-------------------------------------
+	void transitionToState(GotoHelperNodeStates_t state);
+	void setInternalState(GotoHelperNodeStates_t state, const str& stateName);
+	void init(Actor &self);
+	void think();
+	void updateEnemy();
 
 
-		virtual void					Archive  ( Archiver &arc );
+	void setupStateFindNode();
+	BehaviorReturnCode_t evaluateStateFindNode();
+	void failureStateFindNode(const str& failureReason);
+
+	void setupStateMoveToNode();
+	BehaviorReturnCode_t evaluateStateMoveToNode();
+	void failureStateMoveToNode(const str& failureReason);
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	str _nodeType;
+	str _movementAnim;
+	float _maxDistance;
 
 	//-------------------------------------
 	// Components
 	//-------------------------------------
-	private: 	
-		GotoHelperNode					_gotoHNode;
-
+	GotoHelperNode _gotoHNode;
 
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private: 
-		GotoHelperNodeStates_t			_state;		 				
-		HelperNodePtr					_node;
-		EntityPtr						_currentEnemy;
+	GotoHelperNodeStates_t _state;
+	HelperNodePtr _node;
+	EntityPtr _currentEnemy;
 
-		Actor						   *_self;		
-
-
-	};
+	Actor* _self;
+};
 
 
 
-inline void GotoHelperNodeNearestEnemy::Archive( Archiver &arc	)
-{
-	Behavior::Archive ( arc );	     
+inline void GotoHelperNodeNearestEnemy::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	//
 	// Archive Parameters
 	//
-	arc.ArchiveString		( &_nodeType     );
-	arc.ArchiveString		( &_movementAnim );
-	arc.ArchiveFloat		( &_maxDistance  );
-	
+	arc.ArchiveString(&_nodeType);
+	arc.ArchiveString(&_movementAnim);
+	arc.ArchiveFloat(&_maxDistance);
+
 	//
 	// Archive Components
 	//
-	arc.ArchiveObject		( &_gotoHNode );
+	arc.ArchiveObject(&_gotoHNode);
 
 	//
 	// Archive Member Variables
 	//
-	ArchiveEnum				( _state, GotoHelperNodeStates_t   );
-	arc.ArchiveSafePointer	( &_node						);
-	arc.ArchiveSafePointer	( &_currentEnemy					);
-	arc.ArchiveObjectPointer( ( Class ** )&_self			);
+	ArchiveEnum(_state, GotoHelperNodeStates_t);
+	arc.ArchiveSafePointer(&_node);
+	arc.ArchiveSafePointer(&_currentEnemy);
+	arc.ArchiveObjectPointer((Class **)&_self);
 }
 
 #endif /* __GOTO_HELPER_NODE_NEAREST_ENEMY__ */
