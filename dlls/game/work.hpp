@@ -38,17 +38,15 @@ class Work;
 //
 // Method of Use: Statemachine or another behavior
 //--------------------------------------------------------------
-class Work : public Behavior
-	{
+class Work : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:
-		typedef enum
-		{
+	typedef enum {
 		WORK_FIND_NODE,
 		WORK_MOVE_TO_NODE,
-		WORK_AT_NODE,		
+		WORK_AT_NODE,
 		WORK_ANIMATE_WAIT_ON_TIME,
 		WORK_ANIMATE_WAIT_ON_ANIM,
 		WORK_ANIMATE_WAIT_ON_SIGNAL,
@@ -59,119 +57,114 @@ class Work : public Behavior
 		WORK_SELECT_ANIM_MODE,
 		WORK_SUCCESSFUL,
 		WORK_FAILED
-		} workStates_t;
-
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private: // Parameters
-		str							_gotoWorkAnimName ; // anim to play to move to work node, default is "walk"
-		float						_maxDistance;	    // maximum distance to look for node
-
-	//-------------------------------------
-	// Internal Functionality
-	//-------------------------------------
-	protected:
-		void	transitionToState	( workStates_t state );
-		void	setInternalState	( workStates_t state , const str &stateName );
-		void	init				( Actor &self );
-		void	think				();		
-
-		void					setupStateFindNode						();
-		BehaviorReturnCode_t	evaluateStateFindNode					();
-		void					failureStateFindNode					( const str& failureReason );
-
-		void					setupStateMoveToNode					();
-		BehaviorReturnCode_t	evaluateStateMoveToNode					();
-		void					failureStateMoveToNode					( const str& failureReason );
-
-		void					setupStateAtNode						();
-		BehaviorReturnCode_t	evaluateStateAtNode						();
-		void					failureStateAtNode						( const str& failureReason );
-		
-		void					setupStateAnimateWaitOnTime				();
-		BehaviorReturnCode_t	evaluateStateAnimateWaitOnTime			();
-		void					failureStateAnimateWaitOnTime			( const str& failureReason );
-
-		void					setupStateAnimateWaitOnAnim				();
-		BehaviorReturnCode_t	evaluateStateAnimateWaitOnAnim			();
-		void					failureStateAnimateWaitOnAnim			( const str& failureReason );
-
-		void					setupStateAnimateWaitOnSignal			();
-		BehaviorReturnCode_t	evaluateStateAnimateWaitOnSignal		();
-		void					failureStateAnimateWaitOnSignal			( const str& failureReason );
-
-		void					setupStateAnimateConstant				();
-		BehaviorReturnCode_t	evaluateStateAnimateConstant			();
-		void					failureStateAnimateConstant				( const str& failureReason );
-
-		void					setupStateAnimateListWaitOnTime			();
-		BehaviorReturnCode_t	evaluateStateAnimateListWaitOnTime		();
-		void					failureStateAnimateListWaitOnTime		( const str& failureReason );
-
-		void					setupStateAnimateListWaitOnAnim			();
-		BehaviorReturnCode_t	evaluateStateAnimateListWaitOnAnim		();
-		void					failureStateAnimateListWaitOnAnim		( const str& failureReason );
-
-		void					setupStateAnimateListWaitOnSignal		();
-		BehaviorReturnCode_t	evaluateStateAnimateListWaitOnSignal	();
-		void					failureStateAnimateListWaitOnSignal		( const str& failureReason );
-
+	} workStates_t;
 
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( Work );
-												Work();
-											   ~Work();
+	CLASS_PROTOTYPE(Work);
+	Work();
+	~Work();
 
-		void									SetArgs				( Event *ev );      
-		void									AnimDone			( Event *ev );
-		void									HandleNodeCommand	( Event *ev );
+	void SetArgs(Event* ev);
+	void AnimDone(Event* ev);
+	void HandleNodeCommand(Event* ev);
 
-		void									Begin				( Actor &self );		
-		BehaviorReturnCode_t					Evaluate			( Actor &self );
-		void									End					( Actor &self );
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
 
-		void									SetNode	( HelperNode* node );
-		virtual void							Archive  ( Archiver &arc );
+	void SetNode(HelperNode* node);
+	virtual void Archive(Archiver& arc);
 
-	private: // Component Behaviors
-		GotoHelperNode					_gotoHelperNode;
+	protected:
+	//-------------------------------------
+	// Internal Functionality
+	//-------------------------------------
+	void transitionToState(workStates_t state);
+	void setInternalState(workStates_t state, const str& stateName);
+	void init(Actor& self);
+	void think();
 
-	private: // Member Variables
-		HelperNodePtr							_node;            
-		unsigned int							_state;
-		bool									_animDone;
-		float									_endTime;
-		Actor*									_self;
-		
-	};
+	void setupStateFindNode();
+	BehaviorReturnCode_t evaluateStateFindNode();
+	void failureStateFindNode(const str& failureReason);
 
-inline void Work::SetNode( HelperNode *node )
-{
+	void setupStateMoveToNode();
+	BehaviorReturnCode_t evaluateStateMoveToNode();
+	void failureStateMoveToNode(const str& failureReason);
+
+	void setupStateAtNode();
+	BehaviorReturnCode_t evaluateStateAtNode();
+	void failureStateAtNode(const str& failureReason);
+
+	void setupStateAnimateWaitOnTime();
+	BehaviorReturnCode_t evaluateStateAnimateWaitOnTime();
+	void failureStateAnimateWaitOnTime(const str& failureReason);
+
+	void setupStateAnimateWaitOnAnim();
+	BehaviorReturnCode_t evaluateStateAnimateWaitOnAnim();
+	void failureStateAnimateWaitOnAnim(const str& failureReason);
+
+	void setupStateAnimateWaitOnSignal();
+	BehaviorReturnCode_t evaluateStateAnimateWaitOnSignal();
+	void failureStateAnimateWaitOnSignal(const str& failureReason);
+
+	void setupStateAnimateConstant();
+	BehaviorReturnCode_t evaluateStateAnimateConstant();
+	void failureStateAnimateConstant(const str& failureReason);
+
+	void setupStateAnimateListWaitOnTime();
+	BehaviorReturnCode_t evaluateStateAnimateListWaitOnTime();
+	void failureStateAnimateListWaitOnTime(const str& failureReason);
+
+	void setupStateAnimateListWaitOnAnim();
+	BehaviorReturnCode_t evaluateStateAnimateListWaitOnAnim();
+	void failureStateAnimateListWaitOnAnim(const str& failureReason);
+
+	void setupStateAnimateListWaitOnSignal();
+	BehaviorReturnCode_t evaluateStateAnimateListWaitOnSignal();
+	void failureStateAnimateListWaitOnSignal(const str& failureReason);
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	str _gotoWorkAnimName; // anim to play to move to work node, default is "walk"
+	float _maxDistance;	    // maximum distance to look for node
+
+	// Component Behaviors
+	GotoHelperNode _gotoHelperNode;
+
+	// Member Variables
+	HelperNodePtr _node;
+	unsigned int _state;
+	bool _animDone;
+	float _endTime;
+	Actor* _self;
+};
+
+inline void Work::SetNode(HelperNode* node) {
 	_node = node;
 }
 
-inline void Work::Archive( Archiver &arc	)
-{
-	Behavior::Archive ( arc );	    
-   
+inline void Work::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
+
 	// Archive Parameters
-	arc.ArchiveString			( &_gotoWorkAnimName);
-	arc.ArchiveFloat			( &_maxDistance     );
+	arc.ArchiveString(&_gotoWorkAnimName);
+	arc.ArchiveFloat(&_maxDistance);
 
 	// Archive Components
-	arc.ArchiveObject			( &_gotoHelperNode  );
-	
+	arc.ArchiveObject(&_gotoHelperNode);
+
 
 	// Archive Member Vars
-	arc.ArchiveSafePointer		( &_node				);
-	arc.ArchiveUnsigned			( &_state				);
-	arc.ArchiveBool				( &_animDone			);
-	arc.ArchiveFloat			( &_endTime				);
-	arc.ArchiveObjectPointer	( ( Class ** )&_self	);
+	arc.ArchiveSafePointer(&_node);
+	arc.ArchiveUnsigned(&_state);
+	arc.ArchiveBool(&_animDone);
+	arc.ArchiveFloat(&_endTime);
+	arc.ArchiveObjectPointer((Class**)&_self);
 }
 
 #endif /* __WORK_HPP__ */
