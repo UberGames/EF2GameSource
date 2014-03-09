@@ -43,83 +43,75 @@ class AnimatedTeleportToPlayer;
 //
 // Method of Use:	State Machine or another behavior
 //--------------------------------------------------------------
-class AnimatedTeleportToPlayer : public Behavior
-	{
+class AnimatedTeleportToPlayer : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:
-		typedef enum
-			{
-			ANIM_TELEPORT_BEGIN,
-			ANIM_TELEPORT_START_ANIM,
-			ANIM_TELEPORT_START_ANIMATING,
-			ANIM_TELEPORT_TELEPORT,
-			ANIM_TELEPORT_END_ANIM,
-			ANIM_TELEPORT_END_ANIMATING,
-			} animTeleportStates_t;
-		
-		typedef enum
-			{
-			TELEPORT_BEHIND,
-			TELEPORT_TOLEFT,
-			TELEPORT_TORIGHT,
-			TELEPORT_INFRONT,
-			TELEPORT_NUMBER_OF_POSITIONS
-			} animTeleportPositionModes_t;
+	typedef enum {
+		ANIM_TELEPORT_BEGIN,
+		ANIM_TELEPORT_START_ANIM,
+		ANIM_TELEPORT_START_ANIMATING,
+		ANIM_TELEPORT_TELEPORT,
+		ANIM_TELEPORT_END_ANIM,
+		ANIM_TELEPORT_END_ANIMATING,
+	} animTeleportStates_t;
 
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private:
-      str						_startAnim;
-      str						_endAnim;
-
-	//-------------------------------------
-	// Internal Functionality
-	//-------------------------------------
-	protected:	
-		bool					testPosition ( Actor &self, int test_pos, Vector &good_position, Entity* player, bool use_player_dir );
-
+	typedef enum {
+		TELEPORT_BEHIND,
+		TELEPORT_TOLEFT,
+		TELEPORT_TORIGHT,
+		TELEPORT_INFRONT,
+		TELEPORT_NUMBER_OF_POSITIONS
+	} animTeleportPositionModes_t;
 
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( AnimatedTeleportToPlayer );
+	CLASS_PROTOTYPE(AnimatedTeleportToPlayer);
 
-		void					SetArgs  ( Event *ev      );		
-		void					Begin    ( Actor &self    );
-		
-		BehaviorReturnCode_t	Evaluate ( Actor &self    );
-		void					End      ( Actor &self    );
-		virtual void			Archive  ( Archiver &arc );
+	void SetArgs(Event* ev);
+	void Begin(Actor& self);
+
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+	virtual void Archive(Archiver& arc);
+
+	protected:
+	//-------------------------------------
+	// Internal Functionality
+	//-------------------------------------
+	bool testPosition(Actor& self, int test_pos, Vector& good_position, Entity* player, bool use_player_dir);
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	str _startAnim;
+	str _endAnim;
 
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private:		
-		Vector					_teleportPosition;
-		animTeleportStates_t	_state;
-	};
+	Vector _teleportPosition;
+	animTeleportStates_t _state;
+};
 
-inline void AnimatedTeleportToPlayer::Archive( Archiver &arc )
-{
-	Behavior::Archive ( arc );
+inline void AnimatedTeleportToPlayer::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	//-------------------------------------
 	// Archive Parameters
 	//-------------------------------------
-	arc.ArchiveString (  &_startAnim                 );
-	arc.ArchiveString (  &_endAnim                   );
+	arc.ArchiveString(&_startAnim);
+	arc.ArchiveString(&_endAnim);
 
 	//-------------------------------------
 	// Archive Member Variables
 	//-------------------------------------
-	arc.ArchiveVector ( &_teleportPosition           );
-	ArchiveEnum       ( _state, animTeleportStates_t );
+	arc.ArchiveVector(&_teleportPosition);
+	ArchiveEnum(_state, animTeleportStates_t);
 }
 
-
-
 #endif /* __TELEPORT_TO_ENTITY_H__ */
+
