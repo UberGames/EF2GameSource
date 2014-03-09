@@ -31,67 +31,66 @@ class CombatSubsystem;
 //
 // Encapsulates combat related data and functionality for the actor
 //
-class CombatSubsystem 
-	{
+class CombatSubsystem {
 	public:
-		CombatSubsystem();
-		CombatSubsystem( Actor *actor );
-		~CombatSubsystem();
-		
-		bool CanAttackTarget			 ( Entity *target							);
-		bool CanAttackTargetFrom		 ( Entity *target , const Vector &startPos );		      		
-		bool IsTargetInWeaponRange		 ( Entity *target							);		
-		bool UsingWeaponNamed			 ( const str &weaponName						);
-		bool WeaponIsFireType			 ( firetype_t fire_type							);
-		bool HaveWeapon					 ();
-		bool CanAttackEnemy				 ();     
+	CombatSubsystem();
+	CombatSubsystem(Actor* actor);
+	~CombatSubsystem();
 
-		void UseActorWeapon				 (const str &weaponName , weaponhand_t hand		);
-		void SetTraceInterval			 ( float interval								);
-		void FireWeapon					 ();
-		void StopFireWeapon				 ();
-		void AimWeaponTag				 (Entity *target);
-		void AimWeaponTag				 (const Vector &targetPos);
-		void ClearAim					 ();
-		
-		void GetGunPositionData			 ( Vector *pos , Vector *forward = NULL, Vector *right = NULL, Vector *up = NULL );		
-		float GetAimGunYaw				 ( const Vector &target							 );
-		float GetAimGunPitch			 ( const Vector &target							 );
-		WeaponPtr GetBestAvailableWeapon ( Entity *target                                );
-		float GetActiveWeaponPowerRating ( Entity *target								 );
-		str GetActiveWeaponName	 ();
-		str GetActiveWeaponArchetype();
+	bool CanAttackTarget(Entity* target);
+	bool CanAttackTargetFrom(Entity* target, const Vector& startPos);
+	bool IsTargetInWeaponRange(Entity* target);
+	bool UsingWeaponNamed(const str& weaponName);
+	bool WeaponIsFireType(firetype_t fire_type);
+	bool HaveWeapon();
+	bool CanAttackEnemy();
 
-		bool GetProjectileLaunchAngles( Vector &launchAngles, const Vector &launchPoint, const float initialSpeed, const float gravity , const bool useHighTrajectory = false ) const;
-		bool shouldArcProjectile();
-		float GetLowArcRange();
+	void UseActorWeapon(const str& weaponName, weaponhand_t hand);
+	void SetTraceInterval(float interval);
+	void FireWeapon();
+	void StopFireWeapon();
+	void AimWeaponTag(Entity* target);
+	void AimWeaponTag(const Vector& targetPos);
+	void ClearAim();
 
-		void OverrideSpread ( float spreadX , float spreadY );
+	void GetGunPositionData(Vector* pos, Vector* forward = NULL, Vector* right = NULL, Vector* up = NULL);
+	float GetAimGunYaw(const Vector& target);
+	float GetAimGunPitch(const Vector& target);
+	WeaponPtr GetBestAvailableWeapon(Entity* target);
+	float GetActiveWeaponPowerRating(Entity* target);
+	str GetActiveWeaponName();
+	str GetActiveWeaponArchetype();
 
-		const str	GetAnimForMyWeapon( const str& property );
-		float GetDataForMyWeapon( const str& property );
+	bool GetProjectileLaunchAngles(Vector& launchAngles, const Vector& launchPoint, const float initialSpeed, const float gravity, const bool useHighTrajectory = false) const;
+	bool shouldArcProjectile();
+	float GetLowArcRange();
 
-		Vector GetLeadingTargetPos( float projSpeed , Vector originalTargetPos , Entity *target );
+	void OverrideSpread(float spreadX, float spreadY);
 
-		// Archiving
-		void         DoArchive		( Archiver &arc , Actor *actor );
-		virtual void Archive		( Archiver &arc );		 
+	const str GetAnimForMyWeapon(const str& property);
+	float GetDataForMyWeapon(const str& property);
+
+	Vector GetLeadingTargetPos(float projSpeed, Vector originalTargetPos, Entity* target);
+
+	// Archiving
+	void DoArchive(Archiver& arc, Actor* actor);
+	virtual void Archive(Archiver& arc);
 
 	protected:
-		void        _init();
-		bool	    _traceHitTarget	( Entity *target , const Vector &startPos );
-		float       getModifiedPowerRating ( Entity *target , Weapon *weapon );
-		
+	void _init();
+	bool _traceHitTarget(Entity* target, const Vector& startPos);
+	float getModifiedPowerRating(Entity* target, Weapon* weapon);
 
-	private:		
-		ActiveWeapon	_activeWeapon;
-		float			_nextTimeTracedToTarget;
-		float			_traceInterval;
-		bool			_canShootTarget;
-		float			_yawDiff;
-				
-		Actor *act;
-	};
+
+	private:
+	ActiveWeapon _activeWeapon;
+	float _nextTimeTracedToTarget;
+	float _traceInterval;
+	bool _canShootTarget;
+	float _yawDiff;
+
+	Actor* act;
+};
 
 
 #endif /* __ACTOR_COMBAT_SUBSYSTEM_H__ */
