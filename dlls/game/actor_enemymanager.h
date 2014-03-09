@@ -39,81 +39,79 @@ class EnemyManager;
 //
 // As behaviors get used, and proves necessary, we can add a flag that will allow the
 // state machine to set and use the _alternateTarget
-class EnemyManager 
-	{
-	public: 
-		 EnemyManager();
-		 EnemyManager( Actor *actor );
-		~EnemyManager();
+class EnemyManager {
+	public:
+	EnemyManager();
+	EnemyManager(Actor* actor);
+	~EnemyManager();
 
-		void			FindHighestHateEnemy();
-		void			FindNextEnemy();
-		void			FindClosestEnemy();
-		void			ClearCurrentEnemy();
-		void			ClearHateList();
-		qboolean		Hates( Entity *ent );
-		qboolean		Likes( Entity *ent );	
-		qboolean		CanAttack( Entity *ent );
-		qboolean		CanAttackAnyEnemy();
+	void FindHighestHateEnemy();
+	void FindNextEnemy();
+	void FindClosestEnemy();
+	void ClearCurrentEnemy();
+	void ClearHateList();
+	qboolean Hates(Entity* ent);
+	qboolean Likes(Entity* ent);
+	qboolean CanAttack(Entity* ent);
+	qboolean CanAttackAnyEnemy();
 
-		EntityPtr		GetCurrentEnemy();
-		void			SetCurrentEnemy( Entity *enemy );
+	EntityPtr GetCurrentEnemy();
+	void SetCurrentEnemy(Entity* enemy);
 
-		bool			CanGetToEntity(Entity *enemy);
+	bool CanGetToEntity(Entity* enemy);
 
-		EntityPtr		GetAlternateTarget();
-		void			SetAlternateTarget( Entity *target );
-		
-		void			TryToAddToHateList( Entity *enemy );		  
-		qboolean		IsInHateList( Entity *enemy );
-		qboolean		IsLastInHateList( Entity* enemy );
-		
-		void			AdjustHate( Entity *enemy , float adjustment );
-		void			AdjustDamageCaused( Entity *enemy, float adjustment );
+	EntityPtr GetAlternateTarget();
+	void SetAlternateTarget(Entity* target);
 
-		void			TrivialUpdate();
-		void			Update();
-		void			UpdateDistance( HateListEntry_t *listIndex );
-		void			UpdateCanSee( HateListEntry_t *listIndex );
-		void			UpdateAttackers( HateListEntry_t *listIndex );
+	void TryToAddToHateList(Entity* enemy);
+	qboolean IsInHateList(Entity* enemy);
+	qboolean IsLastInHateList(Entity* enemy);
 
-		void			LockOnCurrentEnemy( qboolean lock );
-		qboolean		IsLockedOnCurrentEnemy();
+	void AdjustHate(Entity* enemy, float adjustment);
+	void AdjustDamageCaused(Entity* enemy, float adjustment);
 
-		Vector			GetAwayFromEnemies();
-		qboolean		InEnemyLineOfFire();
-		float			GetDistanceFromEnemy();
-		void			TrySleep( void );
-		  
-		bool			HasEnemy();
+	void TrivialUpdate();
+	void Update();
+	void UpdateDistance(HateListEntry_t* listIndex);
+	void UpdateCanSee(HateListEntry_t* listIndex);
+	void UpdateAttackers(HateListEntry_t* listIndex);
 
-		// Utility Functions
-		qboolean IsValidEnemy( Entity *enemy );
-		bool	IsAnyEnemyInRange( float range );
-		float	getEnemyCount();
+	void LockOnCurrentEnemy(qboolean lock);
+	qboolean IsLockedOnCurrentEnemy();
+
+	Vector GetAwayFromEnemies();
+	qboolean InEnemyLineOfFire();
+	float GetDistanceFromEnemy();
+	void TrySleep(void);
+
+	bool HasEnemy();
+
+	// Utility Functions
+	qboolean IsValidEnemy(Entity* enemy);
+	bool IsAnyEnemyInRange(float range);
+	float getEnemyCount();
 
 
-		// Archiving
-		virtual void	Archive( Archiver &arc );
-		void			DoArchive ( Archiver &arc , Actor *actor );
+	// Archiving
+	virtual void Archive(Archiver& arc);
+	void DoArchive(Archiver& arc, Actor* actor);
 
-   
+
 	protected: //Member Functions			
-			void		_AddToHateList( Entity *enemy );						
-			int			_findEntityInHateList( Entity *searchEnt );
-			
+	void _AddToHateList(Entity* enemy);
+	int _findEntityInHateList(Entity* searchEnt);
+
 
 	private: //Member Variables
-			Container<HateListEntry_t> _hateList;
-			EntityPtr                  _currentEnemy;
-			EntityPtr                  _lastEnemy;
-			EntityPtr                  _alternateTarget;
-			qboolean                   _lockedOnCurrentEnemy;
-			float                      _currentEnemyHate;
-			
+	Container<HateListEntry_t> _hateList;
+	EntityPtr _currentEnemy;
+	EntityPtr _lastEnemy;
+	EntityPtr _alternateTarget;
+	qboolean _lockedOnCurrentEnemy;
+	float _currentEnemyHate;
 
-			Actor                      *act;
-	};
+	Actor* act;
+};
 
 
 
