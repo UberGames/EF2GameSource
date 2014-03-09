@@ -43,70 +43,63 @@ class AnimatedTeleportToPosition;
 //
 // Method of Use:	State Machine or another behavior
 //--------------------------------------------------------------
-class AnimatedTeleportToPosition : public Behavior
-	{
+class AnimatedTeleportToPosition : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:
-		typedef enum
-			{
-			ANIM_TELEPORT_BEGIN,
-			ANIM_TELEPORT_START_ANIM,
-			ANIM_TELEPORT_START_ANIMATING,
-			ANIM_TELEPORT_TELEPORT,
-			ANIM_TELEPORT_END_ANIM,
-			ANIM_TELEPORT_END_ANIMATING,
-			} animTeleportStates_t;
-
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private:
-		str						_teleportPositionName;
-		int						_numberOfTeleportPositions;
-		str						_startAnim;
-		str						_endAnim;
-
+	typedef enum {
+		ANIM_TELEPORT_BEGIN,
+		ANIM_TELEPORT_START_ANIM,
+		ANIM_TELEPORT_START_ANIMATING,
+		ANIM_TELEPORT_TELEPORT,
+		ANIM_TELEPORT_END_ANIM,
+		ANIM_TELEPORT_END_ANIMATING,
+	} animTeleportStates_t;
 
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( AnimatedTeleportToPosition );
+	CLASS_PROTOTYPE(AnimatedTeleportToPosition);
 
-		void					SetArgs( Event *ev );
-		void					Begin( Actor &self );
-		BehaviorReturnCode_t	Evaluate( Actor &self );
-		void					End( Actor &self );
-		virtual void			Archive( Archiver &arc );
+	void SetArgs(Event* ev);
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
+	virtual void Archive(Archiver& arc);
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	str _teleportPositionName;
+	int _numberOfTeleportPositions;
+	str _startAnim;
+	str _endAnim;
 
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private:		
-		animTeleportStates_t	_state;
-		PathNodePtr				_goal;
+	animTeleportStates_t _state;
+	PathNodePtr _goal;
+};
 
-	};
-
-inline void AnimatedTeleportToPosition::Archive( Archiver &arc )
-{
-	Behavior::Archive( arc );
+inline void AnimatedTeleportToPosition::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	//-------------------------------------
 	// Archive Parameters
 	//-------------------------------------
-	arc.ArchiveString		( &_teleportPositionName	    );
-	arc.ArchiveInteger		( &_numberOfTeleportPositions   );
-	arc.ArchiveString		( &_startAnim				    );
-	arc.ArchiveString		( &_endAnim				        );
+	arc.ArchiveString(&_teleportPositionName);
+	arc.ArchiveInteger(&_numberOfTeleportPositions);
+	arc.ArchiveString(&_startAnim);
+	arc.ArchiveString(&_endAnim);
 
 	//-------------------------------------
 	// Archive Member Variables
 	//-------------------------------------
-	ArchiveEnum				(  _state, animTeleportStates_t );
-	arc.ArchiveSafePointer	( &_goal					    );
+	ArchiveEnum(_state, animTeleportStates_t);
+	arc.ArchiveSafePointer(&_goal);
 }
 
 
