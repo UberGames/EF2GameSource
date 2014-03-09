@@ -7,7 +7,7 @@
  * desc:		bot characters
  *
  * $Archive: /Code/DLLs/game/be_ai_char.h $
- * $Author: Jwaters $ 
+ * $Author: Jwaters $
  * $Revision: 1 $
  * $Modtime: 5/17/02 11:35a $
  * $Date: 7/31/02 10:45a $
@@ -15,7 +15,7 @@
  *****************************************************************************/
 
 //loads a bot character from a file
-int BotLoadCharacter(char *charfile, float skill);
+int BotLoadCharacter(char* charfile, float skill);
 //frees a bot character
 void BotFreeCharacter(int character);
 //returns a float characteristic
@@ -27,6 +27,6 @@ int Characteristic_Integer(int character, int index);
 //returns a bounded integer characteristic
 int Characteristic_BInteger(int character, int index, int min, int max);
 //returns a string characteristic
-void Characteristic_String(int character, int index, char *buf, int size);
+void Characteristic_String(int character, int index, char* buf, int size);
 //free cached bot characters
 void BotShutdownCharacters(void);

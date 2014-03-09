@@ -7,7 +7,7 @@
  * desc:		weapon AI
  *
  * $Archive: /Code/DLLs/game/be_ai_weap.h $
- * $Author: Jwaters $ 
+ * $Author: Jwaters $
  * $Revision: 4 $
  * $Modtime: 8/19/02 3:51p $
  * $Date: 8/19/02 4:08p $
@@ -24,8 +24,7 @@
 #define DAMAGETYPE_RADIAL			2		//radial damage
 #define DAMAGETYPE_VISIBLE			4		//damage to all entities visible to the projectile
 
-typedef struct projectileinfo_s
-{
+typedef struct projectileinfo_s {
 	char name[MAX_STRINGFIELD];
 	char model[MAX_STRINGFIELD];
 	int flags;
@@ -42,8 +41,7 @@ typedef struct projectileinfo_s
 	float bouncestop;
 } projectileinfo_t;
 
-typedef struct weaponinfo_s
-{
+typedef struct weaponinfo_s {
 	int valid;					//true if the weapon info is valid
 	int number;									//number of the weapon
 	char name[MAX_STRINGFIELD];
@@ -77,11 +75,11 @@ int BotSetupWeaponAI(void);
 //shut down the weapon AI
 void BotShutdownWeaponAI(void);
 //returns the best weapon to fight with
-int BotChooseBestFightWeapon(int weaponstate, int *inventory);
+int BotChooseBestFightWeapon(int weaponstate, int* inventory);
 //returns the information of the current weapon
-void BotGetWeaponInfo(int weaponstate, int weapon, weaponinfo_t *weaponinfo);
+void BotGetWeaponInfo(int weaponstate, int weapon, weaponinfo_t* weaponinfo);
 //loads the weapon weights
-int BotLoadWeaponWeights(int weaponstate, char *filename);
+int BotLoadWeaponWeights(int weaponstate, char* filename);
 //returns a handle to a newly allocated weapon state
 int BotAllocWeaponState(void);
 //frees the weapon state

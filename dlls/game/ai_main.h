@@ -7,7 +7,7 @@
  * desc:		Quake3 bot AI
  *
  * $Archive: /Code/DLLs/game/ai_main.h $
- * $Author: Jwaters $ 
+ * $Author: Jwaters $
  * $Revision: 2 $
  * $Modtime: 8/05/02 5:51p $
  * $Date: 8/06/02 6:28p $
@@ -76,19 +76,18 @@
 #define MAX_PROXMINES				64
 
 //check points
-typedef struct bot_waypoint_s
-{
-	int			inuse;
-	char		name[32];
-	bot_goal_t	goal;
-	struct		bot_waypoint_s *next, *prev;
+typedef struct bot_waypoint_s {
+	int inuse;
+	char name[32];
+	bot_goal_t goal;
+	struct bot_waypoint_s* next;
+	struct bot_waypoint_s* prev;
 } bot_waypoint_t;
 
 #define MAX_ACTIVATESTACK		8
 #define MAX_ACTIVATEAREAS		32
 
-typedef struct bot_activategoal_s
-{
+typedef struct bot_activategoal_s {
 	int inuse;
 	bot_goal_t goal;						//goal to activate (buttons etc.)
 	float time;								//time to activate something
@@ -101,12 +100,11 @@ typedef struct bot_activategoal_s
 	int areas[MAX_ACTIVATEAREAS];			//routing areas disabled by blocking entity
 	int numareas;							//number of disabled routing areas
 	int areasdisabled;						//true if the areas are disabled for the routing
-	struct bot_activategoal_s *next;		//next activate goal on stack
+	struct bot_activategoal_s* next;		//next activate goal on stack
 } bot_activategoal_t;
 
 //bot state
-typedef struct bot_state_s
-{
+typedef struct bot_state_s {
 	int inuse;										//true if this state is used by a bot client
 	int botthink_residual;							//residual for the bot thinks
 	int client;										//client number of the bot
@@ -117,7 +115,7 @@ typedef struct bot_state_s
 	int entityeventTime[1024];						//last entity event time
 	//
 	bot_settings_t settings;						//several bot settings
-	int (*ainode)(struct bot_state_s *bs);			//current AI node
+	int(*ainode)(struct bot_state_s* bs);			//current AI node
 	float thinktime;								//time the bot thinks this frame
 	vec3_t origin;									//origin of the bot
 	vec3_t velocity;								//velocity of the bot
@@ -256,31 +254,31 @@ typedef struct bot_state_s
 	vec3_t formation_origin;						//origin the bot uses for relative positioning
 	bot_goal_t formation_goal;						//formation goal
 
-	bot_activategoal_t *activatestack;				//first activate goal on the stack
+	bot_activategoal_t* activatestack;				//first activate goal on the stack
 	bot_activategoal_t activategoalheap[MAX_ACTIVATESTACK];	//activate goal heap
 
-	bot_waypoint_t *checkpoints;					//check points
-	bot_waypoint_t *patrolpoints;					//patrol points
-	bot_waypoint_t *curpatrolpoint;					//current patrol point the bot is going for
+	bot_waypoint_t* checkpoints;					//check points
+	bot_waypoint_t* patrolpoints;					//patrol points
+	bot_waypoint_t* curpatrolpoint;					//current patrol point the bot is going for
 	int patrolflags;								//patrol flags
 } bot_state_t;
 
 //resets the whole bot state
-void BotResetState(bot_state_t *bs);
+void BotResetState(bot_state_t* bs);
 //returns the number of bots in the game
 int NumBots(void);
 //returns info about the entity
-void BotEntityInfo(int entnum, aas_entityinfo_t *info);
+void BotEntityInfo(int entnum, aas_entityinfo_t* info);
 
 extern float floattime;
 #define FloatTime() level.time
 
 // from the game source
-void	QDECL BotAI_Print(int type, const char *fmt, ...);
-void	QDECL QDECL BotAI_BotInitialChat( bot_state_t *bs, const char *type, ... );
-void	BotAI_Trace(bsp_trace_t *bsptrace, vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, int passent, int contentmask);
-int		BotAI_GetClientState( int clientNum, playerState_t *state );
-int		BotAI_GetEntityState( int entityNum, entityState_t *state );
-int		BotAI_GetSnapshotEntity( int clientNum, int sequence, entityState_t *state );
-int		BotTeamLeader(bot_state_t *bs);
+void	QDECL BotAI_Print(int type, const char* fmt, ...);
+void	QDECL QDECL BotAI_BotInitialChat(bot_state_t* bs, const char* type, ...);
+void	BotAI_Trace(bsp_trace_t* bsptrace, vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, int passent, int contentmask);
+int		BotAI_GetClientState(int clientNum, playerState_t* state);
+int		BotAI_GetEntityState(int entityNum, entityState_t* state);
+int		BotAI_GetSnapshotEntity(int clientNum, int sequence, entityState_t* state);
+int		BotTeamLeader(bot_state_t* bs);
 #endif // __AI_MAIN__
