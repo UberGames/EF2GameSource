@@ -38,110 +38,100 @@ class SelectBestWeapon;
 //
 // Method of Use:  Called From State Machine
 //--------------------------------------------------------------
-class SelectBestWeapon : public Behavior
-	{
+class SelectBestWeapon : public Behavior {
+	public:
 	//------------------------------------
 	// States
 	//------------------------------------
-	public:  
-		typedef enum
-		{
-			SBW_SELECT_WEAPON,
-			SBW_PUT_AWAY_CURRENT_WEAPON,
-			SBW_PULL_OUT_NEW_WEAPON,
-			SBW_READY_NEW_WEAPON,			
-			SBW_SUCCESS,
-			SBW_FAILED
-		} selectBestWeaponStates_t;
-
-	//------------------------------------
-	// Parameters
-	//------------------------------------
-	private:
-		EntityPtr	_currentEnemy;
-
-	//-------------------------------------
-	// Internal Functionality
-	//-------------------------------------
-	protected:
-		void	transitionToState	( selectBestWeaponStates_t state );
-		void	setInternalState	( selectBestWeaponStates_t state , const str &stateName );
-		void	init				( Actor &self );
-		void	think				();		
-
-		void					setupStateSelectWeapon ();
-		BehaviorReturnCode_t	evaluateStateSelectWeapon();
-		void					failureStateSelectWeapon( const str& failureReason );
-
-		void					setupStatePutAwayCurrentWeapon();
-		BehaviorReturnCode_t	evaluateStatePutAwayCurrentWeapon();
-		void					failureStatePutAwayCurrentWeapon(const str& failureReason);
-
-		void					setupStatePullOutNewWeapon();
-		BehaviorReturnCode_t	evaluateStatePullOutNewWeapon();
-		void					failureStatePullOutNewWeapon(const str& failureReason);
-
-		void					setupStateReadyNewWeapon();
-		BehaviorReturnCode_t	evaluateStateReadyNewWeapon();
-		void					failureStateReadyNewWeapon( const str& failureReason );
+	typedef enum {
+		SBW_SELECT_WEAPON,
+		SBW_PUT_AWAY_CURRENT_WEAPON,
+		SBW_PULL_OUT_NEW_WEAPON,
+		SBW_READY_NEW_WEAPON,
+		SBW_SUCCESS,
+		SBW_FAILED
+	} selectBestWeaponStates_t;
 
 	//-------------------------------------
 	// Public Interface
 	//-------------------------------------
-	public:
-		CLASS_PROTOTYPE( SelectBestWeapon );
+	CLASS_PROTOTYPE(SelectBestWeapon);
 
-										SelectBestWeapon();
-									   ~SelectBestWeapon();
+	SelectBestWeapon();
+	~SelectBestWeapon();
 
-		void							SetArgs						( Event *ev );      
-		void							AnimDone					( Event *ev );
-		void							PostureDone					( Event *ev );
+	void SetArgs(Event* ev);
+	void AnimDone(Event* ev);
+	void PostureDone(Event* ev);
 
-		void							Begin						( Actor &self );		
-		BehaviorReturnCode_t			Evaluate					( Actor &self );
-		void							End							( Actor &self );
-		
-		void							SetCurrentEnemy ( Entity* enemy );
+	void Begin(Actor& self);
+	BehaviorReturnCode_t Evaluate(Actor& self);
+	void End(Actor& self);
 
-		static	bool					CanExecute( Actor &self );
-		virtual void					Archive  ( Archiver &arc );
+	void SetCurrentEnemy(Entity* enemy);
 
-		
+	static bool CanExecute(Actor& self);
+	virtual void Archive(Archiver& arc);
+
+	protected:
+	//-------------------------------------
+	// Internal Functionality
+	//-------------------------------------
+	void transitionToState(selectBestWeaponStates_t state);
+	void setInternalState(selectBestWeaponStates_t state, const str& stateName);
+	void init(Actor& self);
+	void think();
+
+	void setupStateSelectWeapon();
+	BehaviorReturnCode_t evaluateStateSelectWeapon();
+	void failureStateSelectWeapon(const str& failureReason);
+
+	void setupStatePutAwayCurrentWeapon();
+	BehaviorReturnCode_t evaluateStatePutAwayCurrentWeapon();
+	void failureStatePutAwayCurrentWeapon(const str& failureReason);
+
+	void setupStatePullOutNewWeapon();
+	BehaviorReturnCode_t evaluateStatePullOutNewWeapon();
+	void failureStatePullOutNewWeapon(const str& failureReason);
+
+	void setupStateReadyNewWeapon();
+	BehaviorReturnCode_t evaluateStateReadyNewWeapon();
+	void failureStateReadyNewWeapon(const str& failureReason);
+
+	private:
+	//------------------------------------
+	// Parameters
+	//------------------------------------
+	EntityPtr _currentEnemy;
 
 	//-------------------------------------
 	// Components
 	//-------------------------------------
-	private: 	
-
 
 	//-------------------------------------
 	// Member Variables
 	//-------------------------------------
-	private: 
-		selectBestWeaponStates_t	_state;
-		Actor					   *_self;
-		WeaponPtr					_bestWeapon;
-		str							_currentWeaponName;
-		str							_bestWeaponName;
-		bool						_animDone;
+	selectBestWeaponStates_t _state;
+	Actor* _self;
+	WeaponPtr _bestWeapon;
+	str _currentWeaponName;
+	str _bestWeaponName;
+	bool _animDone;
 
-	};
+};
 
-inline void	SelectBestWeapon::SetCurrentEnemy( Entity *enemy )
-{
+inline void	SelectBestWeapon::SetCurrentEnemy(Entity* enemy) {
 	_currentEnemy = enemy;
 }
 
-inline void SelectBestWeapon::Archive( Archiver &arc	)
-{
-	Behavior::Archive ( arc );	     
+inline void SelectBestWeapon::Archive(Archiver& arc) {
+	Behavior::Archive(arc);
 
 	//
 	// Archive Parameters
 	//
-	arc.ArchiveSafePointer( &_currentEnemy );
-	
+	arc.ArchiveSafePointer(&_currentEnemy);
+
 	//
 	// Archive Components
 	//
@@ -149,12 +139,12 @@ inline void SelectBestWeapon::Archive( Archiver &arc	)
 	//
 	// Archive Member Variables
 	//
-	ArchiveEnum				( _state, selectBestWeaponStates_t   );
-	arc.ArchiveObjectPointer( ( Class ** )&_self			);
-	arc.ArchiveSafePointer	( &_bestWeapon );
-	arc.ArchiveString		( &_currentWeaponName );
-	arc.ArchiveString		( &_bestWeaponName );
-	arc.ArchiveBool			( &_animDone );
+	ArchiveEnum(_state, selectBestWeaponStates_t);
+	arc.ArchiveObjectPointer((Class **)&_self);
+	arc.ArchiveSafePointer(&_bestWeapon);
+	arc.ArchiveString(&_currentWeaponName);
+	arc.ArchiveString(&_bestWeaponName);
+	arc.ArchiveBool(&_animDone);
 }
 
 
