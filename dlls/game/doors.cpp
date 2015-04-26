@@ -315,11 +315,11 @@ Door::Door()
 
 	if ( health )
 	{
-		takedamage = DAMAGE_YES;
+		takedamage = DamageYes;
 	}
 	else
 	{
-		takedamage = DAMAGE_NO;
+		takedamage = DamageNo;
 	}
 
 	// LinkDoors can't be done until all of the doors have been spawned, so
@@ -537,7 +537,7 @@ void Door::Close( Event * )
 	{
 		if ( max_health )
 		{
-			takedamage	= DAMAGE_YES;
+			takedamage	= DamageYes;
 			health		= max_health;
 		}
 
@@ -702,7 +702,7 @@ void Door::DoorFire( Event *ev )
 	health = max_health;
 
 	// will be reset upon return
-	takedamage = DAMAGE_NO;
+	takedamage = DamageNo;
 
 	if ( ( spawnflags & ( DOOR_TOGGLE | DOOR_START_OPEN ) ) && ( ( state == STATE_OPENING ) || ( state == STATE_OPEN ) ) )
 	{
@@ -1773,7 +1773,7 @@ void ScriptDoor::ScriptDoorClose( Event * )
 	{
 		if ( max_health )
 		{
-			takedamage	= DAMAGE_YES;
+			takedamage	= DamageYes;
 			health		= max_health;
 		}
 

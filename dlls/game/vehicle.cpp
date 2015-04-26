@@ -204,7 +204,7 @@ VehicleBase::VehicleBase()
 		return;
 	}
 	
-	takedamage = DAMAGE_NO;
+	takedamage = DamageNo;
 	showModel();
 	setSolidType( SOLID_NOT );
 	setMoveType( MOVETYPE_NONE );
@@ -213,7 +213,7 @@ VehicleBase::VehicleBase()
 	//
 	// we want the bounds of this model auto-rotated
 	//
-	flags |= FL_ROTATEDBOUNDS;
+	flags |= FlagRotatedbounds;
 	
 	//
 	// rotate the mins and maxs for the model
@@ -269,7 +269,7 @@ Vehicle::Vehicle()
 		// Archive function will setup all necessary data
 		return;
 	}
-	takedamage = DAMAGE_YES;
+	takedamage = DamageYes;
 	seatangles = vec_zero;
 	driveroffset = vec_zero;
 	seatoffset = vec_zero;
@@ -287,9 +287,9 @@ Vehicle::Vehicle()
 	drivable = true;
 	jumpable = false;
 	showweapon = false;
-	flags |= FL_DIE_EXPLODE;
+	flags |= FlagDieExplode;
 	// touch triggers by default
-	flags |= FL_TOUCH_TRIGGERS;
+	flags |= FlagTouchTriggers;
 	gravity = 1;
 	mass = size.length() * 10.0f;
 	
@@ -663,7 +663,7 @@ void Vehicle::WorldEffects( void )
 	//
 	if ( watertype & CONTENTS_LAVA )
 	{
-		Damage( world, world, 20.0f * waterlevel, origin, vec_zero, vec_zero, 0, DAMAGE_NO_ARMOR, MOD_LAVA );
+		Damage( world, world, 20.0f * waterlevel, origin, vec_zero, vec_zero, 0, DamageNoArmor, MOD_LAVA );
 	}
 }
 
@@ -798,7 +798,7 @@ void Vehicle::DriverUse( Event *ev )
 		
 		offset = other->origin - origin;
 		
-		flags	|= FL_POSTTHINK;
+		flags	|= FlagPostthink;
 		SetDriverAngles( angles + seatangles );
 	}	
 }
@@ -1052,7 +1052,7 @@ void Vehicle::Postthink( void )
 	
 	if ( !driver && !velocity.length() && groundentity && !( watertype & CONTENTS_LAVA ) )
 	{
-		flags &= ~FL_POSTTHINK;
+		flags &= ~FlagPostthink;
 		if ( drivable )
 			setMoveType( MOVETYPE_NONE );
 	}
@@ -1242,7 +1242,7 @@ DrivableVehicle::DrivableVehicle()
 	}
 	
 	drivable = true;
-	flags |= FL_DIE_EXPLODE;
+	flags |= FlagDieExplode;
 }
 
 void DrivableVehicle::Killed(Event *ev)
@@ -1254,7 +1254,7 @@ void DrivableVehicle::Killed(Event *ev)
 	const char * name;
 	VehicleBase *last;
 	
-	takedamage = DAMAGE_NO;
+	takedamage = DamageNo;
 	setSolidType( SOLID_NOT );
 	hideModel();
 	
@@ -1280,12 +1280,12 @@ void DrivableVehicle::Killed(Event *ev)
 		sent->Damage( this, this, sent->health * 2.0f, origin, dir, vec_zero, 50, 0, MOD_VEHICLE  );
 	}
 	
-	if (flags & FL_DIE_EXPLODE)
+	if (flags & FlagDieExplode)
 	{
 		CreateExplosion( origin, 150.0f * edict->s.scale, this, this, this );
 	}
 	
-	if (flags & FL_DIE_GIBS)
+	if (flags & FlagDieGibs)
 	{
 		setSolidType( SOLID_NOT );
 		hideModel();
@@ -1621,7 +1621,7 @@ void HorseVehicle::Postthink ( void	)
 	// Turn off think if we aren't being used
 	if ( !driver && !velocity.length() && groundentity && !( watertype & CONTENTS_LAVA ) )
 	{
-		flags &= ~FL_POSTTHINK;
+		flags &= ~FlagPostthink;
 		if ( drivable )
 			setMoveType( MOVETYPE_NONE );
 	}
@@ -1759,7 +1759,7 @@ foundpos:
 		
 		offset = other->origin - origin;
 		
-		flags	|= FL_POSTTHINK;
+		flags	|= FlagPostthink;
 		SetDriverAngles( angles + seatangles );
 		
 		int tagnum = gi.Tag_NumForName( this->edict->s.modelindex, "tag_rider" );
@@ -2017,7 +2017,7 @@ void HorseVehicle::_HandleJump()
 	switch ( _jumpmode )
 	{
 	case JUMPMODE_START:
-		flags |= FL_FLY;
+		flags |= FlagFly;
 		_jumpSpeed += 100.0f;
 		if ( _jumpSpeed > 600.0f )
 			_jumpSpeed = 600.0f;		
@@ -2060,7 +2060,7 @@ void HorseVehicle::_HandleJump()
 		
 		if ( _animDone )
 		{
-			flags &= ~FL_FLY;
+			flags &= ~FlagFly;
 			_jumpmode = JUMPMODE_DONE;
 			_AnimateVehicle( "run" );					
 		}

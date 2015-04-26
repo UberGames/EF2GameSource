@@ -351,7 +351,7 @@ bool ModifierDestruction::shouldKeepItem( MultiplayerItem *item )
 
 		item->setSolidType( SOLID_BBOX );
 		item->setContents( CONTENTS_SOLID );
-		item->takedamage = DAMAGE_YES;
+		item->takedamage = DamageYes;
 
 		event = new Event( EV_Trigger_SetDestructible );
 		event->AddInteger( true );

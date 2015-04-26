@@ -431,7 +431,7 @@ void MovementSubsystem::Accelerate( const Vector &original_steering )
 		// make him lean into the turn a bit
 		newDir.z = _movespeed * ( 0.4f / 320.0f ) * steering.y;
 		
-		if ( ( act->flags & FL_FLY ) || ( ( act->flags & FL_SWIM ) && act->waterlevel > 0 ) )
+		if ( ( act->flags & FlagFly ) || ( ( act->flags & FlagSwim ) && act->waterlevel > 0 ) )
 			newDir.z = bound( act->angles.z, -2.0f, 2.0f );
 		else
 			newDir.z = bound( act->angles.z, -5.0f, 5.0f );		
@@ -826,7 +826,7 @@ stepmoveresult_t MovementSubsystem::TryMove ( void	)
 			_saveGroundInformation( verticalTrace );
 		
 		
-		act->flags &= ~FL_PARTIALGROUND;  // set in ActorThink
+		act->flags &= ~FlagPartialground;  // set in ActorThink
 		CheckWater();
 		
 	}
@@ -920,7 +920,7 @@ qboolean MovementSubsystem::Push ( const Vector &dir )
 	
 	oldorg = trace.endpos;
 	
-	if ( act->flags & FL_FLY )
+	if ( act->flags & FlagFly )
 		neworg = oldorg - _step;
 	else
 		neworg = oldorg - _step * 2.0f;
@@ -1394,7 +1394,7 @@ qboolean MovementSubsystem::_isBlockedByFall( trace_t &trace ) const
 	// step on sentients in general.  This is because, if we were to step on a flying
 	// creature, and the flying creature moved, then we might fall, where had we not
 	// stepped on the flying creature we would still be safe and sound
-	if ( trace.ent && ( trace.ent->entity->flags & FL_FLY ) && !allow_fall )
+	if ( trace.ent && ( trace.ent->entity->flags & FlagFly ) && !allow_fall )
 		return true;
 	
 	// Don't voluntarilty step on sentients
@@ -1441,7 +1441,7 @@ qboolean MovementSubsystem::_isBlockedByFall( trace_t &trace ) const
 //
 qboolean MovementSubsystem::_allowFall() const
 {
-	if ( ( act->flags & FL_PARTIALGROUND ) ||
+	if ( ( act->flags & FlagPartialground ) ||
 		( act->groundentity && act->groundentity->entity && ( act->groundentity->entity->isSubclassOf( Sentient ) ) ) ||
 		( act->GetActorFlag( ACTOR_FLAG_ALLOW_FALL ) ) )
 		return true;

@@ -1021,7 +1021,7 @@ qboolean KillBox( Entity *ent )
 		}
 		
 		hit->entity->Damage( ent, ent, hit->entity->health + 100000.0f, ent->origin, vec_zero, vec_zero,
-			0, DAMAGE_NO_PROTECTION, MOD_TELEFRAG );
+			0, DamageNoProtection, MOD_TELEFRAG );
 		
 		//
 		// if we didn't kill it, fail
@@ -1944,7 +1944,7 @@ Squirrel : #if 0 / 1 block demoted to comment
 	//Putting in the mechanisims for a SoundType within Broadcast sound
 	//However it won't actually do anything yet.
 	assert( soundent );
-	if ( soundent && !( soundent->flags & FL_NOTARGET ) )
+	if ( soundent && !( soundent->flags & FlagNotarget ) )
 	{
 		r2 = radius * radius;
 		n = SentientList.NumObjects();
@@ -2028,7 +2028,7 @@ Squirrel : #if 0 / 1 block demoted to comment
 	//int	   soundType = SOUNDTYPE_ALERT;
 	
 	assert( soundent );
-	if ( soundent && !( soundent->flags & FL_NOTARGET ) )
+	if ( soundent && !( soundent->flags & FlagNotarget ) )
 	{
 		r2 = radius * radius;
 		n = SentientList.NumObjects();
@@ -2121,7 +2121,7 @@ void CloneEntity( Entity * dest, const Entity * src )
 			child = G_GetEntity( src->bind_info->children[ i ] );
 			if ( child )
 			{
-				clone = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+				clone = new Entity( EntityCreateFlagAnimate );
 				CloneEntity( clone, child );
 				clone->attach( dest->entnum, child->edict->s.tag_num );
 			}

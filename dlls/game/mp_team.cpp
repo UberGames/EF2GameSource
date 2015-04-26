@@ -412,7 +412,7 @@ void Team::_activatePlayer( Player *player )
 {
 	_giveInitialConditions(player);
 	multiplayerManager.allowFighting( true );
-	player->takedamage = DAMAGE_YES ;
+	player->takedamage = DamageYes ;
 }	
 
 
@@ -440,5 +440,5 @@ void Team::_deactivatePlayer( Player *player )
 	}
 
 	multiplayerManager.allowFighting( false );
-	player->takedamage = DAMAGE_NO ;
+	player->takedamage = DamageNo ;
 }

@@ -1019,7 +1019,7 @@ void Trigger::EventSetHealth( Event *ev )
 	max_health = health;
 	if ( health )
 	{
-		takedamage = DAMAGE_YES;
+		takedamage = DamageYes;
 		setSolidType( SOLID_BBOX );
 	}
 	else
@@ -1033,12 +1033,12 @@ void Trigger::SetTakeDamage( bool cantakedamage )
 {
 	if (cantakedamage)
 	{
-		takedamage = DAMAGE_YES ;
+		takedamage = DamageYes ;
 		setSolidType( SOLID_BBOX );
 	}
 	else
 	{
-		takedamage = DAMAGE_NO ;
+		takedamage = DamageNo ;
 		setMoveType( MOVETYPE_NONE ); // no one knows why this is here
 		setSolidType( SOLID_TRIGGER );
 	}
@@ -2393,9 +2393,9 @@ void TriggerHurt::Hurt( Event *ev )
 	
 	other = ev->GetEntity( 1 );
 	
-	if ( ( damage != 0 ) && !other->deadflag && !( other->flags & FL_GODMODE ) )
+	if ( ( damage != 0 ) && !other->deadflag && !( other->flags & FlagGodmode ) )
 	{
-		other->Damage( this, world, damage, other->origin, vec_zero, vec_zero, 0, DAMAGE_NO_ARMOR|DAMAGE_NO_SKILL, damage_type );
+		other->Damage( this, world, damage, other->origin, vec_zero, vec_zero, 0, DamageNoArmor|DamageNoSkill, damage_type );
 	}
 }
 
@@ -2454,12 +2454,12 @@ TriggerDamageTargets::TriggerDamageTargets()
 	{
 		health = 60;
 		max_health = health;
-		takedamage = DAMAGE_YES;
+		takedamage = DamageYes;
 		setSolidType( SOLID_BBOX );
 	}
 	else
 	{
-		takedamage = DAMAGE_NO;
+		takedamage = DamageNo;
 		setSolidType( SOLID_NOT );
 	}
 }
@@ -2531,7 +2531,7 @@ void TriggerDamageTargets::PassDamage( Event *ev )
 				break;
 			}
 			
-			if ( !ent->deadflag && !( ent->flags & FL_GODMODE ) )
+			if ( !ent->deadflag && !( ent->flags & FlagGodmode ) )
 			{
 				ent->Damage( this, attacker, dmg, ent->origin, vec_zero, vec_zero, 0, 0, MOD_CRUSH );
 			}
@@ -2592,7 +2592,7 @@ void TriggerDamageTargets::DamageTargets( Event *ev )
 				break;
 			}
 			
-			if ( !ent->deadflag && !( ent->flags & FL_GODMODE ) )
+			if ( !ent->deadflag && !( ent->flags & FlagGodmode ) )
 			{
 				if (damage)
 					ent->Damage( this, other, damage, ent->origin, vec_zero, vec_zero, 0, 0, MOD_CRUSH );

@@ -646,7 +646,6 @@ class Actor : public Sentient {
 	void SetHaveThing(int thing_number, qboolean thing_bool);
 	void SetBounceOff(Event* ev);
 	void SetBounceOffEffect(Event* ev);
-	void SetWatchOffset(Event* ev);
 	void SetMaxInactiveTime(Event* ev);
 	void SetTurnSpeed(Event* ev);
 	void SetHealth(Event* ev);
@@ -1205,7 +1204,11 @@ class Actor : public Sentient {
 	void EvaluateEnemies(Event* ev);
 	void ForgetEnemies(Event* ev);
 	bool IsFinishable();
-	const str getName() const { return name; }
+	str getName() const override 
+  { 
+    return name; 
+  }
+
 	void SendEventToGroup(Event* ev);
 	Actor* GetAttachedChildActor(const str& childName);
 	void turnTowardsEntity(Entity* ent, float extraYaw);

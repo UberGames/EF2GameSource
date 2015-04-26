@@ -659,7 +659,7 @@ Sentient::Sentient()
 	attack_blocked = false;
 	max_mouth_angle = 10;
 	// touch triggers by default
-	flags |= FL_TOUCH_TRIGGERS;
+	flags |= FlagTouchTriggers;
 	on_fire = false;
 	max_gibs = 0;
 	next_bleed_time = 0;
@@ -2151,7 +2151,7 @@ void Sentient::ArmorDamage( float damage, Entity *inflictor, Entity *attacker, c
 	
 	Q_UNUSED(normal);
 
-	if ( ( takedamage == DAMAGE_NO ) || ( movetype == MOVETYPE_NOCLIP ) )
+	if ( ( takedamage == DamageNo ) || ( movetype == MOVETYPE_NOCLIP ) )
 	   {
 		return;
 		}
@@ -2274,7 +2274,7 @@ void Sentient::ArmorDamage( float damage, Entity *inflictor, Entity *attacker, c
 		return;
 	}
 	
-	if ( flags & FL_GODMODE )
+	if ( flags & FlagGodmode )
 	{
 		return;
 	}
@@ -2326,7 +2326,7 @@ void Sentient::ArmorDamage( float damage, Entity *inflictor, Entity *attacker, c
 	}
 	
 	// Do the kick
-	if (!(dflags & DAMAGE_NO_KNOCKBACK))
+	if (!(dflags & DamageNoKnockback))
 	{
 		if ((knockback) &&
 			(movetype != MOVETYPE_NONE) &&
@@ -2351,7 +2351,7 @@ void Sentient::ArmorDamage( float damage, Entity *inflictor, Entity *attacker, c
 			else
 				momentum = normalizedDirection * ( 500.0f * ( float )knockback / m );
 			
-			if ( dflags & DAMAGE_BULLET )
+			if ( dflags & DamageBullet )
             {
 				// Clip the z velocity for bullet weapons
 				if ( momentum.z > 75.0f )
@@ -2758,7 +2758,7 @@ void Sentient::AddBloodSpurt( const Vector &position, const Vector &direction, i
 	
 	// Add blood spurt
 	
-	blood = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	blood = new Entity( EntityCreateFlagAnimate );
 	blood->setModel( blood_model );
 
 	if ( !isSubclassOf( Player ) )
@@ -4234,7 +4234,7 @@ void Sentient::SpawnBloodyGibs( Event *ev )
 	real_gib_name += number_of_gibs;
 	real_gib_name += ".tik";
 	
-	ent = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	ent = new Entity( EntityCreateFlagAnimate );
 	ent->setModel( real_gib_name.c_str() );
 	ent->setScale( scale );
 	ent->setOrigin( centroid );

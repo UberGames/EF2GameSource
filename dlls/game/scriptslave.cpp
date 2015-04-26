@@ -772,7 +772,7 @@ ScriptSlave::ScriptSlave()
 	edict->s.eType = ET_GENERAL;
 	
 	speed             = 100;
-	takedamage			= DAMAGE_YES;
+	takedamage			= DamageYes;
 	waypoint				= NULL;
 	SetNewAngles( localangles );
 	SetNewPosition( GetLocalOrigin() );
@@ -2302,7 +2302,7 @@ void ScriptSlave::Continue( void )
 //-----------------------------------------------------
 void ScriptSlave::Think()
 {
-	if(flags & FL_TOUCH_TRIGGERS)
+	if(flags & FlagTouchTriggers)
 	{
 		G_TouchTriggers(this);
 	}

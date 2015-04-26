@@ -104,7 +104,7 @@ BehaviorReturnCode_t AnimatedTeleportToPlayer::Evaluate ( Actor &self )
 		player = GetPlayer(i);		
 		
 		// don't target while player is not in the game or he's in notarget
-		if ( temp_player && !( temp_player->flags & FL_NOTARGET ) )
+		if ( temp_player && !( temp_player->flags & FlagNotarget ) )
 			{
 			player = temp_player;
 			break;

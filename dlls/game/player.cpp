@@ -1637,7 +1637,7 @@ qboolean Player::checkanimdone_torso( Conditional & )
 
 qboolean Player::checkattackleft( Conditional & )
 {
-	if ( level.playerfrozen || ( flags & FL_IMMOBILE ) )
+	if ( level.playerfrozen || ( flags & FlagImmobile ) )
 	{
 		return qfalse;
 	}
@@ -1690,7 +1690,7 @@ qboolean Player::checkattackleft( Conditional & )
 
 qboolean Player::checkattackbuttonleft( Conditional & )
 {
-	if ( level.playerfrozen || ( flags & FL_IMMOBILE ) )
+	if ( level.playerfrozen || ( flags & FlagImmobile ) )
 	{
 		return qfalse;
 	}
@@ -1709,7 +1709,7 @@ qboolean Player::checkattackright( Conditional & )
 {
 	Weapon *weapon;
 	
-	if ( level.playerfrozen || ( flags & FL_IMMOBILE ) )
+	if ( level.playerfrozen || ( flags & FlagImmobile ) )
 	{
 		return qfalse;
 	}
@@ -1768,7 +1768,7 @@ qboolean Player::checkattackright( Conditional & )
 
 qboolean Player::checkattackbuttonright( Conditional & )
 {
-	if ( level.playerfrozen || ( flags & FL_IMMOBILE ) )
+	if ( level.playerfrozen || ( flags & FlagImmobile ) )
 	{
 		return qfalse;
 	}
@@ -1837,7 +1837,7 @@ qboolean Player::checkblocked( Conditional &condition )
 	
 	test_moveresult = moveresult;
 	
-	if ( flags & FL_IMMOBILE )
+	if ( flags & FlagImmobile )
 		test_moveresult = MOVERESULT_BLOCKED;
 	
 	if ( condition.numParms() )
@@ -2343,7 +2343,7 @@ qboolean Player::checkweaponreadytofire( Conditional &condition )
 	weaponhand_t   hand;
 	qboolean    ready;
 	
-	if ( level.playerfrozen || ( flags & FL_IMMOBILE ) )
+	if ( level.playerfrozen || ( flags & FlagImmobile ) )
 	{
 		return qfalse;
 	}
@@ -3269,7 +3269,7 @@ Player::Player()
 			_targetSelectedHighlight->setModel( targetSelectedHighlightModelName );
 			_targetSelectedHighlight->setSolidType( SOLID_NOT );
 			_targetSelectedHighlight->setMoveType( MOVETYPE_NONE );
-			_targetSelectedHighlight->takedamage = DAMAGE_NO;
+			_targetSelectedHighlight->takedamage = DamageNo;
 			_targetSelectedHighlight->hideModel();
 		}
 		
@@ -3281,7 +3281,7 @@ Player::Player()
 			_targetLockedHighlight->setModel( targetLockedHighlightModelName );
 			_targetLockedHighlight->setSolidType( SOLID_NOT );
 			_targetLockedHighlight->setMoveType( MOVETYPE_NONE );
-			_targetLockedHighlight->takedamage = DAMAGE_NO;
+			_targetLockedHighlight->takedamage = DamageNo;
 			_targetLockedHighlight->hideModel();
 		}
 	}
@@ -3539,15 +3539,15 @@ void Player::InitState( void )
 	knockdown          = false;
 	pain_dir           = PAIN_NONE;
 	pain_type          = MOD_NONE;
-	takedamage			 = DAMAGE_AIM;
-	deadflag				 = DEAD_NO;
-	flags					&= ~FL_NO_KNOCKBACK;
-	flags					|= ( FL_BLOOD | FL_DIE_GIBS );
+	takedamage			 = DamageAim;
+	deadflag				 = DeadNo;
+	flags					&= ~FlagNoKnockback;
+	flags					|= ( FlagBlood | FlagDieGibs );
 	
 	if ( !com_blood->integer )
 	{
-		flags &= ~FL_BLOOD;
-		flags &= ~FL_DIE_GIBS;
+		flags &= ~FlagBlood;
+		flags &= ~FlagDieGibs;
 	}
 }
 
@@ -3748,7 +3748,7 @@ void Player::Respawn( Event * )
 {
 	if ( multiplayerManager.inMultiplayer() )
 	{
-		assert ( deadflag == DEAD_DEAD );
+		assert ( deadflag == DeadDead );
 		
 		respawn_time = level.time;
 		
@@ -3801,7 +3801,7 @@ void Player::Dead( Event * )
 		return;
 	}
 	
-	deadflag = DEAD_DEAD;
+	deadflag = DeadDead;
 	
 	// stop animating
 	//animate->StopAnimating( legs );
@@ -3860,7 +3860,7 @@ void Player::Killed( Event *ev )
 	animate->ClearTorsoAnim();
 	animate->ClearLegsAnim();
 	
-	deadflag	= DEAD_DYING;
+	deadflag	= DeadDying;
 	
 	respawn_time = level.time + 1.0f;
 	
@@ -3988,7 +3988,7 @@ void Player::Pain( Event *ev )
 
 	damage_blood += damage;
 
-	if ( deadflag == DEAD_NO )
+	if ( deadflag == DeadNo )
 	{
 		if ( meansofdeath == MOD_DEATH_QUAD )
 			damage_from = vec_zero;
@@ -4601,16 +4601,16 @@ void Player::showObjectInfo()
 		
 		switch( act->deadflag )
 		{
-		case DEAD_NO :
+		case DeadNo :
 			sprintf(addstr, "deadflag: NO\n" );
 			break;
-		case DEAD_DYING :
+		case DeadDying :
 			sprintf(addstr, "deadflag: DYING\n" );
 			break;
-		case DEAD_DEAD :
+		case DeadDead :
 			sprintf(addstr, "deadflag: DEAD\n" );
 			break;
-		case DEAD_RESPAWNABLE :
+		case DeadRespawnable :
 			sprintf(addstr, "deadflag: RESPAWNABLE\n" );
 			break;
 		}
@@ -4877,14 +4877,14 @@ void Player::ApplyPowerupEffects(int &moveSpeed)
 		
 	if ( poweruptype == POWERUP_STEALTH )
 	{
-		if ( !(flags & FL_NOTARGET) )
-			flags ^= FL_NOTARGET;
+		if ( !(flags & FlagNotarget) )
+			flags ^= FlagNotarget;
 	}
 		
 	if ( poweruptype == POWERUP_PROTECTION )
 	{
-		if ( !(flags & FL_GODMODE) )
-			flags ^= FL_GODMODE;
+		if ( !(flags & FlagGodmode) )
+			flags ^= FlagGodmode;
 	}
 
 	if ( poweruptype == POWERUP_FLIGHT )
@@ -5135,12 +5135,12 @@ void Player::ClientMoveLean( usercmd_t *ucmd )
 
 void Player::ClientMoveFlagsAndSpeeds( int moveSpeed, int noclipSpeed, int crouchSpeed, int airSpeed )
 {
-	if ( level.playerfrozen || ( flags & FL_STUNNED ) )
+	if ( level.playerfrozen || ( flags & FlagStunned ) )
 	{
 		client->ps.pm_flags |= PMF_FROZEN;
 	}
 	
-	if ( ( flags & FL_IMMOBILE ) || ( flags & FL_PARTIAL_IMMOBILE ) )
+	if ( ( flags & FlagImmobile ) || ( flags & FlagPartialImmobile ) )
 	{
 		client->ps.pm_flags |= PMF_NO_MOVE;
 		//client->ps.pm_flags |= PMF_NO_PREDICTION;
@@ -5547,7 +5547,7 @@ void Player::ClientThink( Event * )
 	old_v_angle  = v_angle;
 	
 	// If we're dying, check for respawn
-	if ( ( deadflag == DEAD_DEAD && ( level.time > respawn_time ) ) )
+	if ( ( deadflag == DeadDead && ( level.time > respawn_time ) ) )
 	{
 		// wait for any button just going down
 		//if ( new_buttons || ( multiplayerManager.inMultiplayer() && multiplayerManager.checkFlag( MP_FLAG_FORCE_RESPAWN ) ) )
@@ -6592,21 +6592,21 @@ void Player::GodCheat( Event *ev )
 	{
 		if ( ev->GetInteger( 1 ) )
 		{
-			flags |= FL_GODMODE;
+			flags |= FlagGodmode;
 		}
 		else
 		{
-			flags &= ~FL_GODMODE;
+			flags &= ~FlagGodmode;
 		}
 	}
 	else
 	{
-		flags ^= FL_GODMODE;
+		flags ^= FlagGodmode;
 	}
 	
 	if ( ev->GetSource() == EV_FROM_CONSOLE )
 	{
-		if ( !( flags & FL_GODMODE ) )
+		if ( !( flags & FlagGodmode ) )
 		{
 			msg = "godmode OFF\n";
 		}
@@ -6626,17 +6626,17 @@ void Player::Kill( Event * )
 		return;
 	}
 	
-	flags &= ~FL_GODMODE;
+	flags &= ~FlagGodmode;
 	health = 1.0f;
-	Damage( this, this, 10.0f, origin, vec_zero, vec_zero, 0, DAMAGE_NO_PROTECTION, MOD_SUICIDE );
+	Damage( this, this, 10.0f, origin, vec_zero, vec_zero, 0, DamageNoProtection, MOD_SUICIDE );
 }
 
 void Player::NoTargetCheat( Event * )
 {
 	const char *msg;
 	
-	flags ^= FL_NOTARGET;
-	if ( !( flags & FL_NOTARGET ) )
+	flags ^= FlagNotarget;
+	if ( !( flags & FlagNotarget ) )
 	{
 		msg = "notarget OFF\n";
 	}
@@ -6893,7 +6893,7 @@ void Player::ProcessPmoveEvents( int event )
 		
 		if ( !multiplayerManager.checkFlag( MP_FLAG_NO_FALLING ) )
 		{
-            Damage( world, world, damage, origin, vec_zero, vec_zero, 0, DAMAGE_NO_ARMOR, MOD_FALLING );
+            Damage( world, world, damage, origin, vec_zero, vec_zero, 0, DamageNoArmor, MOD_FALLING );
 		}
 		break;
 	case EV_TERMINAL_VELOCITY:
@@ -6930,7 +6930,7 @@ void Player::ProcessPmoveEvents( int event )
 			
 			// Spawn in a water splash
 			
-			water = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+			water = new Entity( EntityCreateFlagAnimate );
 			
 			water->setOrigin( trace.endpos );
 			water->setModel( "fx_splashsmall.tik" );
@@ -6959,7 +6959,7 @@ WorldEffects
 */
 void Player::WorldEffects( void )
 {
-	if ( deadflag == DEAD_DEAD )
+	if ( deadflag == DeadDead )
 	{
 		// if we are dead, no world effects
 		return;
@@ -6992,7 +6992,7 @@ void Player::WorldEffects( void )
 		if ( next_drown_time < level.time )
 		{
 			next_drown_time = level.time + 0.2f;
-			Damage( world, world, 10.0f * waterlevel, origin, vec_zero, vec_zero, 0, DAMAGE_NO_ARMOR, MOD_LAVA );
+			Damage( world, world, 10.0f * waterlevel, origin, vec_zero, vec_zero, 0, DamageNoArmor, MOD_LAVA );
 		}
 		if ( next_painsound_time < level.time )
 		{
@@ -7009,7 +7009,7 @@ void Player::WorldEffects( void )
 		if ( next_drown_time < level.time )
 		{
 			next_drown_time = level.time + 0.4f;
-			Damage( world, world, 7.0f * waterlevel, origin, vec_zero, vec_zero, 0, DAMAGE_NO_ARMOR, MOD_SLIME );
+			Damage( world, world, 7.0f * waterlevel, origin, vec_zero, vec_zero, 0, DamageNoArmor, MOD_SLIME );
 		}
 		if ( next_painsound_time < level.time )
 		{
@@ -7024,7 +7024,7 @@ void Player::WorldEffects( void )
 	if ( waterlevel == 3 )
 	{
 		// if out of air, start drowning
-		if ( ( air_finished < level.time ) && !( flags & FL_GODMODE ) )
+		if ( ( air_finished < level.time ) && !( flags & FlagGodmode ) )
 		{
 			// drown!
 			if ( ( next_drown_time < level.time ) && ( health > 0 ) )
@@ -7055,7 +7055,7 @@ void Player::WorldEffects( void )
 					BroadcastSound();
 				}
 				
-				Damage( world, world, drown_damage, origin, vec_zero, vec_zero, 0, DAMAGE_NO_ARMOR, MOD_DROWN );
+				Damage( world, world, drown_damage, origin, vec_zero, vec_zero, 0, DamageNoArmor, MOD_DROWN );
 			}
 		}
 	}
@@ -7150,7 +7150,7 @@ void Player::CalcBlend( void )
 	
 	contents = gi.pointcontents( vieworg, 0 );
 	
-	if ( flags & FL_STUNNED )
+	if ( flags & FlagStunned )
 	{
 		AddBlend( 0.0f, 0.0f, 0.5f, 0.1f );
 		SetBlend( true );
@@ -8384,7 +8384,7 @@ void Player::PlayerAngles( void )
 		}
 	}
 	
-	if ( ( deadflag == DEAD_DYING ) || ( deadflag == DEAD_DEAD ) )
+	if ( ( deadflag == DeadDying ) || ( deadflag == DeadDead ) )
 		headAngles[PITCH] = 0.0f;
 	
 	// --------- pitch -------------
@@ -9315,7 +9315,7 @@ void Player::GibEvent( Event *ev )
 		if ( hidemodel )
 		{
 			gibbed = true;
-			takedamage = DAMAGE_NO;
+			takedamage = DamageNo;
 			setSolidType( SOLID_NOT );
 			hideModel();
 		}
@@ -9360,10 +9360,10 @@ void Player::GotKill( Event * )
    else
       {
 		// Reset any flags as necessary, powerup is done
-		if ( poweruptype == POWERUP_STEALTH && (flags & FL_NOTARGET) )
-			flags ^= FL_NOTARGET;
-		if ( poweruptype == POWERUP_PROTECTION && (flags & FL_GODMODE) )
-			flags ^= FL_GODMODE;
+		if ( poweruptype == POWERUP_STEALTH && (flags & FlagNotarget) )
+			flags ^= FlagNotarget;
+		if ( poweruptype == POWERUP_PROTECTION && (flags & FlagGodmode) )
+			flags ^= FlagGodmode;
 
 		if ( poweruptype == POWERUP_ACCURACY )
 			{
@@ -9549,7 +9549,7 @@ void Player::StartFakePlayer( void )
 	fake->maxs[2] -= STEPSIZE;
 	fake->setSize( mins, maxs );
 	
-	fake->takedamage = DAMAGE_NO;
+	fake->takedamage = DamageNo;
 	
 	// hide the player
 	this->hideModel();
@@ -9557,7 +9557,7 @@ void Player::StartFakePlayer( void )
 	//
 	// immobolize the player
 	//
-	this->flags |= FL_IMMOBILE;
+	this->flags |= FlagImmobile;
 	// make the player not solid
 	setSolidType( SOLID_NOT );
 	
@@ -9615,7 +9615,7 @@ void Player::RemoveFakePlayer( void )
 	this->showModel();
 	this->ProcessEvent( EV_Sentient_TurnOnShadow );
 	// allow the player to move
-	this->flags &= ~FL_IMMOBILE;
+	this->flags &= ~FlagImmobile;
 	// make the player solid
 	setSolidType( SOLID_BBOX );
 	// remove the fake
@@ -9826,7 +9826,7 @@ void Player::EnterVehicle( Event *ev )
 	ent = ev->GetEntity( 1 );
 	if ( ent && ent->isSubclassOf( Vehicle ) )
 	{
-		flags |= FL_PARTIAL_IMMOBILE;
+		flags |= FlagPartialImmobile;
 		viewheight = STAND_EYE_HEIGHT;
 		velocity = vec_zero;
 		vehicle = ( Vehicle * )ent;
@@ -9839,7 +9839,7 @@ void Player::EnterVehicle( Event *ev )
 
 void Player::ExitVehicle( Event * )
 {
-	flags &= ~FL_PARTIAL_IMMOBILE;
+	flags &= ~FlagPartialImmobile;
 	setMoveType( MOVETYPE_WALK );
 	vehicle = NULL;
 }
@@ -10118,7 +10118,7 @@ qboolean TryPush( int entnum, vec3_t move_origin, vec3_t move_end )
 		dir2 = move_end;
 		dir2 -= move_origin;
 		
-		if ( act->flags & FL_FLY )
+		if ( act->flags & FlagFly )
 		{
 			dir *= dir2.length() / 2.0f;
 			
@@ -10400,7 +10400,7 @@ int Player::GetKnockback( int original_knockback, qboolean blocked )
 			if ( damage > 10.0f )
 				damage = 10.0f;
 			
-			Damage( world, world, damage, origin, vec_zero, vec_zero, 0, DAMAGE_NO_ARMOR, MOD_CRUSH );
+			Damage( world, world, damage, origin, vec_zero, vec_zero, 0, DamageNoArmor, MOD_CRUSH );
 		}
 	}
 	
@@ -10566,7 +10566,7 @@ void Player::StartCoolItem( Event * )
 	// turn off ai off during the cinematic
 	level.ai_on = false;
 	// make sure we don't take damage during this time
-	takedamage = DAMAGE_NO;
+	takedamage = DamageNo;
 	// freeze the player
 	level.playerfrozen = true;
 	// turn on cinematic mode
@@ -10595,7 +10595,7 @@ void Player::ShowCoolItem( Event * )
 	org = origin;
 	org.z += 128.0f;
 	
-	fx = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	fx = new Entity( EntityCreateFlagAnimate );
 	
 	fx->setOrigin( org );
 	fx->setModel( "fx_coolitem.tik" );
@@ -10624,7 +10624,7 @@ void Player::HideCoolItem( Event * )
 	org = origin;
 	org.z += 128.0f;
 	
-	fx = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	fx = new Entity( EntityCreateFlagAnimate );
 	
 	fx->setOrigin( org );
 	fx->setModel( "fx_coolitem_reverse.tik" );
@@ -10675,7 +10675,7 @@ void Player::StopCoolItem( Event * )
 	level.ai_on = true;
 	
 	// turn damage back on
-	takedamage = DAMAGE_AIM;
+	takedamage = DamageAim;
 	
 	// unfreeze the player
 	level.playerfrozen = false;
@@ -10760,7 +10760,7 @@ void Player::Gib( void )
 	real_gib_name += number_of_gibs;
 	real_gib_name += ".tik";
 	
-	ent = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	ent = new Entity( EntityCreateFlagAnimate );
 	ent->setModel( real_gib_name.c_str() );
 	ent->setScale( scale );
 	ent->setOrigin( centroid );
@@ -13214,9 +13214,9 @@ void Player::immobilizePlayer( Event *ev )
 		freeze = ev->GetBoolean( 1 );
 
 	if ( freeze )
-		flags |= FL_IMMOBILE;
+		flags |= FlagImmobile;
 	else
-		flags &= ~FL_IMMOBILE;
+		flags &= ~FlagImmobile;
 
 }
 

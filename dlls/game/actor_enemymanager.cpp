@@ -328,7 +328,7 @@ qboolean EnemyManager::Hates( Entity *ent )
 qboolean EnemyManager::IsValidEnemy( Entity *enemy )
 {
 	
-	if ( !enemy || ( enemy == world ) || ( enemy == act ) || ( enemy->flags & FL_NOTARGET ) || ( enemy->takedamage == DAMAGE_NO ) || enemy->deadflag )
+	if ( !enemy || ( enemy == world ) || ( enemy == act ) || ( enemy->flags & FlagNotarget ) || ( enemy->takedamage == DamageNo ) || enemy->deadflag )
 		return false;
 	
 	if ( !Hates( enemy ) )
@@ -967,7 +967,7 @@ void EnemyManager::TrySleep( void )
 			if ( player )
 			{
 				//We should NOT fall asleep if:
-				// our mode is ACTOR_MODE_IDLE _AND_ player flags are not equal to FL_NOTARGET 
+				// our mode is ACTOR_MODE_IDLE _AND_ player flags are not equal to FlagNotarget 
 				// OR
 				// Player is within our vision distance
 				// OR
@@ -980,7 +980,7 @@ void EnemyManager::TrySleep( void )
 				// and this was ruining the framerate... I do not believe this is going to have any 
 				// detrimental side effects. 
 				//
-				if ( ( act->mode == ACTOR_MODE_IDLE ) && !(player->flags & FL_NOTARGET) && gi.inPVS( player->centroid, act->centroid ) || act->sensoryPerception->WithinVisionDistance(player) || gi.inPVS( player->centroid, act->centroid ) )
+				if ( ( act->mode == ACTOR_MODE_IDLE ) && !(player->flags & FlagNotarget) && gi.inPVS( player->centroid, act->centroid ) || act->sensoryPerception->WithinVisionDistance(player) || gi.inPVS( player->centroid, act->centroid ) )
 				{
 					act->last_time_active = level.time;
 				}

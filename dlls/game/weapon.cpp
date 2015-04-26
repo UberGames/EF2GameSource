@@ -2231,7 +2231,7 @@ void Weapon::Shoot( Event *ev )
 			
 			Entity *victim = G_GetEntity( trace.entityNum );
 			
-			if ( victim && ( ( victim == world ) || ( victim->takedamage == DAMAGE_NO ) ) )
+			if ( victim && ( ( victim == world ) || ( victim->takedamage == DamageNo ) ) )
 			{
 				vec3_t  newangles;
 				vectoangles( trace.plane.normal, newangles );
@@ -2323,7 +2323,7 @@ qboolean Weapon::UnlimitedAmmo( firemode_t mode )
 	if ( !ammorequired[mode] )
 		return true;
 	
-	if ( !owner->isClient() || ( owner->flags & FL_GODMODE ) || multiplayerManager.checkFlag( MP_FLAG_INFINITE_AMMO ) )
+	if ( !owner->isClient() || ( owner->flags & FlagGodmode ) || multiplayerManager.checkFlag( MP_FLAG_INFINITE_AMMO ) )
 	{
 		return true;
 	}
@@ -2646,7 +2646,7 @@ qboolean Weapon::Drop( void )
 	
 	// hack to fix the bounds when the gun is dropped
 	// once dropped reset the rotated bounds
-	flags |= FL_ROTATEDBOUNDS;
+	flags |= FlagRotatedbounds;
 	
 	if ( ( mins == vec_zero ) && ( maxs == vec_zero ) )
 	{
@@ -5465,7 +5465,7 @@ void Weapon::AdvancedMeleeAttack(const char* tag1, const char* tag2, bool critic
 		
 		Entity *victim = G_GetEntity( trace.entityNum );
 		
-		if ( victim && ( ( victim == world ) || ( victim->takedamage == DAMAGE_NO ) ) )
+		if ( victim && ( ( victim == world ) || ( victim->takedamage == DamageNo ) ) )
 		{
 			vec3_t  newangles;
 			vectoangles( trace.plane.normal, newangles );

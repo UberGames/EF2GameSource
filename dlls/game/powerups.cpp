@@ -988,7 +988,7 @@ bool HoldableItemExplosive::use( void )
 
 			// Spawn the item into the world
 
-			_explosive = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+			_explosive = new Entity( EntityCreateFlagAnimate );
 
 			_explosive->setModel( "models/item/holdable_explosive.tik" );
 
@@ -1002,7 +1002,7 @@ bool HoldableItemExplosive::use( void )
 
 			_explosive->setHealth( 5.0f );
 
-			_explosive->takedamage = DAMAGE_YES;
+			_explosive->takedamage = DamageYes;
 
 			_explosive->setOrigin( newOrigin );
 			_explosive->setAngles( newAngles );

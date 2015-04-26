@@ -44,7 +44,7 @@ Entity * Player::FindClosestEntityInRadius( const float horizontalFOVDegrees, co
 	{
 		bool validEntity = false;
 		
-		if ( currentEntity->flags & FL_AUTOAIM )
+		if ( currentEntity->flags & FlagAutoaim )
 		{
 			validEntity = true;
 		}

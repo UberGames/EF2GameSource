@@ -2889,7 +2889,7 @@ void L_ArchiveEvents( Archiver &arc )
 		assert( obj );
 		
 		if ( obj->isSubclassOf( Entity ) &&
-			( ( ( Entity * )obj )->flags & FL_DONTSAVE ) )
+			( ( ( Entity * )obj )->flags & FlagDontsave ) )
 		{
 			continue;
 		}
@@ -2909,7 +2909,7 @@ void L_ArchiveEvents( Archiver &arc )
 		assert( obj );
 		
 		if ( obj->isSubclassOf( Entity ) &&
-			( ( ( Entity * )obj )->flags & FL_DONTSAVE ) )
+			( ( ( Entity * )obj )->flags & FlagDontsave ) )
 		{
 			continue;
 		}

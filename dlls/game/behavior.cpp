@@ -5628,7 +5628,7 @@ BehaviorReturnCode_t	FlyCircle::Evaluate
 				temp_player = GetPlayer(i);		
 			
 				// don't target while player is not in the game or he's in notarget
-				if ( temp_player && !( temp_player->flags & FL_NOTARGET ) )
+				if ( temp_player && !( temp_player->flags & FlagNotarget ) )
 					{
 					player = temp_player;
 					break;
@@ -7257,7 +7257,7 @@ BehaviorReturnCode_t	GetCloseToPlayer::Evaluate
 		temp_player = GetPlayer(i);		
 		
 		// don't target while player is not in the game or he's in notarget
-		if( temp_player && !( temp_player->flags & FL_NOTARGET ) )
+		if( temp_player && !( temp_player->flags & FlagNotarget ) )
 			{
 			player = temp_player;
 			break;
@@ -8277,7 +8277,7 @@ BehaviorReturnCode_t	BurrowAttack::Evaluate
 			temp_endpos -=  Vector( "0 0 5" );
 			cont = gi.pointcontents( temp_endpos, 0 );
 
-			dirt = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+			dirt = new Entity( EntityCreateFlagAnimate );
 
 			dirt->setOrigin( trace.endpos );
 
@@ -8413,7 +8413,7 @@ void BurrowAttack::SpawnArm
 
 	// Spawn some dirt
 
-	dirt = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	dirt = new Entity( EntityCreateFlagAnimate );
 
 	dirt->setOrigin( arm_origin );
 	dirt->setModel( "fx_dirtcloud.tik" );
@@ -8423,7 +8423,7 @@ void BurrowAttack::SpawnArm
 
 	// Spawn leg
 
-	leg = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	leg = new Entity( EntityCreateFlagAnimate );
 
 	leg->setModel( "vmama_arm.tik" );
 	leg->setOrigin( arm_origin );
@@ -9838,7 +9838,7 @@ BehaviorReturnCode_t	DragEnemy::Evaluate
 				ev->AddVector( offset );
 				ent_to_drag->ProcessEvent( ev );
 
-				ent_to_drag->flags |= FL_PARTIAL_IMMOBILE;
+				ent_to_drag->flags |= FlagPartialImmobile;
 				}
 
 			attached = true;
@@ -9916,7 +9916,7 @@ void DragEnemy::End
 
 	if ( drop || ( strcmp( self.currentState->getName(), "SUICIDE" ) == 0 ) )
 		{
-		ent_to_drag->flags &= ~FL_PARTIAL_IMMOBILE;
+		ent_to_drag->flags &= ~FlagPartialImmobile;
 
 		ev = new Event( EV_Detach );
 		ent_to_drag->ProcessEvent( ev );
@@ -10088,7 +10088,7 @@ BehaviorReturnCode_t	PickupEnemy::Evaluate
 			ev->AddVector( offset );
 			ent_to_drag->ProcessEvent( ev );
 
-			ent_to_drag->flags |= FL_PARTIAL_IMMOBILE;
+			ent_to_drag->flags |= FlagPartialImmobile;
 			}
 
 		attached = true;
@@ -10165,7 +10165,7 @@ void PickupEnemy::End
 
 	if ( drop || ( strcmp( self.currentState->getName(), "SUICIDE" ) == 0 ) )
 		{
-		ent_to_drag->flags &= ~FL_PARTIAL_IMMOBILE;
+		ent_to_drag->flags &= ~FlagPartialImmobile;
 
 		ev = new Event( EV_Detach );
 		ent_to_drag->ProcessEvent( ev );
@@ -10544,7 +10544,7 @@ BehaviorReturnCode_t	TeleportToPlayer::Evaluate
 		player = GetPlayer(i);		
 		
 		// don't target while player is not in the game or he's in notarget
-		if ( temp_player && !( temp_player->flags & FL_NOTARGET ) )
+		if ( temp_player && !( temp_player->flags & FlagNotarget ) )
 			{
 			player = temp_player;
 			break;
@@ -10708,7 +10708,7 @@ BehaviorReturnCode_t	TeleportToPosition::Evaluate
    /*
 	// Spawn in teleport effect at old positiond
 
-	effect = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	effect = new Entity( EntityCreateFlagAnimate );
 	effect->setModel( "fx_teleport3.tik" );
 	effect->setOrigin( self.origin );
 	effect->setScale( 2.0f );
@@ -10723,7 +10723,7 @@ BehaviorReturnCode_t	TeleportToPosition::Evaluate
 
 	// Spawn in teleport effect at new position
    /*
-	effect = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	effect = new Entity( EntityCreateFlagAnimate );
 	effect->setModel( "fx_teleport3.tik" );
 	effect->setOrigin( self.origin );
 	effect->setScale( 2.0f );
@@ -12169,7 +12169,7 @@ BehaviorReturnCode_t	HelicopterFlyCircle::Evaluate
 				temp_player = GetPlayer(i);		
 			
 				// don't target while player is not in the game or he's in notarget
-				if ( temp_player && !( temp_player->flags & FL_NOTARGET ) )
+				if ( temp_player && !( temp_player->flags & FlagNotarget ) )
 					{
 					player = temp_player;
 					break;
@@ -12849,7 +12849,7 @@ BehaviorReturnCode_t	GetWithinRangeOfPlayer::Evaluate
 		temp_player = GetPlayer(i);		
 		
 		// don't target while player is not in the game or he's in notarget
-		if( temp_player && !( temp_player->flags & FL_NOTARGET ) )
+		if( temp_player && !( temp_player->flags & FlagNotarget ) )
 			{
 			player = temp_player;
 			break;

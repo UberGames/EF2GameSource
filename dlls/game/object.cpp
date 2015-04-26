@@ -75,17 +75,17 @@ Object::Object()
 	
 	health = 0;
 	
-	takedamage = ( spawnflags & 2 ) ? DAMAGE_NO : DAMAGE_YES;
+	takedamage = ( spawnflags & 2 ) ? DamageNo : DamageYes;
 	
 	//
 	// we want the bounds of this model auto-rotated
 	//
-	flags |= FL_ROTATEDBOUNDS;
+	flags |= FlagRotatedbounds;
 	
 	if ( !com_blood->integer )
 	{
-		flags &= ~FL_BLOOD;
-		flags &= ~FL_DIE_GIBS;
+		flags &= ~FlagBlood;
+		flags &= ~FlagDieGibs;
 	}
 	
 	PostEvent( EV_Object_Setup, EV_POSTSPAWN );
@@ -128,18 +128,18 @@ void Object::Killed(Event *ev)
 	Event * event;
 	const char * name;
 	
-	takedamage = DAMAGE_NO;
+	takedamage = DamageNo;
 	setSolidType( SOLID_NOT );
 	hideModel();
 	
 	attacker	= ev->GetEntity( 1 );
 	
-	if (flags & FL_DIE_EXPLODE)
+	if (flags & FlagDieExplode)
 	{
 		CreateExplosion( origin, 50.0f, this, this, this );
 	}
 	
-	if (flags & FL_DIE_GIBS)
+	if (flags & FlagDieGibs)
 	{
 		setSolidType( SOLID_NOT );
 		hideModel();
@@ -349,7 +349,7 @@ void ThrowObject::Throw( const Entity *owner, float speed, const Sentient *targe
 	
 	avelocity.x = crandom() * 200.0f;
 	avelocity.y = crandom() * 200.0f;
-	takedamage = DAMAGE_YES;
+	takedamage = DamageYes;
 }
 
 void ThrowObject::Throw( Event *ev )
@@ -435,7 +435,7 @@ void ThrowObject::Throw( Event *ev )
 
 	avelocity.x = crandom() * 200;
 	avelocity.y = crandom() * 200;
-	takedamage = DAMAGE_YES;
+	takedamage = DamageYes;
 	*/
 }
 

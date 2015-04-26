@@ -273,7 +273,7 @@ Item::Item()
 	//
 	// we want the bounds of this model auto-rotated
 	//
-	flags |= FL_ROTATEDBOUNDS;
+	flags |= FlagRotatedbounds;
 
 	//
 	// set a minimum mins and maxs for the model
@@ -285,7 +285,7 @@ Item::Item()
 	}
 
 	//
-	// reset the mins and maxs to pickup the FL_ROTATEDBOUNDS flag
+	// reset the mins and maxs to pickup the FlagRotatedbounds flag
 	//
 	setSize( mins, maxs );
 
@@ -802,11 +802,6 @@ void Item::setName( const char *i )
 	item_name = i;
 	item_index = gi.itemindex( i );
 	strcpy( edict->entname, i );
-}
-
-const str Item::getName( void ) const
-{
-   return( item_name );
 }
 
 int Item::getIndex( void )

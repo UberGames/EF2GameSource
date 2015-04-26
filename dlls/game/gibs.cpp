@@ -51,7 +51,7 @@ Gib::Gib( const str &name, qboolean blood_trail, const str &bloodtrailname, cons
 	
 	setMoveType( MOVETYPE_GIB );
 	setSolidType( SOLID_BBOX );
-	takedamage = DAMAGE_YES;
+	takedamage = DamageYes;
 	sprayed     = false;
 	fadesplat   = true;
 	scale       = 2.0f;
@@ -63,7 +63,7 @@ Gib::Gib( const str &name, qboolean blood_trail, const str &bloodtrailname, cons
 	if ( blood_trail )
 	{
 		// Make a blood emitter and bind it to the head
-		blood = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+		blood = new Entity( EntityCreateFlagAnimate );
 		
 		if ( bloodtrailname.length() )
 			blood->setModel( bloodtrailname.c_str() );
@@ -168,7 +168,7 @@ void Gib::Damage( Event *ev )
 	
 	if ( blood_spurt_name.length() > 0 )
 	{
-		blood = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+		blood = new Entity( EntityCreateFlagAnimate );
 		blood->setModel( blood_spurt_name.c_str() );
 		
 		dir[0] = -direction[0];

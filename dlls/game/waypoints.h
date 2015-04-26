@@ -37,7 +37,6 @@ class WayPointNode : public Entity
 		virtual void  SetWayPointThread ( Event *ev );		
 		virtual void  SetActorAnim      ( Event *ev );
 		        void  SetTargetname     ( Event *ev );
-              void  SetTarget         ( Event *ev );
 		
 		
 		virtual void  SetWayPointThread ( const str &thread );

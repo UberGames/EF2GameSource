@@ -1337,7 +1337,7 @@ void MultiplayerModeBase::ActivatePlayer( Player* player )
 	}
 
 	multiplayerManager.allowFighting( true );
-	player->takedamage = DAMAGE_YES;
+	player->takedamage = DamageYes;
 
 	multiplayerManager.playerSpawned( player );
 }

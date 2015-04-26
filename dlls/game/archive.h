@@ -33,254 +33,227 @@
 
 typedef SafePtr<Entity> EntityPtr;
 
-enum
-	{
-   pointer_fixup_normal,
-   pointer_fixup_safe
-	};
+enum {
+	pointer_fixup_normal,
+	pointer_fixup_safe
+};
 
-typedef struct
-   {
-   void **ptr;
-   int  index;
-   int  type;
-   } pointer_fixup_t;
+typedef struct {
+	void **ptr;
+	int  index;
+	int  type;
+} pointer_fixup_t;
 
-class FileRead : public Class
-	{
-	protected:
-		str				filename;
-      size_t         length;
-      byte           *buffer;
-      byte           *pos;
+class FileRead : public Class {
+protected:
+	str				filename;
+	size_t         length;
+	byte           *buffer;
+	byte           *pos;
 
-	public:
-      CLASS_PROTOTYPE( FileRead );
+public:
+	CLASS_PROTOTYPE(FileRead);
 
-							FileRead();
-							~FileRead();
-		void				Close( void );
-      const char     *Filename( void );
-      size_t         Length( void );
-      size_t         Pos( void );
-      qboolean       Seek( size_t newpos );
-      qboolean       Open( const char *name );
-      qboolean       Read( void *dest, size_t size );
-	};
+	FileRead();
+	~FileRead();
+	void				Close(void);
+	const char     *Filename(void);
+	size_t         Length(void);
+	size_t         Pos(void);
+	qboolean       Seek(size_t newpos);
+	qboolean       Open(const char *name);
+	qboolean       Read(void *dest, size_t size);
+};
 
-class Archiver : public Class
-	{
-   private:
-      Container<Class *>         classpointerList;
-      Container<pointer_fixup_t *> fixupList;
+class Archiver : public Class {
+private:
+	Container<Class *>         classpointerList;
+	Container<pointer_fixup_t *> fixupList;
 
-	protected:
-		str				filename;
-		qboolean			fileerror;
-		fileHandle_t   file;
-      FileRead       readfile;
-		int				archivemode;
-      int            numclassespos;
-      qboolean       harderror;
+protected:
+	str				filename;
+	qboolean			fileerror;
+	fileHandle_t   file;
+	FileRead       readfile;
+	int				archivemode;
+	int            numclassespos;
+	qboolean       harderror;
 
-		void				CheckRead( void );
-		void				CheckType( int type );
-		int            ReadType( void );
-		size_t			ReadSize( void );
-		void				CheckSize( int type, size_t size );
-		void				ArchiveData( int type, void *data, size_t size );
+	void				CheckRead(void);
+	void				CheckType(int type);
+	int            ReadType(void);
+	size_t			ReadSize(void);
+	void				CheckSize(int type, size_t size);
+	void				ArchiveData(int type, void *data, size_t size);
 
-		void				CheckWrite( void );
-		void				WriteType( int type );
-		void				WriteSize( size_t size );
+	void				CheckWrite(void);
+	void				WriteType(int type);
+	void				WriteSize(size_t size);
 
-	public:
-      CLASS_PROTOTYPE( Archiver );
+public:
+	CLASS_PROTOTYPE(Archiver);
 
-							Archiver();
-							~Archiver();
-		void				FileError( const char *fmt, ... );
-		void				Close( void );
+	Archiver();
+	~Archiver();
+	void				FileError(const char *fmt, ...);
+	void				Close(void);
 
-		qboolean       Read( const str &name, qboolean file_harderror = true );
-		qboolean       Read( const char *name, qboolean file_harderror = true );
-		Class				*ReadObject( void );
+	qboolean       Read(const str &name, qboolean file_harderror = true);
+	qboolean       Read(const char *name, qboolean file_harderror = true);
+	Class				*ReadObject(void);
 
-		qboolean       Create( const str &name, qboolean file_harderror = true );
-		qboolean       Create( const char *name, qboolean file_harderror = true );
+	qboolean       Create(const str &name, qboolean file_harderror = true);
+	qboolean       Create(const char *name, qboolean file_harderror = true);
 
-      qboolean       Loading( void );
-      qboolean       Saving( void );
-      qboolean       NoErrors( void );
+	qboolean       Loading(void);
+	qboolean       Saving(void);
+	qboolean       NoErrors(void);
 
-		void  			ArchiveVector( Vector * vec );
-		void  			ArchiveQuat( Quat * quat );
-		void				ArchiveInteger( int * num );
-		void  			ArchiveUnsigned( unsigned * unum);
-		void				ArchiveByte( byte * num );
-		void				ArchiveChar( char * ch );
-		void				ArchiveShort( short * num );
-		void           ArchiveUnsignedShort( unsigned short * num );
-		void           ArchiveFloat( float * num );
-		void			   ArchiveDouble( double * num );
-		void  			ArchiveBoolean( qboolean * boolean );
-		void  			ArchiveString( str * string );
-		void           ArchiveObjectPointer( Class ** ptr );
-		void           ArchiveSafePointer( SafePtrBase * ptr );
-		void           ArchiveEvent( Event * ev );
-		void           ArchiveEventPointer( Event ** ev );
-		void  			ArchiveBool( bool * boolean );
-		void  			ArchiveVec3( vec3_t vec );
-		void  			ArchiveVec4( vec4_t vec );
+	void  			ArchiveVector(Vector * vec);
+	void  			ArchiveQuat(Quat * quat);
+	void				ArchiveInteger(int * num);
+	void  			ArchiveUnsigned(unsigned * unum);
+	void				ArchiveByte(byte * num);
+	void				ArchiveChar(char * ch);
+	void				ArchiveShort(short * num);
+	void           ArchiveUnsignedShort(unsigned short * num);
+	void           ArchiveFloat(float * num);
+	void			   ArchiveDouble(double * num);
+	void  			ArchiveBoolean(qboolean * boolean);
+	void  			ArchiveString(str * string);
+	void           ArchiveObjectPointer(Class ** ptr);
+	void           ArchiveSafePointer(SafePtrBase * ptr);
+	void           ArchiveEvent(Event * ev);
+	void           ArchiveEventPointer(Event ** ev);
+	void  			ArchiveBool(bool * boolean);
+	void  			ArchiveVec3(vec3_t vec);
+	void  			ArchiveVec4(vec4_t vec);
 
-		void				ArchiveRaw( void *data, size_t size );
-		void				ArchiveObject( Class *obj );
+	void				ArchiveRaw(void *data, size_t size);
+	void				ArchiveObject(Class *obj);
 
-	};
+};
 
 inline qboolean Archiver::Read
-   (
-   const str &name,
-   qboolean file_harderror
-   )
+(
+const str &name,
+qboolean file_harderror
+)
 
-   {
-   return Read( name.c_str(), file_harderror );
-   }
+{
+	return Read(name.c_str(), file_harderror);
+}
 
 inline qboolean Archiver::Create
-   (
-   const str &name,
-   qboolean file_harderror
-   )
+(
+const str &name,
+qboolean file_harderror
+)
 
-   {
-   return Create( name.c_str(), file_harderror );
-   }
+{
+	return Create(name.c_str(), file_harderror);
+}
 
 inline qboolean Archiver::Loading
-   (
-   void
-   )
-   {
-	return ( archivemode == ARCHIVE_READ );
-   }
+(
+void
+) {
+	return (archivemode == ARCHIVE_READ);
+}
 
 inline qboolean Archiver::Saving
-   (
-   void
-   )
-   {
-	return ( archivemode == ARCHIVE_WRITE );
-   }
+(
+void
+) {
+	return (archivemode == ARCHIVE_WRITE);
+}
 
 inline qboolean Archiver::NoErrors
-   (
-   void
-   )
-   {
-	return ( !fileerror );
-   }
+(
+void
+) {
+	return (!fileerror);
+}
 
 template <>
 inline void Container<str>::Archive
-	(
-   Archiver &arc
-	)
-	{
-   int i, num;
+(
+Archiver &arc
+) {
+	int i, num;
 
-   if ( arc.Loading() )
-      {
-      ClearObjectList();
-      arc.ArchiveInteger( &num );
-      Resize( num );
-      }
-   else
-      {
-      num = numobjects;
-      arc.ArchiveInteger( &num );
-      }
-   for( i = 1; i <= num; i++ )
-      {
-      arc.ArchiveString( AddressOfObjectAt( i ) );
-      }
+	if (arc.Loading()) {
+		ClearObjectList();
+		arc.ArchiveInteger(&num);
+		Resize(num);
+	} else {
+		num = numobjects;
+		arc.ArchiveInteger(&num);
 	}
+	for (i = 1; i <= num; i++) {
+		arc.ArchiveString(AddressOfObjectAt(i));
+	}
+}
 
 template <>
 inline void Container<Vector>::Archive
-	(
-   Archiver &arc
-	)
-	{
-   int i, num;
+(
+Archiver &arc
+) {
+	int i, num;
 
-   if ( arc.Loading() )
-      {
-      ClearObjectList();
-      arc.ArchiveInteger( &num );
-      Resize( num );
-      }
-   else
-      {
-      num = numobjects;
-      arc.ArchiveInteger( &num );
-      }
-   for( i = 1; i <= num; i++ )
-      {
-      arc.ArchiveVector( AddressOfObjectAt( i ) );
-      }
+	if (arc.Loading()) {
+		ClearObjectList();
+		arc.ArchiveInteger(&num);
+		Resize(num);
+	} else {
+		num = numobjects;
+		arc.ArchiveInteger(&num);
 	}
+	for (i = 1; i <= num; i++) {
+		arc.ArchiveVector(AddressOfObjectAt(i));
+	}
+}
 
 template <>
 inline void Container<int>::Archive
-	(
-   Archiver &arc
-	)
-	{
-   int i, num;
+(
+Archiver &arc
+) {
+	int i, num;
 
-   if ( arc.Loading() )
-      {
-      ClearObjectList();
-      arc.ArchiveInteger( &num );
-      Resize( num );
-      }
-   else
-      {
-      num = numobjects;
-      arc.ArchiveInteger( &num );
-      }
-   for( i = 1; i <= num; i++ )
-      {
-      arc.ArchiveInteger( AddressOfObjectAt( i ) );
-      }
+	if (arc.Loading()) {
+		ClearObjectList();
+		arc.ArchiveInteger(&num);
+		Resize(num);
+	} else {
+		num = numobjects;
+		arc.ArchiveInteger(&num);
 	}
+	for (i = 1; i <= num; i++) {
+		arc.ArchiveInteger(AddressOfObjectAt(i));
+	}
+}
 
 template <>
 inline void Container<float>::Archive
-	(
-   Archiver &arc
-	)
-	{
-   int i, num;
+(
+Archiver &arc
+) {
+	int i, num;
 
-   if ( arc.Loading() )
-      {
-      ClearObjectList();
-      arc.ArchiveInteger( &num );
-      Resize( num );
-      }
-   else
-      {
-      num = numobjects;
-      arc.ArchiveInteger( &num );
-      }
-   for( i = 1; i <= num; i++ )
-      {
-      arc.ArchiveFloat( AddressOfObjectAt( i ) );
-      }
+	if (arc.Loading()) {
+		ClearObjectList();
+		arc.ArchiveInteger(&num);
+		Resize(num);
+	} else {
+		num = numobjects;
+		arc.ArchiveInteger(&num);
 	}
+	for (i = 1; i <= num; i++) {
+		arc.ArchiveFloat(AddressOfObjectAt(i));
+	}
+}
 
 
 
@@ -303,19 +276,17 @@ inline void Container<float>::Archive
 template <>
 inline void Container<Class*>::Archive
 (
-	Archiver &arc
-)
-{
-	int numObjects = numobjects ;
-	arc.ArchiveInteger( &numObjects );
+Archiver &arc
+) {
+	int numObjects = numobjects;
+	arc.ArchiveInteger(&numObjects);
 
-	if ( arc.Loading() )	
-		Resize( numObjects );
+	if (arc.Loading())
+		Resize(numObjects);
 
-	for ( int objectIdx = 1; objectIdx <= numObjects; ++objectIdx )
-	{
-		arc.ArchiveObjectPointer( AddressOfObjectAt( objectIdx ) );
-		arc.ArchiveObject( ObjectAt( objectIdx ) );
+	for (int objectIdx = 1; objectIdx <= numObjects; ++objectIdx) {
+		arc.ArchiveObjectPointer(AddressOfObjectAt(objectIdx));
+		arc.ArchiveObject(ObjectAt(objectIdx));
 	}
 }
 
@@ -335,18 +306,16 @@ inline void Container<Class*>::Archive
 template <>
 inline void Container<Class>::Archive
 (
-	Archiver &arc
-)
-{
-	int numObjects = numobjects ;
-	arc.ArchiveInteger( &numObjects );
+Archiver &arc
+) {
+	int numObjects = numobjects;
+	arc.ArchiveInteger(&numObjects);
 
-	if ( arc.Loading() )	
-		Resize( numObjects );
+	if (arc.Loading())
+		Resize(numObjects);
 
-	for ( int objectIdx = 1; objectIdx <= numObjects; ++objectIdx )
-	{
-		arc.ArchiveObject( AddressOfObjectAt( objectIdx ) );
+	for (int objectIdx = 1; objectIdx <= numObjects; ++objectIdx) {
+		arc.ArchiveObject(AddressOfObjectAt(objectIdx));
 	}
 }
 
@@ -357,29 +326,29 @@ inline void Container<Class>::Archive
 // Class:		Container<SafePtr>
 //
 // Description: Archive function for a container of Safe pointers.
-// 
+//
 // Parameters:	Archiver& -- holds the archive data
 //
 // Returns:		None
-// 
+//
 //===============================================================
 inline void Container< SafePtr<Class*> >::Archive
 (
-	Archiver &arc
+Archiver &arc
 )
 {
-	int numObjects = numobjects ;
-	arc.ArchiveInteger( &numObjects );
+int numObjects = numobjects ;
+arc.ArchiveInteger( &numObjects );
 
-	if ( arc.Loading() )
-		Resize( numObjects );
+if ( arc.Loading() )
+Resize( numObjects );
 
-	for ( int objectIdx = 1; objectIdx <= numObjects; ++objectIdx )
-	{
-		SafePtr<Class*> *safePtr = AddressOfObjectAt( objectIdx );
-		arc.ArchiveSafePointer( ObjectAt( objectIdx ) );
-		arc.ArchiveObject( ObjectAt( objectIdx ) );
-	}
+for ( int objectIdx = 1; objectIdx <= numObjects; ++objectIdx )
+{
+SafePtr<Class*> *safePtr = AddressOfObjectAt( objectIdx );
+arc.ArchiveSafePointer( ObjectAt( objectIdx ) );
+arc.ArchiveObject( ObjectAt( objectIdx ) );
+}
 }
 */
 
@@ -397,55 +366,47 @@ inline void Container< SafePtr<Class*> >::Archive
 template <>
 inline void Container<Entity*>::Archive
 (
-	Archiver &arc
-)
-{
-	int numObjects = numobjects ;
-	arc.ArchiveInteger( &numObjects );
+Archiver &arc
+) {
+	int numObjects = numobjects;
+	arc.ArchiveInteger(&numObjects);
 
-	if ( arc.Loading() )
-		Resize( numObjects );
+	if (arc.Loading())
+		Resize(numObjects);
 
-	for ( int objectIdx = 1; objectIdx <= numObjects; ++objectIdx )
-	{
-		Entity** entity = AddressOfObjectAt( objectIdx );
-		arc.ArchiveObjectPointer( (Class**)entity );
+	for (int objectIdx = 1; objectIdx <= numObjects; ++objectIdx) {
+		Entity** entity = AddressOfObjectAt(objectIdx);
+		arc.ArchiveObjectPointer((Class**)entity);
 	}
 }
 
 template <>
 inline void Container<EntityPtr>::Archive
 (
-	Archiver &arc
-)
-{
+Archiver &arc
+) {
 	int i;
 	int numEntries;
 	EntityPtr eptr;
 	EntityPtr *eptrptr;
 
-	if ( arc.Saving() )
-	{
+	if (arc.Saving()) {
 		numEntries = NumObjects();
-		arc.ArchiveInteger( &numEntries );
-		for ( i = 1 ; i <= numEntries ; i++ )
-		{
-			eptr = ObjectAt( i );
-			arc.ArchiveSafePointer( &eptr );			
+		arc.ArchiveInteger(&numEntries);
+		for (i = 1; i <= numEntries; i++) {
+			eptr = ObjectAt(i);
+			arc.ArchiveSafePointer(&eptr);
 		}
-	}
-	else
-	{
-		arc.ArchiveInteger( &numEntries );
+	} else {
+		arc.ArchiveInteger(&numEntries);
 
 		ClearObjectList();
-		Resize( numEntries );
+		Resize(numEntries);
 
-		for ( i = 1 ; i <= numEntries ; i++ )
-		{
-			AddObject( eptr );
-			eptrptr = &ObjectAt( i );
-			arc.ArchiveSafePointer( eptrptr );		
+		for (i = 1; i <= numEntries; i++) {
+			AddObject(eptr);
+			eptrptr = &ObjectAt(i);
+			arc.ArchiveSafePointer(eptrptr);
 		}
 	}
 }
@@ -456,27 +417,27 @@ inline void Container<EntityPtr>::Archive
 // Class:		Container<Entity>
 //
 // Description: Archive function for a container of Entity objects.
-// 
+//
 // Parameters:	Archiver& -- holds the archive data
 //
 // Returns:		None
-// 
+//
 //===============================================================
 inline void Container<Entity>::Archive
 (
-	Archiver &arc
+Archiver &arc
 )
 {
-	int numObjects = numobjects ;
-	arc.ArchiveInteger( &numObjects );
+int numObjects = numobjects ;
+arc.ArchiveInteger( &numObjects );
 
-	if ( arc.Loading() )
-		Resize( numObjects );
+if ( arc.Loading() )
+Resize( numObjects );
 
-	for ( int objectIdx = 1; objectIdx <= numObjects; ++objectIdx )
-	{
-		arc.ArchiveObject( AddressOfObjectAt( objectIdx ) );
-	}
+for ( int objectIdx = 1; objectIdx <= numObjects; ++objectIdx )
+{
+arc.ArchiveObject( AddressOfObjectAt( objectIdx ) );
+}
 }
 */
 

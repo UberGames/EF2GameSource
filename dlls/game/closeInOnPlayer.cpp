@@ -278,7 +278,7 @@ void CloseInOnPlayer::findPlayer()
 {
 	Entity *player = (Entity*)GetPlayer(0);
 
-	if ( !player || player->flags & FL_NOTARGET )
+	if ( !player || player->flags & FlagNotarget )
 		{
 		SetFailureReason( "CloseInOnPlayer::findPlayer -- No Player" );
 		transitionToState( CLOSE_IN_ON_PLAYER_FAILED );

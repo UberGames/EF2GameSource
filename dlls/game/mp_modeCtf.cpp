@@ -811,7 +811,7 @@ void ModeCaptureTheFlag::grabTheFlag( Player *player, MultiplayerItem *item )
 
 	// Give the flag to the player
 
-	obj = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	obj = new Entity( EntityCreateFlagAnimate );
 
 	obj->setModel( flag->model );
 

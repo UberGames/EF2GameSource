@@ -194,7 +194,7 @@ void ActorThink::ProcessBehaviors( Actor &actor )
 //----------------------------------------------------------------
 void ActorThink::DoMove( Actor &actor )
 {
-	if ( ( actor.flags & FL_IMMOBILE ) || ( actor.flags & FL_PARTIAL_IMMOBILE ) )
+	if ( ( actor.flags & FlagImmobile ) || ( actor.flags & FlagPartialImmobile ) )
 	{
 		actor.animate->StopAnimating();
 		return;
@@ -205,9 +205,9 @@ void ActorThink::DoMove( Actor &actor )
 	
 	stepmoveresult_t lastMove;
 	
-	if ( actor.flags & FL_SWIM )		
+	if ( actor.flags & FlagSwim )		
 		lastMove = actor.movementSubsystem->WaterMove();
-	else if ( actor.flags & FL_FLY )
+	else if ( actor.flags & FlagFly )
 		lastMove = actor.movementSubsystem->AirMove();
 	else
 		lastMove = actor.movementSubsystem->TryMove();
@@ -223,7 +223,7 @@ void ActorThink::DoMove( Actor &actor )
 		G_TouchTriggers( &actor );
 	
 	if ( actor.groundentity && ( actor.groundentity->entity != world ) && !M_CheckBottom( &actor ) )
-		actor.flags |= FL_PARTIALGROUND;
+		actor.flags |= FlagPartialground;
 }
 
 //----------------------------------------------------------------
@@ -269,8 +269,8 @@ void ActorThink::CheckGround( Actor &actor )
 	// Add Fall Damage if necessary
 	if ( actor.groundentity )
 	{
-		if ( !actor.Immune( MOD_FALLING ) && !( actor.flags & FL_FLY ) && ( actor.origin.z + 1000.0f < actor.last_ground_z ) )
-			actor.Damage( world, world, 1000.0f, actor.origin, vec_zero, vec_zero, 0, DAMAGE_NO_ARMOR, MOD_FALLING );
+		if ( !actor.Immune( MOD_FALLING ) && !( actor.flags & FlagFly ) && ( actor.origin.z + 1000.0f < actor.last_ground_z ) )
+			actor.Damage( world, world, 1000.0f, actor.origin, vec_zero, vec_zero, 0, DamageNoArmor, MOD_FALLING );
 		
 		actor.last_ground_z = actor.origin.z;
 	}
@@ -342,7 +342,7 @@ void ActorThink::InanimateObject( Actor &actor )
 //----------------------------------------------------------------
 void ActorThink::TryDrown( Actor &actor )
 {
-	if ( actor.waterlevel == 3 && !( actor.flags & FL_SWIM ) )
+	if ( actor.waterlevel == 3 && !( actor.flags & FlagSwim ) )
 	{
 		// if out of air, start drowning
 		if ( actor.air_finished < level.time )
@@ -362,7 +362,7 @@ void ActorThink::TryDrown( Actor &actor )
 				//Sound( "snd_uwchoke", CHAN_VOICE );
 				actor.BroadcastSound();
 				
-				actor.Damage( world, world, 15.0f, actor.origin, vec_zero, vec_zero, 0, DAMAGE_NO_ARMOR, MOD_DROWN );
+				actor.Damage( world, world, 15.0f, actor.origin, vec_zero, vec_zero, 0, DamageNoArmor, MOD_DROWN );
 			}
 		}
 	}
@@ -395,7 +395,7 @@ void ActorThink::ActorStateUpdate( Actor &actor )
 	actor.last_origin = actor.origin;
 	
 	// Check for the ground
-	if ( !( actor.flags & FL_SWIM ) && !( actor.flags & FL_FLY ) && actor.GetStickToGround() )
+	if ( !( actor.flags & FlagSwim ) && !( actor.flags & FlagFly ) && actor.GetStickToGround() )
 		CheckGround( actor );
 	
 	if ( !actor.deadflag )
@@ -424,7 +424,7 @@ void ActorThink::ActorStateUpdate( Actor &actor )
 		TryDrown( actor );
 		
 		if ( actor.groundentity && ( actor.groundentity->entity != world ) && !M_CheckBottom( &actor ) )
-			actor.flags |= FL_PARTIALGROUND;
+			actor.flags |= FlagPartialground;
 	}
 }
 
@@ -457,7 +457,7 @@ void ActorThink::ActorStateUpdate( Actor &actor )
 //----------------------------------------------------------------
 void DefaultThink::Think( Actor &actor )
 {
-	if ( actor.flags & FL_IMMOBILE )
+	if ( actor.flags & FlagImmobile )
 	{
 		// Update boss health if necessary
 		if ( (actor.GetActorFlag( ACTOR_FLAG_UPDATE_BOSS_HEALTH ) && actor.max_boss_health && ( actor.mode == ACTOR_MODE_AI )) || actor.GetActorFlag(ACTOR_FLAG_FORCE_LIFEBAR) )

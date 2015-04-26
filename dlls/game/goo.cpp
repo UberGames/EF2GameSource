@@ -162,7 +162,7 @@ void GooProjectile::Explode( Event *ev )
 	if ( !owner )
 		owner = world;
 	
-	takedamage = DAMAGE_NO;
+	takedamage = DamageNo;
 	
 	// Spawn an explosion model
 	if ( explosionmodel.length() )

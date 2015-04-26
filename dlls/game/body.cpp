@@ -34,7 +34,7 @@ Body::Body()
 {
 	Event *newEvent;
 	
-	takedamage         = DAMAGE_YES;
+	takedamage         = DamageYes;
 	edict->s.eType     = ET_MODELANIM;
 	health             = 10;
 	edict->clipmask    = MASK_DEADSOLID;
@@ -84,7 +84,7 @@ void Body::Damage( Event * )
 	real_gib_name += number_of_gibs;
 	real_gib_name += ".tik";
 
-	ent = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	ent = new Entity( EntityCreateFlagAnimate );
 	ent->setModel( real_gib_name.c_str() );
 	ent->setScale( scale );
 	ent->setOrigin( centroid );
@@ -94,5 +94,5 @@ void Body::Damage( Event * )
 	Sound( "snd_decap", CHAN_BODY, 1.0f, 300.0f );
 
 	this->hideModel();
-	this->takedamage = DAMAGE_NO; */
+	this->takedamage = DamageNo; */
 }

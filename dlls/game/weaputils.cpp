@@ -693,7 +693,7 @@ Projectile::Projectile()
 	can_hit_owner				= false;
 	remove_when_stopped			= false;
 	stick_on_touch				= false;
-	takedamage					= DAMAGE_NO;
+	takedamage					= DamageNo;
 	ownercontrol				= false;
 	_ownerControlLaser			= false;
 	_ownerControlUsed			= false;
@@ -715,7 +715,7 @@ Projectile::Projectile()
 	//
 	// touch triggers by default
 	//
-	flags |= FL_TOUCH_TRIGGERS;
+	flags |= FlagTouchTriggers;
 	
 	startTime = level.time;
 
@@ -920,7 +920,7 @@ void Projectile::HeatSeek( Event * )
 				continue;
 			}
 			
-			if ( ( ( ent->takedamage != DAMAGE_AIM ) || ( ent->health <= 0.0f ) ) && !( edict->svflags & SVF_MONSTER ) )
+			if ( ( ( ent->takedamage != DamageAim ) || ( ent->health <= 0.0f ) ) && !( edict->svflags & SVF_MONSTER ) )
 			{
 				continue;
 			}
@@ -1135,7 +1135,7 @@ void Projectile::Think( void )
 			
 			if ( triggerdetonate )
 			{
-				if ( ( player->getHealth() <= 0.0f ) || ( player->deadflag != DEAD_NO ) )
+				if ( ( player->getHealth() <= 0.0f ) || ( player->deadflag != DeadNo ) )
 				{
 					PostEvent( EV_Remove, 0.0f );
 				}
@@ -1214,7 +1214,7 @@ void Projectile::Explode( Event *ev )
 	if ( !owner )
 		owner = world;
 
-	takedamage = DAMAGE_NO;
+	takedamage = DamageNo;
 	
 	if (! ((level.time - startTime >= life-FRAMETIME) && (projFlags & P_QUIET_EXPIRE)) ) // if projectile didn't expire by timeout
 	{											// or isn't set to quiet_expire (FRAMETIME required due to float roundoff errors)
@@ -1472,7 +1472,7 @@ void Projectile::Touch( Event *ev )
 
 		if ( other->isSubclassOf(Actor) )
 			{
-			if ( act->GetActorFlag( ACTOR_FLAG_BOUNCE_OFF ) && (act->Immune( meansofdeath ) || act->takedamage == DAMAGE_NO ))
+			if ( act->GetActorFlag( ACTOR_FLAG_BOUNCE_OFF ) && (act->Immune( meansofdeath ) || act->takedamage == DamageNo ))
 				{
 				// Remove the owner so it can be hit after the bounce
 				//this->owner     = ENTITYNUM_NONE;
@@ -1578,7 +1578,7 @@ void Projectile::Touch( Event *ev )
 		{
 			Actor *act = (Actor *)other;
 			
-			if ( act->GetActorFlag( ACTOR_FLAG_BOUNCE_OFF ) && (act->Immune( meansofdeath ) || act->takedamage == DAMAGE_NO ))
+			if ( act->GetActorFlag( ACTOR_FLAG_BOUNCE_OFF ) && (act->Immune( meansofdeath ) || act->takedamage == DamageNo ))
 			{
 				// Remove the owner so it can be hit after the bounce
 				//this->owner     = ENTITYNUM_NONE;
@@ -2248,7 +2248,7 @@ float BulletAttack(
 				Vector left;
 				Vector up;
 				
-				if ( act->GetActorFlag( ACTOR_FLAG_BOUNCE_OFF ) && ( act->Immune( meansofdeath ) || act->takedamage == DAMAGE_NO ) )
+				if ( act->GetActorFlag( ACTOR_FLAG_BOUNCE_OFF ) && ( act->Immune( meansofdeath ) || act->takedamage == DamageNo ) )
 				{
 					// Play sound
 					
@@ -2297,7 +2297,7 @@ float BulletAttack(
 							decal->setRadius( 2.0f );
 							
 							// Add smoke
-							Entity *smoke = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+							Entity *smoke = new Entity( EntityCreateFlagAnimate );
 							
 							smoke->setModel( "fx_bulletsmoke.tik" );
 							smoke->setOrigin( trace.endpos );
@@ -2649,7 +2649,7 @@ float RadiusDamage(
 						dir,
 						vec_zero,
 						knockback,
-						DAMAGE_RADIUS,
+						DamageRadius,
 						mod
 						);
 

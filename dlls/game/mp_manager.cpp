@@ -332,7 +332,7 @@ void MultiplayerManager::update( float frameTime )
 		{
 			playerFollowing = getPlayer( _playerData[ player->entnum ]._spectatorPlayerNum );
 
-			if ( !playerFollowing || playerFollowing->deadflag == DEAD_DEAD )
+			if ( !playerFollowing || playerFollowing->deadflag == DeadDead )
 			{
 				makePlayerSpectateNextPlayer( player );
 
@@ -1379,7 +1379,7 @@ void MultiplayerManager::itemTouched( Player *player, MultiplayerItem *item )
 
 	// Make sure the player is alive and playing
 
-	if ( isPlayerSpectator( player ) || ( player->deadflag != DEAD_NO ) || ( player->getHealth() <= 0.0f ) )
+	if ( isPlayerSpectator( player ) || ( player->deadflag != DeadNo ) || ( player->getHealth() <= 0.0f ) )
 		return;
 
 	// Tell all of the modifiers that this item was touched
@@ -2690,12 +2690,12 @@ void MultiplayerManager::makePlayerSpectator( Player *player, SpectatorTypes spe
 				makePlayerSpectateNextPlayer( player );
 		}
 
-		player->takedamage              = DAMAGE_NO;
+		player->takedamage              = DamageNo;
 		player->client->ps.feetfalling  = false;
-		player->deadflag				= DEAD_NO;
+		player->deadflag				= DeadNo;
 
-		player->flags &= ~FL_IMMOBILE;
-		player->flags &= ~FL_STUNNED;
+		player->flags &= ~FlagImmobile;
+		player->flags &= ~FlagStunned;
 
 		//player->movecontrol             = MOVECONTROL_USER;
 
@@ -2849,7 +2849,7 @@ void MultiplayerManager::playerEnterArena( int entnum, float health )
 
 	// Make sure player is solid and can take damage
 
-	player->takedamage = DAMAGE_YES;
+	player->takedamage = DamageYes;
 	player->setSolidType( SOLID_BBOX );
 
 	// Show the player

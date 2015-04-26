@@ -183,7 +183,7 @@ qboolean FindEnemyMovement::done( PathNode *node , const PathNode *end )
 //======================================
 qboolean EntityIsValidTarget( const Entity *ent )
 {
-	if ( ent && ( ent->flags & FL_NOTARGET ) )
+	if ( ent && ( ent->flags & FlagNotarget ) )
 		return false;
 	
 	if ( ent && ( ent->entnum == ENTITYNUM_WORLD ) )

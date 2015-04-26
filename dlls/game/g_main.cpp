@@ -838,7 +838,7 @@ qboolean G_ArchiveLevel( const char *filename, qboolean autosave, qboolean loadi
 			for( i = 0; i < globals.num_entities; i++ )
 			{
 				edict = &g_entities[ i ];
-				if ( edict->inuse && edict->entity && !( edict->entity->flags & FL_DONTSAVE ) )
+				if ( edict->inuse && edict->entity && !( edict->entity->flags & FlagDontsave ) )
 				{
 					num++;
 				}
@@ -857,7 +857,7 @@ qboolean G_ArchiveLevel( const char *filename, qboolean autosave, qboolean loadi
 			for( i = 0; i < globals.num_entities; i++ )
 			{
 				edict = &g_entities[ i ];
-				if ( !edict->inuse || !edict->entity || ( edict->entity->flags & FL_DONTSAVE ) )
+				if ( !edict->inuse || !edict->entity || ( edict->entity->flags & FlagDontsave ) )
 				{
 					continue;
 				}
@@ -1156,7 +1156,7 @@ void G_MoveClientToIntermission( Entity *ent )
 		
 		// Set a PMF flag to allow them to see the scoreboard
 		player->client->ps.pm_flags |= PMF_INTERMISSION;
-		player->flags |= FL_IMMOBILE;
+		player->flags |= FlagImmobile;
 	}
 }
 

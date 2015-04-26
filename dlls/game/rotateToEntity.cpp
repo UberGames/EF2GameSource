@@ -138,7 +138,7 @@ void RotateToEntity::Begin( Actor &self )
 			{
 			Entity *player = (Entity*)GetPlayer(0);
 
-			if ( player && !(player->flags & FL_NOTARGET) )
+			if ( player && !(player->flags & FlagNotarget) )
 				{
 				_ent = player;
 				}

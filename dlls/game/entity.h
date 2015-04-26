@@ -13,7 +13,7 @@
 //
 //
 // DESCRIPTION:
-// Base class for all enities that are controlled by the game.  If you have any
+// Base class for all entities that are controlled by the game.  If you have any
 // object that should be called on a periodic basis and it is not an entity,
 // then you have to have an dummy entity that calls it.
 //
@@ -43,70 +43,83 @@ class Entity;
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 
+#include <cinttypes>
+
 #include "program.h"
-#include "g_local.h"
-#include "class.h"
 #include "vector.h"
-#include "script.h"
-#include "listener.h"
 #include "scriptvariable.h"
 #include "DamageModification.hpp"
 #include "UseData.h"
 
 // modification flags
-#define FLAG_IGNORE  0
-#define FLAG_CLEAR   1
-#define FLAG_ADD     2
+enum EModificationFlags
+{
+  FLAG_IGNORE,
+  FLAG_CLEAR,
+  FLAG_ADD,
+};
 
-typedef enum
-	{
-	DAMAGE_NO,
-	DAMAGE_YES,			// will take damage if hit
-	DAMAGE_AIM			// auto targeting recognizes this
-	} damage_t;
+enum EDamageT
+{
+  DamageNo,
+  DamageYes, // will take damage if hit
+  DamageAim // auto targeting recognizes this
+};
 
 //deadflag
-#define DEAD_NO						0
-#define DEAD_DYING					1
-#define DEAD_DEAD					2
-#define DEAD_RESPAWNABLE			3
+enum EDeadFlag
+{
+  DeadNo,
+  DeadDying,
+  DeadDead,
+  DeadRespawnable
+};
 
 // flags
-#define	FL_FLY					(1<<0)
-#define	FL_SWIM					(1<<1)      // implied immunity to drowining
-#define	FL_INWATER				(1<<2)
-#define	FL_GODMODE				(1<<3)
-#define	FL_NOTARGET				(1<<4)
-#define	FL_PARTIALGROUND		(1<<5)      // not all corners are valid
-#define	FL_TEAMSLAVE			(1<<6)      // not the first on the team
-#define	FL_NO_KNOCKBACK			(1<<7)
-#define	FL_THINK				(1<<8)
-#define FL_BLOOD				(1<<9)      // when hit, it should bleed.
-#define FL_DIE_GIBS				(1<<10)     // when it dies, it should gib
-#define FL_DIE_EXPLODE			(1<<11)     // when it dies, it will explode
-#define FL_ROTATEDBOUNDS		(1<<12)     // model uses rotated mins and maxs
-#define FL_DONTSAVE				(1<<13)     // don't add to the savegame
-#define FL_IMMOBILE				(1<<14)     // entity has been immobolized somehow
-#define FL_PARTIAL_IMMOBILE		(1<<15)     // entity has been immobolized somehow
-#define FL_STUNNED				(1<<16)
-#define FL_POSTTHINK			(1<<17)     // call a think function after the physics have been run
-#define FL_TOUCH_TRIGGERS		(1<<18)     // should this entity touch triggers
-#define FL_AUTOAIM				(1<<19)     // Autoaim on this entity
+enum EFlags
+{
+  FlagFly = 1 << 0,
+  FlagSwim = 1 << 1, // implied immunity to drowning
+  FlagInwater = 1 << 2,
+  FlagGodmode = 1 << 3,
+  FlagNotarget = 1 << 4,
+  FlagPartialground = 1 << 5, // not all corners are valid
+  FlagTeamslave = 1 << 6, // not the first on the team
+  FlagNoKnockback = 1 << 7,
+  FlagThink = 1 << 8,
+  FlagBlood = 1 << 9, // when hit, it should bleed.
+  FlagDieGibs = 1 << 10, // when it dies, it should gib
+  FlagDieExplode = 1 << 11, // when it dies, it will explode
+  FlagRotatedbounds = 1 << 12, // model uses rotated mins and maxs
+  FlagDontsave = 1 << 13, // don't add to the save game
+  FlagImmobile = 1 << 14, // entity has been immobilized somehow
+  FlagPartialImmobile = 1 << 15, // entity has been immobilized somehow
+  FlagStunned = 1 << 16,
+  FlagPostthink = 1 << 17, // call a think function after the physics have been run
+  FlagTouchTriggers = 1 << 18, // should this entity touch triggers
+  FlagAutoaim = 1 << 19 // Auto aim on this entity
+};
 
-// Create falgs
+// Create flags
 
-#define ENTITY_CREATE_FLAG_ANIMATE	(1<<0)
-#define ENTITY_CREATE_FLAG_MOVER	(1<<1)
+enum ECreateFlags
+{
+  EntityCreateFlagAnimate = 1 << 0,
+  EntityCreateFlagMover = 1 << 1
+};
 
 
 // damage flags
-#define DAMAGE_RADIUS			0x00000001	// damage was indirect
-#define DAMAGE_NO_ARMOR			0x00000002	// armour does not protect from this damage
-#define DAMAGE_ENERGY			0x00000004	// damage is from an energy based weapon
-#define DAMAGE_NO_KNOCKBACK		0x00000008	// do not affect velocity, just view angles
-#define DAMAGE_BULLET			0x00000010  // damage is from a bullet (used for ricochets)
-#define DAMAGE_NO_PROTECTION	0x00000020  // armor, shields, invulnerability, and godmode have no effect
-#define DAMAGE_NO_SKILL			0x00000040  // damage is not affected by skill level
+enum EDamageFlags
+{
+  DamageRadius = 0x00000001, // damage was indirect
+  DamageNoArmor = 0x00000002, // armor does not protect from this damage
+  DamageEnergy = 0x00000004, // damage is from an energy based weapon
+  DamageNoKnockback = 0x00000008, // do not affect velocity, just view angles
+  DamageBullet = 0x00000010, // damage is from a bullet (used for ricochets)
+  DamageNoProtection = 0x00000020,// armor, shields, invulnerability, and god mode have no effect
+  DamageNoSkill = 0x00000040, // damage is not affected by skill level
+};
 
 extern Event EV_ClientMove;
 extern Event EV_ClientEndFrame;
@@ -148,7 +161,7 @@ extern Event EV_NewAnim;
 extern Event EV_LastFrame;
 extern Event EV_TakeDamage;
 extern Event EV_NoDamage;
-extern Event EV_SetCinematicAnim ;
+extern Event EV_SetCinematicAnim;
 
 // script stuff
 extern Event EV_Model;
@@ -212,8 +225,8 @@ extern Event EV_Unmorph;
 
 // dir is 1
 // power is 2
-// minsize is 3
-// maxsize is 4
+// min size is 3
+// max size is 4
 // percentage is 5
 // thickness 6
 // entity is 7
@@ -248,884 +261,878 @@ class ScriptMaster;
 // "targetname"
 // "target"
 //
-#define MAX_MODEL_CHILDREN 8
+static const uint8_t MAX_MODEL_CHILDREN = 8;
 
 class Entity;
 class Animate;
 class Mover;
 
 class BindInfo
-	{
-	public:	
+{
+public:
 
-	// Model Binding variables
-	int				numchildren;
-	int				children[MAX_MODEL_CHILDREN];
+  // Model Binding variables
+  int32_t numchildren;
+  int32_t children[MAX_MODEL_CHILDREN];
 
-	// Team variables
-	str				moveteam;
-	Entity			*teamchain;
-	Entity 			*teammaster;
+  // Team variables
+  str moveteam;
+  Entity* teamchain;
+  Entity* teammaster;
 
-	// Binding variables
-	Entity 			*bindmaster;
-	qboolean		bind_use_my_angles;
-	//Vector		localorigin;
-	//Vector		localangles;
+  // Binding variables
+  Entity* bindmaster;
+  qboolean bind_use_my_angles;
+  //Vector localorigin;
+  //Vector localangles;
 
-	qboolean		detach_at_death;
+  qboolean detach_at_death;
 
-	BindInfo();
+  BindInfo();
 
-	void			Archive( Archiver &arc );
-	};
+  void Archive(Archiver& Arc);
+};
 
 inline BindInfo::BindInfo()
-	{
-	int i;
+{
+  // model binding variables
+  numchildren = 0;
 
-	// model binding variables
-	numchildren = 0;
+  for (auto i = 0; i < MAX_MODEL_CHILDREN; i++)
+  {
+    children[i] = ENTITYNUM_NONE;
+  }
 
-	for( i = 0 ; i < MAX_MODEL_CHILDREN ; i++ )
-		children[i] = ENTITYNUM_NONE;
+  detach_at_death = true;
 
-	detach_at_death = true;
+  // team variables
+  teamchain = nullptr;
+  teammaster = nullptr;
 
-	// team variables
-	teamchain	= NULL;
-	teammaster	= NULL;
+  // bind variables
+  bindmaster = nullptr;
 
-	// bind variables
-	bindmaster = NULL;
+  bind_use_my_angles = false;
+}
 
-	bind_use_my_angles = false;
-	}
+inline void BindInfo::Archive(Archiver& Arc)
+{
+  Arc.ArchiveInteger(&numchildren);
+  Arc.ArchiveRaw(children, sizeof(children));
+  Arc.ArchiveString(&moveteam);
+  Arc.ArchiveObjectPointer(reinterpret_cast<Class **>(&teamchain));
+  Arc.ArchiveObjectPointer(reinterpret_cast<Class **>(&teammaster));
+  Arc.ArchiveObjectPointer(reinterpret_cast<Class **>(&bindmaster));
+  Arc.ArchiveBoolean(&bind_use_my_angles);
+  Arc.ArchiveBoolean(&detach_at_death);
+}
 
-inline void BindInfo::Archive(Archiver &arc)
-	{
-	arc.ArchiveInteger( &numchildren );
-	arc.ArchiveRaw( children, sizeof( children ) );
-	arc.ArchiveString( &moveteam );
-	arc.ArchiveObjectPointer( ( Class ** )&teamchain );
-	arc.ArchiveObjectPointer( ( Class ** )&teammaster );
-	arc.ArchiveObjectPointer( ( Class ** )&bindmaster );
-	arc.ArchiveBoolean( &bind_use_my_angles );
-	arc.ArchiveBoolean( &detach_at_death );
-	}
-
-BindInfo *CreateBindInfo( void );
-
-typedef struct 
-	{
-	int			index;
-	float		current_percent;
-	float		speed;
-	float		final_percent;
-	qboolean	return_to_zero;
-	int			channel;
-	} morph_t;
+BindInfo* CreateBindInfo();
 
 class MorphInfo
-	{
-	public:
-		MorphInfo();
+{
+public:
+  MorphInfo()
+  {
+    for (auto i = 0; i < NUM_MORPH_CONTROLLERS; i++)
+    {
+      controllers[i].index = -1;
+      controllers[i].current_percent = 0.0;
+    }
 
-		morph_t		controllers[ NUM_MORPH_CONTROLLERS ];
-		qboolean	controller_on;
+    controller_on = false;
+  }
 
-		void		Archive( Archiver &arc );
-	};
+  struct TMorph
+  {
+    int32_t index;
+    float current_percent;
+    float speed;
+    float final_percent;
+    qboolean return_to_zero;
+    int32_t channel;
+  };
 
-inline MorphInfo::MorphInfo()
-	{
-	int i;
+  TMorph controllers[NUM_MORPH_CONTROLLERS];
+  qboolean controller_on;
 
-	for( i = 0 ; i < NUM_MORPH_CONTROLLERS ; i++ )
-		{
-		controllers[ i ].index = -1;
-		controllers[ i ].current_percent = 0.0;
-		}
+  void Archive(Archiver& Arc)
+  {
+    for (auto i = 0; i < NUM_MORPH_CONTROLLERS; i++)
+    {
+      Arc.ArchiveInteger(&controllers[i].index);
+      Arc.ArchiveFloat(&controllers[i].current_percent);
+      Arc.ArchiveFloat(&controllers[i].speed);
+      Arc.ArchiveFloat(&controllers[i].final_percent);
+      Arc.ArchiveBoolean(&controllers[i].return_to_zero);
+      Arc.ArchiveInteger(&controllers[i].channel);
+    }
 
-	controller_on = false;
-	}
+    Arc.ArchiveBoolean(&controller_on);
+  }
+};
 
-inline void MorphInfo::Archive(Archiver &arc)
-	{
-	int i;
 
-	for( i = 0 ; i < NUM_MORPH_CONTROLLERS ; i++ )
-		{
-		arc.ArchiveInteger( &controllers[ i ].index );
-		arc.ArchiveFloat( &controllers[ i ].current_percent );
-		arc.ArchiveFloat( &controllers[ i ].speed );
-		arc.ArchiveFloat( &controllers[ i ].final_percent );
-		arc.ArchiveBoolean( &controllers[ i ].return_to_zero );
-		arc.ArchiveInteger( &controllers[ i ].channel );
-		}
-
-	arc.ArchiveBoolean( &controller_on );
-	}
-
-MorphInfo *CreateMorphInfo( void );
+MorphInfo* CreateMorphInfo();
 
 typedef SafePtr<Entity> EntityPtr;
 
 class Program;
+
 class Entity : public Listener
-	{
-	private:
-		Vector					_localOrigin;
-		Container<EntityPtr>	_lastTouchedList ;
-		bool					_fulltrace ;
-		int						_groupID;
-		str						_archetype;
-		bool					_missionObjective;
-		str						_targetPos;
-
-		bool					_networkDetail;
-
-	protected:
-		void					buildUseData();
-
-	public:
-		CLASS_PROTOTYPE( Entity );
-
-		// Construction / destruction
-		Entity();
-		Entity( int create_flag );
-		virtual ~Entity();
-
-		// Spawning variables
-		int					entnum;
-		gentity_t			*edict;
-		gclient_t			*client;
-		int					spawnflags;
-
-		// Standard variables
-		str					model;
-
-		// Physics variables
-		Vector				total_delta;   // total unprocessed movement
-		Vector				mins;
-		Vector				maxs;
-		Vector				absmin;
-		Vector				absmax;
-		Vector				centroid;
-		Vector				velocity;
-		Vector				avelocity;
-		Vector				origin;
-		Vector				angles;
-		Vector				size;
-		int					movetype;
-		int					mass;
-		float				gravity;			// per entity gravity multiplier (1.0 is normal)
-		float				orientation[3][3];
-		Vector				localangles;
-
-		// Ground variables
-		gentity_t			*groundentity;
-		cplane_t			groundplane;
-		int					groundcontents;
-
-		// Surface variables
-		int					numsurfaces;
-
-		// Light variables
-		float				lightRadius;
-
-		// Targeting variables
-		str					target;
-		str					targetname;
-		str					killtarget;
-
-		// Character state
-		float				health;
-		float				max_health;
-		int					deadflag;
-		int					flags;
-
-		// underwater variables
-		int					watertype;
-		int					waterlevel;
-
-		// Pain and damage variables
-		damage_t			takedamage;
-		int					damage_type;
-
-		qboolean			look_at_me;
-		bool				projectilesCanStickToMe;
-
-		str					explosionModel;
-
-		ScriptVariableList	entityVars;
-
-		unsigned int		_affectingViewModes;
-		Vector				watch_offset;
-
-		// Pluggable modules
-
-		Animate						*animate;
-		Mover						*mover;
-		BindInfo					*bind_info;
-		MorphInfo					*morph_info;
-		Program						*ObjectProgram;
-		DamageModificationSystem	*damageModSystem;
-		UseData						*useData;
-
-		void				Setup();
-
-		static Entity*		FindEntityByName( const str &entityName );
-		void				SetEntNum( int num );
-		void				ClassnameEvent( Event *ev );
-		void				SpawnFlagsEvent( Event *ev );
-
-		const Vector		InterceptTarget( const Vector &targetPosition, const Vector &targetVelocity, const float maxSpeed) const;
-		const Vector		InterceptTargetXY( const Vector &targetPosition, const Vector &targetVelocity, const float maxSpeed) const;
-		float				DistanceTo( const Vector &pos );
-		float				DistanceTo( const Entity *ent );
-		qboolean			WithinDistance( const Vector &pos, float dist );
-		qboolean			WithinDistance( const Entity *ent, float dist );
-		bool				WithinDistanceXY( const Vector &pos , float dist );
-		bool				WithinDistanceXY( const Entity *ent , float dist );
-
-		const char			*Target( void );
-		void				SetTarget( const char *target );
-		qboolean			Targeted( void );
-		const char			*TargetName( void );
-		void				SetTargetName( const char *target );
-		void				SetKillTarget( const char *killtarget );
-		const char			*KillTarget( void );
-
-		const Vector &		GetLocalOrigin( void ) const { return _localOrigin; }
-		void				SetLocalOrigin( const Vector &localOrigin ) { _localOrigin = localOrigin; }
-
-		virtual void		setModel( const char *model );
-		void		        setModel( const str &mdl );
-		virtual void		setViewModel( const char *model );
-		void		        setViewModel( const str &mdl );
-		void				SetModelEvent( Event *ev );
-		void				SetTeamEvent( Event *ev );
-		virtual void		TriggerEvent( Event *ev );
-		void				hideModel( void );
-		void				EventHideModel( Event *ev );
-		virtual void		showModel( void );
-		void				EventShowModel( Event *ev );
-		qboolean			hidden( void );
-		void				ProcessInitCommandsEvent( Event *ev );
-		void				ProcessInitCommands( int index, qboolean cache = false );
-
-		void				setAlpha( float alpha );
-		float				alpha( void );
-
-		void				setMoveType( int type );
-		void				setMoveType( Event *ev );
-
-		int					getMoveType( void );
-
-		void				setSolidType( solid_t type );
-		int					getSolidType( void );
-
-		virtual Vector		getParentVector( const Vector &vec );
-		Vector				getLocalVector( const Vector &vec );
-
-		virtual void		setSize( Vector min, Vector max );
-		virtual void		setOrigin( const Vector &org );
-		virtual void		setOrigin( void );
-		virtual void		addOrigin( const Vector &org );
-		virtual void		setOriginEveryFrame( Event *ev );		
-
-		void				GetRawTag( int tagnum, orientation_t * orient, bodypart_t part = legs );
-		qboolean			GetRawTag( const char * tagname, orientation_t * orient, bodypart_t part = legs );
-
-		void				GetTag( int tagnum, orientation_t * orient );
-		qboolean			GetTag( const char *name, orientation_t * orient );
-		void  				GetTag( int tagnum, Vector *pos, Vector *forward = NULL, Vector *left = NULL, Vector *up = NULL );
-		qboolean			GetTag( const char *name, Vector *pos, Vector *forward = NULL, Vector *left = NULL, Vector *up = NULL );
-
-		virtual int			CurrentFrame( bodypart_t part = legs );
-		virtual int			CurrentAnim( bodypart_t part = legs );
-
-		virtual void		setAngles( const Vector &ang );
-		virtual void		setAngles( void );
-		virtual void		SetOrigin( Event *ev );
-		void				GetOrigin( Event *ev );
-
-		Vector				GetControllerAngles( int num );
-		void				SetControllerAngles( int num, vec3_t angles );
-		void				SetControllerAngles( Event *ev );
-		void				SetControllerTag( int num, int tag_num );
-
-		void				link( void );
-		void				unlink( void );
-
-		void				setContents( int type );
-		int					getContents( void );
-		void				setScale( float scale );
-
-		qboolean			droptofloor( float maxfall );
-		qboolean			isClient( void );
-
-		virtual void		SetDeltaAngles( void );
-		virtual void		DamageEvent( Event *event );
-
-		void				Damage( Entity *inflictor,
-									Entity *attacker,
-									float damage,
-									const Vector &position,
-									const Vector &direction,
-									const Vector &normal,
-									int knockback,
-									int flags,
-									int meansofdeath,
-									int surface_number = -1,
-									int bone_number = -1,
-									Entity *weapon = 0);
-
-		void						Stun( float time );
-
-		void				DamageType( Event *ev );
-		virtual qboolean	CanDamage( const Entity *target, const Entity *skip_ent = NULL );
-
-		qboolean			IsTouching( const Entity *e1 );
-
-		void				FadeNoRemove( Event *ev );
-		void				FadeOut( Event *ev );
-		void				FadeIn( Event *ev );
-		void				Fade( Event *ev );
-
-		virtual void		CheckGround( void );
-		virtual qboolean	HitSky( const trace_t *trace );
-		virtual qboolean	HitSky( void );
-
-		void				BecomeSolid( Event *ev );
-		void				BecomeNonSolid( Event *ev );
-		void				SetHealth( Event *ev );
-		void				GetHealth( Event *ev );
-		void				SetMaxHealth( Event *ev );
-		void				SetSize( Event *ev );
-		void				SetMins( Event *ev );
-		void				SetMaxs( Event *ev );
-		void				GetMins( Event* ev );
-		void				GetMaxs( Event* ev );
-		void				SetScale( Event *ev );
-		void				setRandomScale( Event *ev );
-		void				SetAlpha( Event *ev );
-		void				SetTargetName( Event *ev );
-		void				GetTargetName( Event *ev );
-		void				GetRawTargetName( Event *ev );
-		void				SetTarget( Event *ev );
-		void				getTarget( Event *ev );
-		void				GetTargetEntity( Event *ev );
-		void				SetKillTarget( Event *ev );
-		void				GetModelName(Event* ev);
-		void				SetAngles( Event *ev );
-		void				GetAngles(Event* ev);
-		void				SetAngleEvent( Event *ev );
-		void				TouchTriggersEvent( Event *ev );
-		void				IncreaseShotCount( Event *ev );
-		void				GetVelocity( Event *ev );
-		void				SetVelocity( Event *ev );
-		
-		// Support for checking/setting fulltrace flag
-		void				SetFullTraceEvent( Event *ev );
-		void				setFullTrace( bool fulltrace )			{ _fulltrace = fulltrace; }
-		bool				usesFullTrace()							{ return _fulltrace ; }
-
-		Vector				GetClosestCorner( const Vector &position );
-
-		str					GetRandomAlias( const str &name );
-		void				SetWaterType( void );
-
-		// model binding functions
-		qboolean			attach( int parent_entity_num, int tag_num, qboolean use_angles = true, Vector attach_offset = Vector(0, 0, 0), Vector attach_angles_offset = Vector(0, 0, 0) );
-		void				detach( void );
-
-		void				RegisterAlias( Event *ev );
-		void				RegisterAliasAndCache( Event *ev );
-		void				Cache( Event *ev );
-
-		qboolean			GlobalAliasExists( const char *name );
-		qboolean			AliasExists( const char *name );
-
-		// Sound Stuff
-		void				Sound( Event *ev );
-		virtual void		Sound( const str &sound_name, int channel = CHAN_BODY, float volume = -1.0f, float min_dist = -1.0f, Vector *origin = NULL, float pitch_modifier = 1.0f, qboolean onlySendToThisEntity = false );
-		void				StopSound( int channel );
-		void				StopSound( Event *ev );
-		void				LoopSound( Event *ev );
-		void				LoopSound( const str &sound_name, float volume = -1.0f, float min_dist = -1.0f );
-		void				StopLoopSound( Event *ev );
-		void				StopLoopSound( void );
-
-		// Light Stuff
-		void				SetLight(Event *ev);
-		void				LightOn(Event *ev);
-		void				LightOff(Event *ev);
-		void				LightRed(Event *ev);
-		void				LightGreen(Event *ev);
-		void				LightBlue(Event *ev);
-		void				LightRadius(Event *ev);
-		void				LightStyle(Event *ev);
-		void				Flags( Event *ev );
-		void				Effects( Event *ev );
-		void				RenderEffects( Event *ev );
-		void				SVFlags( Event *ev );
-
-		void				BroadcastSound( float pos = SOUND_RADIUS, int soundType = SOUNDTYPE_GENERAL );
-		void				BroadcastSound( Event *ev );
-		float				ModifyFootstepSoundRadius( float radius , int soundTypeIdx );
-		void				Kill( Event *ev );
-		void				SurfaceModelEvent( Event *ev );
-		void				SurfaceCommand( const char * surf_name, const char * token );
-
-		virtual void		Postthink( void );
-		virtual void		Think( void );
-		void				DamageSkin( trace_t * trace, float damage );
-
-		void				AttachEvent( Event *ev );
-		void				AttachModelEvent( Event *ev );
-		void				RemoveAttachedModelEvent( Event *ev );
-		void				removeAttachedModelByTargetname( Event *ev );
-		void				removeAttachedModelByTargetname( const str &targetNameToRemove );
-		void				DetachEvent( Event *ev );
-		void				TakeDamageEvent( Event *ev );
-		void				NoDamageEvent( Event *ev );
-		void				Gravity( Event *ev );
-		//void              GiveOxygen( float time );
-		void				UseBoundingBoxEvent( Event *ev );
-		void				HurtEvent( Event *ev );
-		void				IfSkillEvent( Event *ev );
-		void				SetMassEvent( Event *ev );
-		void				Censor( Event *ev );
-		void				Ghost( Event *ev );
-
-		void				StationaryEvent( Event *ev );
-		void				Explosion( Event *ev );
-		void				SelfDetonate( Event *ev );
-		void				DoRadiusDamage( Event *ev );
-
-		void				Shader( Event *ev );
-
-		void				KillAttach( Event *ev );
-		//void					SetBloodModel( Event *ev );
-
-		void				DropToFloorEvent( Event *ev );
-		void				SetAnimOnAttachedModel( Event *ev );
-		void				SetAnimOnAttachedModel( const str &AnimName, const str &TagName );
-		void				SetEntityExplosionModel( Event *ev );
-
-		virtual void		SetCinematicAnim( const str &AnimName);
-		virtual void		SetCinematicAnim( Event *ev );
-		virtual void		CinematicAnimDone( void );
-		virtual void		CinematicAnimDone( Event *ev );
-
-		// Binding methods
-		void				joinTeam( Entity *teammember );
-		void				quitTeam( void );
-		qboolean			isBoundTo( const Entity *master );
-		virtual void		bind( Entity *master, qboolean use_my_angles=false );
-		virtual void		unbind( void );
-
-		void				JoinTeam( Event *ev );
-		void				EventQuitTeam( Event *ev );
-		void				BindEvent( Event *ev );
-		void				EventUnbind( Event *ev );
-		void				AddToSoundManager( Event *ev );
-		void				NoLerpThisFrame( void );
-
-		virtual void		addAngles( const Vector &add );
-
-		void				DeathSinkStart( Event *ev );
-		void				DeathSink( Event *ev );
-
-		void				LookAtMe( Event *ev );
-		void				ProjectilesCanStickToMe( Event *ev );
-		void				DetachAllChildren( Event *ev );
-
-		void				MorphEvent( Event *ev );
-		void				UnmorphEvent( Event *ev );
-		void				MorphControl( Event *ev );
-		int					GetMorphChannel( const char *morph_name );
-		void				StartMorphController( void );
-		qboolean			MorphChannelMatches(	int morph_channel1, int morph_channel2	);
-
-		void				ProjectileAtk( Event *ev );
-		void				ProjectileAttackPoint( Event *ev );
-		void				ProjectileAttackEntity( Event *ev );
-		void				ProjectileAttackFromTag( Event *ev );
-		void				ProjectileAttackFromPoint( Event *ev );
-		void				TraceAtk( Event *ev );
-
-		virtual void		VelocityModified( void );
-		virtual void		Archive( Archiver &arc );
-
-		virtual void		PassToAnimate( Event *ev );
-		void				SetObjectProgram( Event *ev );
-		void				SetWatchOffset( Event *ev );
-		void				ExecuteProgram( Event *ev );
-
-		void				Contents(Event* ev);
-		void				setMask(Event* ev);
-
-		void				hideFeaturesForFade( void );
-		void				showFeaturesForFade( void );
-
-		void				DisplayEffect( Event *ev );
-		void				clearDisplayEffects( void );
-
-		void				getCustomShaderInfo( const str &customShader, str &shaderName, str &soundName );
-
-		void				setCustomShader( const char *customShader );
-		void				setCustomShader( Event *ev );
-		void				clearCustomShader( const char *customShader = NULL );
-		void				clearCustomShader( Event *ev );
-		bool				hasCustomShader( const char *customShader = NULL );
-
-		void				setCustomEmitter( const char *customEmitter );
-		void				setCustomEmitter( Event *ev );
-		void				clearCustomEmitter( const char *customEmitter = NULL );
-		void				clearCustomEmitter( Event *ev );
-
-		Entity				*SpawnEffect( const str &name, const Vector &origin, const Vector &angles, float removeTime );
-		Entity				*SpawnSound( const str &sound, const Vector &pos, float volume , float removeTime );
-
-		void				SpawnEffect( Event *ev );
-
-		void				attachEffect( const str &modelName, const str &tagName, float removeTime );
-		void				attachEffect( Event *ev );
-
-		void				ForceAlpha( Event *ev );
-		void				CreateEarthquake( Event *ev );
-
-		void				SetFloatVar( Event *ev );
-		void				SetVectorVar( Event *ev );
-		void				SetStringVar( Event *ev );
-		void				GetFloatVar( Event *ev );
-		void				doesVarExist( Event *ev );
-		void				RemoveVariable( Event* ev );
-		void				GetVectorVar( Event *ev );
-		void				GetStringVar( Event *ev );
-		void				SetUserVar1( Event *ev );
-		void				SetUserVar2( Event *ev );
-		void				SetUserVar3( Event *ev );
-		void				SetUserVar4( Event *ev );
-		void				isWithinDistanceOf( Event *ev );
-
-		void				affectingViewMode( Event *ev );
-		void				addAffectingViewModes( unsigned int mask );
-		void				removeAffectingViewModes( unsigned int mask );
-
-		void				TikiNote( Event *ev );
-		void				TikiTodo( Event *ev );
-
-		void				AddDamageModifier( Event *ev );
-		void				ResolveDamage( ::Damage &damage );
-
-		// Health interface
-		float				getHealth( void ) { return health; };
-		float				getMaxHealth( void ) { return max_health; };
-		void				setHealth( float newHealth ) { health = newHealth; };
-		void				setMaxHealth( float newMaxHealth ) { max_health = newMaxHealth; };
-		void				addHealth( float healthToAdd, float maxHealth = 0.0f );
-		void				addHealthOverTime( Event *ev );
-
-		// Group Number Interface
-		void				SetGroupID(Event *ev);
-		void				AddToGroup( int ID );
-		void				SetGroupID(int ID) { _groupID = ID; }
-		int					GetGroupID() { return _groupID; };
-
-		void				MultiplayerEvent( Event *ev );
-
-		Container<EntityPtr>&	GetLastTouchedList() { return _lastTouchedList ; }
-
-		// Archetype name
-		virtual void		setArchetype( Event *ev );
-		const str			getArchetype() const;
-		virtual const str	getName() const { return ""; }
-
-		void				setMissionObjective(Event* ev);
-		
-		// Usable Entity functions
-		void		useDataAnim( Event *ev );
-		void		useDataType( Event *ev );
-		void		useDataThread( Event *ev );
-		void		useDataMaxDist( Event *ev );
-		void		useDataCount( Event *ev );
-		void		useDataEvent( Event *ev );
-		bool		hasUseData(); 
-
-
-		// GameplayManager interfaces to health and damage
-		void			setGameplayHealth( Event *ev );
-		void			setGameplayDamage( Event *ev );
-		virtual void	processGameplayData( Event* ) {}
-
-		// Think interface
-
-		void			turnThinkOn( void ) { flags |= FL_THINK; }
-		void			turnThinkOff( void ) { flags &= ~FL_THINK; }
-		bool			isThinkOn( void ) { return (flags & FL_THINK) ? true : false; }
-
-		void			startStasis( void );
-		void			stopStasis( void );
-		void			startStasis( Event *ev );
-		void			stopStasis( Event *ev );
-		void			setTargetPos( Event *ev );
-		void			setTargetPos( const str &targetPos );
-		str				getTargetPos();
-
-		void			simplePlayDialog( Event *ev );
-
-		void			warp( Event *ev );
-
-		void			traceHitsEntity( Event *ev );
-
-		void			setNetworkDetail( Event *ev );
-		bool			isNetworkDetail( void );
-	};
-
-inline bool Entity::hasUseData()
-	{
-	if ( useData )
-		return true;
-	return false;
-	}
-
-inline int Entity::getSolidType()
-	{
-	return edict->solid;
-	}
-
-inline const Vector Entity::InterceptTarget( const Vector &targetPosition, const Vector &targetVelocity, const float maxSpeed) const
-	{
-	Vector myPosition (origin);
-	Vector predictedPosition = targetPosition + targetVelocity * ( Vector::Distance(targetPosition, myPosition) / maxSpeed );
-	Vector desiredDirection = predictedPosition - myPosition;
-	
-	return desiredDirection.toAngles();
-	}
-
-inline const Vector Entity::InterceptTargetXY( const Vector &targetPosition, const Vector &targetVelocity, const float maxSpeed) const
-	{
-	Vector myPosition (origin);
-	float distanceToTargetPosition = Vector::Distance(targetPosition, myPosition);
-	if ( !fSmallEnough( distanceToTargetPosition, 0.1f ) )
-		{
-		Vector predictedPosition = targetPosition + targetVelocity * ( distanceToTargetPosition / maxSpeed );
-		Vector desiredDirection = predictedPosition - myPosition;
-		desiredDirection.z = 0.0f;
-		return desiredDirection.toAngles();
-		}
-	return angles;
-	}
-
-inline float Entity::DistanceTo(const Vector &pos)
-	{
-	Vector delta;
-
-	delta = origin - pos;
-	return delta.length();
-	}
-
-inline float Entity::DistanceTo(const Entity *ent)
-	{
-	Vector delta;
-
-	assert( ent );
-
-	if ( !ent )
-		return 999999.0f; // "Infinite" distance
-
-	delta = origin - ent->origin;
-	return delta.length();
-	}
-
-inline qboolean Entity::WithinDistance(const Vector &pos, float dist)
-	{
-	Vector delta;
-	delta = origin - pos;
-
-	// check squared distance
-	return ( ( delta * delta ) < ( dist * dist ) );
-	}
-
-inline qboolean Entity::WithinDistance(const Entity *ent, float dist)
-	{
-	Vector delta;
-
-	//assert( ent );
-
-	if ( !ent )
-		return false;
-		
-	delta = origin - ent->origin;
-
-	// check squared distance
-	return ( ( delta * delta ) < ( dist * dist ) );
-	}
-
-inline bool Entity::WithinDistanceXY( const Vector &pos, float dist )
 {
-	float distance = Vector::DistanceXY( origin , pos );
-	return distance <= dist;
-}
+  Vector _localOrigin;
+  Container<EntityPtr> _lastTouchedList;
+  bool _fulltrace;
+  int32_t _groupID;
+  str _archetype;
+  bool _missionObjective;
+  str _targetPos;
 
-inline bool Entity::WithinDistanceXY( const Entity *ent , float dist )
-{
-	if ( !ent )
-		return false;
+  bool _networkDetail;
 
-	float distance = Vector::DistanceXY( origin , ent->origin );
-	return distance <= dist;
-}
+protected:
+  void BuildUseData();
 
-inline const char *Entity::Target()
-	{
-	return target.c_str();
-	}
+public:
+  CLASS_PROTOTYPE(Entity);
 
-inline qboolean Entity::Targeted()
-	{
-	if ( !targetname.length() )
-		return false;
+  // Construction / destruction
+  Entity();
+  explicit Entity(int32_t create_flag);
+  virtual ~Entity();
 
-	return true;
-	}
+  // Spawning variables
+  int32_t entnum;
+  gentity_t* edict;
+  gclient_t* client;
+  int32_t spawnflags;
 
-inline const char *Entity::TargetName()
-	{
-	return targetname.c_str();
-	}
+  // Standard variables
+  str model;
 
-inline const char * Entity::KillTarget()
-	{
-	return killtarget.c_str();
-	}
+  // Physics variables
+  Vector total_delta; // total unprocessed movement
+  Vector mins;
+  Vector maxs;
+  Vector absmin;
+  Vector absmax;
+  Vector centroid;
+  Vector velocity;
+  Vector avelocity;
+  Vector origin;
+  Vector angles;
+  Vector size;
+  int32_t movetype;
+  int32_t mass;
+  float gravity; // per entity gravity multiplier (1.0 is normal)
+  float orientation[3][3];
+  Vector localangles;
 
-inline qboolean Entity::hidden()
-	{
-	if ( edict->s.renderfx & RF_DONTDRAW )
-		return true;
+  // Ground variables
+  gentity_t* groundentity;
+  cplane_t groundplane;
+  int32_t groundcontents;
 
-	return false;
-	}
+  // Surface variables
+  int32_t numsurfaces;
 
-inline void Entity::setModel(const str &mdl)
-	{
-	setModel( mdl.c_str() );
-	}
+  // Light variables
+  float lightRadius;
 
-inline void Entity::setViewModel(const str &mdl)
-	{
-	setViewModel( mdl.c_str() );
-	}
+  // Targeting variables
+  str target;
+  str targetname;
+  str killtarget;
 
-inline void Entity::SetModelEvent(Event *ev)
-	{
-	char modelname[256] ;
-	strcpy(modelname, ev->GetString( 1 ) );
-	char *tmpPtr = strstr(modelname, "*");
-	if (tmpPtr)
-		{
-		ev->SetString( 1, tmpPtr);
-		}
+  // Character state
+  float health;
+  float max_health;
+  int32_t deadflag;
+  int32_t flags;
 
-	setModel( ev->GetString( 1 ) );
-	}
+  // underwater variables
+  int32_t watertype;
+  int32_t waterlevel;
 
-inline void Entity::hideModel()
-	{
-	edict->s.renderfx |= RF_DONTDRAW;
-	if ( getSolidType() <= SOLID_TRIGGER )
-		edict->svflags |= SVF_NOCLIENT;
-	}
+  // Pain and damage variables
+  EDamageT takedamage;
+  int32_t damage_type;
 
-inline void Entity::showModel()
-	{
-	edict->s.renderfx &= ~RF_DONTDRAW;
-	edict->svflags &= ~SVF_NOCLIENT;
-	}
+  qboolean look_at_me;
+  bool projectilesCanStickToMe;
 
-inline float Entity::alpha()
-	{
-	return edict->s.alpha;
-	}
+  str explosionModel;
 
-inline void Entity::setMoveType(int type)
-	{
-	movetype = type;
-	}
+  ScriptVariableList entityVars;
 
-inline int Entity::getMoveType()
-	{
-	return movetype;
-	}
+  uint32_t _affectingViewModes;
+  Vector watch_offset;
 
-inline void Entity::unlink()
-	{
-	gi.unlinkentity( edict );
-	}
+  // Pluggable modules
 
-inline void Entity::setContents(int type)
-	{
-	edict->contents = type;
-	}
+  Animate* animate;
+  Mover* mover;
+  BindInfo* bind_info;
+  MorphInfo* morph_info;
+  Program* ObjectProgram;
+  DamageModificationSystem* damageModSystem;
+  UseData* useData;
 
-inline int Entity::getContents()
-	{
-	return edict->contents;
-	}
+  void Setup();
 
-inline qboolean Entity::isClient()
-	{
-	if ( client )
-		return true;
+  static Entity* FindEntityByName(const str& EntityName);
+  void SetEntNum(int32_t Num);
+  void ClassnameEvent(Event* ev);
+  void SpawnFlagsEvent(Event* ev);
 
-	return false;
-	}
+  Vector InterceptTarget(const Vector& targetPosition, const Vector& targetVelocity, float maxSpeed) const
+  {
+    auto myPosition(origin);
+    auto predictedPosition = targetPosition + targetVelocity * (Vector::Distance(targetPosition, myPosition) / maxSpeed);
+    auto desiredDirection = predictedPosition - myPosition;
 
-inline void Entity::SetDeltaAngles()
-	{
-	int i;
+    return desiredDirection.toAngles();
+  }
 
-	if ( !client )
-		return;
+  Vector InterceptTargetXY(const Vector& targetPosition, const Vector& targetVelocity, float maxSpeed) const
+  {
+    auto myPosition(origin);
+    auto distanceToTargetPosition = Vector::Distance(targetPosition, myPosition);
+    if (!fSmallEnough(distanceToTargetPosition, 0.1f))
+    {
+      auto predictedPosition = targetPosition + targetVelocity * (distanceToTargetPosition / maxSpeed);
+      auto desiredDirection = predictedPosition - myPosition;
+      desiredDirection.z = 0.0f;
+      return desiredDirection.toAngles();
+    }
+    return angles;
+  }
 
-	for( i = 0; i < 3; i++ )
-		client->ps.delta_angles[ i ] = ANGLE2SHORT( client->ps.viewangles[ i ] );
-	}
+  float DistanceTo(const Vector& pos)
+  {
+    Vector delta;
 
-inline qboolean Entity::GlobalAliasExists(const char *name)
-	{
-	assert( name );
-	return ( gi.GlobalAlias_FindRandom( name ) != NULL );
-	}
+    delta = origin - pos;
+    return delta.length();
+  }
 
-inline qboolean Entity::AliasExists(const char *name)
-	{
-	assert( name );
-	return ( gi.Alias_FindRandom( edict->s.modelindex, name ) != NULL );
-	}
+  float DistanceTo(const Entity* ent)
+  {
+    Vector delta;
 
-inline str Entity::GetRandomAlias(const str &name)
-	{
-	str realname;
-	const char *s;
+    assert(ent);
 
-	s = gi.Alias_FindRandom( edict->s.modelindex, name.c_str() );
-	if ( s )
-		realname = s;
-	else
-		{
-		s = gi.GlobalAlias_FindRandom( name.c_str() );
-		if ( s )
-			realname = s;
-		}
+    if (!ent)
+      return 999999.0f; // "Infinite" distance
 
-	return realname;
-	}
+    delta = origin - ent->origin;
+    return delta.length();
+  }
+
+  qboolean WithinDistance(const Vector& pos, float dist)
+  {
+    auto delta(origin - pos);
+
+    // check squared distance
+    return delta * delta < dist * dist;
+  }
+
+  qboolean WithinDistance(const Entity* ent, float dist)
+  {
+    if (!ent)
+    {
+      return false;
+    }
+
+    auto delta(origin - ent->origin);
+
+    // check squared distance
+    return delta * delta < dist * dist;
+  }
+
+  bool WithinDistanceXY(const Vector& pos, float dist)
+  {
+    auto distance = Vector::DistanceXY(origin, pos);
+    return distance <= dist;
+  }
+
+  bool WithinDistanceXY(const Entity* ent, float dist)
+  {
+    if (!ent)
+      return false;
+
+    auto distance = Vector::DistanceXY(origin, ent->origin);
+    return distance <= dist;
+  }
+
+  const char* Target(void)
+  {
+    return target.c_str();
+  }
+
+  void SetTarget(const char* target);
+  qboolean Targeted(void)
+  {
+    return targetname.length() == 0 ? false : true;
+  }
+
+  const char* TargetName(void)
+  {
+    return targetname.c_str();
+  }
+
+  void SetTargetName(const char* target);
+  void SetKillTarget(const char* killtarget);
+  const char* KillTarget(void)
+  {
+    return killtarget.c_str();
+  }
+
+  const Vector& GetLocalOrigin(void) const
+  {
+    return _localOrigin;
+  }
+
+  void SetLocalOrigin(const Vector& localOrigin)
+  {
+    _localOrigin = localOrigin;
+  }
+
+  virtual void setModel(const char* model);
+  void setModel(const str& mdl)
+  {
+    setModel(mdl.c_str());
+  }
+
+  virtual void setViewModel(const char* model);
+  void setViewModel(const str& mdl)
+  {
+    setViewModel(mdl.c_str());
+  }
+
+  virtual void SetModelEvent(Event* ev)
+  {
+    char modelname[256];
+    strcpy(modelname, ev->GetString(1));
+    auto tmpPtr = strstr(modelname, "*");
+    if (tmpPtr)
+    {
+      ev->SetString(1, tmpPtr);
+    }
+
+    setModel(ev->GetString(1));
+  }
+
+  void SetTeamEvent(Event* ev);
+  virtual void TriggerEvent(Event* ev);
+  void hideModel(void)
+  {
+    edict->s.renderfx |= RF_DONTDRAW;
+    if (getSolidType() <= SOLID_TRIGGER)
+      edict->svflags |= SVF_NOCLIENT;
+  }
+
+  void EventHideModel(Event* ev);
+  virtual void showModel(void)
+  {
+    edict->s.renderfx &= ~RF_DONTDRAW;
+    edict->svflags &= ~SVF_NOCLIENT;
+  }
+
+  void EventShowModel(Event* ev);
+  qboolean hidden(void)
+  {
+    return edict->s.renderfx & RF_DONTDRAW ? true : false;
+  }
+
+  void ProcessInitCommandsEvent(Event* ev);
+  void ProcessInitCommands(int32_t index, qboolean cache = false);
+
+  void setAlpha(float alpha);
+  float alpha(void)
+  {
+    return edict->s.alpha;
+  }
+
+  void setMoveType(int32_t type)
+  {
+    movetype = type;
+  }
+
+  void setMoveType(Event* ev);
+
+  int32_t getMoveType(void)
+  {
+    return movetype;
+  }
+
+  void setSolidType(solid_t type);
+  int32_t getSolidType(void)
+  {
+    return edict->solid;
+  }
+
+  virtual Vector getParentVector(const Vector& vec);
+  Vector getLocalVector(const Vector& vec);
+
+  virtual void setSize(Vector min, Vector max);
+  virtual void setOrigin(const Vector& org);
+  virtual void setOrigin(void);
+  virtual void addOrigin(const Vector& org);
+  virtual void setOriginEveryFrame(Event* ev);
+
+  void GetRawTag(int32_t tagnum, orientation_t* orient, bodypart_t part = legs);
+  qboolean GetRawTag(const char* tagname, orientation_t* orient, bodypart_t part = legs);
+
+  void GetTag(int32_t tagnum, orientation_t* orient);
+  qboolean GetTag(const char* name, orientation_t* orient);
+  void GetTag(int32_t tagnum, Vector* pos, Vector* forward = nullptr, Vector* left = nullptr, Vector* up = nullptr);
+  qboolean GetTag(const char* name, Vector* pos, Vector* forward = nullptr, Vector* left = nullptr, Vector* up = nullptr);
+
+  virtual int32_t CurrentFrame(bodypart_t part = legs);
+  virtual int32_t CurrentAnim(bodypart_t part = legs);
+
+  virtual void setAngles(const Vector& ang);
+  virtual void setAngles(void);
+  virtual void SetOrigin(Event* ev);
+  void GetOrigin(Event* ev);
+
+  Vector GetControllerAngles(int32_t num);
+  void SetControllerAngles(int32_t num, vec3_t angles);
+  void SetControllerAngles(Event* ev);
+  void SetControllerTag(int32_t num, int32_t tag_num);
+
+  void link(void);
+  void unlink(void)
+  {
+    gi.unlinkentity(edict);
+  }
+
+
+  void setContents(int32_t type)
+  {
+    edict->contents = type;
+  }
+
+  int32_t getContents(void)
+  {
+    return edict->contents;
+  }
+
+  void setScale(float scale);
+
+  qboolean droptofloor(float maxfall);
+  qboolean isClient(void)
+  {
+    return client != nullptr ? true : false;
+  }
+
+  virtual void SetDeltaAngles(void)
+  {
+    if (!client)
+      return;
+
+    for (auto i = 0; i < 3; i++)
+      client->ps.delta_angles[i] = ANGLE2SHORT(client->ps.viewangles[i]);
+  }
+
+  virtual void DamageEvent(Event* event);
+
+  void Damage(Entity* inflictor, Entity* attacker, float damage, const Vector& position, const Vector& direction,
+              const Vector& normal, int32_t knockback, int32_t flags, int32_t meansofdeath, int32_t surface_number = -1,
+              int32_t bone_number = -1, Entity* weapon = nullptr);
+
+  void Stun(float time);
+
+  void DamageType(Event* ev);
+  virtual qboolean CanDamage(const Entity* target, const Entity* skip_ent = nullptr);
+
+  qboolean IsTouching(const Entity* e1);
+
+  void FadeNoRemove(Event* ev);
+  void FadeOut(Event* ev);
+  void FadeIn(Event* ev);
+  void Fade(Event* ev);
+
+  virtual void CheckGround(void);
+  virtual qboolean HitSky(const trace_t* trace);
+  virtual qboolean HitSky(void);
+
+  void BecomeSolid(Event* ev);
+  void BecomeNonSolid(Event* ev);
+  virtual void SetHealth(Event* ev);
+  void GetHealth(Event* ev);
+  virtual void SetMaxHealth(Event* ev);
+  void SetSize(Event* ev);
+  virtual void SetMins(Event* ev);
+  virtual void SetMaxs(Event* ev);
+  void GetMins(Event* ev);
+  void GetMaxs(Event* ev);
+  void SetScale(Event* ev);
+  void setRandomScale(Event* ev);
+  void SetAlpha(Event* ev);
+  void SetTargetName(Event* ev);
+  void GetTargetName(Event* ev);
+  void GetRawTargetName(Event* ev);
+  virtual void SetTarget(Event* ev);
+  void getTarget(Event* ev);
+  void GetTargetEntity(Event* ev);
+  void SetKillTarget(Event* ev);
+  void GetModelName(Event* ev);
+  virtual void SetAngles(Event* ev);
+  void GetAngles(Event* ev);
+  virtual void SetAngleEvent(Event* ev);
+  void TouchTriggersEvent(Event* ev);
+  void IncreaseShotCount(Event* ev);
+  void GetVelocity(Event* ev);
+  void SetVelocity(Event* ev);
+
+  // Support for checking/setting fulltrace flag
+  void SetFullTraceEvent(Event* ev);
+
+  void setFullTrace(bool fulltrace)
+  {
+    _fulltrace = fulltrace;
+  }
+
+  bool usesFullTrace()
+  {
+    return _fulltrace;
+  }
+
+  Vector GetClosestCorner(const Vector& position);
+
+  str GetRandomAlias(const str& name)
+  {
+    str realname;
+    const char* s;
+
+    s = gi.Alias_FindRandom(edict->s.modelindex, name.c_str());
+    if (s != nullptr)
+    {
+      realname = s;
+    }
+    else
+    {
+      s = gi.GlobalAlias_FindRandom(name.c_str());
+      if (s != nullptr)
+      {
+        realname = s;
+      }
+    }
+
+    return realname;
+  }
+
+  void SetWaterType(void);
+
+  // model binding functions
+  qboolean attach(int32_t parent_entity_num, int32_t tag_num, qboolean use_angles = true, Vector attach_offset = Vector(0, 0, 0), Vector attach_angles_offset = Vector(0, 0, 0));
+  void detach(void);
+
+  void RegisterAlias(Event* ev);
+  void RegisterAliasAndCache(Event* ev);
+  void Cache(Event* ev);
+
+  qboolean GlobalAliasExists(const char* name)
+  {
+    assert(name);
+    return gi.GlobalAlias_FindRandom(name) != nullptr;
+  }
+
+  qboolean AliasExists(const char* name)
+  {
+    assert(name);
+    return gi.Alias_FindRandom(edict->s.modelindex, name) != nullptr;
+  }
+
+  // Sound Stuff
+  void Sound(Event* ev);
+  virtual void Sound(const str& sound_name, int32_t channel = CHAN_BODY, float volume = -1.0f, float min_dist = -1.0f, Vector* origin = nullptr, float pitch_modifier = 1.0f, qboolean onlySendToThisEntity = false);
+  void StopSound(int32_t channel);
+  void StopSound(Event* ev);
+  void LoopSound(Event* ev);
+  void LoopSound(const str& sound_name, float volume = -1.0f, float min_dist = -1.0f);
+  void StopLoopSound(Event* ev);
+  void StopLoopSound(void);
+
+  // Light Stuff
+  void SetLight(Event* ev);
+  void LightOn(Event* ev);
+  void LightOff(Event* ev);
+  void LightRed(Event* ev);
+  void LightGreen(Event* ev);
+  void LightBlue(Event* ev);
+  void LightRadius(Event* ev);
+  void LightStyle(Event* ev);
+  void Flags(Event* ev);
+  void Effects(Event* ev);
+  void RenderEffects(Event* ev);
+  void SVFlags(Event* ev);
+
+  void BroadcastSound(float pos = SOUND_RADIUS, int32_t soundType = SOUNDTYPE_GENERAL);
+  void BroadcastSound(Event* ev);
+  float ModifyFootstepSoundRadius(float radius, int32_t soundTypeIdx);
+  virtual void Kill(Event* ev);
+  void SurfaceModelEvent(Event* ev);
+  void SurfaceCommand(const char* surf_name, const char* token);
+
+  virtual void Postthink(void);
+  virtual void Think(void);
+  void DamageSkin(trace_t* trace, float damage);
+
+  void AttachEvent(Event* ev);
+  void AttachModelEvent(Event* ev);
+  void RemoveAttachedModelEvent(Event* ev);
+  void removeAttachedModelByTargetname(Event* ev);
+  void removeAttachedModelByTargetname(const str& targetNameToRemove);
+  void DetachEvent(Event* ev);
+  void TakeDamageEvent(Event* ev);
+  void NoDamageEvent(Event* ev);
+  void Gravity(Event* ev);
+  //void              GiveOxygen( float time );
+  void UseBoundingBoxEvent(Event* ev);
+  void HurtEvent(Event* ev);
+  void IfSkillEvent(Event* ev);
+  void SetMassEvent(Event* ev);
+  void Censor(Event* ev);
+  void Ghost(Event* ev);
+
+  void StationaryEvent(Event* ev);
+  void Explosion(Event* ev);
+  void SelfDetonate(Event* ev);
+  void DoRadiusDamage(Event* ev);
+
+  void Shader(Event* ev);
+
+  void KillAttach(Event* ev);
+  //void					SetBloodModel( Event *ev );
+
+  void DropToFloorEvent(Event* ev);
+  void SetAnimOnAttachedModel(Event* ev);
+  void SetAnimOnAttachedModel(const str& AnimName, const str& TagName);
+  void SetEntityExplosionModel(Event* ev);
+
+  virtual void SetCinematicAnim(const str& AnimName);
+  virtual void SetCinematicAnim(Event* ev);
+  virtual void CinematicAnimDone(void);
+  virtual void CinematicAnimDone(Event* ev);
+
+  // Binding methods
+  void joinTeam(Entity* teammember);
+  void quitTeam(void);
+  qboolean isBoundTo(const Entity* master);
+  virtual void bind(Entity* master, qboolean use_my_angles = false);
+  virtual void unbind(void);
+
+  void JoinTeam(Event* ev);
+  void EventQuitTeam(Event* ev);
+  virtual void BindEvent(Event* ev);
+  virtual void EventUnbind(Event* ev);
+  void AddToSoundManager(Event* ev);
+  void NoLerpThisFrame(void);
+
+  virtual void addAngles(const Vector& add);
+
+  void DeathSinkStart(Event* ev);
+  void DeathSink(Event* ev);
+
+  void LookAtMe(Event* ev);
+  void ProjectilesCanStickToMe(Event* ev);
+  void DetachAllChildren(Event* ev);
+
+  void MorphEvent(Event* ev);
+  void UnmorphEvent(Event* ev);
+  void MorphControl(Event* ev);
+  int32_t GetMorphChannel(const char* morph_name);
+  void StartMorphController(void);
+  qboolean MorphChannelMatches(int32_t morph_channel1, int32_t morph_channel2);
+
+  void ProjectileAtk(Event* ev);
+  void ProjectileAttackPoint(Event* ev);
+  void ProjectileAttackEntity(Event* ev);
+  void ProjectileAttackFromTag(Event* ev);
+  void ProjectileAttackFromPoint(Event* ev);
+  void TraceAtk(Event* ev);
+
+  virtual void VelocityModified(void);
+  virtual void Archive(Archiver& arc) override;
+
+  virtual void PassToAnimate(Event* ev);
+  void SetObjectProgram(Event* ev);
+  virtual void SetWatchOffset(Event* ev);
+  void ExecuteProgram(Event* ev);
+
+  void Contents(Event* ev);
+  void setMask(Event* ev);
+
+  void hideFeaturesForFade(void);
+  void showFeaturesForFade(void);
+
+  void DisplayEffect(Event* ev);
+  void clearDisplayEffects(void);
+
+  void getCustomShaderInfo(const str& customShader, str& shaderName, str& soundName);
+
+  void setCustomShader(const char* customShader);
+  void setCustomShader(Event* ev);
+  void clearCustomShader(const char* customShader = nullptr);
+  void clearCustomShader(Event* ev);
+  bool hasCustomShader(const char* customShader = nullptr);
+
+  void setCustomEmitter(const char* customEmitter);
+  void setCustomEmitter(Event* ev);
+  void clearCustomEmitter(const char* customEmitter = nullptr);
+  void clearCustomEmitter(Event* ev);
+
+  Entity* SpawnEffect(const str& name, const Vector& origin, const Vector& angles, float removeTime);
+  Entity* SpawnSound(const str& sound, const Vector& pos, float volume, float removeTime);
+
+  void SpawnEffect(Event* ev);
+
+  void attachEffect(const str& modelName, const str& tagName, float removeTime);
+  void attachEffect(Event* ev);
+
+  void ForceAlpha(Event* ev);
+  void CreateEarthquake(Event* ev);
+
+  void SetFloatVar(Event* ev);
+  void SetVectorVar(Event* ev);
+  void SetStringVar(Event* ev);
+  void GetFloatVar(Event* ev);
+  void doesVarExist(Event* ev);
+  void RemoveVariable(Event* ev);
+  void GetVectorVar(Event* ev);
+  void GetStringVar(Event* ev);
+  void SetUserVar1(Event* ev);
+  void SetUserVar2(Event* ev);
+  void SetUserVar3(Event* ev);
+  void SetUserVar4(Event* ev);
+  void isWithinDistanceOf(Event* ev);
+
+  void affectingViewMode(Event* ev);
+  void addAffectingViewModes(uint32_t mask);
+  void removeAffectingViewModes(uint32_t mask);
+
+  void TikiNote(Event* ev);
+  void TikiTodo(Event* ev);
+
+  void AddDamageModifier(Event* ev);
+  void ResolveDamage(::Damage& damage);
+
+  // Health interface
+  float getHealth(void)
+  {
+    return health;
+  };
+
+  float getMaxHealth(void)
+  {
+    return max_health;
+  };
+
+  void setHealth(float newHealth)
+  {
+    health = newHealth;
+  };
+
+  void setMaxHealth(float newMaxHealth)
+  {
+    max_health = newMaxHealth;
+  };
+
+  void addHealth(float healthToAdd, float maxHealth = 0.0f);
+  void addHealthOverTime(Event* ev);
+
+  // Group Number Interface
+  void SetGroupID(Event* ev);
+  void AddToGroup(int32_t ID);
+
+  void SetGroupID(int32_t ID)
+  {
+    _groupID = ID;
+  }
+
+  int32_t GetGroupID()
+  {
+    return _groupID;
+  };
+
+  void MultiplayerEvent(Event* ev);
+
+  Container<EntityPtr>& GetLastTouchedList()
+  {
+    return _lastTouchedList;
+  }
+
+  // Archetype name
+  virtual void setArchetype(Event* ev);
+  str getArchetype() const;
+
+  virtual str getName() const
+  {
+    return "";
+  }
+
+  void setMissionObjective(Event* ev);
+
+  // Usable Entity functions
+  void useDataAnim(Event* ev);
+  void useDataType(Event* ev);
+  void useDataThread(Event* ev);
+  void useDataMaxDist(Event* ev);
+  void useDataCount(Event* ev);
+  void useDataEvent(Event* ev);
+  bool hasUseData()
+  {
+    return useData != nullptr ? true : false;
+  }
+
+
+  // GameplayManager interfaces to health and damage
+  void setGameplayHealth(Event* ev);
+  void setGameplayDamage(Event* ev);
+
+  virtual void processGameplayData(Event*)
+  {
+  }
+
+  // Think interface
+
+  void turnThinkOn(void)
+  {
+    flags |= FlagThink;
+  }
+
+  void turnThinkOff(void)
+  {
+    flags &= ~FlagThink;
+  }
+
+  bool isThinkOn(void)
+  {
+    return flags & FlagThink ? true : false;
+  }
+
+  void startStasis(void);
+  void stopStasis(void);
+  void startStasis(Event* ev);
+  void stopStasis(Event* ev);
+  void setTargetPos(Event* ev);
+  void setTargetPos(const str& targetPos);
+  str getTargetPos();
+
+  void simplePlayDialog(Event* ev);
+
+  virtual void warp(Event* ev);
+
+  void traceHitsEntity(Event* ev);
+
+  void setNetworkDetail(Event* ev);
+  bool isNetworkDetail(void);
+};
+
 
 #include "worldspawn.h"
 

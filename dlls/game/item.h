@@ -95,7 +95,11 @@ class Item : public Trigger
 		virtual qboolean		Pickupable( Entity *other );
 
 		virtual void			setName( const char *i );
-		virtual const str		getName( void ) const ;
+		virtual str getName( void ) const override
+    {
+      return item_name;
+    }
+
 		virtual int				getIndex( void );
 		virtual void			SetAmountEvent( Event *ev );
 		virtual void			SetMaxAmount( Event *ev );
@@ -135,7 +139,7 @@ class Item : public Trigger
 		virtual void			cacheStrings();
 		void					postSpawn( Event *ev );
 
-		virtual void			Archive( Archiver &arc );
+		virtual void			Archive( Archiver &arc ) override;
 		virtual void			ArchivePersistantData( Archiver& ) {};
 	};
 

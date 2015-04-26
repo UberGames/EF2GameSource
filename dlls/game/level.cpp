@@ -1002,7 +1002,7 @@ FindTeams
 
 Chain together all entities with a matching team field.
 
-All but the first will have the FL_TEAMSLAVE flag set.
+All but the first will have the FlagTeamslave flag set.
 All but the last will have the teamchain field set to the next one
 ================
 */
@@ -1035,7 +1035,7 @@ void Level::FindTeams( void )
 			continue;
 		}
 		
-		if ( ent->flags & FL_TEAMSLAVE )
+		if ( ent->flags & FlagTeamslave )
 		{
 			continue;
 		}
@@ -1058,7 +1058,7 @@ void Level::FindTeams( void )
 				continue;
 			}
 			
-			if ( ent2->flags & FL_TEAMSLAVE )
+			if ( ent2->flags & FlagTeamslave )
 			{
 				continue;
 			}
@@ -1069,7 +1069,7 @@ void Level::FindTeams( void )
 				chain->bind_info->teamchain = ent2;
 				ent2->bind_info->teammaster = ent;
 				chain = ent2;
-				ent2->flags |= FL_TEAMSLAVE;
+				ent2->flags |= FlagTeamslave;
 			}
 		}
 	}

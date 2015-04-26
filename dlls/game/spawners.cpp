@@ -735,7 +735,7 @@ void SpawnOutOfSight::DoSpawn( Event *ev )
 		
 		// get the Entity from the gentity_t and skip it if invalid
 		ent = ed->entity;
-		if ( ( ent->health < 0.0f ) || ( ent->flags & FL_NOTARGET ) )
+		if ( ( ent->health < 0.0f ) || ( ent->flags & FlagNotarget ) )
 		{
 			continue;
 		}
@@ -856,7 +856,7 @@ void SpawnChain::DoSpawn( Event *ev )
 			if ( angleToMe <  entityFOV/2.0f )
 			{
 				Entity *entity = ed->entity;
-				if ( ( entity->health >= 0.0f ) && !( entity->flags & FL_NOTARGET ) )
+				if ( ( entity->health >= 0.0f ) && !( entity->flags & FlagNotarget ) )
 				{
 					trace_t trace = G_Trace( origin, vec_zero, vec_zero, entity->centroid, this, MASK_OPAQUE, false, "SpawnChain::DoSpawn" );
 					if ( trace.fraction == 1.0f )

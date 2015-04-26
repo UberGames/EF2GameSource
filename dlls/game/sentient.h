@@ -343,7 +343,8 @@ class Sentient : public Entity
 		void					SetCriticalHealthPercentage ( float percentage );
 		float					GetCriticalHealthPercentage ();
 		bool					getHeadWatchAllowed			()	{ return _headWatchAllowed; }
-		virtual const str		getName() const { return ""; }
+		virtual str		getName() const override
+		{ return ""; }
 
 		void					freeConditionals( Container<Conditional *> &conditionalsToDelete );
 	};

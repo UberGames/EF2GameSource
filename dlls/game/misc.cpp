@@ -328,10 +328,10 @@ void ExplodingWall::Explode( Event *ev )
 	{
 		showModel();
 		setSolidType( SOLID_BSP );
-		takedamage = DAMAGE_YES;
+		takedamage = DamageYes;
 	}
 	
-	if ( takedamage == DAMAGE_NO )
+	if ( takedamage == DamageNo )
 	{
 		return;
 	}
@@ -339,7 +339,7 @@ void ExplodingWall::Explode( Event *ev )
 	other = ev->GetEntity( 1 );
 	
 	health = 0;
-	takedamage = DAMAGE_NO;
+	takedamage = DamageNo;
 	
 	// Create explosions
 	for( i = 0; i < explosions; i++ )
@@ -419,7 +419,7 @@ void ExplodingWall::DamageEvent( Event *ev )
 	Entity		*attacker;
 	float			damage;
 	
-	if ( takedamage == DAMAGE_NO )
+	if ( takedamage == DamageNo )
 	{
 		return;
 	}
@@ -460,7 +460,7 @@ void ExplodingWall::GroundDamage( Event *ev )
 	Vector		pos;
 	int			damage;
 	
-	if ( takedamage == DAMAGE_NO )
+	if ( takedamage == DamageNo )
 	{
 		return;
 	}
@@ -491,7 +491,7 @@ void ExplodingWall::GroundDamage( Event *ev )
 		
 		CreateExplosion( pos, damage, this, attacker, this );
 	}
-	takedamage = DAMAGE_NO;
+	takedamage = DamageNo;
 	hideModel();
 	BroadcastSound();
 	PostEvent( EV_Remove, 0.0f );
@@ -500,7 +500,7 @@ void ExplodingWall::GroundDamage( Event *ev )
 void ExplodingWall::SetupSecondStage( void )
 {
 	health = max_health;
-	takedamage = DAMAGE_YES;
+	takedamage = DamageYes;
 }
 
 void ExplodingWall::StopRotating( Event * )
@@ -568,7 +568,7 @@ void ExplodingWall::TouchFunc( Event *ev )
 	{
 		Vector pos;
 		
-		takedamage = DAMAGE_NO;
+		takedamage = DamageNo;
 		
 		if ( explosions )
 		{
@@ -597,9 +597,9 @@ void ExplodingWall::Setup( Event * )
 	if ( spawnflags & INVISIBLE )
 	{
 		if ( Targeted() )
-			takedamage = DAMAGE_YES;
+			takedamage = DamageYes;
 		else
-			takedamage = DAMAGE_NO;
+			takedamage = DamageNo;
 		hideModel();
 		setSolidType( SOLID_NOT );
 	}
@@ -607,7 +607,7 @@ void ExplodingWall::Setup( Event * )
 	{
 		showModel();
 		setSolidType( SOLID_BSP );
-		takedamage = DAMAGE_YES;
+		takedamage = DamageYes;
 	}
 	
 	setMoveType( MOVETYPE_PUSH );
@@ -757,7 +757,7 @@ void Teleporter::StartTeleport( Event *ev )
 
 	// Create the teleport special effect
 	
-	/* fx = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	/* fx = new Entity( EntityCreateFlagAnimate );
 	fx->setOrigin( other->origin );
 	
 	if ( is_sentient )
@@ -775,8 +775,8 @@ void Teleporter::StartTeleport( Event *ev )
 	if ( is_sentient && !( spawnflags & FAST_EFFECTS ) )
 	{
 		// Freeze the entity that went into the teleporter
-		other->flags |= FL_IMMOBILE;
-		other->takedamage = DAMAGE_NO;
+		other->flags |= FlagImmobile;
+		other->takedamage = DamageNo;
 	} */
 	
 	// Make the entity teleport
@@ -922,7 +922,7 @@ void Teleporter::Teleport( Event *ev )
 
 	/* // Spawn in effect
 	
-	fx = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	fx = new Entity( EntityCreateFlagAnimate );
 	
 	fx->setOrigin( other->origin );
 	
@@ -957,8 +957,8 @@ void Teleporter::StopTeleport( Event *ev )
 	{
 		if ( doFullTeleport( other ) )
 		{
-			other->flags &= ~FL_IMMOBILE;
-			other->takedamage = DAMAGE_AIM;
+			other->flags &= ~FlagImmobile;
+			other->takedamage = DamageAim;
 			other->showModel();
 		}
 	}
@@ -1914,7 +1914,7 @@ UseObject::UseObject()
 	setContents( CONTENTS_BODY );
 	
 	// make sure the bounds get rotated with the object
-	flags |= FL_ROTATEDBOUNDS;
+	flags |= FlagRotatedbounds;
 	// by default this can activated infinitely
 	count = -1;
 	// clear out the triggertarget
@@ -1928,7 +1928,7 @@ UseObject::UseObject()
 	// clear out the damage type, by default useobjects do not respond to damage
 	damage_type = MOD_NONE;
 	// turn on damage taking ability
-	takedamage = DAMAGE_YES;
+	takedamage = DamageYes;
 	// give it some health
 	health = 100.0f;
 	// set the default yaw offset
@@ -2610,7 +2610,7 @@ void PushObject::SetPushSound( Event *ev )
 void PushObject::Start( Event * )
 {
 	// make sure that this touches triggers
-	flags |= FL_TOUCH_TRIGGERS;
+	flags |= FlagTouchTriggers;
 	edict->clipmask = MASK_SOLID;
 	setSolidType( SOLID_BSP );
 	setMoveType( MOVETYPE_PUSH );

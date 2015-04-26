@@ -3001,8 +3001,8 @@ Actor::Actor()
 	//Do We Bleed?
    if ( com_blood->integer )
       {
-      flags |= FL_BLOOD;
-      flags |= FL_DIE_GIBS;
+      flags |= FlagBlood;
+      flags |= FlagDieGibs;
       }
 
    // don't talk all at once initially
@@ -3027,8 +3027,8 @@ Actor::Actor()
 	max_health			             = health;
 	
 	// General Data
-	takedamage			             = DAMAGE_AIM;
-	deadflag				             = DEAD_NO;
+	takedamage			             = DamageAim;
+	deadflag				             = DeadNo;
 	mode                           = ACTOR_MODE_AI; //ACTOR_MODE_IDLE;
 	max_inactive_time              = MAX_INACTIVE_TIME;
 	newanimevent                   = NULL;
@@ -3622,7 +3622,7 @@ void Actor::TurnTowardsEnemy(	Event *ev )
 	// Get our current enemy
 	Entity *currentEnemy;
 	currentEnemy = enemyManager->GetCurrentEnemy();
-	if ( !currentEnemy || (currentEnemy->flags & FL_NOTARGET ))
+	if ( !currentEnemy || (currentEnemy->flags & FlagNotarget ))
 		return;
 	
 	//See if we want to add any additional yaw
@@ -3649,7 +3649,7 @@ void Actor::TurnTowardsPlayer( Event *ev )
 	player = GetPlayer(0);
 
 	// don't target while player is not in the game or he's in notarget
-	if( !player || ( player->flags & FL_NOTARGET ) )
+	if( !player || ( player->flags & FlagNotarget ) )
 		return;
 
 	//See if we want to add any additional yaw
@@ -6807,7 +6807,7 @@ void Actor::BroadcastAlert( float rad )
 	if ( !currentEnemy )
 		return;
 
-	if ( !( this->flags & FL_NOTARGET ) )
+	if ( !( this->flags & FlagNotarget ) )
 		{
 		enemypos = currentEnemy->centroid;
 		G_BroadcastAlert( this, centroid, enemypos, rad );
@@ -6824,7 +6824,7 @@ void Actor::BroadcastAlert( float rad,	int soundtype )
 	if ( !currentEnemy )
 		return;
 
-	if ( !( this->flags & FL_NOTARGET ) )
+	if ( !( this->flags & FlagNotarget ) )
 		{
 		enemypos = currentEnemy->centroid;
 		G_BroadcastSound( this, centroid, rad, soundtype );
@@ -7045,10 +7045,10 @@ void Actor::Dead( Event * )
 		}
 
 	// don't allow them to fly, think, or swim anymore
-	flags &= ~( FL_SWIM | FL_FLY );
+	flags &= ~( FlagSwim | FlagFly );
 	turnThinkOff();
 
-   deadflag = DEAD_DEAD;
+   deadflag = DeadDead;
    setMoveType( MOVETYPE_NONE );
    setOrigin( origin );
 
@@ -7310,9 +7310,9 @@ void Actor::Killed( Event *ev )
 		G_MissionFailed( "CivilianKilled" ); 
 
 	// don't allow them to fly or swim anymore
-	flags &= ~( FL_SWIM | FL_FLY );
+	flags &= ~( FlagSwim | FlagFly );
 
-	deadflag = DEAD_DYING;
+	deadflag = DeadDying;
 
 	groundentity = NULL;
 
@@ -7752,7 +7752,7 @@ void Actor::RealSpawnGib( qboolean use_tag, Event *ev	)
 
 	// Spawn in the visible gib
 
-	ent = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	ent = new Entity( EntityCreateFlagAnimate );
 	ent->setModel( model );
 
 	// Make sure the init stuff in the tiki get processed now
@@ -8155,8 +8155,8 @@ void Actor::ForwardSpeedEvent( Event *ev )
 
 void Actor::SwimEvent( Event * )
    {
-   flags &= ~FL_FLY;
-   flags |= FL_SWIM;
+   flags &= ~FlagFly;
+   flags |= FlagSwim;
    }
 
 void Actor::FlyEvent( Event *ev )
@@ -8164,28 +8164,28 @@ void Actor::FlyEvent( Event *ev )
 	if ( ev->NumArgs() == 0 )
 		{
 		// Turn flying on
-		flags &= ~FL_SWIM;
-		flags |= FL_FLY;		
+		flags &= ~FlagSwim;
+		flags |= FlagFly;		
 		}
 	else
 		{
 		if ( ev->GetBoolean( 1 ) )
 			{
 			// Turn flying on
-			flags &= ~FL_SWIM;
-			flags |= FL_FLY;			
+			flags &= ~FlagSwim;
+			flags |= FlagFly;			
 			}
 		else
 			{
 			// Turn flying off
-			flags &= ~FL_FLY;
+			flags &= ~FlagFly;
 			}
 		}
    }
 
 void Actor::NotLandEvent( Event * )
    {
-   flags &= FL_SWIM | FL_FLY;
+   flags &= FlagSwim | FlagFly;
    }
 
 void Actor::Push( Event *ev )
@@ -8311,16 +8311,16 @@ void Actor::ShowInfo(void)
 
 	switch( deadflag )
 		{
-		case DEAD_NO :
+		case DeadNo :
 			gi.Printf( "deadflag: NO\n" );
 			break;
-		case DEAD_DYING :
+		case DeadDying :
 			gi.Printf( "deadflag: DYING\n" );
 			break;
-		case DEAD_DEAD :
+		case DeadDead :
 			gi.Printf( "deadflag: DEAD\n" );
 			break;
-		case DEAD_RESPAWNABLE :
+		case DeadRespawnable :
 			gi.Printf( "deadflag: RESPAWNABLE\n" );
 			break;
 
@@ -9376,7 +9376,7 @@ qboolean Actor::checkmovingactorrange( Conditional &condition )
             ( ent_in_range->movetype != MOVETYPE_STATIONARY ) &&
             ( this != ent_in_range ) &&
             ( ent_in_range->health > 0 ) &&
-            !( ent_in_range->flags & FL_NOTARGET )
+            !( ent_in_range->flags & FlagNotarget )
          )
          {
          delta = origin - ent_in_range->centroid;
@@ -12634,7 +12634,7 @@ void Actor::SetMaxInactiveTime( Event *ev	)
 
 bool Actor::IsEntityAlive( const Entity *ent )
 	{
-	return ( ent && !ent->deadflag && ( ent->health > 0.0f ) && !(ent->flags & FL_NOTARGET) && level.ai_on );
+	return ( ent && !ent->deadflag && ( ent->health > 0.0f ) && !(ent->flags & FlagNotarget) && level.ai_on );
 	}
 
 void Actor::Name(	Event *ev )
@@ -13130,7 +13130,7 @@ void Actor::SpawnActorAtLocation( Event *ev )
 
 	// Spawn in teleport effect
 
-	effect = new Entity( ENTITY_CREATE_FLAG_ANIMATE );
+	effect = new Entity( EntityCreateFlagAnimate );
 	effect->setModel( "fx_teleport3.tik" );
 	effect->setOrigin( orig );
 	effect->setSolidType( SOLID_NOT );
@@ -14012,8 +14012,8 @@ void Actor::SetActorType( Event *ev )
 		actortype = IS_INANIMATE;	
 		edict->svflags	&= ~SVF_MONSTER;
       setMoveType( MOVETYPE_STATIONARY );
-      flags &= ~FL_BLOOD;
-		flags &= ~FL_DIE_GIBS;
+      flags &= ~FlagBlood;
+		flags &= ~FlagDieGibs;
 		return;
 		}
 	else if ( !Q_stricmp( aType.c_str() , "monster" ) )
@@ -15114,7 +15114,7 @@ void Actor::_dropActorToGround()
 
 	if ( trace.startsolid || trace.allsolid )
 		stuck = true;
-	else if ( !( flags & FL_FLY ) )
+	else if ( !( flags & FlagFly ) )
 		{
 		setOrigin( trace.endpos );
 		groundentity = trace.ent;

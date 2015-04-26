@@ -555,7 +555,7 @@ retry:
 	
 	if ( edict && ( edict != ent->edict ) )
 	{
-		if ( ent->flags & FL_TOUCH_TRIGGERS )
+		if ( ent->flags & FlagTouchTriggers )
 		{
 			G_TouchTriggers( ent );
 		}
@@ -917,7 +917,7 @@ qboolean G_Push( Entity *pusher, const Vector &pushermove, const Vector &pushera
 	// see if anything we moved has touched a trigger
 	for( p = pushed_p - 1; p >= pushed; p-- )
 	{
-		if ( p->ent->flags & FL_TOUCH_TRIGGERS )
+		if ( p->ent->flags & FlagTouchTriggers )
 		{
 			G_TouchTriggers( p->ent );
 		}
@@ -984,7 +984,7 @@ void G_Physics_Pusher( Entity *ent )
 	Event		*ev;
 	
 	// team slaves are only moved by their captains
-	if ( ent->flags & FL_TEAMSLAVE )
+	if ( ent->flags & FlagTeamslave )
 	{
 		return;
 	}
@@ -1094,7 +1094,7 @@ void G_Physics_Toss( Entity *ent )
 	qboolean onconveyor;
 	
 	// if not a team captain, so movement will be handled elsewhere
-	if ( ent->flags & FL_TEAMSLAVE )
+	if ( ent->flags & FlagTeamslave )
 	{
 		return;
 	}
@@ -1131,7 +1131,7 @@ void G_Physics_Toss( Entity *ent )
 	// add gravity
 	if ( !onconveyor && ( ent->movetype != MOVETYPE_FLY ) && ( ent->movetype != MOVETYPE_FLYMISSILE ) )
 	{
-		if ( !( ent->flags & FL_FLY ) ) 
+		if ( !( ent->flags & FlagFly ) ) 
 			G_AddGravity( ent );			
 	}
 	
@@ -1155,7 +1155,7 @@ void G_Physics_Toss( Entity *ent )
 			mask = MASK_MONSTERSOLID;
 		}
 		G_FlyMove( ent, basevel, FRAMETIME, mask );
-		if ( ent->flags & FL_TOUCH_TRIGGERS )
+		if ( ent->flags & FlagTouchTriggers )
 		{
 			G_TouchTriggers( ent );
 		}
@@ -1262,7 +1262,7 @@ void G_Physics_Toss( Entity *ent )
 		}
 	}
 	
-	if ( ent->flags & FL_TOUCH_TRIGGERS )
+	if ( ent->flags & FlagTouchTriggers )
 	{
 		G_TouchTriggers( ent );
 	}
@@ -1383,9 +1383,9 @@ void G_Physics_Step( Entity *ent )
 	//   swimming monsters who are in the water
 	if ( !wasonground )
 	{
-		if ( !( ent->flags & FL_FLY ) )
+		if ( !( ent->flags & FlagFly ) )
 		{
-			if ( !( ( ent->flags & FL_SWIM ) && ( ent->waterlevel > 2 ) ) )
+			if ( !( ( ent->flags & FlagSwim ) && ( ent->waterlevel > 2 ) ) )
 			{
 				if ( ent->velocity[ 2 ] < ( sv_currentGravity->value * ent->gravity * -0.1f ) )
 				{
@@ -1402,7 +1402,7 @@ void G_Physics_Step( Entity *ent )
 	}
 	
 	// friction for flying monsters that have been given vertical velocity
-	if ( ( ent->flags & FL_FLY ) && ( ent->velocity.z != 0.0f ) )
+	if ( ( ent->flags & FlagFly ) && ( ent->velocity.z != 0.0f ) )
 	{
 		speed = fabs( ent->velocity.z );
 		control = speed < sv_stopspeed->value ? sv_stopspeed->value : speed;
@@ -1417,7 +1417,7 @@ void G_Physics_Step( Entity *ent )
 	}
 	
 	// friction for flying monsters that have been given vertical velocity
-	if ( ( ent->flags & FL_SWIM ) && ( ent->velocity.z != 0.0f ) )
+	if ( ( ent->flags & FlagSwim ) && ( ent->velocity.z != 0.0f ) )
 	{
 		speed = fabs( ent->velocity.z );
 		control = speed < sv_stopspeed->value ? sv_stopspeed->value : speed;
@@ -1434,7 +1434,7 @@ void G_Physics_Step( Entity *ent )
 	{
 		// apply friction
 		// let dead monsters who aren't completely onground slide
-		if ( ( wasonground ) || ( ent->flags & ( FL_SWIM | FL_FLY ) ) )
+		if ( ( wasonground ) || ( ent->flags & ( FlagSwim | FlagFly ) ) )
 		{
 			if ( !( ( ent->health <= 0.0f ) && !M_CheckBottom( ent ) ) )
 			{
@@ -1478,7 +1478,7 @@ void G_Physics_Step( Entity *ent )
 		ent->link();
 		
 		G_CheckWater( ent );
-		if ( ent->flags & FL_TOUCH_TRIGGERS )
+		if ( ent->flags & FlagTouchTriggers )
 		{
 			G_TouchTriggers( ent );
 		}
@@ -1514,7 +1514,7 @@ void G_RunEntity( Entity *ent )
 	
 	// Only run physics if in use, not bound, and not immobilized
 	
-	if ( ( edict->s.parent == ENTITYNUM_NONE ) && !(ent->flags & FL_IMMOBILE) && !(ent->flags & FL_PARTIAL_IMMOBILE) )
+	if ( ( edict->s.parent == ENTITYNUM_NONE ) && !(ent->flags & FlagImmobile) && !(ent->flags & FlagPartialImmobile) )
 	{
 		switch ( ( int )ent->movetype )
 		{
@@ -1547,7 +1547,7 @@ void G_RunEntity( Entity *ent )
 		}
 	}
 	
-	if ( ent->flags & FL_POSTTHINK )
+	if ( ent->flags & FlagPostthink )
 	{
 		ent->Postthink();
 	}
