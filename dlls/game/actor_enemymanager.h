@@ -21,9 +21,7 @@ class EnemyManager;
 #ifndef __ACTOR_ENEMYMANAGER_H__
 #define __ACTOR_ENEMYMANAGER_H__
 
-#include "actor.h"
 #include "actorincludes.h"
-#include "weapon.h"
 
 //============================
 // Class EnemyManager
@@ -42,8 +40,8 @@ class EnemyManager;
 class EnemyManager {
 	public:
 	EnemyManager();
-	EnemyManager(Actor* actor);
-	~EnemyManager();
+  explicit EnemyManager(Actor* actor);
+  virtual ~EnemyManager();
 
 	void FindHighestHateEnemy();
 	void FindNextEnemy();
