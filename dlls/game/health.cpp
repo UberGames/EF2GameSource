@@ -43,7 +43,7 @@ void HealthInventoryItem::Use( Event *ev )
 	str			sound_name;
 	
 	
-	other = ev->GetEntity( 1 );
+	other = ev->GetEntity<Entity>( 1 );
 	if ( !other || !other->isSubclassOf( Sentient ) )
 	{
 		return;

@@ -532,7 +532,29 @@ class Event : public Class
       void              ReturnEntity( Entity *ent );
 
 		void					AddEntity( Entity *ent );
-		Entity				*GetEntity( int pos );
+
+    Entity* GetEntity(int pos)
+    {
+      if (data == nullptr || (pos < 1) || (data->NumObjects() < pos))
+      {
+        Error("Index %d out of range.", pos);
+        return nullptr;
+      }
+
+      return data->ObjectAt(pos).GetEntity(*this);
+    }
+
+    template <typename T>
+		T* GetEntity(int pos)
+    {
+      if (data == nullptr || (pos < 1) || (data->NumObjects() < pos))
+      {
+        Error("Index %d out of range.", pos);
+        return nullptr;
+      }
+
+      return dynamic_cast<T*>(data->ObjectAt(pos).GetEntity(*this));
+    }
 		
 		void					SetThread( CThread *thread );
 		CThread				*GetThread( void );
@@ -1127,25 +1149,6 @@ inline bool Event::GetBoolean
 
    return ( val != 0 ) ? true : false;
    }
-
-#ifdef GAME_DLL
-
-inline Entity *Event::GetEntity
-	(
-	int pos
-	)
-
-	{
-	if ( !data || ( pos < 1 ) || ( data->NumObjects() < pos ) )
-		{
-		Error( "Index %d out of range.", pos );
-		return NULL;
-		}
-
-   return data->ObjectAt( pos ).GetEntity( *this );
-	}
-
-#endif
 
 
 //===============================================================

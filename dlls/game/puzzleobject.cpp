@@ -542,7 +542,7 @@ void PuzzleObject::useEvent(Event* event)
 	Entity* entity;
 
 	if ( event->NumArgs() > 0 )
-		entity = event->GetEntity( 1 );
+		entity = event->GetEntity<Entity>( 1 );
 	else
 		entity = NULL;
 

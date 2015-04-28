@@ -67,6 +67,57 @@ Conditional::Conditional( const Condition<Class> &cond ) :
 	checked = false;
 }
 
+const char* Conditional::getParm(int number)
+{
+  if (number < 1 || number > parmList.NumObjects())
+  {
+    gi.Error(ERR_DROP, "Parm #%d out of range on %s condition\n", number, condition.name);
+  }
+  return parmList.ObjectAt(number).c_str();
+}
+
+template <>
+float Conditional::getParm(int number)
+{
+  return float(atof(getParm(number)));
+}
+
+template<>
+int Conditional::getParm(int number)
+{
+  return atoi(getParm(number));
+}
+
+bool Conditional::getResult(testcondition_t test, Entity& ent)
+{
+  if (condition.func && !checked)
+  {
+    checked = true;
+    previous_result = result;
+
+    result = (ent.*condition.func)(*this);
+  }
+
+  switch (test)
+  {
+  case TC_ISFALSE:
+    return !result;
+    break;
+
+  case TC_EDGETRUE:
+    return result && !previous_result;
+    break;
+
+  case TC_EDGEFALSE:
+    return !result && previous_result;
+    break;
+
+  case TC_ISTRUE:
+  default:
+    return result != false;
+  }
+}
+
 Conditional::Conditional( void )
 {
 	gi.Error( ERR_DROP, "Conditional created with wrong constructor\n" );

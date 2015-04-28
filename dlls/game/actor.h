@@ -28,20 +28,17 @@ class FindEnemyMovement;
 #ifndef __ACTOR_H__
 #define __ACTOR_H__
 
+#include <cinttypes>
+
 #include "g_local.h"
-#include "weapon.h"
 #include "sentient.h"
 #include "container.h"
-#include "stack.h"
 #include "navigate.h"
 #include "behavior.h"
-#include "behaviors_general.h"
-#include "behaviors_specific.h"
 #include "scriptmaster.h"
 #include "characterstate.h"
 #include "actorstrategies.h"
 #include "actorgamecomponents.h"
-#include "helper_node.h"
 #include "actorutil.h"
 #include "actor_sensoryperception.h"
 #include "actor_enemymanager.h"
@@ -51,7 +48,6 @@ class FindEnemyMovement;
 #include "actor_posturecontroller.hpp"
 #include "actorincludes.h"
 #include "RageAI.h"
-#include "FollowPath.h"
 
 //-------------------------------------------
 // Global Functions
@@ -123,14 +119,14 @@ class Actor : public Sentient {
 	// of just BONE.
 	//-----------------------------------------------------
 	str newanim;
-	int newanimnum;
-	int animnum;
+	int32_t newanimnum;
+	int32_t animnum;
 	str animname;
 	Event* newanimevent;
 	str last_anim_event_name;
 
 	str newTorsoAnim;
-	int newTorsoAnimNum;
+	int32_t newTorsoAnimNum;
 	str TorsoAnimName;
 	Event* newTorsoAnimEvent;
 	str last_torso_anim_event_name;
@@ -241,12 +237,12 @@ class Actor : public Sentient {
 	// should experiment with converting these flags into a 
 	// bit vector
 	//---------------------------------------------------------
-	unsigned int actor_flags1;
-	unsigned int actor_flags2;
-	unsigned int actor_flags3;
-	unsigned int actor_flags4;
-	unsigned int notify_flags1;
-	unsigned int state_flags;
+	uint32_t actor_flags1;
+  uint32_t actor_flags2;
+  uint32_t actor_flags3;
+  uint32_t actor_flags4;
+  uint32_t notify_flags1;
+  uint32_t state_flags;
 
 
 	//--------------------------------------------------------
@@ -301,9 +297,9 @@ class Actor : public Sentient {
 	float pain_threshold;
 	float next_drown_time;
 	float air_finished;
-	int pain_type;
+	int32_t pain_type;
 	Vector pain_angles;
-	int bullet_hits;
+	int32_t bullet_hits;
 	float next_pain_time;
 	float min_pain_time;
 	float next_forced_pain_time;
@@ -334,8 +330,8 @@ class Actor : public Sentient {
 
 	float state_time;
 	float masterstate_time;
-	int times_done;
-	int masterstate_times_done;
+	int32_t times_done;
+	int32_t masterstate_times_done;
 	float state_done_time;
 	float masterstate_done_time;
 	float last_time_active;
@@ -390,7 +386,7 @@ class Actor : public Sentient {
 	// to talk, when the dialog is completed, they step back into
 	// the behaivors they saved off here
 	//---------------------------------------------------------------
-	int saved_mode;
+	int32_t saved_mode;
 	BehaviorPtr saved_behavior;
 	BehaviorPtr saved_headBehavior;
 	BehaviorPtr saved_eyeBehavior;
@@ -438,14 +434,14 @@ class Actor : public Sentient {
 	EntityPtr last_ent;
 	float canseeenemy_time;
 	float canseeplayer_time;
-	int stage;
-	int num_of_spawns;
+	int32_t stage;
+	int32_t num_of_spawns;
 	ActorPtr spawnparent;
 	Vector last_attack_pos;
 	Vector last_attack_enemy_pos;
 	EntityPtr last_attack_entity_hit;
 	Vector last_attack_entity_hit_pos;
-	int mode;
+	int32_t mode;
 	Vector last_known_enemy_pos;
 	Vector last_known_player_pos;
 	float feet_width;
@@ -461,10 +457,10 @@ class Actor : public Sentient {
 	float actor_to_actor_damage_modifier;
 	float last_used_time;
 	float hitscan_response_chance;
-	int shotsFired;
-	int ondamage_threshold;
+	int32_t shotsFired;
+	int32_t ondamage_threshold;
 	float timeBetweenSleepChecks;
-	int saved_bone_hit;
+	int32_t saved_bone_hit;
 	float activationDelay;
 	float activationStart;
 	float deathKnockbackVerticalValue;
@@ -515,7 +511,7 @@ class Actor : public Sentient {
 	// target.
 	//--------------------------------------------------------
 	FollowTargetData_t followTarget;
-	int _steeringDirectionPreference;
+	int32_t _steeringDirectionPreference;
 
 
 
@@ -537,7 +533,7 @@ class Actor : public Sentient {
 	float spawn_chance;
 	str bounce_off_effect;
 	float bounce_off_velocity;
-	Container<int> can_be_finsihed_by_mods;
+	Container<int32_t> can_be_finsihed_by_mods;
 	float max_boss_health;
 	qboolean haveAttached;
 	float currentSplineTime;
@@ -592,21 +588,21 @@ class Actor : public Sentient {
 	Actor();
 	~Actor();
 	void Start(Event* ev);
-	void Sleep(void);
+	void Sleep();
 	void Sleep(Event* ev);
-	void Wakeup(void);
+	void Wakeup();
 	void Wakeup(Event* ev);
-	void InitGameComponent(void);
-	void InitThinkStrategy(void);
-	void InitSensoryPerception(void);
-	void InitStrategos(void);
-	void InitEnemyManager(void);
-	void InitPackageManager(void);
-	void InitMovementSubsystem(void);
-	void InitPersonality(void);
-	void InitCombatSubsystem(void);
-	void InitHeadWatcher(void);
-	void InitPostureController(void);
+	void InitGameComponent();
+	void InitThinkStrategy();
+	void InitSensoryPerception();
+	void InitStrategos();
+	void InitEnemyManager();
+	void InitPackageManager();
+	void InitMovementSubsystem();
+	void InitPersonality();
+	void InitCombatSubsystem();
+	void InitHeadWatcher();
+	void InitPostureController();
 
 	//---------------------------------------------------------
 	// Event Interface for Accessor Functions
@@ -641,15 +637,14 @@ class Actor : public Sentient {
 	void SetNotAllowedToKill(Event* ev);
 	void SetUseGravity(Event* ev);
 	void SetAllowFall(Event* ev);
-	void SetUseMovement(Event* ev);
 	void SetHaveThing(Event* ev);
-	void SetHaveThing(int thing_number, qboolean thing_bool);
+	void SetHaveThing(int32_t thing_number, qboolean thing_bool);
 	void SetBounceOff(Event* ev);
 	void SetBounceOffEffect(Event* ev);
 	void SetMaxInactiveTime(Event* ev);
 	void SetTurnSpeed(Event* ev);
-	void SetHealth(Event* ev);
-	void SetMaxHealth(Event* ev);
+	virtual void SetHealth(Event* ev) override;
+  virtual void SetMaxHealth(Event* ev) override;
 	void SetVar(Event* ev);
 	void SetVarTime(Event* ev);
 	void SetMask(Event* ev);
@@ -697,7 +692,6 @@ class Actor : public Sentient {
 
 	void SetHeadWatchTarget(Entity *ent);
 	void SetHeadWatchSpeed(float speed);
-	void ResetTorso(Event* ev);
 	void EyeOffset(Event* ev);
 	void ForceSetClip(Event* ev);
 	void GroupMemberInjured(Event* ev);
@@ -713,8 +707,6 @@ class Actor : public Sentient {
 
 	void SetMaxHeadYaw(Event* ev);
 	void SetMaxHeadPitch(Event* ev);
-
-	void SetPlayerHateModifier(Event* ev);
 
 	void UseBehaviorPackage(Event* ev);
 	void UseBehaviorPackage(const str& packageName);
@@ -742,7 +734,7 @@ class Actor : public Sentient {
 
 	void SetTalkWatchMode(Event* ev);
 	void SetPostureState(Event* ev);
-	/*virtual*/ void processGameplayData(Event* ev);
+	virtual void processGameplayData(Event* ev) override;
 
 	void UnreserveCurrentHelperNode(Event* ev);
 	void UnreserveCurrentHelperNode();
@@ -754,7 +746,7 @@ class Actor : public Sentient {
 	void AddCustomThread(const str& threadType, const str& threadName);
 	bool HaveCustomThread(const str& threadType);
 	void RunCustomThread(const str& threadType);
-	const str GetCustomThread(const str& threadType);
+	str GetCustomThread(const str& threadType);
 
 	//----------------------------------------------------------
 	// Personality Tendencies
@@ -779,7 +771,7 @@ class Actor : public Sentient {
 	// Debug Functions
 	//-----------------------------------------------------------
 	void DebugStates(Event* ev);
-	void ShowInfo(void);
+	void ShowInfo();
 	void WhatAreYouDoing(Event* ev);
 	void WhatsWrong(Event* ev);
 	void PrintMasterStateInfo();
@@ -818,11 +810,11 @@ class Actor : public Sentient {
 	void TurnTowardsEntity(Event* ev);
 	void SetMinimumMeleeHeight(Event* ev);
 
-	qboolean IsImmortal(void);
-	qboolean TakeDamage(void);
+	qboolean IsImmortal();
+	qboolean TakeDamage();
 
-	void FireWeapon(Event* ev);
-	void StopFireWeapon(Event* ev);
+	virtual void FireWeapon(Event* ev) override;
+	virtual void StopFireWeapon(Event* ev) override;
 	void ClearArmorAdaptions(Event* ev);
 
 	//-----------------------------------------------------------------
@@ -849,15 +841,15 @@ class Actor : public Sentient {
 	//--------------------------------------------------------------
 	void SetIdleStateName(Event* ev);
 	void SetState(const char* state_name);
-	void resetStateMachine(void);
+	void resetStateMachine();
 	void SetMasterState(const str& state_name);
 	void SetGlobalState(const char* state_name);
-	void InitState(void);
-	void InitMasterState(void);
+	void InitState();
+	void InitMasterState();
 	void LoadStateMap(Event* ev);
 	void LoadMasterStateMap(Event* ev);
-	void ProcessActorStateMachine(void);
-	void ProcessMasterStateMachine(void);
+	void ProcessActorStateMachine();
+	void ProcessMasterStateMachine();
 	void LoadFuzzyEngine(Event* ev);
 
 	void LoadPostureStateMachine(Event* ev);
@@ -867,22 +859,21 @@ class Actor : public Sentient {
 	//--------------------------------------------------------------
 	void RunThread(Event* ev);
 	void RunThread(const str& thread_name);
-	void SetThread(const str& filename, const str& label);
-	void RunDamageThread(void);
+	void RunDamageThread();
 	void RunAlertThread(Event* ev);
 
 	//--------------------------------------------------------------
 	// Behavior management
 	//--------------------------------------------------------------
 	void SendMoveDone(CThread* script_thread);
-	void EndBehavior(void);
-	void EndHeadBehavior(void);
-	void EndEyeBehavior(void);
-	void EndTorsoBehavior(void);
-	void SetBehavior(Behavior* newbehavior, Event* argevent = NULL, CThread* thread = NULL);
-	void SetHeadBehavior(Behavior* newbehavior, Event* argevent = NULL, CThread* thread = NULL);
-	void SetEyeBehavior(Behavior* newbehavior, Event* argevent = NULL, CThread* thread = NULL);
-	void SetTorsoBehavior(Behavior* newbehavior, Event* argevent = NULL, CThread* thread = NULL);
+	void EndBehavior();
+	void EndHeadBehavior();
+	void EndEyeBehavior();
+	void EndTorsoBehavior();
+  void SetBehavior(Behavior* newbehavior, Event* argevent = nullptr, CThread* thread = nullptr);
+  void SetHeadBehavior(Behavior* newbehavior, Event* argevent = nullptr, CThread* thread = nullptr);
+  void SetEyeBehavior(Behavior* newbehavior, Event* argevent = nullptr, CThread* thread = nullptr);
+  void SetTorsoBehavior(Behavior* newbehavior, Event* argevent = nullptr, CThread* thread = nullptr);
 	void EndBehaviorEvent(Event* ev);
 	void EndHeadBehaviorEvent(Event* ev);
 	void EndEyeBehaviorEvent(Event* ev);
@@ -891,7 +882,7 @@ class Actor : public Sentient {
 	void NotifyHeadBehavior(Event* ev);
 	void NotifyEyeBehavior(Event* ev);
 	void NotifyTorsoBehavior(Event* ev);
-	void EndAllBehaviors(void);
+	void EndAllBehaviors();
 
 
 	//-----------------------------------------------------------------
@@ -905,21 +896,21 @@ class Actor : public Sentient {
 	trace_t Trace(const float distance, const char* reason) const;
 	trace_t Trace(const float angle, const float distance, const char* reason) const;
 	trace_t Trace(const Vector& begin, const Vector& end, const char* reason) const;
-	trace_t Trace(const Vector& begin, const Vector& end, const int contentMask, const char* reason) const;
+	trace_t Trace(const Vector& begin, const Vector& end, const int32_t contentMask, const char* reason) const;
 
 
 	//-----------------------------------------------------------------
 	// Animation control functions
 	//-----------------------------------------------------------------
-	void RemoveAnimDoneEvent(void);
-	void ChangeAnim(void);
-	qboolean SetAnim(const str& anim, Event* ev = NULL, bodypart_t part = legs, const float animationRate = 1.0f);
+	void RemoveAnimDoneEvent();
+	void ChangeAnim();
+  qboolean SetAnim(const str& anim, Event* ev = nullptr, bodypart_t part = legs, const float animationRate = 1.0f);
 	qboolean SetAnim(const str& anim, Event& ev, bodypart_t part = legs, const float animationRate = 1.0f);
 	void SetAnim(Event* ev);
 	void AnimDone(Event* ev);
 	void TorsoAnimDone(Event* ev);
-	void SetCinematicAnim(const str& anim);
-	void CinematicAnimDone();
+	virtual void SetCinematicAnim(const str& anim) override;
+	virtual void CinematicAnimDone() override;
 	void PostureAnimDone(Event* ev);
 
 	//-----------------------------------------------------------------
@@ -1055,14 +1046,13 @@ class Actor : public Sentient {
 	void StopDialog(Event* ev);
 	void PlayRadiusDialog(Sentient *user);
 	void StopDialog(void);
-	void PlayDialog(Sentient* user, float volume = -1.0f, float min_dist = -1.0f, const char* dialog_name = NULL, const char* state_name = NULL, qboolean headDisplay = false, bool useTalk = false, bool important = false);
+  void PlayDialog(Sentient* user, float volume = -1.0f, float min_dist = -1.0f, const char* dialog_name = nullptr, const char* state_name = nullptr, qboolean headDisplay = false, bool useTalk = false, bool important = false);
 	qboolean DialogExists(const str& aliasName);
 	float GetDialogRemainingTime(void);
-	const str FindDialog(Sentient* user, DialogType_t dialogType, const str& context = "");
+	str FindDialog(Sentient* user, DialogType_t dialogType, const str& context = "");
 
 
 	void BranchDialog(Event* ev);
-	void BranchOptionSelected(Event* ev);
 
 	//-----------------------------------------------------------------
 	// Branch Dialog Functionality
@@ -1119,7 +1109,7 @@ class Actor : public Sentient {
 	bool ReleaseControl(Listener* controller);
 
 
-	const str GetStateVar(const str& varName);
+	str GetStateVar(const str& varName);
 
 	//-----------------------------------------------------------------
 	// General functions
@@ -1140,7 +1130,7 @@ class Actor : public Sentient {
 	void SetActorFlag(const str& flag_name, qboolean flag_value);
 	void SetStickToGround(const bool stick);
 	void SetStickToGround(Event* ev);
-	const bool GetStickToGround(void) const;
+	bool GetStickToGround(void) const;
 	void SetActorFlag(int flag, qboolean flag_value);
 	void SetActorFlag(Event* ev);
 	qboolean GetActorFlag(const int flag) const;
@@ -1158,12 +1148,12 @@ class Actor : public Sentient {
 	void GetStage(Event* ev);
 	void Pickup(Event* ev);
 	void Throw(Event* ev);
-	virtual void setSize(Vector min, Vector max);
+	virtual void setSize(Vector min, Vector max) override;
 	void NoChatterEvent(Event* ev);
 	virtual void Chatter(const char* sound, float chance = 10, float volume = 1.0f, int channel = CHAN_VOICE);
 	void ActivateEvent(Event* ev);
 	void UseEvent(Event* ev);
-	void Think(void);
+  virtual void Think() override;
 	void Active(Event* ev);
 	bool IsEntityAlive(const Entity *ent);
 	void Name(Event* ev);
@@ -1184,12 +1174,12 @@ class Actor : public Sentient {
 	void NotSolidMask(Event* ev);
 	void NoMask(Event* ev);
 	void ResetMoveDir(Event* ev);
-	int	 ActorFlag_string_to_int(const str& actorflagstr) const;
-	int	 NotifyFlag_string_to_int(const str& notifyflagstr);
-	void ArmorDamage(Event* ev);
+	int32_t ActorFlag_string_to_int(const str& actorflagstr) const;
+	int32_t NotifyFlag_string_to_int(const str& notifyflagstr);
+	virtual void ArmorDamage(Event* ev) override;
 	qboolean CheckBottom(void);
 	void ChangeType(Event* ev);
-	void GetStateAnims(Container<const char*>* c);
+	virtual void GetStateAnims(Container<const char*>* c) override;
 	void Touched(Event* ev);
 	void TryBlink(void);
 	void SetBlink(Event* ev);
@@ -1374,12 +1364,10 @@ class Actor : public Sentient {
 	qboolean checkIsTeammate(Conditional& condition);
 	qboolean checkWeaponIsMelee(Conditional& condition);
 	qboolean checkWeaponChanged(Conditional& condition);
-	qboolean checkPersonality(Conditional& condition);
 	qboolean checkVarTimeDifference(Conditional& condition);
 	qboolean checkRequestedPosture(Conditional& condition);
 	qboolean checkPostureAnimDone(Conditional& condition);
 
-	qboolean checkCurrentEnemyLastInList(Conditional& condition);
 	qboolean checkGroupAttackerCount(Conditional& condition);
 	qboolean checkCurrentEnemyGroupAttackerCount(Conditional& condition);
 	qboolean checkGroupAttackerCountForEntity(Conditional& condition, Entity* attackTarget);
@@ -1505,7 +1493,7 @@ class Actor : public Sentient {
 	qboolean checkInAIMode(Conditional& condition);
 
 
-	virtual void Archive(Archiver& arc);
+	virtual void Archive(Archiver& arc) override;
 
 
 	protected:
@@ -1519,6 +1507,8 @@ class Actor : public Sentient {
 
 	qboolean _WorkNodeInDistance(float dist);
 	qboolean _FleeNodeInDistance(float dist);
+
+  void Init();
 };
 
 typedef PathFinder<FindMovement> FindMovementPath;
