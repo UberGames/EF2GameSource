@@ -21,10 +21,6 @@ class CombatSubsystem;
 #ifndef __ACTOR_COMBAT_SUBSYSTEM_H__
 #define __ACTOR_COMBAT_SUBSYSTEM_H__
 
-#include "actor.h"
-#include "actorincludes.h"
-#include "weapon.h"
-
 //============================
 // Class CombatSubsystem
 //============================
@@ -34,8 +30,8 @@ class CombatSubsystem;
 class CombatSubsystem {
 	public:
 	CombatSubsystem();
-	CombatSubsystem(Actor* actor);
-	~CombatSubsystem();
+  explicit CombatSubsystem(Actor* actor);
+  virtual ~CombatSubsystem();
 
 	bool CanAttackTarget(Entity* target);
 	bool CanAttackTargetFrom(Entity* target, const Vector& startPos);
@@ -53,7 +49,7 @@ class CombatSubsystem {
 	void AimWeaponTag(const Vector& targetPos);
 	void ClearAim();
 
-	void GetGunPositionData(Vector* pos, Vector* forward = NULL, Vector* right = NULL, Vector* up = NULL);
+	void GetGunPositionData(Vector* pos, Vector* forward = nullptr, Vector* right = nullptr, Vector* up = nullptr);
 	float GetAimGunYaw(const Vector& target);
 	float GetAimGunPitch(const Vector& target);
 	WeaponPtr GetBestAvailableWeapon(Entity* target);
@@ -67,7 +63,7 @@ class CombatSubsystem {
 
 	void OverrideSpread(float spreadX, float spreadY);
 
-	const str GetAnimForMyWeapon(const str& property);
+	str GetAnimForMyWeapon(const str& property);
 	float GetDataForMyWeapon(const str& property);
 
 	Vector GetLeadingTargetPos(float projSpeed, Vector originalTargetPos, Entity* target);
