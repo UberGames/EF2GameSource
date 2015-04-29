@@ -28,8 +28,8 @@ extern Event EV_Actor_Start;
 extern Event EV_Actor_Dead;
 extern Event EV_Actor_LookAt;
 extern Event EV_Actor_TurnTo;
-extern Event EV_Actor_BehaviorFinished ;
-extern Event EV_Actor_ControlLost ;
+extern Event EV_Actor_BehaviorFinished;
+extern Event EV_Actor_ControlLost;
 extern Event EV_Actor_EndBehavior;
 extern Event EV_Actor_EndHeadBehavior;
 extern Event EV_Actor_EndEyeBehavior;
@@ -61,112 +61,126 @@ extern Event EV_Actor_Statemap;
 extern Event EV_Actor_SetTargetable;
 extern Event EV_Sentient_StopFire;
 extern Event EV_Sentient_Attack;
-extern Event EV_Actor_SetUseGravity ;
-extern Event EV_Actor_SetSimplifiedThink ;
-extern Event EV_Actor_SetStickToGround ;
-extern Event EV_Actor_SetMovementMode ;
+extern Event EV_Actor_SetUseGravity;
+extern Event EV_Actor_SetSimplifiedThink;
+extern Event EV_Actor_SetStickToGround;
+extern Event EV_Actor_SetMovementMode;
 
 //========================================
 // General Defines
 //========================================
-#define MAX_ALIAS_NAME_LENGTH     32
-#define MAX_INACTIVE_TIME         30.0
-#define DEFAULT_FOV               150
-#define DEFAULT_VISION_DISTANCE   1536
-#define MIN_SIGHT_DELAY           2
-#define RANDOM_SIGHT_DELAY        1.5
-#define DEFAULT_INITIAL_HATE      100
-#define TURN_SPEED		          60 //Used to be 25
-#define HELPER_NODE_MAX_DISTANCE  96.0
-#define HELPER_NODE_ARRIVAL_DISTANCE 24.0
+static const uint8_t MAX_ALIAS_NAME_LENGTH = 32;
+static const float MAX_INACTIVE_TIME = 30.0f;
+static const uint8_t DEFAULT_FOV = 150;
+static const uint16_t DEFAULT_VISION_DISTANCE = 1536;
+static const uint8_t MIN_SIGHT_DELAY = 2;
+static const float RANDOM_SIGHT_DELAY = 1.5f;
+static const uint8_t DEFAULT_INITIAL_HATE = 100;
+static const float TURN_SPEED = 60.0f; //Used to be 25
+static const float HELPER_NODE_MAX_DISTANCE = 96.0f;
+static const float HELPER_NODE_ARRIVAL_DISTANCE = 24.0f;
 
-#define HACK_PATH_CHECK           1.0
+static const float HACK_PATH_CHECK = 1.0f;
 
 
 
 //========================================
 // Stimuli types
 //========================================
-#define STIMULI_ALL    -1
-#define STIMULI_NONE    0
-#define STIMULI_SIGHT   (1<<0)
-#define STIMULI_SOUND   (1<<1)
-#define STIMULI_PAIN    (1<<2)
-#define STIMULI_SCRIPT  (1<<3)
+enum EStimuli
+{
+  StimuliAll = -1,
+  StimuliNone,
+  StimuliSight = 1 << 0,
+  StimuliSound = 1 << 1,
+  StimuliPain = 1 << 2,
+  StimuliScript = 1 << 3
+};
 
 //========================================
 // Bones used by actor
 //========================================
-#define ACTOR_MOUTH_TAG         0
-#define ACTOR_HEAD_TAG          1
-#define ACTOR_TORSO_TAG         2
-#define ACTOR_LEYE_TAG   3
-#define ACTOR_REYE_TAG   4
+enum EActorBoneTag
+{
+  ActorMouthTag = 0,
+  ActorHeadTag = 1,
+  ActorTorsoTag = 2,
+  ActorLeyeTag = 3,
+  ActorReyeTag = 4
+};
 
 
 //========================================
 // Dialog stuff
 //========================================
-#define MAX_DIALOG_PARAMETERS_LENGTH   100
-#define MAX_DIALOG_PARM_LENGTH         64
-#define MAX_DIALOG_PARMS               10
-#define DIALOG_PARM_TYPE_NONE          0
-#define DIALOG_PARM_TYPE_PLAYERHAS     1
-#define DIALOG_PARM_TYPE_PLAYERHASNOT  2
-#define DIALOG_PARM_TYPE_HAS           3
-#define DIALOG_PARM_TYPE_HASNOT        4
-#define DIALOG_PARM_TYPE_DEPENDS       5
-#define DIALOG_PARM_TYPE_DEPENDSNOT    6
-#define DIALOG_PARM_TYPE_DEPENDSINT    7
-#define DIALOG_PARM_TYPE_CONTEXT_INITIATOR 8
-#define DIALOG_PARM_TYPE_CONTEXT_RESPONSE  9
+static const uint8_t MAX_DIALOG_PARAMETERS_LENGTH = 100;
+static const uint8_t MAX_DIALOG_PARM_LENGTH = 64;
+static const uint8_t MAX_DIALOG_PARMS = 10;
+static const uint8_t DIALOG_PARM_TYPE_NONE = 0;
+static const uint8_t DIALOG_PARM_TYPE_PLAYERHAS = 1;
+static const uint8_t DIALOG_PARM_TYPE_PLAYERHASNOT = 2;
+static const uint8_t DIALOG_PARM_TYPE_HAS = 3;
+static const uint8_t DIALOG_PARM_TYPE_HASNOT = 4;
+static const uint8_t DIALOG_PARM_TYPE_DEPENDS = 5;
+static const uint8_t DIALOG_PARM_TYPE_DEPENDSNOT = 6;
+static const uint8_t DIALOG_PARM_TYPE_DEPENDSINT = 7;
+static const uint8_t DIALOG_PARM_TYPE_CONTEXT_INITIATOR = 8;
+static const uint8_t DIALOG_PARM_TYPE_CONTEXT_RESPONSE = 9;
 
 //========================================
 // State flags
 //========================================
-#define STATE_FLAG_IN_PAIN					 ( 1<<0  )
-#define STATE_FLAG_MELEE_HIT				 ( 1<<1  )
-#define STATE_FLAG_TOUCHED					 ( 1<<2  )
-#define STATE_FLAG_ACTIVATED				 ( 1<<3  )
-#define STATE_FLAG_USED				         ( 1<<4  )
-#define STATE_FLAG_TWITCH			         ( 1<<5  )
-#define STATE_FLAG_BLOCKED_HIT	             ( 1<<6  )
-#define STATE_FLAG_SMALL_PAIN		         ( 1<<7  )
-#define STATE_FLAG_OTHER_DIED		         ( 1<<8  )
-#define STATE_FLAG_STUCK			         ( 1<<9  )
-#define STATE_FLAG_NO_PATH			         ( 1<<10 )
-#define STATE_FLAG_TOUCHED_BY_PLAYER	  	 ( 1<<11 )
-#define STATE_FLAG_CHANGED_WEAPON			 ( 1<<12 )
-#define STATE_FLAG_DAMAGE_THRESHOLD_EXCEEDED ( 1<<13 )
-#define STATE_FLAG_ATTACKED					 ( 1<<14 )
-#define STATE_FLAG_ATTACKED_BY_PLAYER		 ( 1<<15 )
-#define STATE_FLAG_SHOW_PAIN				 ( 1<<16 )
-#define STATE_FLAG_IN_THE_WAY				 ( 1<<17 )
-#define STATE_FLAG_STEERING_FAILED			 ( 1<<18 )
-#define STATE_FLAG_BLOCKED_BY_ENTITY		 ( 1<<19 )
-#define STATE_FLAG_ENEMY_PROJECTILE_CLOSE	 ( 1<<20 )
+enum EStateFlag
+{
+  StateFlagInPain = 1 << 0,
+  StateFlagMeleeHit = 1 << 1,
+  StateFlagTouched = 1 << 2,
+  StateFlagActivated = 1 << 3,
+  StateFlagUsed = 1 << 4,
+  StateFlagTwitch = 1 << 5,
+  StateFlagBlockedHit = 1 << 6,
+  StateFlagSmallPain = 1 << 7,
+  StateFlagOtherDied = 1 << 8,
+  StateFlagStuck = 1 << 9,
+  StateFlagNoPath = 1 << 10,
+  StateFlagTouchedByPlayer = 1 << 11,
+  StateFlagChangedWeapon = 1 << 12,
+  StateFlagDamageThresholdExceeded = 1 << 13,
+  StateFlagAttacked = 1 << 14,
+  StateFlagAttackedByPlayer = 1 << 15,
+  StateFlagShowPain = 1 << 16,
+  StateFlagInTheWay = 1 << 17,
+  StateFlagSteeringFailed = 1 << 18,
+  StateFlagBlockedByEntity = 1 << 19,
+  StateFlagEnemyProjectileClose = 1 << 20
+};
 
 //========================================
 // Combat Subsystem Defines
 //========================================
-#define DEFAULT_TRACE_INTERVAL   .05f
-
-#define DEFAULT_PATH_TO_ENEMY_INTERVAL .05f
+static const float DEFAULT_TRACE_INTERVAL = .05f;
+static const float DEFAULT_PATH_TO_ENEMY_INTERVAL = .05f;
 
 //========================================
 // Actor modes
 //========================================
-#define ACTOR_MODE_NONE			0
-#define ACTOR_MODE_IDLE			1
-#define ACTOR_MODE_AI			2
-#define ACTOR_MODE_SCRIPT		3
-#define ACTOR_MODE_TALK			4
+enum EActorMode
+{
+  ActorModeNone,
+  ActorModeIdle,
+  ActorModeAi,
+  ActorModeScript,
+  ActorModeTalk
+};
 
 //=======================================
 // Pain types
 //=======================================
-#define PAIN_SMALL  0
-#define PAIN_BIG    1
+enum EPainType
+{
+  PainSmall,
+  PainBig
+};
 
 //========================================
 // Save Flags
@@ -208,39 +222,39 @@ extern Event EV_Actor_SetMovementMode ;
 //DialogParm_t -- Structure for Dialog Parameters
 typedef struct
 {
-	byte type;
-	char parm[ MAX_DIALOG_PARM_LENGTH ];
-	char parm2[ MAX_DIALOG_PARM_LENGTH ];
+  byte type;
+  char parm[MAX_DIALOG_PARM_LENGTH];
+  char parm2[MAX_DIALOG_PARM_LENGTH];
 } DialogParm_t;
 
 typedef enum
 {
-	DIALOG_TYPE_NORMAL,
-	DIALOG_TYPE_RADIUS,
-	DIALOG_TYPE_GREETING,	
-	DIALOG_TYPE_COMBAT,
-	DIALOG_TYPE_CONTEXT_INITIATOR,
-	DIALOG_TYPE_CONTEXT_RESPONSE
+  DIALOG_TYPE_NORMAL,
+  DIALOG_TYPE_RADIUS,
+  DIALOG_TYPE_GREETING,
+  DIALOG_TYPE_COMBAT,
+  DIALOG_TYPE_CONTEXT_INITIATOR,
+  DIALOG_TYPE_CONTEXT_RESPONSE
 } DialogType_t;
 
 //DialogNode_t -- Structure for Dialog Nodes
 typedef struct DialogNode_s
-   {
-	char alias_name[ MAX_ALIAS_NAME_LENGTH ];
-	int random_flag;
-	int number_of_parms;
-	float random_percent;
-	DialogType_t dType;
-	DialogParm_t parms[ MAX_DIALOG_PARMS ];
-	struct DialogNode_s *next;
-   } DialogNode_t;
+{
+  char alias_name[MAX_ALIAS_NAME_LENGTH];
+  int random_flag;
+  int number_of_parms;
+  float random_percent;
+  DialogType_t dType;
+  DialogParm_t parms[MAX_DIALOG_PARMS];
+  struct DialogNode_s *next;
+} DialogNode_t;
 
 typedef struct
-   {
-   int entNum;
-   float time;
-   qboolean inLineOfSight;
-   } LineOfSight_t;
+{
+  int entNum;
+  float time;
+  qboolean inLineOfSight;
+} LineOfSight_t;
 
 //HateListEntry_t -- Structure for the hate list
 typedef struct
@@ -268,34 +282,34 @@ typedef struct
 // Helper Node Data
 typedef struct
 {
-   HelperNodePtr node;
-   int         mask;
-   int         nodeID;
+  HelperNodePtr node;
+  int         mask;
+  int         nodeID;
 } CurrentHelperNodeData_t;
 
 typedef struct
 {
-   HelperNodePtr node;
-   int         mask;
-   int         nodeID;
+  HelperNodePtr node;
+  int         mask;
+  int         nodeID;
 } IgnoreHelperNodeData_t;
 
 // Follow Target Data
 typedef struct
 {
-   EntityPtr	currentFollowTarget;
-   EntityPtr	specifiedFollowTarget;
-   float		maxRangeIdle;
-   float		minRangeIdle;
-   float		maxRangeCombat;
-   float		minRangeCombat;
+  EntityPtr	currentFollowTarget;
+  EntityPtr	specifiedFollowTarget;
+  float		maxRangeIdle;
+  float		minRangeIdle;
+  float		maxRangeCombat;
+  float		minRangeCombat;
 } FollowTargetData_t;
 
 typedef struct
 {
   int          packageIndex;
   float        currentScore;
-  float        lastScore;  
+  float        lastScore;
   float        lastTimeExecuted;
   float        priority;
 
@@ -320,210 +334,215 @@ typedef struct
 // StateVar -- Structure for holding StateVars
 typedef struct
 {
-	str varName;
-	str varValue;
-	float varTime;
+  str varName;
+  str varValue;
+  float varTime;
 } StateVar;
 
 // part_t -- Part stuff
 typedef struct
 {
-	EntityPtr ent;
-	unsigned int state_flags;
+  EntityPtr ent;
+  unsigned int state_flags;
 } part_t;
 
 // threadlist_t -- A Key/Value pair for all the custom threading stuff we're doing
 // we will eventually need to convert all those errant actor threads into this.
 typedef struct
 {
-	str threadType;
-	str threadName;
+  str threadType;
+  str threadName;
 } threadlist_t;
 
 //===========================================
 // Enumerations
 //===========================================
 
-typedef enum{
-  MOVEMENT_TYPE_NORMAL,  
+typedef enum
+{
+  MOVEMENT_TYPE_NORMAL,
   MOVEMENT_TYPE_ANIM
 } MovementType_t;
 
 //DialogMode_t -- Enumeration of Dialog Modes
-typedef enum{
-	DIALOG_MODE_ANXIOUS,
-	DIALOG_MODE_NORMAL,
-	DIALOG_MODE_IGNORE
-	} DialogMode_t;
+typedef enum
+{
+  DIALOG_MODE_ANXIOUS,
+  DIALOG_MODE_NORMAL,
+  DIALOG_MODE_IGNORE
+} DialogMode_t;
 
 
 // actortype_t -- Enumeration of possible actor types
 typedef enum
-	{
-   IS_INANIMATE,
-	IS_MONSTER,
-	IS_ENEMY,
-	IS_CIVILIAN,
-	IS_FRIEND,
-   IS_ANIMAL,	
-	IS_TEAMMATE,
-	NUM_ACTORTYPES
-	} actortype_t;
+{
+  IS_INANIMATE,
+  IS_MONSTER,
+  IS_ENEMY,
+  IS_CIVILIAN,
+  IS_FRIEND,
+  IS_ANIMAL,
+  IS_TEAMMATE,
+  NUM_ACTORTYPES
+} actortype_t;
 
 
 
 // targetType_t -- Enumeration of possible target types
 typedef enum
-   {
-	ATTACK_ANY,
-	ATTACK_PLAYER_ONLY,
-	ATTACK_ACTORS_ONLY,
-	ATTACK_SCRIPTED_ONLY,
-	ATTACK_LEVEL_INTERACTION
-	} targetType_t;
+{
+  ATTACK_ANY,
+  ATTACK_PLAYER_ONLY,
+  ATTACK_ACTORS_ONLY,
+  ATTACK_SCRIPTED_ONLY,
+  ATTACK_LEVEL_INTERACTION
+} targetType_t;
 
 typedef enum
-	{
-	DEBUG_NONE,
-	DEBUG_STATES_ONLY,
-	DEBUG_STATES_BEHAVIORS,
-	DEBUG_ALL,
-	MAX_DEBUG_TYPES
-	} stateDebugType_t;
+{
+  DEBUG_NONE,
+  DEBUG_STATES_ONLY,
+  DEBUG_STATES_BEHAVIORS,
+  DEBUG_ALL,
+  MAX_DEBUG_TYPES
+} stateDebugType_t;
 
 typedef enum
-	{
-	TALK_TURNTO,
-	TALK_HEADWATCH,
-	TALK_IGNORE		
-	} talkModeStates_t;
+{
+  TALK_TURNTO,
+  TALK_HEADWATCH,
+  TALK_IGNORE
+} talkModeStates_t;
 
 // actorflags -- Enumeration of Actor flags
-typedef enum{
-	ACTOR_FLAG_NOISE_HEARD,
-	ACTOR_FLAG_INVESTIGATING,
-	ACTOR_FLAG_DEATHGIB,
-	ACTOR_FLAG_DEATHFADE,
-	ACTOR_FLAG_NOCHATTER,
-	ACTOR_FLAG_INACTIVE,
-	ACTOR_FLAG_ANIM_DONE,
-	ACTOR_FLAG_STATE_DONE_TIME_VALID,
-	ACTOR_FLAG_MASTER_STATE_DONE_TIME_VALID,
-	ACTOR_FLAG_AI_ON,
-	ACTOR_FLAG_LAST_CANSEEENEMY,
-	ACTOR_FLAG_LAST_CANSEEENEMY_NOFOV,
-	ACTOR_FLAG_DIALOG_PLAYING,
-	ACTOR_FLAG_RADIUS_DIALOG_PLAYING,
-	ACTOR_FLAG_ALLOW_TALK,
-	ACTOR_FLAG_DAMAGE_ONCE_ON,
-	ACTOR_FLAG_DAMAGE_ONCE_DAMAGED,
-	ACTOR_FLAG_BOUNCE_OFF,
-	ACTOR_FLAG_NOTIFY_OTHERS_AT_DEATH,
-	ACTOR_FLAG_HAS_THING1,
-	ACTOR_FLAG_HAS_THING2,
-	ACTOR_FLAG_HAS_THING3,
-	ACTOR_FLAG_HAS_THING4,
-	ACTOR_FLAG_LAST_ATTACK_HIT,
-	ACTOR_FLAG_STARTED,
-	ACTOR_FLAG_ALLOW_HANGBACK,
-	ACTOR_FLAG_USE_GRAVITY,
-	ACTOR_FLAG_SPAWN_FAILED,
-	ACTOR_FLAG_FADING_OUT,
-	ACTOR_FLAG_DEATHSHRINK,
-	ACTOR_FLAG_DEATHSINK,
-	ACTOR_FLAG_STAYSOLID,
-	ACTOR_FLAG_STUNNED,
-	ACTOR_FLAG_ALLOW_FALL,
-	ACTOR_FLAG_FINISHED,
-	ACTOR_FLAG_IN_LIMBO,
-	ACTOR_FLAG_CAN_WALK_ON_OTHERS,
-	ACTOR_FLAG_PUSHABLE,
-	ACTOR_FLAG_LAST_TRY_TALK,
-	ACTOR_FLAG_TARGETABLE,
-	ACTOR_FLAG_IMMORTAL,
-	ACTOR_FLAG_TURNING_HEAD,
-	ACTOR_FLAG_MOVING_EYES,
-	ACTOR_FLAG_DIE_COMPLETELY,
-	ACTOR_FLAG_BLEED_AFTER_DEATH,
-	ACTOR_FLAG_IGNORE_STUCK_WARNING,
-	ACTOR_FLAG_IGNORE_OFF_GROUND_WARNING,
-	ACTOR_FLAG_ALLOWED_TO_KILL,
-	ACTOR_FLAG_TOUCH_TRIGGERS,
-	ACTOR_FLAG_IGNORE_WATER,
-	ACTOR_FLAG_NEVER_IGNORE_SOUNDS,
-	ACTOR_FLAG_SIMPLE_PATHFINDING,
-	ACTOR_FLAG_HAVE_MOVED,
-	ACTOR_FLAG_NO_PAIN_SOUNDS,
-	ACTOR_FLAG_UPDATE_BOSS_HEALTH,
-	ACTOR_FLAG_IGNORE_PAIN_FROM_ACTORS,
-	ACTOR_FLAG_DAMAGE_ALLOWED,
-	ACTOR_FLAG_AT_COVER_NODE,
-	ACTOR_FLAG_WAIT_FOR_NEW_ENEMY,
-	ACTOR_FLAG_TAKE_DAMAGE,
-	ACTOR_FLAG_USE_DAMAGESKINS,
-	ACTOR_FLAG_CAPTURED,
-	ACTOR_FLAG_TURRET_MODE,
-	ACTOR_FLAG_INCOMING_HITSCAN,
-	ACTOR_FLAG_RESPONDING_TO_HITSCAN,
-	ACTOR_FLAG_MELEE_HIT_WORLD,
-	ACTOR_FLAG_TORSO_ANIM_DONE,
-	ACTOR_FLAG_WEAPON_READY,	
-	ACTOR_FLAG_DISABLED,
-	ACTOR_FLAG_IN_ALCOVE,
-	ACTOR_FLAG_IN_CONE_OF_FIRE,
-	ACTOR_FLAG_IN_PLAYER_CONE_OF_FIRE,
-	ACTOR_FLAG_PLAYER_IN_CALL_VOLUME,
-	ACTOR_FLAG_IN_CALL_VOLUME,
-	ACTOR_FLAG_OUT_OF_TORSO_RANGE,
-	ACTOR_FLAG_DUCKED,
-	ACTOR_FLAG_PRONE,
-	ACTOR_FLAG_SHOULD_BLINK,
-	ACTOR_FLAG_CRIPPLED,
-	ACTOR_FLAG_RETREATING,
-	ACTOR_FLAG_HIDDEN,
-	ACTOR_FLAG_FOLLOWING_IN_FORMATION,
-	ACTOR_FLAG_DISPLAYING_FAILURE_FX,
-	ACTOR_FLAG_GROUPMEMBER_INJURED,
-	ACTOR_FLAG_CAN_HEAL_OTHER,
-	ACTOR_FLAG_STRICTLY_FOLLOW_PATHS,
-	ACTOR_FLAG_POSTURE_ANIM_DONE,
-	ACTOR_FLAG_ATTACKING_ENEMY,
-	ACTOR_FLAG_UPDATE_HATE_WITH_ATTACKERS,
-	ACTOR_FLAG_LAST_CANSEEPLAYER,
-	ACTOR_FLAG_LAST_CANSEEPLAYER_NOFOV,	
-	ACTOR_FLAG_MELEE_ALLOWED,
-	ACTOR_FLAG_PLAYING_DIALOG_ANIM,
-	ACTOR_FLAG_USING_HUD,
-	ACTOR_FLAG_FORCE_LIFEBAR,
-	ACTOR_FLAG_UPDATE_ACTION_LEVEL,
-	ACTOR_FLAG_CAN_CHANGE_ANIM,
-	ACTOR_FLAG_USE_FOLLOWRANGE_FOR_NODES,
-	ACTOR_FLAG_IMMEDIATE_ACTIVATE,
-	ACTOR_FLAG_CANNOT_DISINTEGRATE,
-	ACTOR_FLAG_CANNOT_USE,
-	ACTOR_FLAG_CANNOT_FREEZE,
+typedef enum
+{
+  ACTOR_FLAG_NOISE_HEARD,
+  ACTOR_FLAG_INVESTIGATING,
+  ACTOR_FLAG_DEATHGIB,
+  ACTOR_FLAG_DEATHFADE,
+  ACTOR_FLAG_NOCHATTER,
+  ACTOR_FLAG_INACTIVE,
+  ACTOR_FLAG_ANIM_DONE,
+  ACTOR_FLAG_STATE_DONE_TIME_VALID,
+  ACTOR_FLAG_MASTER_STATE_DONE_TIME_VALID,
+  ACTOR_FLAG_AI_ON,
+  ACTOR_FLAG_LAST_CANSEEENEMY,
+  ACTOR_FLAG_LAST_CANSEEENEMY_NOFOV,
+  ACTOR_FLAG_DIALOG_PLAYING,
+  ACTOR_FLAG_RADIUS_DIALOG_PLAYING,
+  ACTOR_FLAG_ALLOW_TALK,
+  ACTOR_FLAG_DAMAGE_ONCE_ON,
+  ACTOR_FLAG_DAMAGE_ONCE_DAMAGED,
+  ACTOR_FLAG_BOUNCE_OFF,
+  ACTOR_FLAG_NOTIFY_OTHERS_AT_DEATH,
+  ACTOR_FLAG_HAS_THING1,
+  ACTOR_FLAG_HAS_THING2,
+  ACTOR_FLAG_HAS_THING3,
+  ACTOR_FLAG_HAS_THING4,
+  ACTOR_FLAG_LAST_ATTACK_HIT,
+  ACTOR_FLAG_STARTED,
+  ACTOR_FLAG_ALLOW_HANGBACK,
+  ACTOR_FLAG_USE_GRAVITY,
+  ACTOR_FLAG_SPAWN_FAILED,
+  ACTOR_FLAG_FADING_OUT,
+  ACTOR_FLAG_DEATHSHRINK,
+  ACTOR_FLAG_DEATHSINK,
+  ACTOR_FLAG_STAYSOLID,
+  ACTOR_FLAG_STUNNED,
+  ACTOR_FLAG_ALLOW_FALL,
+  ACTOR_FLAG_FINISHED,
+  ACTOR_FLAG_IN_LIMBO,
+  ACTOR_FLAG_CAN_WALK_ON_OTHERS,
+  ACTOR_FLAG_PUSHABLE,
+  ACTOR_FLAG_LAST_TRY_TALK,
+  ACTOR_FLAG_TARGETABLE,
+  ACTOR_FLAG_IMMORTAL,
+  ACTOR_FLAG_TURNING_HEAD,
+  ACTOR_FLAG_MOVING_EYES,
+  ACTOR_FLAG_DIE_COMPLETELY,
+  ACTOR_FLAG_BLEED_AFTER_DEATH,
+  ACTOR_FLAG_IGNORE_STUCK_WARNING,
+  ACTOR_FLAG_IGNORE_OFF_GROUND_WARNING,
+  ACTOR_FLAG_ALLOWED_TO_KILL,
+  ACTOR_FLAG_TOUCH_TRIGGERS,
+  ACTOR_FLAG_IGNORE_WATER,
+  ACTOR_FLAG_NEVER_IGNORE_SOUNDS,
+  ACTOR_FLAG_SIMPLE_PATHFINDING,
+  ACTOR_FLAG_HAVE_MOVED,
+  ACTOR_FLAG_NO_PAIN_SOUNDS,
+  ACTOR_FLAG_UPDATE_BOSS_HEALTH,
+  ACTOR_FLAG_IGNORE_PAIN_FROM_ACTORS,
+  ACTOR_FLAG_DAMAGE_ALLOWED,
+  ACTOR_FLAG_AT_COVER_NODE,
+  ACTOR_FLAG_WAIT_FOR_NEW_ENEMY,
+  ACTOR_FLAG_TAKE_DAMAGE,
+  ACTOR_FLAG_USE_DAMAGESKINS,
+  ACTOR_FLAG_CAPTURED,
+  ACTOR_FLAG_TURRET_MODE,
+  ACTOR_FLAG_INCOMING_HITSCAN,
+  ACTOR_FLAG_RESPONDING_TO_HITSCAN,
+  ACTOR_FLAG_MELEE_HIT_WORLD,
+  ACTOR_FLAG_TORSO_ANIM_DONE,
+  ACTOR_FLAG_WEAPON_READY,
+  ACTOR_FLAG_DISABLED,
+  ACTOR_FLAG_IN_ALCOVE,
+  ACTOR_FLAG_IN_CONE_OF_FIRE,
+  ACTOR_FLAG_IN_PLAYER_CONE_OF_FIRE,
+  ACTOR_FLAG_PLAYER_IN_CALL_VOLUME,
+  ACTOR_FLAG_IN_CALL_VOLUME,
+  ACTOR_FLAG_OUT_OF_TORSO_RANGE,
+  ACTOR_FLAG_DUCKED,
+  ACTOR_FLAG_PRONE,
+  ACTOR_FLAG_SHOULD_BLINK,
+  ACTOR_FLAG_CRIPPLED,
+  ACTOR_FLAG_RETREATING,
+  ACTOR_FLAG_HIDDEN,
+  ACTOR_FLAG_FOLLOWING_IN_FORMATION,
+  ACTOR_FLAG_DISPLAYING_FAILURE_FX,
+  ACTOR_FLAG_GROUPMEMBER_INJURED,
+  ACTOR_FLAG_CAN_HEAL_OTHER,
+  ACTOR_FLAG_STRICTLY_FOLLOW_PATHS,
+  ACTOR_FLAG_POSTURE_ANIM_DONE,
+  ACTOR_FLAG_ATTACKING_ENEMY,
+  ACTOR_FLAG_UPDATE_HATE_WITH_ATTACKERS,
+  ACTOR_FLAG_LAST_CANSEEPLAYER,
+  ACTOR_FLAG_LAST_CANSEEPLAYER_NOFOV,
+  ACTOR_FLAG_MELEE_ALLOWED,
+  ACTOR_FLAG_PLAYING_DIALOG_ANIM,
+  ACTOR_FLAG_USING_HUD,
+  ACTOR_FLAG_FORCE_LIFEBAR,
+  ACTOR_FLAG_UPDATE_ACTION_LEVEL,
+  ACTOR_FLAG_CAN_CHANGE_ANIM,
+  ACTOR_FLAG_USE_FOLLOWRANGE_FOR_NODES,
+  ACTOR_FLAG_IMMEDIATE_ACTIVATE,
+  ACTOR_FLAG_CANNOT_DISINTEGRATE,
+  ACTOR_FLAG_CANNOT_USE,
+  ACTOR_FLAG_CANNOT_FREEZE,
 
-	ACTOR_FLAG_MAX
-	
-	} ActorFlags;
+  ACTOR_FLAG_MAX
 
-
-typedef enum {
-   NOTIFY_FLAG_DAMAGED,
-   NOTIFY_FLAG_KILLED,
-   NOTIFY_FLAG_SPOTTED_ENEMY,
-
-   NOTIFY_FLAG_MAX
-   } NotifyFlags;
+} ActorFlags;
 
 
-typedef enum {
-   MOVEMENT_STYLE_NONE,
-   MOVEMENT_STYLE_WALK,
-   MOVEMENT_STYLE_RUN,
+typedef enum
+{
+  NOTIFY_FLAG_DAMAGED,
+  NOTIFY_FLAG_KILLED,
+  NOTIFY_FLAG_SPOTTED_ENEMY,
 
-   MOVEMENT_STYLE_MAX
-   } MovementStyle;
+  NOTIFY_FLAG_MAX
+} NotifyFlags;
+
+
+typedef enum
+{
+  MOVEMENT_STYLE_NONE,
+  MOVEMENT_STYLE_WALK,
+  MOVEMENT_STYLE_RUN,
+
+  MOVEMENT_STYLE_MAX
+} MovementStyle;
 
 
 //========================================

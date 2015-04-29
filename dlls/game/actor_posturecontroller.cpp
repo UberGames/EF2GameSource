@@ -14,7 +14,6 @@
 //-----------------------------------------------------------------------------
 
 #include "_pch_cpp.h"
-#include "actor_posturecontroller.hpp"
 
 extern Event EV_Actor_SetPostureStateMap;
 
@@ -138,16 +137,16 @@ void PostureController::Archive( Archiver &arc )
 //--------------------------------------------------------------
 void PostureController::init()
 {
-	_postureStateMap = NULL;
+	_postureStateMap = nullptr;
 	_postureStateMap_Name = "";
 
-	_currentPostureState = NULL;
+	_currentPostureState = nullptr;
 	_currentPostureState_Name = "";
 
-	_requestedPostureState = NULL;
+	_requestedPostureState = nullptr;
 	_requestedPostureState_Name = "";
 
-	_requestor = NULL;
+	_requestor = nullptr;
 }
 
 
@@ -163,12 +162,11 @@ void PostureController::init()
 //--------------------------------------------------------------
 void PostureController::evaluate()
 {
-	int count;
-	State	*laststate = NULL;	
+	int32_t count;
+	State	*laststate;	
 	str currentanim;
-	str stateLegAnim;	
 	
-	stateLegAnim = act->animname;
+	auto stateLegAnim = act->animname;
 	count = 0;
 	
 	if ( !_postureStateMap )
@@ -218,7 +216,7 @@ void PostureController::evaluate()
 		// Change the animation if it has changed
 		currentanim = _currentPostureState->getLegAnim( *act, &_postureConditionals );
 		
-		if ( currentanim.length() && ( stricmp( stateLegAnim , currentanim.c_str() ) != 0 ) )
+		if ( currentanim.length() && stricmp( stateLegAnim , currentanim.c_str() ) != 0 )
 		{
 			act->SetAnim( currentanim, EV_Posture_Anim_Done, legs );
 			stateLegAnim = currentanim;
@@ -263,14 +261,12 @@ bool PostureController::requestPosture( const str &postureState , Listener *requ
 
 void PostureController::setPostureStateMap( const str &stateMap , bool loading )
 {
-	str animName;
-	
 	// Load the new state map
 	_postureStateMap_Name = stateMap;
 
 	//_postureConditionals.FreeObjectList();
 	act->freeConditionals( _postureConditionals );
-	_postureStateMap = GetStatemap( _postureStateMap_Name, ( Condition<Class> * )act->Conditions, &_postureConditionals, false );
+	_postureStateMap = GetStatemap( _postureStateMap_Name, reinterpret_cast<Condition<Class> * >(act->Conditions), &_postureConditionals, false );
 
 	// Set the first state
 	_currentPostureState_Name = "START";

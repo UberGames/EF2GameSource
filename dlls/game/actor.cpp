@@ -3024,12 +3024,12 @@ void Actor::Init()
   // General Data
   takedamage = DamageAim;
   deadflag = DeadNo;
-  mode = ACTOR_MODE_AI; //ACTOR_MODE_IDLE;
+  mode = ActorModeAi; //ActorModeIdle;
   max_inactive_time = MAX_INACTIVE_TIME;
   newanimevent = nullptr;
   newTorsoAnimEvent = nullptr;
   groundentity = nullptr;
-  saved_mode = ACTOR_MODE_NONE;
+  saved_mode = ActorModeNone;
   showStates = DEBUG_NONE;
   talkMode = TALK_TURNTO;
 
@@ -3671,16 +3671,16 @@ turnTowardsEntity( ent, extraYaw );
 */
   TurnTo* turnTo;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_TurnTo);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   turnTo = new TurnTo;
   turnTo->SetTarget(ev->GetEntity(1));
@@ -3697,9 +3697,9 @@ void Actor::GoIdle(Event* ev)
 {
   const char* state_name;
 
-  if (!ModeAllowed(ACTOR_MODE_IDLE))
+  if (!ModeAllowed(ActorModeIdle))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_Idle);
     return;
   }
@@ -3711,7 +3711,7 @@ void Actor::GoIdle(Event* ev)
 
   SetState(state_name);
 
-  StartMode(ACTOR_MODE_IDLE);
+  StartMode(ActorModeIdle);
 }
 
 
@@ -3731,16 +3731,16 @@ void Actor::LookAt(Event* ev)
   Entity* ent;
   TurnTo* turnTo;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_LookAt);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   ent = ev->GetEntity(1);
   if (ent && ent != world)
@@ -3761,16 +3761,16 @@ void Actor::TurnToEvent(Event* ev)
 {
   TurnTo* turnTo;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_TurnTo);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   turnTo = new TurnTo;
   turnTo->SetDirection(ev->GetFloat(1));
@@ -3792,16 +3792,16 @@ void Actor::HeadAndEyeWatchEvent(Event* ev)
 {
   Event* event;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_HeadWatch);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   event = new Event(EV_Behavior_Args);
   event->AddEntity(ev->GetEntity(1));
@@ -3823,16 +3823,16 @@ void Actor::HeadWatchEvent(Event* ev)
 {
   //Event *event;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_HeadWatch);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   /*event = new Event( EV_Behavior_Args );
 event->AddEntity( ev->GetEntity( 1 ) );
@@ -3864,16 +3864,16 @@ void Actor::ResetHeadEvent(Event* ev)
 {
   //Event *event;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_ResetHead);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   /*
 event = new Event( EV_Behavior_Args );
@@ -3898,16 +3898,16 @@ void Actor::EyeWatchEvent(Event* ev)
 {
   Event* event;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_EyeWatch);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   event = new Event(EV_Behavior_Args);
   event->AddEntity(ev->GetEntity(1));
@@ -3928,16 +3928,16 @@ void Actor::ResetEyeEvent(Event* ev)
 {
   Event* event;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_ResetEye);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   event = new Event(EV_Behavior_Args);
   event->AddEntity(nullptr);
@@ -3959,11 +3959,11 @@ void Actor::ResetTorsoEvent(Event*)
   /*
 Event *event;
 
-if ( !ModeAllowed( ACTOR_MODE_SCRIPT ) )
+if ( !ModeAllowed( ActorModeScript ) )
 {
-if ( mode == ACTOR_MODE_TALK )
+if ( mode == ActorModeTalk )
 RepostEvent( ev, EV_Actor_ResetTorso );
-else if ( mode == ACTOR_MODE_AI )
+else if ( mode == ActorModeAi )
 SendMoveDone( ev->GetThread() );
 return;
 }
@@ -3978,8 +3978,8 @@ event->AddInteger( 0 );
 SetEyeBehavior( new TorsoTurn, event, ev->GetThread() );
 */
 
-  SetControllerTag(ACTOR_TORSO_TAG, gi.Tag_NumForName(edict->s.modelindex, "Bip01 Spine1"));
-  SetControllerAngles(ACTOR_TORSO_TAG, vec_zero);
+  SetControllerTag(ActorTorsoTag, gi.Tag_NumForName(edict->s.modelindex, "Bip01 Spine1"));
+  SetControllerAngles(ActorTorsoTag, vec_zero);
 }
 
 
@@ -3994,16 +3994,16 @@ void Actor::FallToDeathEvent(Event* ev)
 {
   Event* e;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_FallToDeath);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   e = new Event(EV_Behavior_Args);
 
@@ -4037,16 +4037,16 @@ void Actor::WalkTo(Event* ev)
   Event* e;
   //HelperNode *node;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_WalkTo);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   e = new Event(EV_Behavior_Args);
 
@@ -4096,19 +4096,19 @@ void Actor::WalkTo(Event* ev)
 //
 void Actor::BlindlyFollowPath(Event* ev)
 {
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
     {
       RepostEvent(ev, EV_Actor_BlindlyFollowPath);
-    } else if (mode == ACTOR_MODE_AI)
+    } else if (mode == ActorModeAi)
     {
       SendMoveDone(ev->GetThread());
     }
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   auto e = new Event(EV_Behavior_Args);
 
@@ -4152,16 +4152,16 @@ void Actor::FollowWayPoints(Event* ev)
   Event* e;
 
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_WalkTo);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   e = new Event(EV_Behavior_Args);
 
@@ -4204,16 +4204,16 @@ void Actor::WalkWatch(Event* ev)
   if (ev->NumArgs() < 2)
     return;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_WalkWatch);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   e = new Event(EV_Behavior_Args);
 
@@ -4252,9 +4252,9 @@ void Actor::WarpTo(Event* ev)
 {
   PathNode* goal_node;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_WarpTo);
     return;
   }
@@ -4289,16 +4289,16 @@ void Actor::PickupEnt(Event* ev)
 {
   Event* e;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_PickupEnt);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   e = new Event(EV_Behavior_Args);
 
@@ -4326,16 +4326,16 @@ void Actor::ThrowEnt(Event* ev)
 {
   Event* e;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       RepostEvent(ev, EV_Actor_ThrowEnt);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   e = new Event(EV_Behavior_Args);
 
@@ -4383,7 +4383,7 @@ void Actor::AttackEntity(Event* ev)
     return;
   }
 
-  sensoryPerception->Stimuli(STIMULI_SIGHT, target);
+  sensoryPerception->Stimuli(StimuliSight, target);
 
   if (enemyManager->IsInHateList(target))
   {
@@ -4433,16 +4433,16 @@ void Actor::JumpToEvent(Event* ev)
   int i;
   int n;
 
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       PostEvent(*ev, FRAMETIME);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
 
-  StartMode(ACTOR_MODE_SCRIPT);
+  StartMode(ActorModeScript);
 
   e = new Event(EV_Behavior_Args);
 
@@ -5076,7 +5076,7 @@ void Actor::ProcessActorStateMachine(void)
   if (deadflag || !currentState)
     return;
 
-  if (mode != ACTOR_MODE_AI && mode != ACTOR_MODE_IDLE)
+  if (mode != ActorModeAi && mode != ActorModeIdle)
     return;
 
   do
@@ -5328,7 +5328,7 @@ void Actor::ProcessMasterStateMachine(void)
   if (deadflag || !currentMasterState)
     return;
 
-  if (mode != ACTOR_MODE_AI && mode != ACTOR_MODE_IDLE)
+  if (mode != ActorModeAi && mode != ActorModeIdle)
     return;
 
   auto count = 0;
@@ -6325,11 +6325,11 @@ void Actor::SetAnim(Event* ev)
 
 void Actor::Anim(Event* ev)
 {
-  if (!ModeAllowed(ACTOR_MODE_SCRIPT))
+  if (!ModeAllowed(ActorModeScript))
   {
-    if (mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeTalk)
       PostEvent(*ev, FRAMETIME);
-    else if (mode == ACTOR_MODE_AI)
+    else if (mode == ActorModeAi)
       SendMoveDone(ev->GetThread());
     return;
   }
@@ -6345,7 +6345,7 @@ void Actor::Anim(Event* ev)
 
   if (ev->GetSource() == EV_FROM_SCRIPT)
   {
-    StartMode(ACTOR_MODE_SCRIPT);
+    StartMode(ActorModeScript);
 
     e->SetThread(ev->GetThread());
     e->SetLineNumber(ev->GetLineNumber());
@@ -6498,7 +6498,7 @@ void Actor::HeardSound(Event* ev)
   }
 
 
-  sensoryPerception->Stimuli(STIMULI_SOUND, ev->GetVector(2), soundType);
+  sensoryPerception->Stimuli(StimuliSound, ev->GetVector(2), soundType);
   if (GetActorFlag(ACTOR_FLAG_NOISE_HEARD))
   {
     enemyManager->TryToAddToHateList(theEntity);
@@ -6593,7 +6593,7 @@ void Actor::Pain(Event* ev)
 
   // Determine which pain flags to set
 
-  AddStateFlag(STATE_FLAG_SMALL_PAIN);
+  AddStateFlag(StateFlagSmallPain);
 
   if (damage < pain_threshold)
   {
@@ -6601,15 +6601,15 @@ void Actor::Pain(Event* ev)
     {
       if (means_of_death == MOD_SWORD || means_of_death == MOD_AXE || means_of_death == MOD_FIRESWORD ||
           means_of_death == MOD_ELECTRICSWORD)
-          pain_type = PAIN_BIG;
+          pain_type = PainBig;
       else
-        pain_type = PAIN_SMALL;
-      AddStateFlag(STATE_FLAG_IN_PAIN);
+        pain_type = PainSmall;
+      AddStateFlag(StateFlagInPain);
     }
   } else
   {
-    pain_type = PAIN_BIG;
-    AddStateFlag(STATE_FLAG_IN_PAIN);
+    pain_type = PainBig;
+    AddStateFlag(StateFlagInPain);
   }
 
   //-------------------------------------------------------------------
@@ -6652,7 +6652,7 @@ void Actor::Pain(Event* ev)
   {
     next_pain_time = level.time + min_pain_time;
     next_forced_pain_time = level.time + max_pain_time;
-    AddStateFlag(STATE_FLAG_SHOW_PAIN);
+    AddStateFlag(StateFlagShowPain);
   }
 
 
@@ -6906,20 +6906,20 @@ void Actor::Killed(Event* ev)
 
   // Make sure all bones are put back in their normal positions
 
-  if (edict->s.bone_tag[ACTOR_MOUTH_TAG] != -1)
-    SetControllerAngles(ACTOR_MOUTH_TAG, vec_zero);
+  if (edict->s.bone_tag[ActorMouthTag] != -1)
+    SetControllerAngles(ActorMouthTag, vec_zero);
 
-  if (edict->s.bone_tag[ACTOR_HEAD_TAG] != -1)
-    SetControllerAngles(ACTOR_HEAD_TAG, vec_zero);
+  if (edict->s.bone_tag[ActorHeadTag] != -1)
+    SetControllerAngles(ActorHeadTag, vec_zero);
 
-  if (edict->s.bone_tag[ACTOR_TORSO_TAG] != -1)
-    SetControllerAngles(ACTOR_TORSO_TAG, vec_zero);
+  if (edict->s.bone_tag[ActorTorsoTag] != -1)
+    SetControllerAngles(ActorTorsoTag, vec_zero);
 
-  if (edict->s.bone_tag[ACTOR_LEYE_TAG] != -1)
-    SetControllerAngles(ACTOR_LEYE_TAG, vec_zero);
+  if (edict->s.bone_tag[ActorLeyeTag] != -1)
+    SetControllerAngles(ActorLeyeTag, vec_zero);
 
-  if (edict->s.bone_tag[ACTOR_REYE_TAG] != -1)
-    SetControllerAngles(ACTOR_REYE_TAG, vec_zero);
+  if (edict->s.bone_tag[ActorReyeTag] != -1)
+    SetControllerAngles(ActorReyeTag, vec_zero);
 
 
   ClassDef* cls;
@@ -7793,13 +7793,13 @@ void Actor::ShowInfo(void)
   else
     gi.Printf("Think is OFF\n");
 
-  if (mode == ACTOR_MODE_IDLE)
+  if (mode == ActorModeIdle)
     gi.Printf("Mode : IDLE\n");
-  else if (mode == ACTOR_MODE_AI)
+  else if (mode == ActorModeAi)
     gi.Printf("Mode : AI\n");
-  else if (mode == ACTOR_MODE_SCRIPT)
+  else if (mode == ActorModeScript)
     gi.Printf("Mode : SCRIPT\n");
-  else if (mode == ACTOR_MODE_TALK)
+  else if (mode == ActorModeTalk)
     gi.Printf("Mode : TALK\n");
 
   gi.Printf("\n");
@@ -7893,10 +7893,10 @@ void Actor::TurnAIOn(void)
   SetActorFlag(ACTOR_FLAG_AI_ON, true);
 
   if (sensoryPerception)
-    sensoryPerception->RespondTo(STIMULI_ALL, true);
+    sensoryPerception->RespondTo(StimuliAll, true);
 
   EndMode();
-  mode = ACTOR_MODE_AI;
+  mode = ActorModeAi;
   Wakeup();
 }
 
@@ -7909,9 +7909,9 @@ void Actor::TurnAIOff(void)
 {
   SetActorFlag(ACTOR_FLAG_AI_ON, false);
   if (sensoryPerception)
-    sensoryPerception->RespondTo(STIMULI_NONE, true);
+    sensoryPerception->RespondTo(StimuliNone, true);
 
-  if (mode == ACTOR_MODE_AI)
+  if (mode == ActorModeAi)
   {
     // Ai is currently on, get out of AI mode
     //gi.WDPrintf( "Forcing an actor (#%d, %s) out of AI mode, this can be dangerous.\n", entnum, name.c_str() );
@@ -7929,16 +7929,16 @@ void Actor::ActivateAI(void)
 
   last_time_active = level.time;
 
-  if (mode == ACTOR_MODE_AI || mode == ACTOR_MODE_TALK)
+  if (mode == ActorModeAi || mode == ActorModeTalk)
     return;
 
-  StartMode(ACTOR_MODE_AI);
+  StartMode(ActorModeAi);
 
   if (fuzzyEngine)
     SetState("START");
 
   if (sensoryPerception)
-    sensoryPerception->RespondTo(STIMULI_ALL, true);
+    sensoryPerception->RespondTo(StimuliAll, true);
 
   if (activate_thread.length())
     RunThread(activate_thread);
@@ -7996,7 +7996,7 @@ Player* GetPlayer(int index)
 // Temporary
 qboolean Actor::checkInAIMode(Conditional&)
 {
-  return mode == ACTOR_MODE_AI;
+  return mode == ActorModeAi;
 }
 
 
@@ -8370,12 +8370,12 @@ qboolean Actor::checkcanflytoenemy(Conditional&)
 
 qboolean Actor::checkinpain(Conditional&)
 {
-  return state_flags & STATE_FLAG_IN_PAIN;
+  return state_flags & StateFlagInPain;
 }
 
 qboolean Actor::checksmallpain(Conditional&)
 {
-  return state_flags & STATE_FLAG_SMALL_PAIN;
+  return state_flags & StateFlagSmallPain;
 }
 
 qboolean Actor::checkpainyaw(Conditional& condition)
@@ -8408,12 +8408,12 @@ qboolean Actor::checkfinished(Conditional&)
 
 qboolean Actor::checkmeleehit(Conditional&)
 {
-  return state_flags & STATE_FLAG_MELEE_HIT;
+  return state_flags & StateFlagMeleeHit;
 }
 
 qboolean Actor::checkblockedhit(Conditional&)
 {
-  return state_flags & STATE_FLAG_BLOCKED_HIT;
+  return state_flags & StateFlagBlockedHit;
 }
 
 qboolean Actor::checkblocked(Conditional&)
@@ -8434,17 +8434,17 @@ qboolean Actor::checkonfire(Conditional&)
 
 qboolean Actor::checkotherdied(Conditional&)
 {
-  return state_flags & STATE_FLAG_OTHER_DIED;
+  return state_flags & StateFlagOtherDied;
 }
 
 qboolean Actor::checkstuck(Conditional&)
 {
-  return state_flags & STATE_FLAG_STUCK;
+  return state_flags & StateFlagStuck;
 }
 
 qboolean Actor::checknopath(Conditional&)
 {
-  return state_flags & STATE_FLAG_NO_PATH;
+  return state_flags & StateFlagNoPath;
 }
 
 qboolean Actor::checkbehaviordone(Conditional&)
@@ -8804,25 +8804,25 @@ qboolean Actor::checkpartflag(Conditional& condition)
 
   if (stricmp(flag_name, "pain") == 0)
   {
-    flag = STATE_FLAG_IN_PAIN;
+    flag = StateFlagInPain;
   } else if (stricmp(flag_name, "small_pain") == 0)
   {
-    flag = STATE_FLAG_SMALL_PAIN;
+    flag = StateFlagSmallPain;
   } else if (stricmp(flag_name, "melee_hit") == 0)
   {
-    flag = STATE_FLAG_MELEE_HIT;
+    flag = StateFlagMeleeHit;
   } else if (stricmp(flag_name, "touched") == 0)
   {
-    flag = STATE_FLAG_TOUCHED;
+    flag = StateFlagTouched;
   } else if (stricmp(flag_name, "activated") == 0)
   {
-    flag = STATE_FLAG_ACTIVATED;
+    flag = StateFlagActivated;
   } else if (stricmp(flag_name, "used") == 0)
   {
-    flag = STATE_FLAG_USED;
+    flag = StateFlagUsed;
   } else if (stricmp(flag_name, "twitch") == 0)
   {
-    flag = STATE_FLAG_TWITCH;
+    flag = StateFlagTwitch;
   } else
   {
     gi.WDPrintf("Unknown flag name (%s) in checkpartflag.", flag_name.c_str());
@@ -8870,7 +8870,7 @@ qboolean Actor::checkcommand(Conditional& condition)
 
 qboolean Actor::checktouched(Conditional&)
 {
-  return state_flags & STATE_FLAG_TOUCHED;
+  return state_flags & StateFlagTouched;
 }
 
 qboolean Actor::checktouchedbyplayer(Conditional&)
@@ -8880,7 +8880,7 @@ qboolean Actor::checktouchedbyplayer(Conditional&)
 
 qboolean Actor::checktouchedbyplayer()
 {
-  return state_flags & STATE_FLAG_TOUCHED_BY_PLAYER;
+  return state_flags & StateFlagTouchedByPlayer;
 }
 
 qboolean Actor::checkInTheWay(Conditional&)
@@ -8890,10 +8890,10 @@ qboolean Actor::checkInTheWay(Conditional&)
 
 qboolean Actor::checkInTheWay()
 {
-  if (state_flags & STATE_FLAG_IN_THE_WAY)
+  if (state_flags & StateFlagInTheWay)
     return true;
 
-  if (state_flags & STATE_FLAG_TOUCHED_BY_PLAYER)
+  if (state_flags & StateFlagTouchedByPlayer)
     return true;
 
   return false;
@@ -8901,17 +8901,17 @@ qboolean Actor::checkInTheWay()
 
 qboolean Actor::checkactivated(Conditional&)
 {
-  return state_flags & STATE_FLAG_ACTIVATED;
+  return state_flags & StateFlagActivated;
 }
 
 qboolean Actor::checkused(Conditional&)
 {
-  return state_flags & STATE_FLAG_USED;
+  return state_flags & StateFlagUsed;
 }
 
 qboolean Actor::checktwitch(Conditional&)
 {
-  return state_flags & STATE_FLAG_TWITCH;
+  return state_flags & StateFlagTwitch;
 }
 
 qboolean Actor::checkhealth(Conditional& condition)
@@ -10188,7 +10188,7 @@ void Actor::PlayDialog(Sentient* user, float volume, float min_dist, const char*
 
     if (state_name != nullptr && currentState)
     {
-      if (mode == ACTOR_MODE_SCRIPT || mode == ACTOR_MODE_IDLE)
+      if (mode == ActorModeScript || mode == ActorModeIdle)
       {
         dialog_old_state_name = currentState->getName();
         dialog_state_name = state_name;
@@ -10244,7 +10244,7 @@ void Actor::PlayDialog(Sentient* user, float volume, float min_dist, const char*
       } else if (strnicmp(morph_target_name, "anm_", 4) == 0)
       {
         // Make sure we don't screw things up if we're in TALK_MODE
-        if (mode != ACTOR_MODE_TALK)
+        if (mode != ActorModeTalk)
         {
           // Change the animation
           new_event = new Event(EV_Actor_Anim);
@@ -10613,7 +10613,7 @@ void Actor::DialogDone(Event*)
   {
     dialog_state_name = "";
 
-    if (mode != ACTOR_MODE_AI && mode != ACTOR_MODE_TALK)
+    if (mode != ActorModeAi && mode != ActorModeTalk)
     {
       if (dialog_old_state_name.length())
         SetState(dialog_old_state_name.c_str());
@@ -10641,12 +10641,12 @@ void Actor::SetMouthAngle(Event* ev)
 
   if (tag_num != -1)
   {
-    SetControllerTag(ACTOR_MOUTH_TAG, tag_num);
+    SetControllerTag(ActorMouthTag, tag_num);
 
     mouth_angles = vec_zero;
     mouth_angles[PITCH] = max_mouth_angle * angle_percent;
 
-    SetControllerAngles(ACTOR_MOUTH_TAG, mouth_angles);
+    SetControllerAngles(ActorMouthTag, mouth_angles);
   }
 }
 
@@ -10667,17 +10667,17 @@ qboolean Actor::ModeAllowed(int new_mode)
   if (deadflag && actortype != IS_INANIMATE)
     return false;
 
-  if (new_mode == ACTOR_MODE_SCRIPT || new_mode == ACTOR_MODE_IDLE)
+  if (new_mode == ActorModeScript || new_mode == ActorModeIdle)
   {
-    if (mode == ACTOR_MODE_AI || mode == ACTOR_MODE_TALK)
+    if (mode == ActorModeAi || mode == ActorModeTalk)
       return false;
-  } else if (new_mode == ACTOR_MODE_TALK)
+  } else if (new_mode == ActorModeTalk)
   {
     //Check if we're already speaking
     if (GetActorFlag(ACTOR_FLAG_DIALOG_PLAYING))
       return false;
 
-    if (/*mode == ACTOR_MODE_AI ||*/ mode == ACTOR_MODE_TALK || actortype == IS_ENEMY || !GetActorFlag(ACTOR_FLAG_ALLOW_TALK) ||
+    if (/*mode == ActorModeAi ||*/ mode == ActorModeTalk || actortype == IS_ENEMY || !GetActorFlag(ACTOR_FLAG_ALLOW_TALK) ||
         !dialog_list || level.cinematic)
         return false;
   }
@@ -10687,7 +10687,7 @@ qboolean Actor::ModeAllowed(int new_mode)
 
 void Actor::StartMode(int new_mode)
 {
-  if (new_mode == ACTOR_MODE_TALK)
+  if (new_mode == ActorModeTalk)
   {
     SaveMode();
     CancelEventsOfType(EV_Actor_EndBehavior);
@@ -10702,7 +10702,7 @@ void Actor::StartMode(int new_mode)
 
 void Actor::EndMode(void)
 {
-  if (mode == ACTOR_MODE_AI)
+  if (mode == ActorModeAi)
   {
     if (GetActorFlag(ACTOR_FLAG_UPDATE_BOSS_HEALTH) && max_boss_health)
     {
@@ -10711,7 +10711,7 @@ void Actor::EndMode(void)
       gi.cvar_set("bosshealth", bosshealth_string);
     }
 
-    mode = ACTOR_MODE_IDLE;
+    mode = ActorModeIdle;
     ProcessEvent(EV_Actor_Idle);
 
     if (currentState)
@@ -10723,7 +10723,7 @@ void Actor::EndMode(void)
     }
 
     enemyManager->ClearCurrentEnemy();
-  } else if (mode == ACTOR_MODE_TALK)
+  } else if (mode == ActorModeTalk)
   {
     next_player_near = level.time + 5.0f;
     RestoreMode();
@@ -10732,25 +10732,25 @@ void Actor::EndMode(void)
 
 void Actor::SaveMode(void)
 {
-  if (mode == ACTOR_MODE_IDLE)
+  if (mode == ActorModeIdle)
   {
-    saved_mode = ACTOR_MODE_IDLE;
+    saved_mode = ActorModeIdle;
 
     if (currentState)
       saved_state_name = currentState->getName();
     else
       saved_state_name = "";
-  } else if (mode == ACTOR_MODE_AI)
+  } else if (mode == ActorModeAi)
   {
-    saved_mode = ACTOR_MODE_AI;
+    saved_mode = ActorModeAi;
 
     if (currentState)
       saved_state_name = currentState->getName();
     else
       saved_state_name = "";
-  } else if (mode == ACTOR_MODE_SCRIPT)
+  } else if (mode == ActorModeScript)
   {
-    saved_mode = ACTOR_MODE_SCRIPT;
+    saved_mode = ActorModeScript;
     saved_behavior = behavior;
     saved_headBehavior = headBehavior;
     saved_eyeBehavior = eyeBehavior;
@@ -10784,22 +10784,22 @@ void Actor::RestoreMode(void)
 {
   Event* idle_event;
 
-  if (saved_mode == ACTOR_MODE_IDLE)
+  if (saved_mode == ActorModeIdle)
   {
-    mode = ACTOR_MODE_IDLE;
+    mode = ActorModeIdle;
 
     idle_event = new Event(EV_Actor_Idle);
     idle_event->AddString(saved_state_name);
     ProcessEvent(idle_event);
   }
-  if (saved_mode == ACTOR_MODE_AI)
+  if (saved_mode == ActorModeAi)
   {
-    mode = ACTOR_MODE_AI;
+    mode = ActorModeAi;
 
     SetState(saved_state_name);
-  } else if (saved_mode == ACTOR_MODE_SCRIPT)
+  } else if (saved_mode == ActorModeScript)
   {
-    StartMode(ACTOR_MODE_SCRIPT);
+    StartMode(ActorModeScript);
 
     behavior = saved_behavior;
     headBehavior = saved_headBehavior;
@@ -10838,7 +10838,7 @@ currentEyeBehavior = "";
     gi.WDPrintf("Can't restore specified mode: %d\n", saved_mode);
   }
 
-  saved_mode = ACTOR_MODE_NONE;
+  saved_mode = ActorModeNone;
 }
 
 
@@ -11472,7 +11472,7 @@ void Actor::NotifyOthersOfDeath(void)
 
     //if ( name.length() && name == act->name && Vector( act->origin - origin ).length() < 1000 )
     if (name.length() && name == act->name)
-      act->AddStateFlag(STATE_FLAG_OTHER_DIED);
+      act->AddStateFlag(StateFlagOtherDied);
   }
 }
 
@@ -11712,7 +11712,7 @@ void Actor::TriggerTouched(Event* ev)
     other->movetype != MOVETYPE_STATIONARY &&
     IsEntityAlive(other)
     )
-    AddStateFlag(STATE_FLAG_TOUCHED);
+    AddStateFlag(StateFlagTouched);
 }
 
 void Actor::AddStateFlag(unsigned int flag)
@@ -11814,7 +11814,7 @@ void Actor::ActivateEvent(Event*)
 
   ProcessEvent(EV_Actor_AttackPlayer);
 
-  AddStateFlag(STATE_FLAG_ACTIVATED);
+  AddStateFlag(StateFlagActivated);
 }
 
 void Actor::UseEvent(Event* ev)
@@ -11839,7 +11839,7 @@ void Actor::UseEvent(Event* ev)
 
   last_used_time = level.time;
 
-  AddStateFlag(STATE_FLAG_USED);
+  AddStateFlag(StateFlagUsed);
 
   if (onuse_thread_name.length() > 0)
   {
@@ -11856,10 +11856,10 @@ void Actor::StartTalkBehavior(Sentient* user)
 {
   Talk* talk;
 
-  if (!ModeAllowed(ACTOR_MODE_TALK))
+  if (!ModeAllowed(ActorModeTalk))
     return;
 
-  StartMode(ACTOR_MODE_TALK);
+  StartMode(ActorModeTalk);
 
   talk = new Talk;
   talk->SetUser(user);
@@ -12295,7 +12295,7 @@ void Actor::TryTalkToPlayer(void)
   if (level.cinematic)
     next_player_near = level.time + 5.0f;
 
-  if (deadflag || actortype != IS_FRIEND || next_player_near > level.time || !ModeAllowed(ACTOR_MODE_TALK))
+  if (deadflag || actortype != IS_FRIEND || next_player_near > level.time || !ModeAllowed(ActorModeTalk))
     return;
 
   next_player_near = level.time + .2f + G_Random(.1f);
@@ -12347,7 +12347,7 @@ void Actor::TryTalkToPlayer(void)
 
   // Go to talk mode
 
-  StartMode(ACTOR_MODE_TALK);
+  StartMode(ActorModeTalk);
 
   talk = new Talk;
   talk->SetUser(user);
@@ -12470,11 +12470,11 @@ void Actor::Touched(Event* ev)
 
   other = ev->GetEntity(1);
 
-  sensoryPerception->Stimuli(STIMULI_SIGHT, other);
+  sensoryPerception->Stimuli(StimuliSight, other);
 
   if (other->isSubclassOf(Player))
   {
-    AddStateFlag(STATE_FLAG_TOUCHED_BY_PLAYER);
+    AddStateFlag(StateFlagTouchedByPlayer);
   }
 }
 
@@ -12505,7 +12505,7 @@ int Actor::NotifyFlag_string_to_int(const str& notifyflagstr)
 
 void Actor::ArmorDamage(Event* ev)
 {
-  AddStateFlag(STATE_FLAG_ATTACKED);
+  AddStateFlag(StateFlagAttacked);
 
   //if (!TakeDamage())  
   //	return;
@@ -12519,10 +12519,10 @@ void Actor::ArmorDamage(Event* ev)
     {
       auto MOD = ev->GetInteger(9);
       if (MOD != MOD_EXPLOSION)
-        AddStateFlag(STATE_FLAG_ATTACKED_BY_PLAYER);
+        AddStateFlag(StateFlagAttackedByPlayer);
     } else
     {
-      AddStateFlag(STATE_FLAG_ATTACKED_BY_PLAYER);
+      AddStateFlag(StateFlagAttackedByPlayer);
     }
   }
 
@@ -12532,7 +12532,7 @@ void Actor::ArmorDamage(Event* ev)
   ::Damage damage(ev);
 
   // Only react to an attack if we respond to pain
-  if (sensoryPerception && sensoryPerception->ShouldRespondToStimuli(STIMULI_PAIN))
+  if (sensoryPerception && sensoryPerception->ShouldRespondToStimuli(StimuliPain))
   {
     enemyManager->TryToAddToHateList(enemy);
   }
@@ -12596,7 +12596,7 @@ return;
 
 
   Sentient::ArmorDamage(damage);
-  sensoryPerception->Stimuli(STIMULI_PAIN, enemy);
+  sensoryPerception->Stimuli(StimuliPain, enemy);
 }
 
 
@@ -13420,7 +13420,7 @@ void Actor::MeleeEvent(Event* ev)
 
   if (success)
   {
-    AddStateFlag(STATE_FLAG_MELEE_HIT);
+    AddStateFlag(StateFlagMeleeHit);
 
     RunCustomThread("meleehit");
 
@@ -14937,7 +14937,7 @@ void Actor::_notifyGroupOfEnemy()
 
     if (act->GetGroupID() == GetGroupID())
     {
-      act->sensoryPerception->Stimuli(STIMULI_ALL);
+      act->sensoryPerception->Stimuli(StimuliAll);
       act->enemyManager->TryToAddToHateList(currentEnemy);
       act->enemyManager->SetCurrentEnemy(currentEnemy);
       act->personality->SetAggressiveness(1.0f);
@@ -14950,7 +14950,7 @@ void Actor::_notifyGroupOfEnemy()
 
     if (act->GetGroupID() == GetGroupID())
     {
-      act->sensoryPerception->Stimuli(STIMULI_ALL);
+      act->sensoryPerception->Stimuli(StimuliAll);
       act->enemyManager->TryToAddToHateList(currentEnemy);
       act->enemyManager->SetCurrentEnemy(currentEnemy);
       act->personality->SetAggressiveness(1.0f);
@@ -15704,7 +15704,7 @@ qboolean Actor::checkWeaponIsMelee(Conditional&)
 
 qboolean Actor::checkWeaponChanged(Conditional&)
 {
-  return state_flags & STATE_FLAG_CHANGED_WEAPON;
+  return state_flags & StateFlagChangedWeapon;
 }
 
 //----------------------------------------------------------------
@@ -16605,7 +16605,7 @@ qboolean Actor::checkDamageThresholdExceeded(Conditional&)
 //--------------------------------------------------------------
 qboolean Actor::checkDamageThresholdExceeded()
 {
-  return state_flags & STATE_FLAG_DAMAGE_THRESHOLD_EXCEEDED;
+  return state_flags & StateFlagDamageThresholdExceeded;
 }
 
 //--------------------------------------------------------------
@@ -16901,7 +16901,7 @@ qboolean Actor::checkAttacked(Conditional&)
 
 qboolean Actor::checkAttacked()
 {
-  return state_flags & STATE_FLAG_ATTACKED;
+  return state_flags & StateFlagAttacked;
 }
 
 qboolean Actor::checkAttackedByPlayer(Conditional&)
@@ -16911,7 +16911,7 @@ qboolean Actor::checkAttackedByPlayer(Conditional&)
 
 qboolean Actor::checkAttackedByPlayer()
 {
-  return state_flags & STATE_FLAG_ATTACKED_BY_PLAYER;
+  return state_flags & StateFlagAttackedByPlayer;
 }
 
 qboolean Actor::checkShowPain(Conditional&)
@@ -16921,7 +16921,7 @@ qboolean Actor::checkShowPain(Conditional&)
 
 qboolean Actor::checkShowPain()
 {
-  return state_flags & STATE_FLAG_SHOW_PAIN;
+  return state_flags & StateFlagShowPain;
 }
 
 qboolean Actor::checkPropEnemyRange(Conditional& condition)
@@ -17843,7 +17843,7 @@ void Actor::DebugEvent(Event*)
 
 qboolean Actor::checkSteeringFailed(Conditional&)
 {
-  return state_flags & STATE_FLAG_STEERING_FAILED;
+  return state_flags & StateFlagSteeringFailed;
 }
 
 qboolean Actor::checkHavePathToEnemy(Conditional&)
@@ -17901,14 +17901,14 @@ void Actor::UnreserveCurrentHelperNode()
 
 qboolean Actor::checkBlockedByEnemy(Conditional&)
 {
-  if (!(state_flags & STATE_FLAG_BLOCKED_BY_ENTITY))
+  if (!(state_flags & StateFlagBlockedByEntity))
     return false;
 
   auto blockingEntity = movementSubsystem->getBlockingEntity();
   if (!blockingEntity)
     return false;
 
-  sensoryPerception->Stimuli(STIMULI_SIGHT, blockingEntity);
+  sensoryPerception->Stimuli(StimuliSight, blockingEntity);
 
 
   if (enemyManager->Hates(blockingEntity))
@@ -17926,7 +17926,7 @@ void Actor::ProjectileClose(Event* ev)
 
   if (enemyManager->Hates(owner))
   {
-    AddStateFlag(STATE_FLAG_ENEMY_PROJECTILE_CLOSE);
+    AddStateFlag(StateFlagEnemyProjectileClose);
   }
 }
 
@@ -17937,7 +17937,7 @@ qboolean Actor::checkEnemyProjectileClose(Conditional&)
 
 qboolean Actor::checkEnemyProjectileClose()
 {
-  return state_flags & STATE_FLAG_ENEMY_PROJECTILE_CLOSE;
+  return state_flags & StateFlagEnemyProjectileClose;
 }
 
 void Actor::SaveOffLastHitBone(Event*)
@@ -18181,7 +18181,7 @@ qboolean Actor::checkTalking(Conditional&)
 
 qboolean Actor::checkTalking()
 {
-  if (mode == ACTOR_MODE_TALK)
+  if (mode == ActorModeTalk)
     return true;
 
   return false;

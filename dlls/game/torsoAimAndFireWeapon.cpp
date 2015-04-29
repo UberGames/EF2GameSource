@@ -239,7 +239,7 @@ BehaviorReturnCode_t TorsoAimAndFireWeapon::Evaluate( Actor &self )
 		//---------------------------------------------------------------------
 		case TORSO_AIM_AND_FIRE_SUCCESS:
 		//---------------------------------------------------------------------
-			_self->SetControllerAngles( ACTOR_TORSO_TAG, vec_zero );
+			_self->SetControllerAngles( ActorTorsoTag, vec_zero );
 
 			if ( _repeat )
 				{
@@ -292,7 +292,7 @@ void TorsoAimAndFireWeapon::End(Actor &)
 
 	_fireWeapon.End(*_self);
 	//gi.Printf( "TorsoAimAndFireWeapon::End()\n");
-	_self->SetControllerAngles( ACTOR_TORSO_TAG, vec_zero );	
+	_self->SetControllerAngles( ActorTorsoTag, vec_zero );	
 	_self->ClearTorsoAnim();
 	//_self->SetAnim( _aimAnim , NULL , torso );
 }
@@ -377,8 +377,8 @@ void TorsoAimAndFireWeapon::init( Actor &self )
 	_self = &self;
 
 	//Set Our Controller Tag and set up our angles
-	self.SetControllerTag( ACTOR_TORSO_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Spine1" ) );
-	_currentTorsoAngles = self.GetControllerAngles( ACTOR_TORSO_TAG );
+	self.SetControllerTag( ActorTorsoTag, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Spine1" ) );
+	_currentTorsoAngles = self.GetControllerAngles( ActorTorsoTag );
 
 	_animDone = false;
 	_canAttack = true;
@@ -570,7 +570,7 @@ void TorsoAimAndFireWeapon::updateEnemy()
 		}
 
 	_currentEnemy = currentEnemy;
-	//_self->SetControllerAngles( ACTOR_TORSO_TAG, vec_zero );
+	//_self->SetControllerAngles( ActorTorsoTag, vec_zero );
 	//gi.Printf( "TorsoAimAndFireWeapon::_turnTowardsEntity()\n");
 	//_self->turnTowardsEntity( _currentEnemy, 0.0f );	
 
@@ -596,7 +596,7 @@ void TorsoAimAndFireWeapon::LerpTorsoBySpeed( const Vector &angleDelta )
    anglesDiff = angleDelta;
 
    //Reset our Controller Tag
-   _self->SetControllerTag( ACTOR_TORSO_TAG, gi.Tag_NumForName( _self->edict->s.modelindex, "Bip01 Spine1" ) );
+   _self->SetControllerTag( ActorTorsoTag, gi.Tag_NumForName( _self->edict->s.modelindex, "Bip01 Spine1" ) );
 
 
    // Make sure we don't change our head angles too much at once   
@@ -615,7 +615,7 @@ void TorsoAimAndFireWeapon::LerpTorsoBySpeed( const Vector &angleDelta )
    
    finalAngles = anglesDiff;
    
-   _self->SetControllerAngles( ACTOR_TORSO_TAG, finalAngles );
+   _self->SetControllerAngles( ActorTorsoTag, finalAngles );
 
 
 	_currentTorsoAngles = anglesDiff;

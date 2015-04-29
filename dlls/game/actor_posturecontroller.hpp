@@ -18,9 +18,6 @@ class PostureController;
 #ifndef __ACTOR_POSTURECONTROLLER_HPP__
 #define __ACTOR_POSTURECONTROLLER_HPP__
 
-#include "actor.h"
-#include "actorincludes.h"
-
 extern Event EV_Posture_Anim_Done;
 extern Event EV_PostureChanged_Completed;
 
@@ -39,54 +36,54 @@ extern Event EV_PostureChanged_Completed;
 //--------------------------------------------------------------
 class PostureController
 {
-	public:
-						PostureController();
-						PostureController( Actor *actor );
-					   ~PostureController();
+public:
+  PostureController();
+  explicit PostureController(Actor *actor);
+  virtual ~PostureController();
 
-		virtual void	Archive( Archiver &arc );		 
-		void			DoArchive( Archiver &arc , Actor *actor );
-		
-		void			evaluate();		
+  virtual void	Archive(Archiver &arc);
+  void			DoArchive(Archiver &arc, Actor *actor);
 
-		bool			requestPosture( const str &postureState , Listener *requestor );
-		
-		const str&		getRequestedPostureName();
-		const str&		getCurrentPostureName();
+  void			evaluate();
 
-		void			setPostureStateMap( const str &stateMap , bool loading );
-		void			setPostureState( const str &postureState );						
-		void			setPostureState( const str &postureState , const str &requestedState );
+  bool			requestPosture(const str &postureState, Listener *requestor);
 
-	protected:
-		void			init();		
+  const str&		getRequestedPostureName();
+  const str&		getCurrentPostureName();
 
-	private:
-		StateMap		*_postureStateMap;
-		str				 _postureStateMap_Name;
+  void			setPostureStateMap(const str &stateMap, bool loading);
+  void			setPostureState(const str &postureState);
+  void			setPostureState(const str &postureState, const str &requestedState);
 
-		State			*_currentPostureState;
-		str				 _currentPostureState_Name;
+protected:
+  void			init();
 
-		State			*_requestedPostureState;
-		str				 _requestedPostureState_Name;
+private:
+  StateMap		*_postureStateMap;
+  str				 _postureStateMap_Name;
 
-		SafePtr<Listener> _requestor;
-		Container<Conditional*>	 _postureConditionals;
+  State			*_currentPostureState;
+  str				 _currentPostureState_Name;
+
+  State			*_requestedPostureState;
+  str				 _requestedPostureState_Name;
+
+  SafePtr<Listener> _requestor;
+  Container<Conditional*>	 _postureConditionals;
 
 
-		
-		Actor		    *act;
+
+  Actor		    *act;
 };
 
 inline const str& PostureController::getRequestedPostureName()
 {
-	return _requestedPostureState_Name;
+  return _requestedPostureState_Name;
 }
 
 inline const str& PostureController::getCurrentPostureName()
 {
-	return _currentPostureState_Name;
+  return _currentPostureState_Name;
 }
 
 #endif /* __ACTOR_POSTURECONTROLLER_HPP__ */

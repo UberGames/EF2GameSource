@@ -14,9 +14,6 @@
 //
 
 #include "_pch_cpp.h"
-#include "actor_sensoryperception.h"
-#include "player.h"
-#include "object.h"
 
 //======================================
 // SensoryPerception Implementation
@@ -62,16 +59,10 @@ SensoryPerception::~SensoryPerception()
 
 qboolean SensoryPerception::isInLineOfSight( const Vector &position , const int entNum )
 {
-	trace_t trace;
-	Vector startPos;
-	Vector endPos;
-	Entity *traceEnt;
-	
-	
-	startPos = act->origin;
+  auto startPos = act->origin;
 	startPos.z += 15;
 	
-	endPos = position;
+	auto endPos = position;
 	endPos.z += 15;
 	
 	Vector modMins;
@@ -83,7 +74,7 @@ qboolean SensoryPerception::isInLineOfSight( const Vector &position , const int 
 	modMaxs = act->maxs;
 	modMaxs *= 1.5;
 	
-	trace = G_Trace( startPos, modMins, modMaxs, endPos, act, act->edict->clipmask, false, "isInLineOfSight" );
+	auto trace = G_Trace( startPos, modMins, modMaxs, endPos, act, act->edict->clipmask, false, "isInLineOfSight" );
 	//G_DebugLine( startPos , trace.endpos, 1.0f, 0.0f, 1.0f, 1.0f );
 	
 	_lineOfSight.entNum = entNum;
@@ -95,13 +86,13 @@ qboolean SensoryPerception::isInLineOfSight( const Vector &position , const int 
 	}
 	else
 	{
-		traceEnt = G_GetEntity( trace.entityNum );
+		auto traceEnt = G_GetEntity( trace.entityNum );
 		_lineOfSight.inLineOfSight = false;
 		
 		if ( traceEnt && traceEnt->isSubclassOf( Actor) )
 		{
 			Actor *traceActor;
-			traceActor = (Actor*)traceEnt;
+			traceActor = dynamic_cast<Actor*>(traceEnt);
 			
 			_lineOfSight.inLineOfSight = traceActor->sensoryPerception->checkInLineOfSight( position , entNum );
 		}            
@@ -117,24 +108,23 @@ qboolean SensoryPerception::checkInLineOfSight( const Vector &position , const i
 	timeDelta = level.time - _lineOfSight.time;
 	
 	if (  timeDelta > .5 || entNum != _lineOfSight.entNum )
-		return isInLineOfSight( position , entNum );   
-	else
-		return _lineOfSight.inLineOfSight;
-	
+		return isInLineOfSight( position , entNum );
+  
+  return _lineOfSight.inLineOfSight;
 }
 
 void SensoryPerception::_init()
 {
 	
 	// Set up Stimuli
-	_stimuli           = STIMULI_ALL;
-	_permanent_stimuli = STIMULI_ALL;
+	_stimuli           = StimuliAll;
+	_permanent_stimuli = StimuliAll;
 	
 	//Member Vars
 	_noise_position  = vec_zero;
 	_noise_time      = 0;
 	_fov             = DEFAULT_FOV;
-	_fovdot          = (float)cos( (double)_fov * 0.5 * M_PI / 180.0 );
+	_fovdot          = float(cos( double(_fov) * 0.5 * M_PI / 180.0 ));
 	_vision_distance = DEFAULT_VISION_DISTANCE;
 	_last_soundType  = SOUNDTYPE_NONE;
 	_nextSenseTime   = 0.0f;
@@ -151,9 +141,7 @@ void SensoryPerception::_init()
 //              needs to wake up
 //
 void SensoryPerception::SenseEnemies()
-{
-	int		i;
-   	
+{   	
 	if ( _nextSenseTime > level.time )
 		return;
 	
@@ -161,13 +149,13 @@ void SensoryPerception::SenseEnemies()
 	//_nextSenseTime = 0;
 	
 	//Well, who your enemies are depends on what side your on
-	if ( ( act->actortype == IS_ENEMY ) || ( act->actortype == IS_MONSTER ) )
+	if ( act->actortype == IS_ENEMY || act->actortype == IS_MONSTER )
 	{
 		//
 		//If we an ENEMY or a MONSTER than teammates are our enemies
 		//
 		Sentient *teammate;
-		for ( i = 1 ; i <= TeamMateList.NumObjects() ; i++ )
+		for ( auto i = 1 ; i <= TeamMateList.NumObjects() ; i++ )
 		{
 			teammate = TeamMateList.ObjectAt( i );
 			
@@ -179,14 +167,11 @@ void SensoryPerception::SenseEnemies()
 	else
 	{
 		//
-		//If we an CIVILIAN, FRIEND, or TEAMMATE our potiential enemies are active monsters
+		//If we an CIVILIAN, FRIEND, or TEAMMATE our potential enemies are active monsters
 		//
-		Entity *ent;
-		
-		for ( i = 1 ; i <= ActiveList.NumObjects() ; i++ )
+		for (auto i = 1 ; i <= ActiveList.NumObjects() ; i++ )
 		{
-			ent = ActiveList.ObjectAt( i );
-			_SenseEntity(ent);
+      _SenseEntity(ActiveList.ObjectAt(i));
 		}
 		
 		//In case we didn't find an enemy, but if the players nearby, we want to wake up anyway
@@ -197,7 +182,7 @@ void SensoryPerception::SenseEnemies()
 
 qboolean SensoryPerception::_SenseEntity( Entity *ent )
 {
-	// Dont want to target the enemy if he's not a valid target
+	// Don't want to target the enemy if he's not a valid target
 	
 	if (!ent)
 		return false;
@@ -205,7 +190,7 @@ qboolean SensoryPerception::_SenseEntity( Entity *ent )
 	if ( !EntityIsValidTarget(ent) )
 		return false;
 	
-	// Dont wake ourselves up
+	// Don't wake ourselves up
 	if ( ent->entnum == act->entnum )
 		return false;
 	
@@ -215,48 +200,18 @@ qboolean SensoryPerception::_SenseEntity( Entity *ent )
 			return false;
 	}
 	
-	/*
-	// Check if we're in the PVS
-	if ( gi.inPVS( ent->centroid, act->centroid ) )		
-	{
-	// Check if we can see the enemy
-	if ( CanSeeEntity ( act , ent , true , true ) )
-	Stimuli( STIMULI_SIGHT , ent );
-	else
-	{
-	// Lets not idle for teammates, just players
-	if ( ent->isSubclassOf( Player ) )
-	{
-	// We couldn't see the enemy, but we're in the PVS, so we need to wake up and idle a bit.	
-	if ( ( world->farplane_distance == 0 ) || ( Distance( ent->centroid, act->centroid ) < world->farplane_distance ) )
-	{
-	act->Wakeup();
-	//act->ActivateAI();
-	}
-	
-	  
-		}
-		else
-		return false;
-		}
-		
-		  return true;
-		  }
-	*/
 	if ( gi.inPVS( ent->centroid, act->centroid ) )
 	{
-		Vector enemyToSelf;
-		enemyToSelf = act->origin - ent->origin;
-		
-		float visionDistance = GetVisionDistance();
+		auto enemyToSelf = act->origin - ent->origin;	
+		auto visionDistance = GetVisionDistance();
+
 		if ( enemyToSelf.length() < visionDistance )
 		{
 			if ( CanSeeEntity( act, ent, true, true ) )
-				Stimuli( STIMULI_SIGHT , ent );
+				Stimuli( StimuliSight , ent );
 		}         
 		
 	}
-	
 	
 	return false;
 }
@@ -363,17 +318,17 @@ void SensoryPerception::Stimuli( int new_stimuli, const Vector &pos, int sound_T
 void SensoryPerception::RespondTo(const str &stimuli_name , qboolean respond )
 {
 	if ( !Q_stricmp( stimuli_name.c_str() , "sight" ) )
-		RespondTo(STIMULI_SIGHT , respond );
+		RespondTo(StimuliSight , respond );
 	else if ( !Q_stricmp( stimuli_name.c_str() , "sound" ) )
-		RespondTo(STIMULI_SOUND , respond );
+		RespondTo(StimuliSound , respond );
 	else if ( !Q_stricmp( stimuli_name.c_str() , "pain" ) )
-		RespondTo(STIMULI_PAIN , respond );
+		RespondTo(StimuliPain , respond );
 	else if ( !Q_stricmp( stimuli_name.c_str() , "script" ) )
-		RespondTo(STIMULI_SCRIPT , respond );
+		RespondTo(StimuliScript , respond );
 	else if ( !Q_stricmp( stimuli_name.c_str() , "all" ) )
-		RespondTo(STIMULI_ALL , respond );
+		RespondTo(StimuliAll , respond );
 	else if ( !Q_stricmp( stimuli_name.c_str() , "none" ) )
-		RespondTo(STIMULI_NONE , respond );
+		RespondTo(StimuliNone , respond );
 }
 
 //
@@ -384,23 +339,15 @@ void SensoryPerception::RespondTo(const str &stimuli_name , qboolean respond )
 //
 void SensoryPerception::RespondTo( int stimuli , qboolean respond )
 {
-	if ( stimuli == STIMULI_ALL )
+	if ( stimuli == StimuliAll )
 	{
-		if ( respond )
-			_stimuli = STIMULI_ALL;
-		else
-			_stimuli = STIMULI_NONE;
-		
+    _stimuli = respond ? StimuliAll : StimuliNone;
 		return;
 	}
 	
-	if ( stimuli == STIMULI_NONE )
+	if ( stimuli == StimuliNone )
 	{
-		if ( respond )
-			_stimuli = STIMULI_NONE;
-		else
-			_stimuli = STIMULI_ALL;
-		
+    _stimuli = respond ? StimuliNone : StimuliAll;
 		return;
 	}
 	
@@ -422,47 +369,47 @@ void SensoryPerception::PermanentlyRespondTo(const str &stimuli_name , qboolean 
 	if ( !Q_stricmp( stimuli_name.c_str() , "sight" ) )
 	{
 		if ( respond )
-			_permanent_stimuli |= STIMULI_SIGHT;
+			_permanent_stimuli |= StimuliSight;
 		else
-			_permanent_stimuli &= ~STIMULI_SIGHT;
+			_permanent_stimuli &= ~StimuliSight;
 	}
 	else if ( !Q_stricmp( stimuli_name.c_str() , "sound" ) )
 	{
 		if ( respond )
-			_permanent_stimuli |= STIMULI_SOUND;
+			_permanent_stimuli |= StimuliSound;
 		else
-			_permanent_stimuli &= ~STIMULI_SOUND;		
+			_permanent_stimuli &= ~StimuliSound;		
 	}
 	else if ( !Q_stricmp( stimuli_name.c_str() , "pain" ) )
 	{
 		if ( respond )
-			_permanent_stimuli |= STIMULI_PAIN;
+			_permanent_stimuli |= StimuliPain;
 		else
-			_permanent_stimuli &= ~STIMULI_PAIN;		
+			_permanent_stimuli &= ~StimuliPain;		
 		
 	}
 	else if ( !Q_stricmp( stimuli_name.c_str() , "script" ) )
 	{
 		if ( respond )
-			_permanent_stimuli |= STIMULI_SCRIPT;
+			_permanent_stimuli |= StimuliScript;
 		else
-			_permanent_stimuli &= ~STIMULI_SCRIPT;		
+			_permanent_stimuli &= ~StimuliScript;		
 		
 	}
 	else if ( !Q_stricmp( stimuli_name.c_str() , "all" ) )
 	{
 		if ( respond )
-			_permanent_stimuli = STIMULI_ALL;
+			_permanent_stimuli = StimuliAll;
 		else
-			_permanent_stimuli = STIMULI_NONE;		
+			_permanent_stimuli = StimuliNone;		
 		
 	}
 	else if ( !Q_stricmp( stimuli_name.c_str() , "none" ) )
 	{
 		if ( respond )
-			_permanent_stimuli = STIMULI_NONE;
+			_permanent_stimuli = StimuliNone;
 		else
-			_permanent_stimuli = STIMULI_ALL;
+			_permanent_stimuli = StimuliAll;
 	}
 }
 
@@ -473,47 +420,47 @@ void SensoryPerception::PermanentlyRespondTo(const str &stimuli_name , qboolean 
 //
 qboolean SensoryPerception::ShouldRespondToStimuli( int new_stimuli )
 {
-	if( ( act->targetType == ATTACK_SCRIPTED_ONLY ) && ( new_stimuli != STIMULI_SCRIPT ) ) return false;
+	if( act->targetType == ATTACK_SCRIPTED_ONLY && new_stimuli != StimuliScript ) return false;
 	
-	if ( _stimuli == STIMULI_ALL )
+	if ( _stimuli == StimuliAll )
 		return true;
 	
-	if ( _stimuli == STIMULI_NONE )
+	if ( _stimuli == StimuliNone )
 		return false;
 	
-	return ( (( new_stimuli & _stimuli ) && ( new_stimuli & _permanent_stimuli )) || ( new_stimuli == STIMULI_SCRIPT ) );
+	return new_stimuli & _stimuli && new_stimuli & _permanent_stimuli || new_stimuli == StimuliScript;
 }
 
 
 //
 // Name:        ShowInfo()
 // Parameters:  None
-// Description: Prints sensoryinformation to the console
+// Description: Prints sensory information to the console
 //
 void SensoryPerception::ShowInfo()
 {
-	if ( ShouldRespondToStimuli( STIMULI_ALL ) )
+	if ( ShouldRespondToStimuli( StimuliAll ) )
 	{
 		gi.Printf( "Actor is Responding To: ALL" );
 		return;
 	}
 	
-	if ( ShouldRespondToStimuli( STIMULI_NONE ) )
+	if ( ShouldRespondToStimuli( StimuliNone ) )
 	{
 		gi.Printf( "Actor is Responding To: NONE" );
 		return;
 	}
 	
-	if ( ShouldRespondToStimuli( STIMULI_SIGHT ) )
+	if ( ShouldRespondToStimuli( StimuliSight ) )
 		gi.Printf( "Actor is Responding To: SIGHT" );
 	
-	if ( ShouldRespondToStimuli( STIMULI_SOUND ) )
+	if ( ShouldRespondToStimuli( StimuliSound ) )
 		gi.Printf( "Actor is Responding To: SOUND" );
 	
-	if ( ShouldRespondToStimuli( STIMULI_PAIN ) )
+	if ( ShouldRespondToStimuli( StimuliPain ) )
 		gi.Printf( "Actor is Responding To: PAIN" );
 	
-	if ( ShouldRespondToStimuli( STIMULI_SCRIPT ) )
+	if ( ShouldRespondToStimuli( StimuliScript ) )
 		gi.Printf( "Actor is Responding To: SCRIPT" );
 	
 }
@@ -537,8 +484,8 @@ qboolean SensoryPerception::WithinVisionDistance( const Entity *ent )
 		gi.Error( ERR_DROP, "SensoryPerception::WithinVisionDistance -- actor is NULL" );
 	
 	
-	// Use whichever is less : the actor's vision distance or the distance of the farplane (fog)
-	if ( ( world->farplane_distance != 0.0f ) && ( world->farplane_distance < _vision_distance ) )
+	// Use whichever is less : the actor's vision distance or the distance of the far plane (fog)
+	if ( world->farplane_distance != 0.0f && world->farplane_distance < _vision_distance )
 		distance = world->farplane_distance;
 	else
 		distance = _vision_distance;
@@ -553,8 +500,8 @@ qboolean SensoryPerception::WithinVisionDistance( const Vector &pos )
 	if ( !act )
 		gi.Error( ERR_DROP, "SensoryPerception::WithinVisionDistance -- actor is NULL" );
 	
-	// Use whichever is less : the actor's vision distance or the distance of the farplane (fog)
-	if ( ( world->farplane_distance != 0.0f ) && ( world->farplane_distance < _vision_distance ) )
+	// Use whichever is less : the actor's vision distance or the distance of the far plane (fog)
+	if ( world->farplane_distance != 0.0f && world->farplane_distance < _vision_distance )
 		distance = world->farplane_distance;
 	else
 		distance = _vision_distance;
@@ -571,19 +518,13 @@ qboolean SensoryPerception::WithinVisionDistance( const Vector &pos )
 //
 qboolean SensoryPerception::InFOV( const Vector &pos, float check_fov, float check_fovdot	)
 {
-	Vector delta;
-	float	 dot;
-	Vector temp;
-	int tagNum;
-	
-	
 	if ( !act )
 		gi.Error( ERR_DROP, "SensoryPerception::InFOV -- actor is NULL" );
 	
 	if ( check_fov == 360.0f )
 		return true;
-	temp = act->EyePosition();
-	delta = pos - act->EyePosition();
+
+	auto delta = pos - act->EyePosition();
 	
 	if ( !delta.x && !delta.y )
 	{
@@ -596,8 +537,9 @@ qboolean SensoryPerception::InFOV( const Vector &pos, float check_fov, float che
 	
 	delta.normalize();
 	
-	tagNum = gi.Tag_NumForName( act->edict->s.modelindex, "tag_eyes" );
+	auto tagNum = gi.Tag_NumForName( act->edict->s.modelindex, "tag_eyes" );
 	
+  float	dot;
 	if ( tagNum >= 0 )
 	{
 		Vector tag_pos;
@@ -611,7 +553,7 @@ qboolean SensoryPerception::InFOV( const Vector &pos, float check_fov, float che
 		dot = DotProduct( act->orientation[ 0 ], delta );
 	}
 	
-	return ( dot > check_fovdot );
+	return dot > check_fovdot;
 	
 }
 
@@ -653,7 +595,7 @@ qboolean SensoryPerception::CanSeeEntity( Entity *start, const Entity *target, q
 		return false;
 	
 	// Check if This Actor can even see at all
-	if ( !ShouldRespondToStimuli( STIMULI_SIGHT ) )
+	if ( !ShouldRespondToStimuli( StimuliSight ) )
 		return false;
 	
 	// Check for FOV
@@ -671,18 +613,14 @@ qboolean SensoryPerception::CanSeeEntity( Entity *start, const Entity *target, q
 	}
 	
 	// Do Trace
-	trace_t trace;
-	Vector p;
-	Vector eyePos;
-	
-	p = target->centroid;
-	eyePos = vec_zero;
+	auto p = target->centroid;
+	auto eyePos = vec_zero;
 	
 	// If the start entity is an actor, then we want to add in the eyeposition
 	if ( start->isSubclassOf ( Actor ) )
 	{
 		Actor *a;
-		a = (Actor*)start;
+		a = dynamic_cast<Actor*>(start);
 		
 		if ( !a )
 			return false;
@@ -692,15 +630,9 @@ qboolean SensoryPerception::CanSeeEntity( Entity *start, const Entity *target, q
 	}
 	
 	// Check if he's visible
-	trace = G_Trace( eyePos, vec_zero, vec_zero, p, target, MASK_OPAQUE, false, "SensoryPerception::CanSeeEntity" );
-
-	//if ( act->actortype == IS_TEAMMATE )
-	//	{
-	//	G_DebugLine( eyePos , target->centroid, 0.0f, 0.0f, 1.0f, 1.0f );	
-	//	G_DebugLine( eyePos , trace.endpos , 1.0f, 0.0f, 1.0f, 1.0f );	
-	//	}
+	auto trace = G_Trace( eyePos, vec_zero, vec_zero, p, target, MASK_OPAQUE, false, "SensoryPerception::CanSeeEntity" );
 	
-	if ( ( trace.fraction == 1.0f ) || ( trace.ent == target->edict ) )
+	if ( trace.fraction == 1.0f || trace.ent == target->edict )
 		return true;
 	
 	// Check if his head is visible
@@ -724,14 +656,12 @@ qboolean SensoryPerception::CanSeeEntity( Entity *start, const Entity *target, q
 //
 qboolean SensoryPerception::CanSeeEntity( const Vector &start , const Entity *target, qboolean useFOV , qboolean useVisionDistance )
 {
-	Vector realStart;
-	
 	// Check for NULL
 	if ( !target )
 		return false;
 	
 	// Check if This Actor can even see at all
-	if ( !ShouldRespondToStimuli( STIMULI_SIGHT ) )
+	if ( !ShouldRespondToStimuli( StimuliSight ) )
 		return false;
 	
 	
@@ -750,21 +680,16 @@ qboolean SensoryPerception::CanSeeEntity( const Vector &start , const Entity *ta
 	}
 	
 	// Do Trace
-	trace_t trace;
-	Vector p;
-	Vector eyePos;
-	
-	realStart = start;
-	
-	p = target->centroid;
+	auto realStart = start;	
+	auto p = target->centroid;
 	
 	// Add in the eye offset
 	
-	eyePos = act->EyePosition() - act->origin;
+	auto eyePos = act->EyePosition() - act->origin;
 	realStart += eyePos;
 	
 	// Check if he's visible
-	trace = G_Trace( realStart, vec_zero, vec_zero, p, act, MASK_OPAQUE, false, "SensoryPerception::CanSeeEntity" );
+	auto trace = G_Trace( realStart, vec_zero, vec_zero, p, act, MASK_OPAQUE, false, "SensoryPerception::CanSeeEntity" );
 	if ( trace.fraction == 1.0f || trace.ent == target->edict )
 		return true;
 	
@@ -795,7 +720,7 @@ qboolean SensoryPerception::CanSeeEntityComplex(Entity *start, Entity *target, q
 		return false;
 	
 	// Check if This Actor can even see at all
-	if ( !ShouldRespondToStimuli( STIMULI_SIGHT ) )
+	if ( !ShouldRespondToStimuli( StimuliSight ) )
 		return false;
 	
 	if ( !act )
@@ -826,7 +751,7 @@ qboolean SensoryPerception::CanSeeEntityComplex( Vector &start, Entity *target, 
 		return false;
 	
 	// Check if This Actor can even see at all
-	if ( !ShouldRespondToStimuli( STIMULI_SIGHT ) )
+	if ( !ShouldRespondToStimuli( StimuliSight ) )
 		return false;
 	
 	if ( !act )
@@ -845,7 +770,7 @@ qboolean SensoryPerception::CanSeePosition( const Vector &start, const Vector &p
 {
 	
 	// Check if This Actor can even see at all
-	if ( !ShouldRespondToStimuli( STIMULI_SIGHT ) )
+	if ( !ShouldRespondToStimuli( StimuliSight ) )
 		return false;
 	
 	// Check for FOV
@@ -863,13 +788,8 @@ qboolean SensoryPerception::CanSeePosition( const Vector &start, const Vector &p
 	}
 	
 	// Do Trace
-	trace_t trace;
-	Vector eyePos;
-	
-	eyePos = vec_zero;
-	
 	// Check if he's visible
-	trace = G_Trace( start, vec_zero, vec_zero, position, act, MASK_OPAQUE, false, "SensoryPerception::CanSeeEntity" );
+	auto trace = G_Trace( start, vec_zero, vec_zero, position, act, MASK_OPAQUE, false, "SensoryPerception::CanSeeEntity" );
 	if ( trace.fraction == 1.0f )
 		return true;
 	
@@ -886,17 +806,15 @@ qboolean SensoryPerception::CanSeePosition( const Vector &start, const Vector &p
 //
 qboolean SensoryPerception::_CanSeeComplex( Vector &start, Entity *target , qboolean useFOV, qboolean useVisionDistance )
 {
-	Vector	d;
-	Vector	p1;
-	Vector	p2;
-	
 	if ( !target )
 		return false;
 	
-	d = target->centroid - start;
+	auto d = target->centroid - start;
 	d.z = 0;
 	d.normalize();
 	
+  Vector	p1;
+  Vector	p2;
 	p1.x = -d.y;
 	p1.y = d.x;
 	p1 *= max( act->size.x, act->size.y ) * 1.44f * 0.5f;

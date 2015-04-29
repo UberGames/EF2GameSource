@@ -2164,7 +2164,7 @@ void Sentient::ArmorDamage( float damage, Entity *inflictor, Entity *attacker, c
 	{
 		Actor *act = (Actor *)this;
 		
-		if ( ( act->state_flags & STATE_FLAG_SMALL_PAIN ) && ( meansofdeath == MOD_ON_FIRE || Immune( meansofdeath ) ) )
+		if ( ( act->state_flags & StateFlagSmallPain ) && ( meansofdeath == MOD_ON_FIRE || Immune( meansofdeath ) ) )
 			set_means_of_death = false;
 	}
 	
@@ -2423,7 +2423,7 @@ void Sentient::ArmorDamage( float damage, Entity *inflictor, Entity *attacker, c
 				if ( this->isSubclassOf( Actor ) )
 				{
 					Actor *act = ( Actor * )this;
-					act->AddStateFlag( STATE_FLAG_BLOCKED_HIT );
+					act->AddStateFlag( StateFlagBlockedHit );
 				}
 				
 				WeaponEffectsAndSound( weapon, "Blocked", position );
@@ -4798,7 +4798,7 @@ void Sentient::CheckDamageThreshold( float damageValue )
 		{
 			Actor *actor;
 			actor = (Actor*)this;			
-			actor->AddStateFlag(STATE_FLAG_DAMAGE_THRESHOLD_EXCEEDED);
+			actor->AddStateFlag(StateFlagDamageThresholdExceeded);
 		}		
 		
 		//Clear out our structure

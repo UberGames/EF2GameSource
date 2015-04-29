@@ -319,7 +319,7 @@ BehaviorReturnCode_t	Talk::Evaluate
 		if ( !self.GetActorFlag( ACTOR_FLAG_DIALOG_PLAYING ) )
 		{
 			mode = TALK_MODE_WAIT;
-			self.state_flags &= ~STATE_FLAG_USED;
+			self.state_flags &= ~StateFlagUsed;
 
 			// Tell player to stop watching us
 
@@ -372,7 +372,7 @@ BehaviorReturnCode_t	Talk::Evaluate
 		if ( !self.WithinDistance( ent_listening, 100.0f ) )
 			mode = TALK_MODE_TURN_BACK;
 
-		if ( self.state_flags & STATE_FLAG_USED )
+		if ( self.state_flags & StateFlagUsed )
 		{
 			mode = TALK_MODE_TURN_TO;
 			self.SetActorFlag(ACTOR_FLAG_PLAYING_DIALOG_ANIM, false );
@@ -381,7 +381,7 @@ BehaviorReturnCode_t	Talk::Evaluate
 			angles = dir.toAngles();
 			yaw    = angles[YAW];
 
-			self.state_flags &= ~STATE_FLAG_USED;
+			self.state_flags &= ~StateFlagUsed;
 
 			/* event = new Event( EV_Player_WatchActor );
 			event->AddEntity( &self );

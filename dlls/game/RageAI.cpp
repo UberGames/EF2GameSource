@@ -310,8 +310,8 @@ void DefaultStrategos::_CheckForInTheWay()
 		
 		if ( (relativeYaw <= _checkYawMax) && (relativeYaw >= _checkYawMin ) )
 		{
-			act->AddStateFlag( STATE_FLAG_TOUCHED_BY_PLAYER );
-			act->AddStateFlag( STATE_FLAG_IN_THE_WAY );
+			act->AddStateFlag( StateFlagTouchedByPlayer );
+			act->AddStateFlag( StateFlagInTheWay );
 		}
 		
 	}

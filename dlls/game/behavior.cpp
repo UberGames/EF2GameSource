@@ -170,7 +170,7 @@ BehaviorReturnCode_t	Idle::Evaluate
 	if ( nexttwitch < level.time )
 		{
 		self.chattime += 10.0f;
-		self.AddStateFlag( STATE_FLAG_TWITCH );
+		self.AddStateFlag( StateFlagTwitch );
 		return BEHAVIOR_EVALUATING;
 		}
 	else
@@ -214,7 +214,7 @@ void Pain::SetPainAnim
 
 	// Determine which pain type to play
 
-	if ( new_pain_type == PAIN_SMALL )
+	if ( new_pain_type == PainSmall )
 		anim_name = "pain_small";
 	else
 		anim_name = "pain";
@@ -225,7 +225,7 @@ void Pain::SetPainAnim
 
 	if ( !self.animate->HasAnim( anim_name.c_str() ) )
 		{
-		if ( new_pain_type == PAIN_SMALL )
+		if ( new_pain_type == PainSmall )
 			anim_name = "pain_small1";
 		else
 			anim_name = "pain1";
@@ -257,7 +257,7 @@ int Pain::GetNumberOfPainAnims
 
 	// Determine base animation name
 
-	if ( new_pain_type == PAIN_SMALL )
+	if ( new_pain_type == PainSmall )
 		anim_name = "pain_small";
 	else
 		anim_name = "pain";
@@ -290,18 +290,18 @@ void Pain::Begin
 
 	// Figure out which type of pain to do
 
-	if ( self.pain_type == PAIN_SMALL )
-		SetPainAnim( self, PAIN_SMALL, pain_anim_number );
+	if ( self.pain_type == PainSmall )
+		SetPainAnim( self, PainSmall, pain_anim_number );
 	else
-		SetPainAnim( self, PAIN_BIG, pain_anim_number );
+		SetPainAnim( self, PainBig, pain_anim_number );
 
 	current_pain_type = self.pain_type;
 	number_of_pains   = 1;
 
 	// Make sure we don't have pain any more
 
-	self.state_flags &= ~STATE_FLAG_SMALL_PAIN;
-	self.state_flags &= ~STATE_FLAG_IN_PAIN;
+	self.state_flags &= ~StateFlagSmallPain;
+	self.state_flags &= ~StateFlagInPain;
 
 	max_pains = (int)G_Random( 4 ) + 4;
 	}
@@ -322,34 +322,34 @@ BehaviorReturnCode_t	Pain::Evaluate
 	{
 	str anim_name;
 
-	if ( self.state_flags & STATE_FLAG_SMALL_PAIN )
+	if ( self.state_flags & StateFlagSmallPain )
 		{
 		// See if we should play another pain animation
 
 		if ( ( self.means_of_death != MOD_FIRE ) && ( self.means_of_death != MOD_ON_FIRE ) && ( self.means_of_death != MOD_FIRE_BLOCKABLE ) )
 			{
-			if ( ( self.pain_type == PAIN_SMALL ) && ( current_pain_type == PAIN_SMALL ) && ( number_of_pains < max_pains ) )
+			if ( ( self.pain_type == PainSmall ) && ( current_pain_type == PainSmall ) && ( number_of_pains < max_pains ) )
 				{
 				pain_anim_number++;
 
 				number_of_pains++;
 
-				SetPainAnim( self, PAIN_SMALL, pain_anim_number );
+				SetPainAnim( self, PainSmall, pain_anim_number );
 				}
-			else if ( self.pain_type == PAIN_BIG )
+			else if ( self.pain_type == PainBig )
 				{
 				pain_anim_number++;
 
-				current_pain_type = PAIN_BIG;
+				current_pain_type = PainBig;
 
-				SetPainAnim( self, PAIN_BIG, pain_anim_number );
+				SetPainAnim( self, PainBig, pain_anim_number );
 				}
 			}
 
 		// Reset pain stuff
 
-		self.state_flags &= ~STATE_FLAG_SMALL_PAIN;
-		self.state_flags &= ~STATE_FLAG_IN_PAIN;
+		self.state_flags &= ~StateFlagSmallPain;
+		self.state_flags &= ~StateFlagInPain;
 		}
 
 	// If the pain animation has finished, then we are done
@@ -949,9 +949,9 @@ void HeadWatch::Begin
 	)
 
 	{
-	self.SetControllerTag( ACTOR_HEAD_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Head" ) );
+	self.SetControllerTag( ActorHeadTag, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Head" ) );
 
-	current_head_angles = self.GetControllerAngles( ACTOR_HEAD_TAG );
+	current_head_angles = self.GetControllerAngles( ActorHeadTag );
 
 	self.SetActorFlag( ACTOR_FLAG_TURNING_HEAD, true );
 	}
@@ -1048,7 +1048,7 @@ BehaviorReturnCode_t	HeadWatch::Evaluate
 	{
 		if( forever )
 		{
-			self.SetControllerAngles( ACTOR_HEAD_TAG, current_head_angles );
+			self.SetControllerAngles( ActorHeadTag, current_head_angles );
 			return BEHAVIOR_EVALUATING;
 		}
 		else
@@ -1105,7 +1105,7 @@ BehaviorReturnCode_t	HeadWatch::Evaluate
 	else if ( change[PITCH] < -max_speed )
 		angles_diff[PITCH] = current_head_angles[PITCH] - max_speed;
 */
-	self.SetControllerAngles( ACTOR_HEAD_TAG, angles_diff );
+	self.SetControllerAngles( ActorHeadTag, angles_diff );
 	self.real_head_pitch = angles_diff[PITCH];
 
 	current_head_angles = angles_diff;	
@@ -1137,7 +1137,7 @@ void HeadWatch::End
 	{
 	// Snap head back into position if we have lost our target or we are doing a resethead
 
-	self.SetControllerAngles( ACTOR_HEAD_TAG, vec_zero );
+	self.SetControllerAngles( ActorHeadTag, vec_zero );
 	self.real_head_pitch = 0;
 
 	self.SetActorFlag( ACTOR_FLAG_TURNING_HEAD, false );
@@ -1196,9 +1196,9 @@ void HeadWatchEnemy::Begin
 	)
 
 	{
-	self.SetControllerTag( ACTOR_HEAD_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Head" ) );
+	self.SetControllerTag( ActorHeadTag, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Head" ) );
 
-	current_head_angles = self.GetControllerAngles( ACTOR_HEAD_TAG );
+	current_head_angles = self.GetControllerAngles( ActorHeadTag );
 
 	self.SetActorFlag( ACTOR_FLAG_TURNING_HEAD, true );
 
@@ -1223,11 +1223,11 @@ BehaviorReturnCode_t	HeadWatchEnemy::Evaluate
 
 
    // Get our Torso Angles
-   self.SetControllerTag( ACTOR_TORSO_TAG , gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Spine1" ) );
-   current_torso_angles = self.GetControllerAngles( ACTOR_TORSO_TAG );
+   self.SetControllerTag( ActorTorsoTag , gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Spine1" ) );
+   current_torso_angles = self.GetControllerAngles( ActorTorsoTag );
 
    //Reset our Controller Tag
-   self.SetControllerTag( ACTOR_HEAD_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Head" ) );
+   self.SetControllerTag( ActorHeadTag, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Head" ) );
 
 
    if ( !ent_to_watch )
@@ -1330,8 +1330,8 @@ BehaviorReturnCode_t	HeadWatchEnemy::Evaluate
    FinalAngles = angles_diff;
    FinalAngles[YAW] = angles_diff[YAW] - current_torso_angles[YAW];
    
-	//self.SetControllerAngles( ACTOR_HEAD_TAG, angles_diff );
-   self.SetControllerAngles( ACTOR_HEAD_TAG, FinalAngles );
+	//self.SetControllerAngles( ActorHeadTag, angles_diff );
+   self.SetControllerAngles( ActorHeadTag, FinalAngles );
 	self.real_head_pitch = angles_diff[PITCH];
 
 	current_head_angles = angles_diff;
@@ -1367,7 +1367,7 @@ void HeadWatchEnemy::End
 	{
 	// Snap head back into position if we have lost our target or we are doing a resethead
 
-	self.SetControllerAngles( ACTOR_HEAD_TAG, vec_zero );
+	self.SetControllerAngles( ActorHeadTag, vec_zero );
 	self.real_head_pitch = 0;
 
 	self.SetActorFlag( ACTOR_FLAG_TURNING_HEAD, false );
@@ -1429,12 +1429,12 @@ void EyeWatch::Begin
 	)
 
 	{
-	self.SetControllerTag( ACTOR_LEYE_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Face eyeballL" ) );
-	self.SetControllerTag( ACTOR_REYE_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Face eyeballR" ) );
+	self.SetControllerTag( ActorLeyeTag, gi.Tag_NumForName( self.edict->s.modelindex, "Face eyeballL" ) );
+	self.SetControllerTag( ActorReyeTag, gi.Tag_NumForName( self.edict->s.modelindex, "Face eyeballR" ) );
 	
 
-	current_left_eye_angles = self.GetControllerAngles( ACTOR_LEYE_TAG );
-	current_right_eye_angles = self.GetControllerAngles( ACTOR_REYE_TAG );
+	current_left_eye_angles = self.GetControllerAngles( ActorLeyeTag );
+	current_right_eye_angles = self.GetControllerAngles( ActorReyeTag );
 
 	self.SetActorFlag( ACTOR_FLAG_MOVING_EYES, true );
 	}
@@ -1535,8 +1535,8 @@ BehaviorReturnCode_t	EyeWatch::Evaluate
 	else if ( change[PITCH] < -max_speed )
 		angles_diff[PITCH] = current_left_eye_angles[PITCH] - max_speed;
 
-	self.SetControllerAngles( ACTOR_LEYE_TAG, angles_diff );
-	self.SetControllerAngles( ACTOR_REYE_TAG, angles_diff );
+	self.SetControllerAngles( ActorLeyeTag, angles_diff );
+	self.SetControllerAngles( ActorReyeTag, angles_diff );
 
 	current_left_eye_angles = angles_diff;
 	current_right_eye_angles = angles_diff;
@@ -1561,8 +1561,8 @@ void EyeWatch::End
 	{
 	// Snap head back into position if we have lost our target or we are doing a resethead
 
-	self.SetControllerAngles( ACTOR_LEYE_TAG, vec_zero );
-	self.SetControllerAngles( ACTOR_REYE_TAG, vec_zero );
+	self.SetControllerAngles( ActorLeyeTag, vec_zero );
+	self.SetControllerAngles( ActorReyeTag, vec_zero );
 
 	self.SetActorFlag( ACTOR_FLAG_MOVING_EYES, false );
 	}
@@ -1622,12 +1622,12 @@ void EyeWatchEnemy::Begin
 	)
 
 	{
-	self.SetControllerTag( ACTOR_LEYE_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Face eyeballL" ) );
-	self.SetControllerTag( ACTOR_REYE_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Face eyeballR" ) );
+	self.SetControllerTag( ActorLeyeTag, gi.Tag_NumForName( self.edict->s.modelindex, "Face eyeballL" ) );
+	self.SetControllerTag( ActorReyeTag, gi.Tag_NumForName( self.edict->s.modelindex, "Face eyeballR" ) );
 	
 
-	current_left_eye_angles = self.GetControllerAngles( ACTOR_LEYE_TAG );
-	current_right_eye_angles = self.GetControllerAngles( ACTOR_REYE_TAG );
+	current_left_eye_angles = self.GetControllerAngles( ActorLeyeTag );
+	current_right_eye_angles = self.GetControllerAngles( ActorReyeTag );
 
 	self.SetActorFlag( ACTOR_FLAG_MOVING_EYES, true );
 	}
@@ -1735,8 +1735,8 @@ BehaviorReturnCode_t	EyeWatchEnemy::Evaluate
 	else if ( change[PITCH] < -max_speed )
 		angles_diff[PITCH] = current_left_eye_angles[PITCH] - max_speed;
 
-	self.SetControllerAngles( ACTOR_LEYE_TAG, angles_diff );
-	self.SetControllerAngles( ACTOR_REYE_TAG, angles_diff );
+	self.SetControllerAngles( ActorLeyeTag, angles_diff );
+	self.SetControllerAngles( ActorReyeTag, angles_diff );
 	//self.real_head_pitch = angles_diff[PITCH];
 
 	current_left_eye_angles = angles_diff;
@@ -1763,8 +1763,8 @@ void EyeWatchEnemy::End
 
 	//if ( !ent_to_watch )
 	//	{
-		self.SetControllerAngles( ACTOR_LEYE_TAG, vec_zero );
-		self.SetControllerAngles( ACTOR_REYE_TAG, vec_zero );
+		self.SetControllerAngles( ActorLeyeTag, vec_zero );
+		self.SetControllerAngles( ActorReyeTag, vec_zero );
 
 		//self.real_head_pitch = 0;
 	//	}
@@ -1911,9 +1911,9 @@ void TorsoTurn::Begin
 	{
 	Vector controller_angles;
 
-	self.SetControllerTag( ACTOR_TORSO_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Spine1" ) );
+	self.SetControllerTag( ActorTorsoTag, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Spine1" ) );
 
-	controller_angles = self.GetControllerAngles( ACTOR_TORSO_TAG );
+	controller_angles = self.GetControllerAngles( ActorTorsoTag );
 
 	current_yaw   = controller_angles[YAW];
 	current_pitch = controller_angles[PITCH];
@@ -2048,7 +2048,7 @@ BehaviorReturnCode_t	TorsoTurn::Evaluate
 
 	// Set our new angles
 
-	self.SetControllerAngles( ACTOR_TORSO_TAG, new_angles );
+	self.SetControllerAngles( ActorTorsoTag, new_angles );
 
 	current_yaw = yaw_diff;
 	current_pitch = pitch_diff;
@@ -2067,7 +2067,7 @@ void TorsoTurn::End
 	)
 
 	{
-	self.SetControllerAngles( ACTOR_TORSO_TAG, vec_zero );		
+	self.SetControllerAngles( ActorTorsoTag, vec_zero );		
 	}
 
 
@@ -2141,9 +2141,9 @@ void TorsoWatchEnemy::Begin
 	{
 	Vector controller_angles;
 
-	self.SetControllerTag( ACTOR_TORSO_TAG, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Spine1" ) );
+	self.SetControllerTag( ActorTorsoTag, gi.Tag_NumForName( self.edict->s.modelindex, "Bip01 Spine1" ) );
 
-	controller_angles = self.GetControllerAngles( ACTOR_TORSO_TAG );
+	controller_angles = self.GetControllerAngles( ActorTorsoTag );
 
 	current_yaw   = controller_angles[YAW];
 	current_pitch = controller_angles[PITCH];
@@ -2205,7 +2205,7 @@ BehaviorReturnCode_t	TorsoWatchEnemy::Evaluate
 
    /*
 	Vector controller_angles;
-	controller_angles = self.GetControllerAngles( ACTOR_TORSO_TAG );
+	controller_angles = self.GetControllerAngles( ActorTorsoTag );
 
 	current_yaw   = controller_angles[YAW];
 	current_pitch = controller_angles[PITCH];
@@ -2292,7 +2292,7 @@ BehaviorReturnCode_t	TorsoWatchEnemy::Evaluate
 
 	// Set our new angles
 
-	self.SetControllerAngles( ACTOR_TORSO_TAG, new_angles );
+	self.SetControllerAngles( ActorTorsoTag, new_angles );
 
 	current_yaw   = yaw_diff;
 	current_pitch = pitch_diff;
@@ -2318,7 +2318,7 @@ void TorsoWatchEnemy::End
 
    self.movementSubsystem->setMovingBackwards( false );   
    if ( reset )
-		self.SetControllerAngles( ACTOR_TORSO_TAG, vec_zero );		
+		self.SetControllerAngles( ActorTorsoTag, vec_zero );		
 	}
 /****************************************************************************
 
@@ -6165,7 +6165,7 @@ BehaviorReturnCode_t	FlyDive::Evaluate
 				//hit_entity->Damage( &self, &self, damage, Vector (0, 0, 0), Vector (0, 0, 0), Vector (0, 0, 0), 0, 0, MOD_CRUSH );
 				dir.normalize();
 				hit_entity->Damage( &self, &self, damage, self.centroid, dir, vec_zero, 0, 0, MOD_CRUSH );
-				self.AddStateFlag( STATE_FLAG_MELEE_HIT );
+				self.AddStateFlag( StateFlagMeleeHit );
 				stuck = false;
 				}
 			}
@@ -6179,7 +6179,7 @@ BehaviorReturnCode_t	FlyDive::Evaluate
 		self.setAngles( self.angles );
 
 		if ( stuck )
-			self.AddStateFlag( STATE_FLAG_STUCK );
+			self.AddStateFlag( StateFlagStuck );
 
 		return BEHAVIOR_SUCCESS;
 		}
@@ -6322,7 +6322,7 @@ BehaviorReturnCode_t	FlyCharge::Evaluate
 				//hit_entity->Damage( &self, &self, damage, Vector (0, 0, 0), Vector (0, 0, 0), Vector (0, 0, 0), 0, 0, MOD_CRUSH );
 				dir.normalize();
 				hit_entity->Damage( &self, &self, damage, self.centroid, dir, vec_zero, 0, 0, MOD_CRUSH );
-				self.AddStateFlag( STATE_FLAG_MELEE_HIT );
+				self.AddStateFlag( StateFlagMeleeHit );
 				stuck = false;
 				}
 			}
@@ -6336,7 +6336,7 @@ BehaviorReturnCode_t	FlyCharge::Evaluate
 		self.setAngles( self.angles );
 
 		if ( stuck )
-			self.AddStateFlag( STATE_FLAG_STUCK );
+			self.AddStateFlag( StateFlagStuck );
 
 		return BEHAVIOR_SUCCESS;
 		}
@@ -9033,7 +9033,7 @@ BehaviorReturnCode_t	ShockWater::Evaluate
 		else
 			{
 			// Shock head
-			center_actor->AddStateFlag( STATE_FLAG_IN_PAIN );
+			center_actor->AddStateFlag( StateFlagInPain );
 
 			center_actor->SpawnEffect( "fx_elecstrike.tik", center_actor->origin, vec_zero, 2.0f );
 			center_actor->Sound( "sound/weapons/sword/electric/hitmix2.wav", 0, 1.0f, 500.0f );
@@ -10897,7 +10897,7 @@ BehaviorReturnCode_t	GhostAttack::Evaluate
 		if ( real_attack )
 			{
 			success = MeleeAttack( start, end, 7.5f, &self, MOD_LIFEDRAIN, 32.0f, 0.0f, 64.0f, 0.0f );
-			self.AddStateFlag( STATE_FLAG_MELEE_HIT );
+			self.AddStateFlag( StateFlagMeleeHit );
 			}
 		else
 			success = false;

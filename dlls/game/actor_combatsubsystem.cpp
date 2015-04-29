@@ -74,7 +74,7 @@ void CombatSubsystem::UseActorWeapon(const str& weaponName, weaponhand_t hand)
     act->DeactivateWeapon(WEAPON_LEFT);
     act->DeactivateWeapon(WEAPON_RIGHT);
     act->DeactivateWeapon(WEAPON_DUAL);
-    act->AddStateFlag(STATE_FLAG_CHANGED_WEAPON);
+    act->AddStateFlag(StateFlagChangedWeapon);
     act->ClearTorsoAnim();
     _activeWeapon.weapon = nullptr;
 
@@ -97,7 +97,7 @@ void CombatSubsystem::UseActorWeapon(const str& weaponName, weaponhand_t hand)
     _activeWeapon.hand = hand;
     _activeWeapon.weapon->SetOwner(act);
     act->ActivateWeapon(weapon, hand);
-    act->AddStateFlag(STATE_FLAG_CHANGED_WEAPON);
+    act->AddStateFlag(StateFlagChangedWeapon);
     return;
   }
 
@@ -115,7 +115,7 @@ void CombatSubsystem::UseActorWeapon(const str& weaponName, weaponhand_t hand)
   _activeWeapon.hand = hand;
   _activeWeapon.weapon->SetOwner(act);
   act->ActivateWeapon(weapon, hand);
-  act->AddStateFlag(STATE_FLAG_CHANGED_WEAPON);
+  act->AddStateFlag(StateFlagChangedWeapon);
 }
 
 //

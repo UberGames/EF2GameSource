@@ -20,8 +20,6 @@
 //
 
 #include "_pch_cpp.h"
-#include "actorgamecomponents.h"
-#include "player.h"
 
 
 //
@@ -74,7 +72,7 @@ EFGameComponent::EFGameComponent()
 EFGameComponent::EFGameComponent( const Actor *actor )
 {
 	if ( actor )
-		act = (Actor *)actor;
+		act = const_cast<Actor*>(actor);
 }
 
 void EFGameComponent::DoArchive( Archiver &arc , const Actor *actor )
@@ -82,7 +80,7 @@ void EFGameComponent::DoArchive( Archiver &arc , const Actor *actor )
 	Q_UNUSED(arc);
 
 	if ( actor )
-		act = (Actor *)actor;
+		act = const_cast<Actor *>(actor);
 	else
 		gi.Error( ERR_FATAL, "EFGameComponnet::DoArchive -- actor is NULL" );
 	

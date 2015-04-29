@@ -26,8 +26,6 @@ class RedemptionGameComponent;
 #ifndef __ACTORGAMECOMPONENTS_H__
 #define __ACTORGAMECOMPONENTS_H__
 
-#include "actor.h"
-
 //============================
 // Class ActorGameComponent
 //============================
@@ -35,20 +33,20 @@ class RedemptionGameComponent;
 // Base class from which all Actor Game Components are derived.
 //
 class ActorGameComponent : public Listener
-	{
-	public:
-		CLASS_PROTOTYPE( ActorGameComponent );
+{
+public:
+  CLASS_PROTOTYPE(ActorGameComponent);
 
-		                  ActorGameComponent()              {}							
-		virtual void	   HandleEvent( Event * )			{}
-		virtual void	   HandleArmorDamage( Event * )		{}
-		virtual void	   HandleDeath( const Entity * )	{}
-		virtual void	   HandleThink()                    {}
-		
-		virtual qboolean  DoCheck( const Conditional & ) { return false; }		
-		virtual void      DoArchive( Archiver &, const Actor * )           {}
+  ActorGameComponent() { }
+  virtual void	   HandleEvent(Event *) { }
+  virtual void	   HandleArmorDamage(Event *) { }
+  virtual void	   HandleDeath(const Entity *) { }
+  virtual void	   HandleThink() { }
 
-	};
+  virtual qboolean  DoCheck(const Conditional &) { return false; }
+  virtual void      DoArchive(Archiver &, const Actor *) { }
+
+};
 
 /*
 EF Specific Stuff
@@ -57,23 +55,23 @@ EF Specific Stuff
 // Class EFGameComponent
 //============================
 class EFGameComponent : public ActorGameComponent
-	{
-	public:
-		CLASS_PROTOTYPE( EFGameComponent );
+{
+public:
+  CLASS_PROTOTYPE(EFGameComponent);
 
-				EFGameComponent();
-				EFGameComponent( const Actor *actor );
+  EFGameComponent();
+  EFGameComponent(const Actor *actor);
 
-		void  HandleEvent( Event *ev );		
-		void  HandleArmorDamage( Event *ev );		
-		void  HandleDeath( const Entity *ent);
-		void  HandleThink();
+  void  HandleEvent(Event *ev);
+  void  HandleArmorDamage(Event *ev);
+  void  HandleDeath(const Entity *ent);
+  void  HandleThink();
 
-		qboolean DoCheck( const Conditional &condition );
-		void  DoArchive( Archiver &arc , const Actor *act );
+  qboolean DoCheck(const Conditional &condition);
+  void  DoArchive(Archiver &arc, const Actor *act);
 
-	private:
-		Actor *act;
-	};
+private:
+  Actor *act;
+};
 
 #endif /*__ACTORGAMECOMPONENTS_H__*/

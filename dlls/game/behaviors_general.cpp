@@ -574,62 +574,62 @@ BehaviorReturnCode_t	GotoEntity::Evaluate( Actor &self )
       case Steering::FAILED: 
 		 self.SetAnim( "idle" );
 		 SetFailureReason( "Steering returned FAILED" );
-		 self.AddStateFlag( STATE_FLAG_STEERING_FAILED );		 		 
+		 self.AddStateFlag( StateFlagSteeringFailed );		 		 
          return BEHAVIOR_FAILED;
       break;
 
       case Steering::FAILED_BLOCKED_BY_ENEMY: 
 		  self.SetAnim( "idle" );
 		  SetFailureReason( "Steering returned BLOCKED_BY_ENEMY" );
-		  self.AddStateFlag( STATE_FLAG_STEERING_FAILED );		 
+		  self.AddStateFlag( StateFlagSteeringFailed );		 
          return BEHAVIOR_FAILED_STEERING_BLOCKED_BY_ENEMY;
       break;
 
       case Steering::FAILED_BLOCKED_BY_CIVILIAN:         
 		  self.SetAnim( "idle" );
 		  SetFailureReason( "Steering returned BLOCKED_BY_CIVILIAN" );
-		  self.AddStateFlag( STATE_FLAG_STEERING_FAILED );		 
+		  self.AddStateFlag( StateFlagSteeringFailed );		 
          return BEHAVIOR_FAILED_STEERING_BLOCKED_BY_CIVILIAN;
       break;
 
       case Steering::FAILED_BLOCKED_BY_FRIEND: 		  
 		  self.SetAnim( "idle" );
 		  SetFailureReason( "Steering returned BLOCKED_BY_FRIEND" );
-		  self.AddStateFlag( STATE_FLAG_STEERING_FAILED );		 
+		  self.AddStateFlag( StateFlagSteeringFailed );		 
          return BEHAVIOR_FAILED_STEERING_BLOCKED_BY_FRIEND;
       break;
 
       case Steering::FAILED_BLOCKED_BY_TEAMMATE: 
 		  self.SetAnim( "idle" );
 		  SetFailureReason( "Steering returned BLOCKED_BY_TEAMMATE" );
-		  self.AddStateFlag( STATE_FLAG_STEERING_FAILED );		 
+		  self.AddStateFlag( StateFlagSteeringFailed );		 
          return BEHAVIOR_FAILED_STEERING_BLOCKED_BY_TEAMMATE;
       break;
 
       case Steering::FAILED_BLOCKED_BY_WORLD:
 		  self.SetAnim( "idle" );
 		  SetFailureReason( "Steering returned BLOCKED_BY_WORLD" );
-		  self.AddStateFlag( STATE_FLAG_STEERING_FAILED );		 
+		  self.AddStateFlag( StateFlagSteeringFailed );		 
          return BEHAVIOR_FAILED_STEERING_BLOCKED_BY_WORLD;
       break;
 
       case Steering::FAILED_BLOCKED_BY_DOOR: 
 		  self.SetAnim( "idle" );
 		  SetFailureReason( "Steering returned BLOCKED_BY_DOOR" );
-		  self.AddStateFlag( STATE_FLAG_STEERING_FAILED );		 
+		  self.AddStateFlag( StateFlagSteeringFailed );		 
          return BEHAVIOR_FAILED_STEERING_BLOCKED_BY_DOOR;
       break;
 
       case Steering::FAILED_CANNOT_GET_TO_PATH: 
-		  self.AddStateFlag( STATE_FLAG_NO_PATH );
+		  self.AddStateFlag( StateFlagNoPath );
 		  self.SetAnim( "idle" );
 		  SetFailureReason( "Steering returned CANNOT_GET_TO_PATH" );
-		  self.AddStateFlag( STATE_FLAG_STEERING_FAILED );		 
+		  self.AddStateFlag( StateFlagSteeringFailed );		 
          return BEHAVIOR_FAILED_STEERING_CANNOT_GET_TO_PATH;
       break;
 
       case Steering::FAILED_NO_PATH: 
-		  self.AddStateFlag( STATE_FLAG_NO_PATH );
+		  self.AddStateFlag( StateFlagNoPath );
 			/*
 		  	if ( !self.GetActorFlag(ACTOR_FLAG_DISPLAYING_FAILURE_FX) )
 				{
@@ -643,7 +643,7 @@ BehaviorReturnCode_t	GotoEntity::Evaluate( Actor &self )
 
 		  self.SetAnim( "idle" );
 		  SetFailureReason( "Steering returned NO_PATH" );
-		  self.AddStateFlag( STATE_FLAG_STEERING_FAILED );		 
+		  self.AddStateFlag( StateFlagSteeringFailed );		 
          return BEHAVIOR_FAILED_STEERING_NO_PATH;
       break;
 
@@ -777,7 +777,7 @@ BehaviorReturnCode_t	GotoPoint::Evaluate( Actor &self )
     unsigned int chaseResult;
 
    	//E3 2002 HACK LOVIN'
-	if ( self.state_flags & STATE_FLAG_STUCK )
+	if ( self.state_flags & StateFlagStuck )
 		{
 		 self.SetAnim( "idle" );
 		 SetFailureReason( "I'm stuck!!!!!!" );
@@ -840,13 +840,13 @@ BehaviorReturnCode_t	GotoPoint::Evaluate( Actor &self )
       break;
 
       case Steering::FAILED_CANNOT_GET_TO_PATH: 
-		  self.AddStateFlag( STATE_FLAG_NO_PATH );
+		  self.AddStateFlag( StateFlagNoPath );
 		  self.SetAnim( "idle" );
          return BEHAVIOR_FAILED_STEERING_CANNOT_GET_TO_PATH;
       break;
 
       case Steering::FAILED_NO_PATH: 
-		  self.AddStateFlag( STATE_FLAG_NO_PATH );
+		  self.AddStateFlag( StateFlagNoPath );
 		  self.SetAnim( "idle" );
          return BEHAVIOR_FAILED_STEERING_NO_PATH;
       break;

@@ -460,7 +460,7 @@ void DefaultThink::Think( Actor &actor )
 	if ( actor.flags & FlagImmobile )
 	{
 		// Update boss health if necessary
-		if ( (actor.GetActorFlag( ACTOR_FLAG_UPDATE_BOSS_HEALTH ) && actor.max_boss_health && ( actor.mode == ACTOR_MODE_AI )) || actor.GetActorFlag(ACTOR_FLAG_FORCE_LIFEBAR) )
+		if ( (actor.GetActorFlag( ACTOR_FLAG_UPDATE_BOSS_HEALTH ) && actor.max_boss_health && ( actor.mode == ActorModeAi )) || actor.GetActorFlag(ACTOR_FLAG_FORCE_LIFEBAR) )
 			UpdateBossHealth( actor );
 
 		if ( actor.statemap )
@@ -471,7 +471,7 @@ void DefaultThink::Think( Actor &actor )
 	}
 
 	// Update boss health if necessary
-	if ( (actor.GetActorFlag( ACTOR_FLAG_UPDATE_BOSS_HEALTH ) && actor.max_boss_health && ( actor.mode == ACTOR_MODE_AI )) || actor.GetActorFlag(ACTOR_FLAG_FORCE_LIFEBAR) )
+	if ( (actor.GetActorFlag( ACTOR_FLAG_UPDATE_BOSS_HEALTH ) && actor.max_boss_health && ( actor.mode == ActorModeAi )) || actor.GetActorFlag(ACTOR_FLAG_FORCE_LIFEBAR) )
 		UpdateBossHealth( actor );	
 
 	if ( actor.postureController )

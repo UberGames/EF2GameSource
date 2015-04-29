@@ -4570,13 +4570,13 @@ void Player::showObjectInfo()
 			sprintf(addstr, "Think is OFF\n" );
 		desc += addstr;
 		
-		if ( act->mode == ACTOR_MODE_IDLE )
+		if ( act->mode == ActorModeIdle )
 			sprintf(addstr, "Mode: IDLE\n" );
-		else if ( act->mode == ACTOR_MODE_AI )
+		else if ( act->mode == ActorModeAi )
 			sprintf(addstr, "Mode: AI\n" );
-		else if ( act->mode == ACTOR_MODE_SCRIPT )
+		else if ( act->mode == ActorModeScript )
 			sprintf(addstr, "Mode: SCRIPT\n" );
-		else if ( act->mode == ACTOR_MODE_TALK )
+		else if ( act->mode == ActorModeTalk )
 			sprintf(addstr, "Mode: TALK\n" );
 		desc += addstr;
 		
