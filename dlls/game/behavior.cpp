@@ -77,14 +77,14 @@ void Behavior::ShowInfo
 
 	{
    if ( movegoal )
-      {
-      gi.Printf( "movegoal: ( %f, %f, %f ) - '%s'\n",
-         movegoal->origin.x, movegoal->origin.y, movegoal->origin.z, movegoal->targetname.c_str() );
-      }
+	  {
+	  gi.Printf( "movegoal: ( %f, %f, %f ) - '%s'\n",
+		 movegoal->origin.x, movegoal->origin.y, movegoal->origin.z, movegoal->targetname.c_str() );
+	  }
    else
-      {
-      gi.Printf( "movegoal: NULL\n" );
-      }
+	  {
+	  gi.Printf( "movegoal: NULL\n" );
+	  }
 	}
 
 void Behavior::Begin
@@ -537,13 +537,13 @@ void Aim::ShowInfo
 
    gi.Printf( "\nseek:\n" );
    if ( target )
-      {
-      gi.Printf( "\ntarget : #%d '%s'\n", target->entnum, target->targetname.c_str() );
-      }
+	  {
+	  gi.Printf( "\ntarget : #%d '%s'\n", target->entnum, target->targetname.c_str() );
+	  }
    else
-      {
-      gi.Printf( "\ntarget : NULL\n" );
-      }
+	  {
+	  gi.Printf( "\ntarget : NULL\n" );
+	  }
 	}
 
 void Aim::Begin
@@ -672,13 +672,13 @@ void TurnTo::ShowInfo
    gi.Printf( "\nseek:\n" );
 
    if ( ent )
-      {
-      gi.Printf( "\nent: #%d '%s'\n", ent->entnum, ent->targetname.c_str() );
-      }
+	  {
+	  gi.Printf( "\nent: #%d '%s'\n", ent->entnum, ent->targetname.c_str() );
+	  }
    else
-      {
-      gi.Printf( "\nent: NULL\n" );
-      }
+	  {
+	  gi.Printf( "\nent: NULL\n" );
+	  }
 
    gi.Printf( "dir: ( %f, %f, %f )\n", dir.x, dir.y, dir.z );
    gi.Printf( "yaw: %f\n", yaw );
@@ -1231,9 +1231,9 @@ BehaviorReturnCode_t	HeadWatchEnemy::Evaluate
 
 
    if ( !ent_to_watch )
-      {
-      ent_to_watch = self.enemyManager->GetCurrentEnemy();
-      }
+	  {
+	  ent_to_watch = self.enemyManager->GetCurrentEnemy();
+	  }
 
 	if ( ent_to_watch )
 		{
@@ -1341,7 +1341,7 @@ BehaviorReturnCode_t	HeadWatchEnemy::Evaluate
 		return false;
    */
 
-  	if ( !ent_to_watch )
+	if ( !ent_to_watch )
 		return BEHAVIOR_EVALUATING;
 
 	if ( !forever && ( change[YAW] < max_speed ) && ( change[YAW] > -max_speed ) && ( change[PITCH] < max_speed ) && ( change[PITCH] > -max_speed ) )
@@ -2028,7 +2028,7 @@ BehaviorReturnCode_t	TorsoTurn::Evaluate
 			return BEHAVIOR_SUCCESS;
 		else
 			{
- 	 	   self.angles[YAW] = new_angles[YAW];
+		   self.angles[YAW] = new_angles[YAW];
 		   self.angles[ROLL] = 0;
 		   self.setAngles( self.angles );
 			return BEHAVIOR_EVALUATING;
@@ -2188,10 +2188,10 @@ BehaviorReturnCode_t	TorsoWatchEnemy::Evaluate
 	
    /*
 	if ( invertLegs && self.GetActorFlag( ACTOR_FLAG_ANIM_DONE ) )
-      {
-      self.SetAnim( "idle" );
-      invertLegs = false;
-      }
+	  {
+	  self.SetAnim( "idle" );
+	  invertLegs = false;
+	  }
 	*/	
 
 	dir = currentEnemy->centroid - self.centroid;	
@@ -2264,17 +2264,17 @@ BehaviorReturnCode_t	TorsoWatchEnemy::Evaluate
 		{
 		if ( !forever ) 
 			return BEHAVIOR_SUCCESS;
-      else
+	  else
 			{
 			if ( new_angles[YAW] < -100.0f || new_angles[YAW] > 100.0f )
 				{            
-            if ( nextFlipTime <= level.time )
-               {               
-               self.movementSubsystem->flipLegs();	
- 	         	invertLegs = true;       
-               nextFlipTime = level.time + .75;
-               }
-            
+			if ( nextFlipTime <= level.time )
+			   {               
+			   self.movementSubsystem->flipLegs();	
+				invertLegs = true;       
+			   nextFlipTime = level.time + .75;
+			   }
+			
 			   return BEHAVIOR_EVALUATING;
 				}
 
@@ -2313,7 +2313,7 @@ void TorsoWatchEnemy::End
 	{
    /*
    if ( invertLegs )
-      self.movementSubsystem->flipLegs();
+	  self.movementSubsystem->flipLegs();
    */
 
    self.movementSubsystem->setMovingBackwards( false );   
@@ -2359,7 +2359,7 @@ void GotoPathNode::SetArgs
 		}
 	else
 		{
-      usevec = false;
+	  usevec = false;
 		movegoal = thePathManager.FindNode( ev->GetString( 2 ) );
 		if ( !movegoal )
 			{
@@ -2410,13 +2410,13 @@ void GotoPathNode::ShowInfo
    gi.Printf( "anim: %s\n", anim.c_str() );
 
    if ( goalent )
-      {
-      gi.Printf( "\ngoalent: #%d '%s'\n", goalent->entnum, goalent->targetname.c_str() );
-      }
+	  {
+	  gi.Printf( "\ngoalent: #%d '%s'\n", goalent->entnum, goalent->targetname.c_str() );
+	  }
    else
-      {
-      gi.Printf( "\ngoalent: NULL\n" );
-      }
+	  {
+	  gi.Printf( "\ngoalent: NULL\n" );
+	  }
 
    gi.Printf( "goal: ( %f, %f, %f )\n", goal.x, goal.y, goal.z );
 	}
@@ -2444,11 +2444,11 @@ void GotoPathNode::Begin
 		_followingEntity = true;
 		}
 	else if ( movegoal )
-      {
+	  {
 		FollowPathToPoint *newFollowPath = new FollowPathToPoint();
 		newFollowPath->SetGoal( movegoal->origin, radius, self );
 		chase = newFollowPath;
-      }
+	  }
    else
 		{
 		FollowPathToPoint *newFollowPath = new FollowPathToPoint();
@@ -2512,7 +2512,7 @@ BehaviorReturnCode_t	GotoPathNode::Evaluate
 
 			if ( movegoal->setangles )
 				{
-            yaw = movegoal->angles.yaw();
+			yaw = movegoal->angles.yaw();
 				turnto.SetDirection( yaw );
 				if ( turnto.Evaluate( self ) )
 					{
@@ -2522,7 +2522,7 @@ BehaviorReturnCode_t	GotoPathNode::Evaluate
 
 			if ( movegoal->animname == "" )
 				{
-            self.SetAnim( "idle" );
+			self.SetAnim( "idle" );
 				return BEHAVIOR_SUCCESS;
 				}
 
@@ -2745,9 +2745,9 @@ void PlayAnim::Begin
 	if ( anim.length() )
 		{
 		if ( !self.SetAnim( anim, EV_Actor_EndBehavior ) )
-         {
-         self.PostEvent( EV_Actor_EndBehavior, 0.0f );
-         }
+		 {
+		 self.PostEvent( EV_Actor_EndBehavior, 0.0f );
+		 }
 		}
 	}
 
@@ -2945,7 +2945,7 @@ BehaviorReturnCode_t	FindCover::Evaluate
 			movegoal = FindCoverNode( self );
 			if ( !movegoal )
 				{
-            // Couldn't find any!
+			// Couldn't find any!
 				return BEHAVIOR_SUCCESS;
 				}
 
@@ -2977,12 +2977,12 @@ BehaviorReturnCode_t	FindCover::Evaluate
 
 			if ( movegoal->nodeflags & AI_DUCK )
 				{
-            // ducking
+			// ducking
 				self.SetAnim( crouch_anim.c_str() );
 				}
 			else
 				{
-            // standing
+			// standing
 				self.SetAnim( "idle" );
 				}
 
@@ -3065,9 +3065,9 @@ PathNode *FindFlee::FindFleeNode
 			( ( node->occupiedTime <= level.time ) || ( node->entnum == self.entnum ) ) )
 			{
 			// get the distance squared (faster than getting real distance)
-         delta = node->origin - pos;
+		 delta = node->origin - pos;
 			dist = delta * delta;
-         
+		 
 				if ( ( dist < bestdist ) && !self.sensoryPerception->CanSeeEntity( node->origin , currentEnemy , true, true  ) )
 					{
 					bestnode = node;
@@ -3094,7 +3094,7 @@ PathNode *FindFlee::FindFleeNode
 		find.heuristic.setSize( self.size );
 		find.heuristic.entnum = self.entnum;
 
-      path = find.FindPath( self.origin, bestnode->origin );
+	  path = find.FindPath( self.origin, bestnode->origin );
 		if ( path )
 			{
 			node = path->End();
@@ -3166,16 +3166,16 @@ BehaviorReturnCode_t	FindFlee::Evaluate
 	switch( state )
 		{
 		case 0 :
-         // Checking for flee node
+		 // Checking for flee node
 			chase.Begin( self );
 			movegoal = FindFleeNode( self );
 			if ( !movegoal )
 				{
-            // Couldn't find any!
+			// Couldn't find any!
 				return BEHAVIOR_SUCCESS;
 				}
 
-         // Found flee node, going to it
+		 // Found flee node, going to it
 			if ( anim.length() && ( anim != self.animname || self.newanim.length() ) )
 				{
 				self.SetAnim( anim );
@@ -3205,8 +3205,8 @@ BehaviorReturnCode_t	FindFlee::Evaluate
 			else
 				{
 				// standing
-   			self.SetAnim( "idle" );
-	   		chase.End( self );
+			self.SetAnim( "idle" );
+			chase.End( self );
 				return BEHAVIOR_SUCCESS;
 				}
 			}
@@ -3295,13 +3295,13 @@ PathNode *FindEnemy::FindClosestSightNode
 	currentEnemy = self.enemyManager->GetCurrentEnemy();
 
    if ( currentEnemy )
-      {
-      pos = currentEnemy->origin;
-      }
+	  {
+	  pos = currentEnemy->origin;
+	  }
    else
-      {
-      pos = self.origin;
-      }
+	  {
+	  pos = self.origin;
+	  }
 
    // greater than ( 8192 * sqr(2) ) ^ 2 -- maximum squared distance
 	bestdist = 999999999;
@@ -3314,7 +3314,7 @@ PathNode *FindEnemy::FindClosestSightNode
 		if ( node && ( ( node->occupiedTime <= level.time ) || ( node->entnum != self.entnum ) ) )
 			{
 			// get the distance squared (faster than getting real distance)
-         delta = node->origin - pos;
+		 delta = node->origin - pos;
 			dist = delta * delta;
 			   if ( ( dist < bestdist ) && self.sensoryPerception->CanSeeEntity( node->origin, currentEnemy , true , true ) )
 					{
@@ -3341,27 +3341,27 @@ BehaviorReturnCode_t	FindEnemy::Evaluate
 
 	if ( nextsearch < level.time )
 		{
-      // check if we should search for the first time
-      if ( !lastSearchNode )
-         {
-         state = 0;
-         }
-      else
-         {
-         // search less often if we're far away
+	  // check if we should search for the first time
+	  if ( !lastSearchNode )
+		 {
+		 state = 0;
+		 }
+	  else
+		 {
+		 // search less often if we're far away
 			nextsearch = self.DistanceTo( currentEnemy ) * ( 1.0f / 512.0f );
-         if ( nextsearch < 1.0f )
-            {
-            nextsearch = 1.0f;
-            }
-         nextsearch += level.time;
+		 if ( nextsearch < 1.0f )
+			{
+			nextsearch = 1.0f;
+			}
+		 nextsearch += level.time;
 
-         // don't search again if our enemy hasn't moved very far
-         if ( currentEnemy->WithinDistance( lastSearchPos, 256.0f ) )
-            {
-            state = 0;
-            }
-         }
+		 // don't search again if our enemy hasn't moved very far
+		 if ( currentEnemy->WithinDistance( lastSearchPos, 256.0f ) )
+			{
+			state = 0;
+			}
+		 }
 		}
 
 	switch( state )
@@ -3369,34 +3369,34 @@ BehaviorReturnCode_t	FindEnemy::Evaluate
 		case 0 :
 			// Searching for enemy
 			chase.Begin( self );
-         lastSearchPos = currentEnemy->origin;
-         movegoal = thePathManager.NearestNode( lastSearchPos, &self );
-         if ( !movegoal )
-            {
-            movegoal = thePathManager.NearestNode( lastSearchPos, &self, false );
-            }
+		 lastSearchPos = currentEnemy->origin;
+		 movegoal = thePathManager.NearestNode( lastSearchPos, &self );
+		 if ( !movegoal )
+			{
+			movegoal = thePathManager.NearestNode( lastSearchPos, &self, false );
+			}
 
-         lastSearchNode = movegoal;
+		 lastSearchNode = movegoal;
 			if ( movegoal )
 				{
 				Path *path;
 				FindEnemyPath find;
-            PathNode *from;
+			PathNode *from;
 
 				find.heuristic.self = &self;
 				find.heuristic.setSize( self.size );
 				find.heuristic.entnum = self.entnum;
 
-            from = thePathManager.NearestNode( self.origin, &self );
-            if ( ( from == movegoal ) && ( self.DistanceTo( from->origin ) < 8.0f ) )
-               {
-               movegoal = NULL;
-               from = NULL;
-               }
+			from = thePathManager.NearestNode( self.origin, &self );
+			if ( ( from == movegoal ) && ( self.DistanceTo( from->origin ) < 8.0f ) )
+			   {
+			   movegoal = NULL;
+			   from = NULL;
+			   }
 
-            if ( from )
-               {
-               path = find.FindPath( from, movegoal );
+			if ( from )
+			   {
+			   path = find.FindPath( from, movegoal );
 				   if ( path )
 					   {
 						float radius=96.0f;
@@ -3405,11 +3405,11 @@ BehaviorReturnCode_t	FindEnemy::Evaluate
 					   delete path;
 					   path = NULL;
 					   }
-               else
-                  {
-                  movegoal = NULL;
-                  }
-               }
+			   else
+				  {
+				  movegoal = NULL;
+				  }
+			   }
 				}
 
 			if ( !movegoal )
@@ -3429,7 +3429,7 @@ BehaviorReturnCode_t	FindEnemy::Evaluate
 					}
 				}
 
-         // Found enemy, going to it
+		 // Found enemy, going to it
 			if ( anim.length() && ( anim != self.animname || self.newanim.length() ) )
 				{
 				self.SetAnim( anim );
@@ -3448,7 +3448,7 @@ BehaviorReturnCode_t	FindEnemy::Evaluate
 
 			if ( chase.Evaluate( self ) != Steering::EVALUATING )
 				{
-            state = 0;
+			state = 0;
 				nextsearch = 0;
 				}
 			break;
@@ -3544,14 +3544,14 @@ void AimAndShoot::SetArgs
    fireanim = ev->GetString( 1 );
 
 	if ( ev->NumArgs() > 1 )
-      {
+	  {
 		maxshots = ev->GetInteger ( 2 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 2 )
-      {
+	  {
 		aimanim = ev->GetString ( 3 );
-      }
+	  }
 	
 	int turnTowardsEnemy = ev->GetInteger( 3 );
 	int speed = ev->GetInteger( 4 );
@@ -3583,16 +3583,16 @@ BehaviorReturnCode_t	AimAndShoot::Evaluate
 	switch( mode )
 		{
 		case START_AIM :     
-         
+		 
 			if ( !currentEnemy || !self.CanAttack( currentEnemy, false ))
-            return BEHAVIOR_SUCCESS;
-  			
+			return BEHAVIOR_SUCCESS;
+			
 			animdone = false;
-         if ( aimanim.length() )
-            self.SetAnim( aimanim.c_str() );
-         
-         // save off time, in case we aim for too long
-         aim_time = level.time + 1.0f;
+		 if ( aimanim.length() )
+			self.SetAnim( aimanim.c_str() );
+		 
+		 // save off time, in case we aim for too long
+		 aim_time = level.time + 1.0f;
 			mode = AIM;
 
 			// lint -fallthrough
@@ -3628,7 +3628,7 @@ BehaviorReturnCode_t	AimAndShoot::Evaluate
 				animdone = false;
 				self.Chatter( "snd_inmysights", 5.0f );
 				self.SetAnim( fireanim.c_str(), EV_Actor_NotifyBehavior );
-            enemy_health = currentEnemy->health;
+			enemy_health = currentEnemy->health;
 				mode = 2;
 				}
 			else if ( !currentEnemy || currentEnemy->deadflag ||
@@ -3648,14 +3648,14 @@ BehaviorReturnCode_t	AimAndShoot::Evaluate
 
 				self.times_done++;
 
-            if ( !currentEnemy || ( currentEnemy->health < enemy_health ) )
-               {
+			if ( !currentEnemy || ( currentEnemy->health < enemy_health ) )
+			   {
 					self.Chatter( "snd_attacktaunt", 4.0f );
-               }
-            else
-               {
+			   }
+			else
+			   {
 					self.Chatter( "snd_missed", 7.0f );
-               }
+			   }
 
 				animdone = false;
 				numshots++;
@@ -3670,21 +3670,21 @@ BehaviorReturnCode_t	AimAndShoot::Evaluate
 				else if ( !self.CanAttack( currentEnemy, false ) )
 					{
 					// weapon not ready or not aimed at enemy, so just keep trying to get enemy in our sights
-               if ( aimanim.length() )
-                  {
-		   			self.SetAnim( aimanim.c_str() );
-                  }
-               //
-               // save off time, in case we aim for too long
-               //
-               aim_time = level.time + 1.0f;
+			   if ( aimanim.length() )
+				  {
+					self.SetAnim( aimanim.c_str() );
+				  }
+			   //
+			   // save off time, in case we aim for too long
+			   //
+			   aim_time = level.time + 1.0f;
 					mode = 1;
 					}
 				else
 					{
 					// keep firing
 					self.SetAnim( fireanim.c_str(), EV_Actor_NotifyBehavior );
-               enemy_health = currentEnemy->health;
+			   enemy_health = currentEnemy->health;
 					}
 				}
 			break;
@@ -3760,9 +3760,9 @@ void AimAndMelee::SetArgs
 	anim_name = ev->GetString( 1 );
 
 	if ( ev->NumArgs() > 1 )
-      {
+	  {
 		maxshots = ev->GetInteger( 2 );
-      }
+	  }
 	}
 
 void AimAndMelee::AnimDone
@@ -3788,9 +3788,9 @@ BehaviorReturnCode_t	AimAndMelee::Evaluate
 		{
 		case 0 :
 			if ( !currentEnemy )
-            {
-            return BEHAVIOR_SUCCESS;
-            }
+			{
+			return BEHAVIOR_SUCCESS;
+			}
 
 			if ( self.IsEntityAlive( currentEnemy ) )
 				{
@@ -3799,13 +3799,13 @@ BehaviorReturnCode_t	AimAndMelee::Evaluate
 				self.setAngles( self.angles );
 				}
 
-         numshots++;
-         animdone = false;
+		 numshots++;
+		 animdone = false;
 
 			// melee
 			self.SetAnim( anim_name.c_str() , EV_Actor_NotifyBehavior );
 			self.Chatter( "snd_attacktaunt", 4.0f );
-         mode = 1;
+		 mode = 1;
 
 			// lint -fallthrough
 		case 1 :
@@ -3813,13 +3813,13 @@ BehaviorReturnCode_t	AimAndMelee::Evaluate
 			if ( animdone )
 				{
 				self.times_done++;
-            if ( numshots >= maxshots )
-               {
+			if ( numshots >= maxshots )
+			   {
 				   return BEHAVIOR_SUCCESS;
-               }
+			   }
 
-            mode = 0;
-            }
+			mode = 0;
+			}
 			break;
 		}
 
@@ -3910,49 +3910,49 @@ BehaviorReturnCode_t	FallToDeath::Evaluate
 	self.SetActorFlag( ACTOR_FLAG_ANIM_DONE, false );
 
    switch( state )
-      {
-      case 0:
-         if ( did_impulse )
+	  {
+	  case 0:
+		 if ( did_impulse )
 				state = 1;
-         // this is here so that we at least hit this function at least once
-         // this gaves the character the chance to leave the ground, nulling out
-         // self.groundentity
-         break;
+		 // this is here so that we at least hit this function at least once
+		 // this gaves the character the chance to leave the ground, nulling out
+		 // self.groundentity
+		 break;
 		case 1:
 			if ( animdone )
-            {
-            animdone = false;
-         	self.SetAnim( fallAnim.c_str(), EV_Anim_Done );
-            state = 2;
-            }
+			{
+			animdone = false;
+			self.SetAnim( fallAnim.c_str(), EV_Anim_Done );
+			state = 2;
+			}
 			if ( self.groundentity )
 				state = 2;
 			break;
-      case 2:
-         //
-         // wait for the character to hit the ground
-         //
-	      if ( self.groundentity )
-            {
-            //
-            // if we have an anim, we go to state 3
-            //
-            animdone = false;
-         	self.SetAnim( deathAnim.c_str(), EV_Actor_Dead );
-            state = 3;            
-            }
-         break;
-      case 3:
-         //
-         // we are on the ground and waiting for our landing animation to finish
-         //
-         
+	  case 2:
+		 //
+		 // wait for the character to hit the ground
+		 //
+		  if ( self.groundentity )
+			{
+			//
+			// if we have an anim, we go to state 3
+			//
+			animdone = false;
+			self.SetAnim( deathAnim.c_str(), EV_Actor_Dead );
+			state = 3;            
+			}
+		 break;
+	  case 3:
+		 //
+		 // we are on the ground and waiting for our landing animation to finish
+		 //
+		 
 			if ( animdone )
-            {
+			{
 				return BEHAVIOR_SUCCESS;
-            }			
-         break;
-      }
+			}			
+		 break;
+	  }
 
 	return BEHAVIOR_EVALUATING;
 	}
@@ -4064,7 +4064,7 @@ BehaviorReturnCode_t	LeapToEnemy::Evaluate
 
 	{
 	if ( jump.Evaluate( self ) == Steering::EVALUATING )
-      return BEHAVIOR_EVALUATING;
+	  return BEHAVIOR_EVALUATING;
 
    return BEHAVIOR_SUCCESS;
 	}
@@ -4177,8 +4177,8 @@ BehaviorReturnCode_t	FlyToPoint::Evaluate
 
    if (offsetOrigin)
 		{
-   	x_offset = self.centroid.x - self.origin.x;
-   	y_offset = self.centroid.y - self.origin.y;
+	x_offset = self.centroid.x - self.origin.x;
+	y_offset = self.centroid.y - self.origin.y;
 	   //z_offset = self.centroid.z - self.origin.z;
 		
 		self.origin.x+=x_offset;
@@ -4193,7 +4193,7 @@ BehaviorReturnCode_t	FlyToPoint::Evaluate
 
 
 	if ( stuck > 1 || ( avoidtime <= level.time ) )
-      {
+	  {
 		time = G_Random( .3f ) + .3f;
 
 		use_temp_goal = false;
@@ -4231,9 +4231,9 @@ BehaviorReturnCode_t	FlyToPoint::Evaluate
 			dir = goal - self.origin;			
 
 		length = dir.length();
-      dir.normalize();
+	  dir.normalize();
 		
-      ang = dir.toAngles();
+	  ang = dir.toAngles();
 		
 		if ( ( length > 150.0f ) && random_allowed && !use_temp_goal )
 			{
@@ -4245,16 +4245,16 @@ BehaviorReturnCode_t	FlyToPoint::Evaluate
 
 		target_angle[YAW]   = AngleNormalize360( target_angle[YAW] );
 		target_angle[PITCH] = AngleNormalize360( target_angle[PITCH] );
-      }
+	  }
 
 	if ( (self.angles[YAW] != target_angle[YAW]) || (self.angles[PITCH] != target_angle[PITCH]) )
-      {
+	  {
 		self.movementSubsystem->setForwardSpeed( speed * 0.8f );
-      }
+	  }
 	else
-      {
+	  {
 		self.movementSubsystem->setForwardSpeed( speed );
-      }
+	  }
 
 	old_yaw   = self.angles[YAW];
 	old_pitch = self.angles[PITCH];
@@ -4310,7 +4310,7 @@ BehaviorReturnCode_t	FlyToPoint::Evaluate
 
 	if (offsetOrigin)
 		{
-   	self.origin.x-=x_offset;
+	self.origin.x-=x_offset;
 	   self.origin.y-=y_offset;
 	   //self.origin.z-=z_offset;
 		}
@@ -4330,37 +4330,37 @@ float FlyToPoint::LerpAngle( float old_angle, float new_angle, float lerp_amount
 	diff = new_angle - old_angle;
 
 	if ( diff > 180.0f )
-      {
+	  {
 		diff -= 360.0f;
-      }
+	  }
 
 	if ( diff < -180.0f )
-      {
+	  {
 		diff += 360.0f;
-      }
+	  }
 
 	lerp_angle = old_angle;
 	
 	abs_diff = diff;
 
 	if ( abs_diff < 0.0f )
-      {
+	  {
 		abs_diff = -abs_diff;
-      }
+	  }
 
 	if ( abs_diff < lerp_amount )
-      {
+	  {
 		lerp_amount = abs_diff;
-      }
+	  }
 
 	if ( diff < 0.0f )
-      {
+	  {
 		lerp_angle -= lerp_amount;
-      }
+	  }
 	else if ( diff > 0.0f )
-      {
+	  {
 		lerp_angle += lerp_amount;
-      }
+	  }
 	
 	lerp_angle = AngleNormalize360( lerp_angle );
 
@@ -4436,9 +4436,9 @@ void FlyCloseToEnemy::Begin
 
 	{
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	fly.Begin( self );
 	fly.SetTurnSpeed( turn_speed );
@@ -4461,7 +4461,7 @@ BehaviorReturnCode_t	FlyCloseToEnemy::Evaluate
 		return BEHAVIOR_SUCCESS;
 
    if ( !self.IsEntityAlive( currentEnemy ) )
-      return BEHAVIOR_SUCCESS;
+	  return BEHAVIOR_SUCCESS;
 
 	if ( next_goal_time <= level.time )
 		{
@@ -4547,9 +4547,9 @@ void FlyCloseToPlayer::Begin
 
 	{
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	fly.Begin( self );
 	fly.SetTurnSpeed( turn_speed );
@@ -4572,7 +4572,7 @@ BehaviorReturnCode_t	FlyCloseToPlayer::Evaluate
 
 
    if ( !self.IsEntityAlive( player ) )
-      return BEHAVIOR_SUCCESS;
+	  return BEHAVIOR_SUCCESS;
 
 	if ( next_goal_time <= level.time )
 		{
@@ -4654,9 +4654,9 @@ void FlyCloseToParent::Begin
 
 	{
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	fly.Begin( self );
 	fly.SetTurnSpeed( turn_speed );
@@ -4756,9 +4756,9 @@ void FlyDescend::Begin
 
 	{
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	Entity *currentEnemy;
 	currentEnemy = self.enemyManager->GetCurrentEnemy();
@@ -4789,9 +4789,9 @@ BehaviorReturnCode_t	FlyDescend::Evaluate
 
 	{
 	if ( self.origin.z <= height || !self.enemyManager->GetCurrentEnemy())
-      {
+	  {
 		return BEHAVIOR_SUCCESS;
-      }
+	  }
 
 	if ( next_height_check < level.time )
 		{
@@ -4855,16 +4855,16 @@ void FlyWander::SetArgs
 
 	if ( ev->NumArgs() > 1 )
 		speed = ev->GetFloat( 2 );
-      
+	  
 	if ( ev->NumArgs() > 2 )
-      turn_speed = ev->GetFloat( 3 );
-      
+	  turn_speed = ev->GetFloat( 3 );
+	  
 	if ( ev->NumArgs() > 3 )
-      change_course_time = ev->GetFloat( 4 );
-      
+	  change_course_time = ev->GetFloat( 4 );
+	  
 	if ( ev->NumArgs() > 4 )
-      try_to_go_up = ev->GetBoolean( 5 );
-      
+	  try_to_go_up = ev->GetBoolean( 5 );
+	  
 	if (ev->NumArgs() > 5 )
 		fly.setAdjustYawAndRoll( ev->GetBoolean( 6 ) );	
 
@@ -4995,19 +4995,19 @@ void FlyToNode::SetArgs
 	anim = ev->GetString( 1 );
 
 	if ( ev->NumArgs() > 1 )
-      {
+	  {
 		speed = ev->GetFloat( 2 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 2 )
-      {
+	  {
 		turn_speed = ev->GetFloat( 3 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 3 )
-      {
+	  {
 		NodeType = ev->GetString( 4 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 4 )
 		{
@@ -5135,19 +5135,19 @@ void FlyToRandomNode::SetArgs
 	anim = ev->GetString( 1 );
 
 	if ( ev->NumArgs() > 1 )
-      {
+	  {
 		speed = ev->GetFloat( 2 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 2 )
-      {
+	  {
 		turn_speed = ev->GetFloat( 3 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 3 )
-      {
+	  {
 		NodeType = ev->GetString( 4 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 4 )
 		{
@@ -5262,19 +5262,19 @@ void FlyToNodeNearestPlayer::SetArgs
 	anim = ev->GetString( 1 );
 
 	if ( ev->NumArgs() > 1 )
-      {
+	  {
 		speed = ev->GetFloat( 2 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 2 )
-      {
+	  {
 		turn_speed = ev->GetFloat( 3 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 3 )
-      {
+	  {
 		NodeType = ev->GetString( 4 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 4 )
 		{
@@ -5419,19 +5419,19 @@ void FlyNodePath::SetArgs
 	anim = ev->GetString( 1 );
 
 	if ( ev->NumArgs() > 1 )
-      {
+	  {
 		speed = ev->GetFloat( 2 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 2 )
-      {
+	  {
 		turn_speed = ev->GetFloat( 3 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 3 )
-      {
+	  {
 		NodeType = ev->GetString( 4 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 4 )
 		{
@@ -5578,9 +5578,9 @@ void FlyCircle::Begin
 	original_z = self.origin.z;
 
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	fly.Begin( self );
 	fly.SetTurnSpeed( 5.0f );
@@ -5608,9 +5608,9 @@ BehaviorReturnCode_t	FlyCircle::Evaluate
 		return BEHAVIOR_SUCCESS;
 
 	if ( !self.IsEntityAlive( currentEnemy ) && !circle_player )
-      {
-      return BEHAVIOR_SUCCESS;
-      }
+	  {
+	  return BEHAVIOR_SUCCESS;
+	  }
 
 
 	if ( self.movementSubsystem->getLastMove() == STEPMOVE_OK )
@@ -5784,7 +5784,7 @@ BehaviorReturnCode_t	FlyStrafe::Evaluate
 	)
 
 	{
- 	Vector dir;
+	Vector dir;
 	Vector delta;
 	
 	Entity *currentEnemy;
@@ -5851,11 +5851,11 @@ void FlyCircleRandomPoint::SetArgs
 	fly_clockwise = ev->GetBoolean( 2 );
 
 	if ( ev->NumArgs() > 2 )
-      change_course_time = ev->GetFloat( 3 );
-      
+	  change_course_time = ev->GetFloat( 3 );
+	  
 	if ( ev->NumArgs() > 3 )
-      try_to_go_up = ev->GetBoolean( 4 );
-      
+	  try_to_go_up = ev->GetBoolean( 4 );
+	  
 	if (ev->NumArgs() > 4 )
 		fly.setAdjustYawAndRoll( ev->GetBoolean( 5 ) );	
 
@@ -5882,9 +5882,9 @@ void FlyCircleRandomPoint::Begin
 	//original_z = self.origin.z;
 
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	fly.Begin( self );
 	fly.SetTurnSpeed( 5.0f );
@@ -5915,9 +5915,9 @@ BehaviorReturnCode_t	FlyCircleRandomPoint::Evaluate
 		return BEHAVIOR_SUCCESS;
 
 	if ( !self.IsEntityAlive( currentEnemy ) )
-      {
-      return BEHAVIOR_SUCCESS;
-      }
+	  {
+	  return BEHAVIOR_SUCCESS;
+	  }
 	
 
 	if ( self.movementSubsystem->getLastMove() == STEPMOVE_OK )
@@ -6069,14 +6069,14 @@ void FlyDive::SetArgs
 	anim = ev->GetString( 1 );
 
 	if ( ev->NumArgs() > 1 )
-      {
+	  {
 		speed = ev->GetFloat( 2 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 2 )
-      {
+	  {
 		damage = ev->GetFloat( 3 );
-      }
+	  }
 	}
 
 void FlyDive::ShowInfo
@@ -6105,9 +6105,9 @@ void FlyDive::Begin
 		return;
 
 	if ( !self.IsEntityAlive( currentEnemy ) )
-      {
+	  {
 		return;
-      }
+	  }
 
 	goal = currentEnemy->centroid - self.origin;
 	goal.normalize();
@@ -6141,7 +6141,7 @@ BehaviorReturnCode_t	FlyDive::Evaluate
 		return BEHAVIOR_SUCCESS;
 
 	if ( !self.IsEntityAlive( currentEnemy ) )
-      return BEHAVIOR_SUCCESS;
+	  return BEHAVIOR_SUCCESS;
 
 	if ( self.origin.z < ( currentEnemy->origin.z + 50.0f ) )
 		return BEHAVIOR_SUCCESS;
@@ -6228,14 +6228,14 @@ void FlyCharge::SetArgs
 	anim = ev->GetString( 1 );
 
 	if ( ev->NumArgs() > 1 )
-      {
+	  {
 		speed = ev->GetFloat( 2 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 2 )
-      {
+	  {
 		damage = ev->GetFloat( 3 );
-      }
+	  }
 	}
 
 void FlyCharge::ShowInfo
@@ -6264,9 +6264,9 @@ void FlyCharge::Begin
 		return;
 
 	if ( !self.IsEntityAlive( currentEnemy ) )
-      {
+	  {
 		return;
-      }
+	  }
 
 	goal = currentEnemy->centroid - self.origin;
 	goal.normalize();
@@ -6301,7 +6301,7 @@ BehaviorReturnCode_t	FlyCharge::Evaluate
 		return BEHAVIOR_SUCCESS;
 
 	if ( !self.IsEntityAlive( currentEnemy ) )
-      return BEHAVIOR_SUCCESS;
+	  return BEHAVIOR_SUCCESS;
 
 	if ( ( self.movementSubsystem->getLastMove() == STEPMOVE_STUCK ) || ( self.movementSubsystem->getLastMove() == STEPMOVE_BLOCKED_BY_WATER ) )
 		{
@@ -6417,9 +6417,9 @@ void FlyClimb::Begin
 	trace_t trace;
 
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	fly.Begin( self );
 
@@ -6466,7 +6466,7 @@ void FlyClimb::Begin
 
 	if ( length > 0.0f )
 		{
-      goal = forward * length;
+	  goal = forward * length;
 		goal.z = length;
 		goal += self.origin;
 		}
@@ -6510,9 +6510,9 @@ BehaviorReturnCode_t	FlyClimb::Evaluate
 	{
 
 	if ( self.origin.z >= height )
-      {
+	  {
 		return BEHAVIOR_SUCCESS;
-      }
+	  }
 
 	if ( next_height_check < level.time )
 		{
@@ -6590,7 +6590,7 @@ void FlySplinePath::CreatePath
 	node = path;
 	while( node != NULL )
 		{
-      splinePath.AppendControlPoint( node->origin, node->angles, node->speed );
+	  splinePath.AppendControlPoint( node->origin, node->angles, node->speed );
 		node = node->GetNext();
 
 		if ( node == path )
@@ -6625,7 +6625,7 @@ void FlySplinePath::Begin
 		{
 
 		SplinePath* path;
-      
+	  
 		path = (SplinePath*)(Entity*)ent;
 		
 		if ( clamp )			
@@ -6634,7 +6634,7 @@ void FlySplinePath::Begin
 			CreatePath( path, SPLINE_LOOP );
 		
 		currentNode = path;
-      
+	  
 		if (currentNode->thread != "" )
 			{
 			if ( !ExecuteThread( currentNode->thread ) )
@@ -6657,7 +6657,7 @@ void FlySplinePath::Begin
 					{
 					break;
 					}
-		   	event = new Event( EV_Activate );
+			event = new Event( EV_Activate );
 				
 				Actor* actorPtr = &self;
 				Entity* entPtr = (Entity*)actorPtr;
@@ -6764,9 +6764,9 @@ void Land::Begin
 
 	{
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	self.velocity = Vector(0, 0, -40);
 	}
@@ -6785,12 +6785,12 @@ BehaviorReturnCode_t	Land::Evaluate
 	self.velocity.z -= 20.0f;
 
 	if ( self.velocity.z < -200.0f )
-      {
+	  {
 		self.velocity.z = -200.0f;
-      }
+	  }
 
    if ( !self.groundentity )
-      return BEHAVIOR_EVALUATING;
+	  return BEHAVIOR_EVALUATING;
 
 	return BEHAVIOR_SUCCESS;
 	}
@@ -6851,9 +6851,9 @@ void VerticalTakeOff::Begin
 
 	{
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 	
 	self.velocity.x = 0;
 	self.velocity.y = 0;
@@ -6875,9 +6875,9 @@ BehaviorReturnCode_t	VerticalTakeOff::Evaluate
 	self.velocity.z += 20.0f;
 
 	if ( self.velocity.z > 200.0f )
-      {
+	  {
 		self.velocity.z = 200.0f;
-      }
+	  }
 
 	if( self.origin.z >= height )
 		return BEHAVIOR_SUCCESS;
@@ -6936,9 +6936,9 @@ void Hover::Begin
 
 	{
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
    
 	fly.Begin( self );	
 	}
@@ -7023,17 +7023,17 @@ BehaviorReturnCode_t	Wander::Evaluate
 
 	{
    if ( ( self.movementSubsystem->getLastMove() != STEPMOVE_OK ) || ( avoidtime <= level.time ) )
-      {
-      Vector dir;
-      Vector ang;
-      float time;
+	  {
+	  Vector dir;
+	  Vector ang;
+	  float time;
 
-      time = 5.0f;
+	  time = 5.0f;
 		//self.Chatter( "snd_idle", 4 );
-      avoidvec = ChooseRandomDirection( self, avoidvec, &time, 0, false );
-      self.movementSubsystem->setMovingBackwards( false );
-      avoidtime = level.time + time;
-      }
+	  avoidvec = ChooseRandomDirection( self, avoidvec, &time, 0, false );
+	  self.movementSubsystem->setMovingBackwards( false );
+	  avoidtime = level.time + time;
+	  }
 
 	float maxSpeed = 100.0f;
 	if ( self.movementSubsystem->getMoveSpeed() != 1.0f )
@@ -7106,14 +7106,14 @@ void GetCloseToEnemy::Begin
 	self.setAngles( dir );
 
    if ( !anim.length() )
-      {
+	  {
 		anim = "run";
-      }
+	  }
 
 	if ( anim != self.animname || self.newanim.length() )
-      {
+	  {
 		self.SetAnim( anim, EV_Actor_NotifyBehavior );
-      }
+	  }
 
 	chase.Begin( self );
 	wander.Begin( self );
@@ -7224,14 +7224,14 @@ void GetCloseToPlayer::Begin
 
 	{
 	if ( !anim.length() )
-      {
+	  {
 		anim = "run";
-      }
+	  }
 
 	if ( anim != self.animname || self.newanim.length() )
-      {
+	  {
 		self.SetAnim( anim, EV_Actor_NotifyBehavior );
-      }
+	  }
 
 	chase.Begin( self );
 	wander.Begin( self );
@@ -7352,14 +7352,14 @@ void RetreatFromEnemy::Begin
 
 	{
 	if ( !anim.length() )
-      {
+	  {
 		anim = "run";
-      }
+	  }
 
 	if ( anim != self.animname || self.newanim.length() )
-      {
+	  {
 		self.SetAnim( anim, EV_Actor_NotifyBehavior );
-      }
+	  }
 
 	chase.Begin( self );
 	wander.Begin( self );
@@ -7468,14 +7468,14 @@ void GotoDeadEnemy::Begin
 
 	{
 	if ( !anim.length() )
-      {
+	  {
 		anim = "run";
-      }
+	  }
 
 	if ( anim != self.animname || self.newanim.length() )
-      {
+	  {
 		self.SetAnim( anim, EV_Actor_NotifyBehavior );
-      }
+	  }
 
 	chase.Begin( self );
 	}
@@ -8791,7 +8791,7 @@ BehaviorReturnCode_t	CircleCurrentEnemy::Evaluate
 	self.angles[YAW] = dirYaw;
 
 	if ( self.movementSubsystem->getLastMove() != STEPMOVE_OK ) 
-      {
+	  {
 		if(stuck >= 2)
 			{
 			if(stuck < 3 )
@@ -8806,7 +8806,7 @@ BehaviorReturnCode_t	CircleCurrentEnemy::Evaluate
 			}
 
 		stuck++;
-      }
+	  }
 	
 	stuckCheck++;
 	if(stuckCheck > stuck)
@@ -8890,7 +8890,7 @@ BehaviorReturnCode_t	ChaoticDodge::Evaluate
 	float CurrentYaw = self.origin.toYaw();
 		
 	if ( self.movementSubsystem->getLastMove() != STEPMOVE_OK ) 
-      {
+	  {
 		stuck++;
 		turnAngle += 30.0f;
 		if (stuck > 3 )
@@ -9015,7 +9015,7 @@ BehaviorReturnCode_t	ShockWater::Evaluate
 		end_pos += dir;
 
 		// Add the left and right beams
-      left_beam   = CreateBeam( NULL, "emap1", left_tag_orig, end_pos, 10, 1.5f, 0.2f );
+	  left_beam   = CreateBeam( NULL, "emap1", left_tag_orig, end_pos, 10, 1.5f, 0.2f );
 		right_beam  = CreateBeam( NULL, "emap1", right_tag_orig, end_pos, 10, 1.5f, 0.2f );
 
 		center_point = center_actor->origin;
@@ -9026,9 +9026,9 @@ BehaviorReturnCode_t	ShockWater::Evaluate
 			{
 			hit_entity = G_GetEntity( trace.entityNum );
 			if ( hit_entity )
-            {
+			{
 				center_point = hit_entity->origin;
-            }
+			}
 			}
 		else
 			{
@@ -9039,8 +9039,8 @@ BehaviorReturnCode_t	ShockWater::Evaluate
 			center_actor->Sound( "sound/weapons/sword/electric/hitmix2.wav", 0, 1.0f, 500.0f );
 			}
 
-      // create the center beam
-      center_beam = CreateBeam( NULL, "emap1", end_pos, center_point, 20, 3.0f, 0.2f );
+	  // create the center beam
+	  center_beam = CreateBeam( NULL, "emap1", end_pos, center_point, 20, 3.0f, 0.2f );
 
 		// Damage player if in water
 	
@@ -9103,14 +9103,14 @@ void Shock::SetArgs
 	beamShader = ev->GetString( 2 );
 
 	if ( ev->NumArgs() > 3 )
-      {
+	  {
 		damage = ev->GetInteger( 3 );
-      }
+	  }
 
 	if ( ev->NumArgs() > 3 )
-      {
+	  {
 		random_angle = ev->GetFloat( 4 );
-      }
+	  }
 	
 	if ( ev->NumArgs() > 4 )
 		z_offset = ev->GetFloat( 5 );
@@ -9146,9 +9146,9 @@ BehaviorReturnCode_t	Shock::Evaluate
 		{
 		// Get tag position
 		if ( tag_name.length() == 0 )
-         {
+		 {
 			return BEHAVIOR_SUCCESS;
-         }
+		 }
 
 		self.GetTag( tag_name.c_str(), &tag_orig );
 
@@ -9170,7 +9170,7 @@ BehaviorReturnCode_t	Shock::Evaluate
 			end_pos += tag_orig;
 			end_pos.z -= z_offset;
 		//	}
-      /*
+	  /*
 		else
 			{
 			// Get end position
@@ -9185,7 +9185,7 @@ BehaviorReturnCode_t	Shock::Evaluate
 			end_pos += tag_orig;
 			end_pos.z -= z_offset;
 			}
-      */
+	  */
 		trace = G_Trace( tag_orig, Vector (-15.0f, -15.0f, -15.0f), Vector (15.0f, 15.0f, 15.0f), end_pos, &self, MASK_SHOT, false, "ShockAttack" );
 
 		if ( ( trace.fraction < 1.0f ) && ( trace.entityNum == currentEnemy->entnum ) )
@@ -9199,13 +9199,13 @@ BehaviorReturnCode_t	Shock::Evaluate
 		// Add the beam
 		beam = CreateBeam( NULL, beamShader.c_str(), tag_orig, end_pos, 2, 1.5f, 0.25f );
 
-      already_started = true;
+	  already_started = true;
 		}
 	else if ( already_started )
 		{
 		self.GetTag( tag_name.c_str(), &tag_orig );
-      if ( beam )
-         beam->setOrigin( tag_orig );         
+	  if ( beam )
+		 beam->setOrigin( tag_orig );         
 		}
 
 	return BEHAVIOR_EVALUATING;
@@ -9298,7 +9298,7 @@ BehaviorReturnCode_t	MultiShock::Evaluate
 		// Get tag position
 		if ( tag_name1.length() == 0 )
 			return BEHAVIOR_SUCCESS;
-         
+		 
 		if ( tag_name2.length() == 0 )
 			return BEHAVIOR_SUCCESS;
 
@@ -9374,7 +9374,7 @@ BehaviorReturnCode_t	MultiShock::Evaluate
 		// Add the beam
 		beam2 = CreateBeam( NULL, beamShader.c_str(), tag2_orig, end_pos2, 20, 1.5f, 0.2f );
 
-      already_started = true;
+	  already_started = true;
 		}
 	else
 		{
@@ -9440,9 +9440,9 @@ void ShockDown::SetArgs
 	beamShader = ev->GetString( 2 );
 
 	if ( ev->NumArgs() > 3 )
-      {
+	  {
 		damage = ev->GetInteger( 3 );
-      }
+	  }
 
 	}
 
@@ -9476,9 +9476,9 @@ BehaviorReturnCode_t	ShockDown::Evaluate
 		{
 		// Get tag position
 		if ( tag_name.length() == 0 )
-         {
+		 {
 			return BEHAVIOR_SUCCESS;
-         }
+		 }
 
 		self.GetTag( tag_name.c_str(), &tag_orig );
 
@@ -9502,7 +9502,7 @@ BehaviorReturnCode_t	ShockDown::Evaluate
 		// Add the beam
 		beam = CreateBeam( NULL, beamShader.c_str(), tag_orig, end_pos, 20, 1.5f, 0.2f );
 
-      already_started = true;
+	  already_started = true;
 		}
 	else if ( already_started )
 		{
@@ -9587,9 +9587,9 @@ Actor *CircleAttack::FindClosestPart
 			angle_diff = AngleDelta( angles[ YAW ], angle );
 
 			if ( angle_diff < 0.0f )
-            {
+			{
 				angle_diff = -angle_diff;
-            }
+			}
 
 			if ( angle_diff < closest_diff )
 				{
@@ -9627,9 +9627,9 @@ void CircleAttack::Begin
 	current_direction = 1;
 
 	if ( direction == "counterclockwise" )
-      {
+	  {
 		current_direction = 0;
-      }
+	  }
 	}
 
 BehaviorReturnCode_t	CircleAttack::Evaluate
@@ -9657,31 +9657,31 @@ BehaviorReturnCode_t	CircleAttack::Evaluate
 		if ( direction == "changing" )
 			{
 			if ( number_of_attacks >= 20 )
-            {
+			{
 				return BEHAVIOR_SUCCESS;
-            }
+			}
 
 			if ( G_Random( 1.0f ) < .3f )
-            {
+			{
 				current_direction = !current_direction;
-            }
+			}
 			}
 
 		if ( current_direction == 1 )
-         {
+		 {
 			angles[YAW] -= 360.0f / 8.0f;
-         }
+		 }
 		else
-         {
+		 {
 			angles[YAW] += 360.0f / 8.0f;
-         }
+		 }
 
 		closest_part = FindClosestPart( self, angles[YAW] );
 
 		if ( ( closest_part == first_part ) && ( direction != "changing" ) )
-         {
+		 {
 			return BEHAVIOR_SUCCESS;
-         }
+		 }
 
 		current_part = closest_part;
 
@@ -9747,9 +9747,9 @@ void DragEnemy::Begin
 	attached = false;
 
 	if ( damage > 0.0f && !drop )
-      {
+	  {
 		ent_to_drag->Damage( &self, &self, damage, vec_zero, vec_zero, vec_zero, 0, 0, MOD_EAT );
-      }
+	  }
 
 	body = self.FindPartActor( "body" );
 
@@ -9784,17 +9784,17 @@ BehaviorReturnCode_t	DragEnemy::Evaluate
 		if ( self.GetTag( tag_name.c_str(), &orig ) )
 			{
 			if ( ent_to_drag->isClient() )
-            {
+			{
 				orig[ 2 ] -= 85.0f;
-            }
+			}
 			else
 				{
 				offset[ 2 ] = ( ent_to_drag->absmin[ 2 ] - ent_to_drag->absmax[ 2 ] ) * 0.5f;
 
 				if ( offset[ 2 ] < -40.0f )
-               {
+			   {
 					offset[ 2 ] -= 25.0f;
-               }
+			   }
 				orig += offset;
 				}
 
@@ -9818,17 +9818,17 @@ BehaviorReturnCode_t	DragEnemy::Evaluate
 			if ( damage > 0.0f )
 				{
 				if ( ent_to_drag->isClient() )
-               {
+			   {
 					offset[ 2 ] -= 85.0f;
-               }
+			   }
 				else
 					{
 					offset[ 2 ] = ( ent_to_drag->absmin[ 2 ] - ent_to_drag->absmax[ 2 ] ) * 0.5f;
 
 					if ( offset[ 2 ] < -40.0f )
-                  {
+				  {
 						offset[ 2 ] -= 25.0f;
-                  }
+				  }
 					}
 
 				ev = new Event( EV_Attach );
@@ -9865,14 +9865,14 @@ BehaviorReturnCode_t	DragEnemy::Evaluate
 				self.angles[ YAW ] -= 90.0f * (level.time - last_turn_time);
 
 				if ( self.angles[ YAW ] < 0.0f )
-               {
+			   {
 					self.angles[ YAW ] += 360.0f;
-               }
+			   }
 
 				if ( self.angles[ YAW ] < target_yaw )
-               {
+			   {
 					self.angles[ YAW ] = target_yaw;
-               }
+			   }
 
 				self.setAngles( self.angles );
 				}
@@ -9881,14 +9881,14 @@ BehaviorReturnCode_t	DragEnemy::Evaluate
 				self.angles[ YAW ] += 90.0f * (level.time - last_turn_time);
 
 				if ( self.angles[ YAW ] > 360.0f )
-               {
+			   {
 					self.angles[ YAW ] -= 360.0f;
-               }
+			   }
 
 				if ( self.angles[ YAW ] > target_yaw )
-               {
+			   {
 					self.angles[ YAW ] = target_yaw;
-               }
+			   }
 
 				self.setAngles( self.angles );
 				}
@@ -9933,17 +9933,17 @@ void DragEnemy::End
 			ent_to_drag->setOrigin( trace.endpos );
 
 			/* if ( ent_to_drag->isClient() )
-            {
+			{
 				offset[2] = -85;
-            }
+			}
 			else
 				{
 				offset[2] = ( ent_to_drag->absmin[2] - ent_to_drag->absmax[2] ) * 0.5;
 
 				if ( offset[2] < -40 )
-               {
+			   {
 					offset[2] -= 25;
-               }
+			   }
 				}
 
 			ent_to_drag->setOrigin( orig + offset ); */
@@ -9999,9 +9999,9 @@ void PickupEnemy::Begin
 	attached = false;
 
 	if ( ( damage > 0.0f ) && !drop )
-      {
+	  {
 		ent_to_drag->Damage( &self, &self, damage, vec_zero, vec_zero, vec_zero, 0, 0, MOD_EAT );
-      }
+	  }
 
 	body = self.FindPartActor( "body" );
 
@@ -10036,17 +10036,17 @@ BehaviorReturnCode_t	PickupEnemy::Evaluate
 		if ( self.GetTag( tag_name.c_str(), &orig ) )
 			{
 			if ( ent_to_drag->isClient() )
-            {
+			{
 				orig[ 2 ] -= 85.0f;
-            }
+			}
 			else
 				{
 				offset[ 2 ] = ( ent_to_drag->absmin[ 2 ] - ent_to_drag->absmax[ 2 ] ) * 0.5f;
 
 				if ( offset[ 2 ] < -40.0f )
-               {
+			   {
 					offset[ 2 ] -= 25.0f;
-               }
+			   }
 				orig += offset;
 				}
 
@@ -10068,17 +10068,17 @@ BehaviorReturnCode_t	PickupEnemy::Evaluate
 		if ( damage > 0.0f )
 			{
 			if ( ent_to_drag->isClient() )
-            {
+			{
 				offset[ 2 ] -= 85.0f;
-            }
+			}
 			else
 				{
 				offset[ 2 ] = ( ent_to_drag->absmin[ 2 ] - ent_to_drag->absmax[ 2 ] ) * 0.5f;
 
 				if ( offset[ 2 ] < -40.0f )
-               {
-			      offset[ 2 ] -= 25.0f;
-               }
+			   {
+				  offset[ 2 ] -= 25.0f;
+			   }
 				}
 
 			ev = new Event( EV_Attach );
@@ -10115,14 +10115,14 @@ BehaviorReturnCode_t	PickupEnemy::Evaluate
 			self.angles[ YAW ] -= 90.0f * (level.time - last_turn_time);
 
 			if ( self.angles[ YAW ] < 0.0f )
-            {
+			{
 				self.angles[ YAW ] += 360.0f;
-            }
+			}
 
 			if ( self.angles[ YAW ] < target_yaw )
-            {
+			{
 				self.angles[ YAW ] = target_yaw;
-            }
+			}
 
 			self.setAngles( self.angles );
 			}
@@ -10131,14 +10131,14 @@ BehaviorReturnCode_t	PickupEnemy::Evaluate
 			self.angles[ YAW ] += 90.0f * (level.time - last_turn_time);
 
 			if ( self.angles[ YAW ] > 360.0f )
-            {
+			{
 				self.angles[ YAW ] -= 360.0f;
-            }
+			}
 
 			if ( self.angles[ YAW ] > target_yaw )
-            {
+			{
 				self.angles[ YAW ] = target_yaw;
-            }
+			}
 
 			self.setAngles( self.angles );
 			}
@@ -10182,17 +10182,17 @@ void PickupEnemy::End
 			ent_to_drag->setOrigin( trace.endpos );
 
 			/* if ( ent_to_drag->isClient() )
-            {
+			{
 				offset[2] = -85;
-            }
+			}
 			else
 				{
 				offset[2] = ( ent_to_drag->absmin[2] - ent_to_drag->absmax[2] ) * 0.5;
 
 				if ( offset[2] < -40 )
-               {
+			   {
 					offset[2] -= 25;
-               }
+			   }
 				}
 
 			ent_to_drag->setOrigin( orig + offset ); */
@@ -10508,7 +10508,7 @@ qboolean	TeleportToPlayer::TestPosition
 		return false;
 
    if ( trace.fraction == 1.0 )
-      return false;
+	  return false;
 
 	// Make sure we can see the Player from this position
    
@@ -11169,28 +11169,28 @@ Vector ChooseRandomDirection
 	random_yaw = G_Random( 360.0f );
 
    for( i = 0; i <= 8; i++ )
-      {
-      t = (int)random_yaw + ( i * 45 );
+	  {
+	  t = (int)random_yaw + ( i * 45 );
 
-      ang.y = self.angles.y + (float)t;
+	  ang.y = self.angles.y + (float)t;
 
-      if ( usepitch )
-         {
-         u = ( int )G_Random( 5.0f );
+	  if ( usepitch )
+		 {
+		 u = ( int )G_Random( 5.0f );
 
-         //for( k = 0; k < 5; k++ )
+		 //for( k = 0; k < 5; k++ )
 			for( k = 0; k < 3; k++ )
-            {
-            ang.x = x[ k + u ];
-            ang.AngleVectors( &dir, NULL, NULL );
+			{
+			ang.x = x[ k + u ];
+			ang.AngleVectors( &dir, NULL, NULL );
 
-            dir *= movespeed * (*time);
-            dir += self.origin;
-            trace = G_Trace( self.origin, self.mins, self.maxs, dir, &self, self.edict->clipmask, false, "ChooseRandomDirection 1" );
+			dir *= movespeed * (*time);
+			dir += self.origin;
+			trace = G_Trace( self.origin, self.mins, self.maxs, dir, &self, self.edict->clipmask, false, "ChooseRandomDirection 1" );
 
-            if ( !trace.startsolid && !trace.allsolid )
-               {
-               newdir = Vector( trace.endpos );
+			if ( !trace.startsolid && !trace.allsolid )
+			   {
+			   newdir = Vector( trace.endpos );
 
 					if ( disallowcontentsmask )
 						{
@@ -11200,14 +11200,14 @@ Vector ChooseRandomDirection
 							continue;
 						}
 
-               if (
-                     ( trace.fraction > bestfraction ) &&
-                     ( newdir != bestdir ) &&
-                     ( newdir != previousdir )
-                  )
-                  {
-                  bestdir = newdir;
-                  bestfraction = trace.fraction;
+			   if (
+					 ( trace.fraction > bestfraction ) &&
+					 ( newdir != bestdir ) &&
+					 ( newdir != previousdir )
+				  )
+				  {
+				  bestdir = newdir;
+				  bestfraction = trace.fraction;
 
 						if ( bestfraction > .9f )
 							{
@@ -11215,37 +11215,37 @@ Vector ChooseRandomDirection
 
 							return bestdir;
 							}
-                  }
-               }
-            }
-         }
-      else
-         {
-         ang.x = 0.0f;
-         ang.AngleVectors( &dir, NULL, NULL );
+				  }
+			   }
+			}
+		 }
+	  else
+		 {
+		 ang.x = 0.0f;
+		 ang.AngleVectors( &dir, NULL, NULL );
 
 			endpos = self.origin + ( dir * movespeed * (*time) ) + step;
 
-         trace = G_Trace( self.origin + step, self.mins, self.maxs, endpos, &self, self.edict->clipmask, false, "ChooseRandomDirection 2" );
+		 trace = G_Trace( self.origin + step, self.mins, self.maxs, endpos, &self, self.edict->clipmask, false, "ChooseRandomDirection 2" );
 
-         if ( !trace.startsolid && !trace.allsolid )
-            {
-            newdir = Vector( trace.endpos );
+		 if ( !trace.startsolid && !trace.allsolid )
+			{
+			newdir = Vector( trace.endpos );
 
-            if ( disallowcontentsmask )
-               {
-               contents = gi.pointcontents( ( newdir + centroid ), 0 );
+			if ( disallowcontentsmask )
+			   {
+			   contents = gi.pointcontents( ( newdir + centroid ), 0 );
 
 					if ( contents & disallowcontentsmask )
 						continue;
 					}
 
-            if (
-                  ( trace.fraction > bestfraction ) &&
-                  ( newdir != bestdir ) &&
-                  ( newdir != previousdir )
-               )
-               {
+			if (
+				  ( trace.fraction > bestfraction ) &&
+				  ( newdir != bestdir ) &&
+				  ( newdir != previousdir )
+			   )
+			   {
 					groundend = endpos - ( step * 2.0f );
 
 					groundtrace = G_Trace( endpos, self.mins, self.maxs, groundend, &self, self.edict->clipmask, false, "Chase::ChooseRandomDirection 3" );
@@ -11265,19 +11265,19 @@ Vector ChooseRandomDirection
 							return bestdir;
 							}
 						}
-               }
-            }
-         }
-      }
+			   }
+			}
+		 }
+	  }
 
    if ( bestfraction > 0.0f )
-      {
-      *time *= bestfraction;
-      }
+	  {
+	  *time *= bestfraction;
+	  }
    else
-      {
-      *time = 0.0f;
-      }
+	  {
+	  *time = 0.0f;
+	  }
 
    return bestdir;
    }
@@ -11329,14 +11329,14 @@ void GotoWayPoint::Begin
 
 	{
 	if ( !anim.length() )
-      {
+	  {
 		anim = "run";
-      }
+	  }
 
 	if ( anim != self.animname || self.newanim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	chase.Begin( self );	
 
@@ -11373,7 +11373,7 @@ BehaviorReturnCode_t	GotoWayPoint::Evaluate
 		if (waypointThread.length() )
 			self.RunThread( waypointThread );
 
-      // See if we have another point to go to
+	  // See if we have another point to go to
 		if ( current_waypoint->target.length() == 0 )
 			{
 			return BEHAVIOR_SUCCESS;
@@ -11508,9 +11508,9 @@ void FlyCircleAroundWaypoint::Begin
 	//original_z = self.origin.z;
 
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	fly.Begin( self );
 	fly.SetTurnSpeed( 5.0f );
@@ -11541,9 +11541,9 @@ BehaviorReturnCode_t	FlyCircleAroundWaypoint::Evaluate
 		return BEHAVIOR_SUCCESS;
 
 	if ( !self.IsEntityAlive( currentEnemy ) )
-      {
-      return BEHAVIOR_SUCCESS;
-      }
+	  {
+	  return BEHAVIOR_SUCCESS;
+	  }
 
 	//if ( self.lastmove == STEPMOVE_OK )
 	if ( self.movementSubsystem->getLastMove() == STEPMOVE_OK )
@@ -11561,7 +11561,7 @@ BehaviorReturnCode_t	FlyCircleAroundWaypoint::Evaluate
 		dir = goalNode->origin - self.origin;
 		dir.z = 0;
 
-   	if ( dir.length() > 200.0f ) //radius
+	if ( dir.length() > 200.0f ) //radius
 			{
 			too_far = true;
 			}
@@ -11598,7 +11598,7 @@ BehaviorReturnCode_t	FlyCircleAroundWaypoint::Evaluate
 
 			new_dir = ( fly_dir * trace.fraction ) + ( dir * ( 1.0f - trace.fraction ) );
 			new_dir.normalize();
-   		goal = self.origin + ( new_dir * 200.0f );
+		goal = self.origin + ( new_dir * 200.0f );
 			}
 		else
 			{
@@ -11800,8 +11800,8 @@ BehaviorReturnCode_t	HelicopterFlyToPoint::Evaluate
 
    if (offsetOrigin)
 		{
-   	x_offset = self.centroid.x - self.origin.x;
-   	y_offset = self.centroid.y - self.origin.y;
+	x_offset = self.centroid.x - self.origin.x;
+	y_offset = self.centroid.y - self.origin.y;
 	   //z_offset = self.centroid.z - self.origin.z;
 		
 		self.origin.x+=x_offset;
@@ -11816,7 +11816,7 @@ BehaviorReturnCode_t	HelicopterFlyToPoint::Evaluate
 		stuck = 0;
 	
 	if ( ( stuck > 1 ) || ( avoidtime <= level.time ) )
-      {
+	  {
 		time = G_Random( .3f ) + .3f;
 
 		use_temp_goal = false;
@@ -11855,13 +11855,13 @@ BehaviorReturnCode_t	HelicopterFlyToPoint::Evaluate
 			dir = goal - self.origin;			
 
 		length = dir.length();
-      dir.normalize();
+	  dir.normalize();
 		
 		//new stuff
 		//self.FlightDir = dir;
 
 
-      ang = dir.toAngles();
+	  ang = dir.toAngles();
 		
 		if ( ( length > 150.0f ) && random_allowed && !use_temp_goal )
 			{
@@ -11889,21 +11889,21 @@ BehaviorReturnCode_t	HelicopterFlyToPoint::Evaluate
 			target_angle[YAW] = enemyDir.toYaw();
 			target_angle[ROLL] = 0.0f;
 			}
-      }
+	  }
 
 	target_angle[YAW]   = AngleNormalize360( target_angle[YAW] );
 	target_angle[PITCH] = AngleNormalize360( target_angle[PITCH] );
 
 	if ( (self.angles[YAW] != target_angle[YAW]) || (self.angles[PITCH] != target_angle[PITCH]) )
-      {
+	  {
 		self.movementSubsystem->setForwardSpeed( speed * 0.8f );
 		//self.forwardspeed = speed * 0.8f;
-      }
+	  }
 	else
-      {
+	  {
 		self.movementSubsystem->setForwardSpeed( speed );
 		//self.forwardspeed = speed;
-      }
+	  }
 
 	old_yaw   = self.angles[YAW];
 	old_pitch = self.angles[PITCH];
@@ -11985,7 +11985,7 @@ BehaviorReturnCode_t	HelicopterFlyToPoint::Evaluate
 
 	if (offsetOrigin)
 		{
-   	self.origin.x-=x_offset;
+	self.origin.x-=x_offset;
 	   self.origin.y-=y_offset;
 	   //self.origin.z-=z_offset;
 		}
@@ -12005,37 +12005,37 @@ float HelicopterFlyToPoint::LerpAngle( float old_angle, float new_angle, float l
 	diff = new_angle - old_angle;
 
 	if ( diff > 180.0f )
-      {
+	  {
 		diff -= 360.0f;
-      }
+	  }
 
 	if ( diff < -180.0f )
-      {
+	  {
 		diff += 360.0f;
-      }
+	  }
 
 	lerp_angle = old_angle;
 	
 	abs_diff = diff;
 
 	if ( abs_diff < 0.0f )
-      {
+	  {
 		abs_diff = -abs_diff;
-      }
+	  }
 
 	if ( abs_diff < lerp_amount )
-      {
+	  {
 		lerp_amount = abs_diff;
-      }
+	  }
 
 	if ( diff < 0.0f )
-      {
+	  {
 		lerp_angle -= lerp_amount;
-      }
+	  }
 	else if ( diff > 0.0f )
-      {
+	  {
 		lerp_angle += lerp_amount;
-      }
+	  }
 	
 	lerp_angle = AngleNormalize360( lerp_angle );
 
@@ -12113,9 +12113,9 @@ void HelicopterFlyCircle::Begin
 	//original_z = self.origin.z;
 
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	fly.Begin( self );
 	fly.SetTurnSpeed( 5.0f );
@@ -12150,9 +12150,9 @@ BehaviorReturnCode_t	HelicopterFlyCircle::Evaluate
 		return BEHAVIOR_SUCCESS;
 
 	if ( !self.IsEntityAlive( currentEnemy ) && !circle_player )
-      {
-      return BEHAVIOR_SUCCESS;
-      }
+	  {
+	  return BEHAVIOR_SUCCESS;
+	  }
 
 	//if ( self.lastmove == STEPMOVE_OK )
 	if ( self.movementSubsystem->getLastMove() == STEPMOVE_OK )
@@ -12610,9 +12610,9 @@ void HelicopterFlyToWaypoint::Begin
 
 	{
 	if ( anim.length() )
-      {
+	  {
 		self.SetAnim( anim );
-      }
+	  }
 
 	fly.Begin( self );
 	fly.SetTurnSpeed( 5.0f );
@@ -12634,9 +12634,9 @@ BehaviorReturnCode_t	HelicopterFlyToWaypoint::Evaluate
 		return BEHAVIOR_SUCCESS;
 
 	if ( !self.IsEntityAlive( currentEnemy ) )
-      {
-      return BEHAVIOR_SUCCESS;
-      }
+	  {
+	  return BEHAVIOR_SUCCESS;
+	  }
 
 	//if ( self.lastmove == STEPMOVE_OK )
 	if ( self.movementSubsystem->getLastMove() == STEPMOVE_OK )
@@ -12790,7 +12790,7 @@ void GetWithinRangeOfPlayer::SetArgs
 		speed = 100;
 
    if ( ev->NumArgs() > 3 )
-      chase.SetRadius( ev->GetFloat( 4 ) );
+	  chase.SetRadius( ev->GetFloat( 4 ) );
 
 	}
 
@@ -12813,14 +12813,14 @@ void GetWithinRangeOfPlayer::Begin
 
 	{
 	if ( !anim.length() )
-      {
+	  {
 		anim = "run";
-      }
+	  }
 
 	if ( anim != self.animname || self.newanim.length() )
-      {
+	  {
 		self.SetAnim( anim, EV_Actor_NotifyBehavior );
-      }
+	  }
 
 	chase.Begin( self );
 	wander.Begin( self );
