@@ -1196,7 +1196,7 @@ class Actor : public Sentient {
 	bool IsFinishable();
 	str getName() const override 
   { 
-    return name; 
+	return name; 
   }
 
 	void SendEventToGroup(Event* ev);
